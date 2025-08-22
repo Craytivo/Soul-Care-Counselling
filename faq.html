@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Soul Care — FAQs</title>
+  <meta name="description" content="Frequently Asked Questions about Soul Care Counselling services." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        colors: {
+          transparent: 'transparent',
+          current: 'currentColor',
+          white: '#ffffff',
+          black: '#000000',
+          cream:    '#F8F5EC',
+          sand:     '#E6DDC6',
+          clay:     '#C49A6C',
+          bark:     '#6E4B3A',
+          charcoal: '#23201B'
+        },
+        extend: {
+          fontFamily: {
+            heading: ['Poppins','ui-sans-serif','system-ui','sans-serif'],
+            body: ['Inter','ui-sans-serif','system-ui','sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>html{scroll-behavior:smooth}</style>
+</head>
+<body class="bg-cream text-charcoal font-body antialiased">
+
+  <!-- Header -->
+  <header data-site-header class="sticky top-0 z-50 bg-bark/90 text-cream supports-[backdrop-filter]:bg-bark/70 backdrop-blur">
+    <div class="mx-auto max-w-7xl px-4 py-3 grid grid-cols-[auto_1fr_auto] items-center gap-4">
+      <a href="./index.html" class="flex items-center gap-2">
+        <span class="inline-block h-9 w-9 rounded-md bg-cream/10 ring-1 ring-cream/20"></span>
+        <span class="text-sm sm:text-base font-semibold tracking-wide">Soul Care Counselling</span>
+      </a>
+      <nav class="hidden lg:flex items-center justify-center gap-6" aria-label="Primary">
+        <a href="./index.html" class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream" data-nav="index.html">Home</a>
+        <a href="./about.html" class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream" data-nav="about.html">About Us</a>
+        <a href="./core-values.html" class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream" data-nav="core-values.html">Core Values</a>
+        <a href="./services.html" class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream" data-nav="services.html">Services</a>
+        <a href="./areas.html" class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream" data-nav="areas.html">Areas of Focus</a>
+      </nav>
+      <button id="menuOpen"
+        class="justify-self-end shrink-0 inline-flex items-center justify-center h-10 w-10 rounded-md ring-1 ring-cream/20 hover:bg-cream/10"
+        aria-controls="menuPanel" aria-expanded="false" aria-label="Open menu">
+        <svg class="h-5 w-5 text-cream" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Backdrop + Drawer -->
+  <div id="menuBackdrop" class="fixed inset-0 bg-charcoal/50 hidden z-[59]"></div>
+  <aside id="menuPanel" class="fixed right-0 top-0 z-[60] h-screen w-[86%] max-w-sm bg-bark text-cream shadow-xl border-l border-cream/15 hidden overflow-y-auto" aria-hidden="true">
+    <div class="sticky top-0 bg-bark/95 backdrop-blur px-4 py-3 border-b border-cream/15 flex items-center justify-between">
+      <span class="text-sm font-semibold uppercase">Menu</span>
+      <button id="menuClose" class="inline-flex items-center justify-center rounded-md p-2 ring-1 ring-cream/20 hover:bg-cream/10" aria-label="Close menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <nav class="px-4 py-4 text-sm">
+      <a href="./index.html" class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="index.html">Home</a>
+      <a href="./about.html" class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="about.html">About Us</a>
+      <a href="./core-values.html" class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="core-values.html">Core Values</a>
+      <a href="./services.html" class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="services.html">Services</a>
+      <a href="./areas.html" class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="areas.html">Areas of Focus</a>
+      <hr class="my-3 border-cream/15">
+      <a href="./faq.html" class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="faq.html">FAQs</a>
+      <a href="./notes.html" class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream">Notes</a>
+      <a href="./workshops.html" class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream">Workshops</a>
+      <a href="./contact.html" class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream">Contact</a>
+    </nav>
+  </aside>
+
+  <main id="main" class="mx-auto max-w-7xl px-4 py-12 md:py-16">
+    <!-- Hero -->
+    <section class="relative overflow-hidden rounded-2xl bg-bark text-cream ring-1 ring-cream/15">
+      <div class="absolute -right-12 -top-12 h-56 w-56 rounded-full bg-gradient-to-br from-clay/40 to-cream/10 blur-2xl"></div>
+      <div class="relative z-10 px-6 py-10 md:px-10 md:py-14">
+        <span class="inline-flex items-center gap-2 rounded-full bg-cream/10 px-3 py-1 ring-1 ring-cream/30 uppercase tracking-[.22em] text-[11px]">FAQs</span>
+        <h1 class="mt-3 font-heading text-3xl md:text-4xl font-bold">Frequently Asked Questions</h1>
+        <p class="mt-3 max-w-3xl text-cream/85">Answers to common questions about sessions, rates, policies, and more.</p>
+      </div>
+    </section>
+
+    <!-- FAQ List -->
+    <section class="mt-14 md:mt-16 space-y-4">
+      <div class="divide-y divide-charcoal/10 rounded-2xl bg-white ring-1 ring-charcoal/10">
+        <!-- FAQ Item -->
+        <details class="p-6 group">
+          <summary class="flex justify-between items-center cursor-pointer font-heading font-semibold">
+            How long will sessions last?
+            <span class="ml-4 transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <p class="mt-2 text-charcoal/80">Each sessions will be for approximately 50 minutes.</p>
+        </details>
+
+        <details class="p-6 group">
+          <summary class="flex justify-between items-center cursor-pointer font-heading font-semibold">
+            Do you only work with faith based clients?
+            <span class="ml-4 transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <p class="mt-2 text-charcoal/80">Although our approach is rooted in faith based principles, we do not only serve faith-based clients. All are welcomed, and we would love to connect with you.</p>
+        </details>
+
+        <details class="p-6 group">
+          <summary class="flex justify-between items-center cursor-pointer font-heading font-semibold">
+            Do you work with clients outside of Canada?
+            <span class="ml-4 transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <p class="mt-2 text-charcoal/80">No, at the moment we only work with clients in Canada.</p>
+        </details>
+
+        <details class="p-6 group">
+          <summary class="flex justify-between items-center cursor-pointer font-heading font-semibold">
+            What is the cost of each session?
+            <span class="ml-4 transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <p class="mt-2 text-charcoal/80">Each session will cost $160.00. Student rates are available for high school and undergraduate university students. Please email for further details.</p>
+        </details>
+
+        <details class="p-6 group">
+          <summary class="flex justify-between items-center cursor-pointer font-heading font-semibold">
+            Do I need a referral?
+            <span class="ml-4 transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <p class="mt-2 text-charcoal/80">You do not need a referral in order for us to journey together, you are able to book a free consultation here; after which we will discuss next steps.</p>
+        </details>
+
+        <details class="p-6 group">
+          <summary class="flex justify-between items-center cursor-pointer font-heading font-semibold">
+            Where are you located?
+            <span class="ml-4 transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <p class="mt-2 text-charcoal/80">Soul Care Christian counselling offers virtual sessions online through secure tele-health platforms.</p>
+        </details>
+
+        <details class="p-6 group">
+          <summary class="flex justify-between items-center cursor-pointer font-heading font-semibold">
+            Do I have to commit to a certain amount of sessions?
+            <span class="ml-4 transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <p class="mt-2 text-charcoal/80">Commitment is an important and necessary aspect of the healing journey; however, each person's healing and soul care journey is different, so your commitment will also look different. As the client, you have the agency to define what commitment looks like for you.</p>
+        </details>
+
+        <details class="p-6 group">
+          <summary class="flex justify-between items-center cursor-pointer font-heading font-semibold">
+            What is your cancellation policy?
+            <span class="ml-4 transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <p class="mt-2 text-charcoal/80">Cancellations between a 24-48 hour period will require 50% of the session fee. If a cancellation is made on the day of (within the 24 hours leading up to the appointment), full session payment will be required.</p>
+        </details>
+
+        <details class="p-6 group">
+          <summary class="flex justify-between items-center cursor-pointer font-heading font-semibold">
+            What types of payments do you accept?
+            <span class="ml-4 transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <p class="mt-2 text-charcoal/80">We accept credit, debit, and interact e-transfers.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <div data-include="partials/footer.html"></div>
+
+  <!-- Scripts -->
+  <script>
+    async function includePartials(){const nodes=document.querySelectorAll("[data-include]");const isDev=['localhost','127.0.0.1'].includes(location.hostname);await Promise.all([...nodes].map(async el=>{const url=el.getAttribute("data-include");const bust=isDev?`?v=${Date.now()}`:"";const res=await fetch(url+bust,{cache:isDev?"no-store":"default"});el.outerHTML=await res.text()}))}
+    function setActiveNav(){const file=location.pathname.split('/').pop()||'index.html';document.querySelectorAll('a[data-nav]').forEach(a=>{if(a.getAttribute('data-nav')===file){a.setAttribute('aria-current','page');a.classList.add('text-cream','font-semibold','underline','underline-offset-8','decoration-cream')}})}
+    function wireSimpleDrawer(){const openBtn=document.getElementById('menuOpen');const closeBtn=document.getElementById('menuClose');const panel=document.getElementById('menuPanel');const backdrop=document.getElementById('menuBackdrop');if(!(openBtn&&closeBtn&&panel&&backdrop))return;const open=()=>{panel.classList.remove('hidden');backdrop.classList.remove('hidden');document.body.classList.add('overflow-hidden');openBtn.setAttribute('aria-expanded','true');panel.setAttribute('aria-hidden','false');panel.focus({preventScroll:true})};const close=()=>{panel.classList.add('hidden');backdrop.classList.add('hidden');document.body.classList.remove('overflow-hidden');openBtn.setAttribute('aria-expanded','false');panel.setAttribute('aria-hidden','true');openBtn.focus()};openBtn.addEventListener('click',open);closeBtn.addEventListener('click',close);backdrop.addEventListener('click',close);document.addEventListener('keydown',e=>{if(e.key==='Escape')close()})}
+    (async function boot(){await includePartials();wireSimpleDrawer();setActiveNav();})();
+  </script>
+</body>
+</html>

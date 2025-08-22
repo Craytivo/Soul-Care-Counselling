@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Privacy Policy | Soul Care Counselling</title>
+  <meta name="description" content="Privacy Policy for Soul Care Counselling. How we collect, use, disclose, and protect your personal information in accordance with Canadian privacy laws." />
+
+  <!-- Fonts (same as homepage) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN (same config as homepage) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        colors: {
+          transparent: 'transparent',
+          current: 'currentColor',
+          white: '#ffffff',
+          black: '#000000',
+          cream:    '#F8F5EC',
+          sand:     '#E6DDC6',
+          clay:     '#C49A6C',
+          bark:     '#6E4B3A',
+          charcoal: '#23201B'
+        },
+        extend: {
+          fontFamily: {
+            heading: ['Poppins','ui-sans-serif','system-ui','sans-serif'],
+            body: ['Inter','ui-sans-serif','system-ui','sans-serif']
+          }
+        }
+      },
+      safelist: [
+        'hidden','backdrop-blur','py-2','py-3','overflow-hidden',
+        'translate-x-full','translate-x-0','opacity-0',
+        'text-cream','underline','underline-offset-8','decoration-cream','font-semibold'
+      ]
+    }
+  </script>
+
+  <style>html{scroll-behavior:smooth}</style>
+</head>
+<body class="bg-cream text-charcoal font-body antialiased">
+
+  <!-- ===== HEADER (exactly as homepage) ===== -->
+  <header data-site-header class="sticky top-0 z-50 bg-bark/90 text-cream supports-[backdrop-filter]:bg-bark/70 backdrop-blur">
+    <div class="mx-auto max-w-7xl px-4 py-3 grid grid-cols-[auto_1fr_auto] items-center gap-4">
+      <a href="./index.html" class="flex items-center gap-2">
+        <span class="inline-block h-9 w-9 rounded-md bg-cream/10 ring-1 ring-cream/20"></span>
+        <span class="text-sm sm:text-base font-semibold tracking-wide">Soul Care Counselling</span>
+      </a>
+
+      <nav class="hidden lg:flex items-center justify-center gap-6" aria-label="Primary">
+        <a href="./index.html"        data-nav="index.html"       class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap">Home</a>
+        <a href="./about.html"        data-nav="about.html"       class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap">About Us</a>
+        <a href="./core-values.html"  data-nav="core-values.html" class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap">Core Values</a>
+        <a href="./services.html"     data-nav="services.html"    class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap">Services</a>
+        <a href="./areas.html"        data-nav="areas.html"       class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap">Areas of Focus</a>
+      </nav>
+
+      <button id="menuOpen"
+        class="justify-self-end shrink-0 inline-flex items-center justify-center h-10 w-10 rounded-md ring-1 ring-cream/20 hover:bg-cream/10"
+        aria-controls="menuPanel" aria-expanded="false" aria-label="Open menu">
+        <svg class="h-5 w-5 text-cream" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Drawer backdrop -->
+  <div id="menuBackdrop" class="fixed inset-0 bg-charcoal/50 hidden z-[59]"></div>
+
+  <!-- Drawer -->
+  <aside id="menuPanel"
+    class="fixed right-0 top-0 z-[60] h-screen w-[86%] max-w-sm bg-bark text-cream shadow-xl border-l border-cream/15 hidden overflow-y-auto"
+    aria-hidden="true" tabindex="-1">
+    <div class="sticky top-0 bg-bark/95 backdrop-blur px-4 py-3 border-b border-cream/15 flex items-center justify-between">
+      <span class="text-sm font-semibold tracking-wide uppercase">Menu</span>
+      <button id="menuClose" class="inline-flex items-center justify-center rounded-md p-2 ring-1 ring-cream/20 hover:bg-cream/10" aria-label="Close menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-cream" aria-hidden="true">
+          <path d="M18 6 6 18M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="px-4 py-4 text-sm" aria-label="All pages">
+      <a href="./index.html"        data-nav="index.html"       class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream">Home</a>
+      <a href="./about.html"        data-nav="about.html"       class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream">About Us</a>
+      <a href="./core-values.html"  data-nav="core-values.html" class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream">Core Values</a>
+      <a href="./services.html"     data-nav="services.html"    class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream">Services</a>
+      <a href="./areas.html"        data-nav="areas.html"       class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream">Areas of Focus</a>
+      <hr class="my-3 border-cream/15">
+      <a href="./faq.html"          data-nav="faq.html"         class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream">FAQs</a>
+      <a href="./notes.html"        data-nav="notes.html"       class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream">Notes from Soul Care</a>
+      <a href="./workshops.html"    data-nav="workshops.html"   class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream">Wellness Workshops</a>
+      <a href="./contact.html"      data-nav="contact.html"     class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream">Contact</a>
+      <a href="https://thesoulcarecounsellor.janeapp.com" target="_blank" rel="noopener noreferrer"
+         class="mt-4 inline-flex items-center justify-center rounded-md bg-clay px-4 py-2 font-semibold tracking-wide text-charcoal hover:bg-clay/90">
+        Book a Free Consultation
+      </a>
+    </nav>
+  </aside>
+
+  <!-- ===== PAGE CONTENT ===== -->
+  <main id="main" class="mx-auto max-w-7xl px-4 py-12 min-h-[60vh]">
+    <section class="mx-auto max-w-3xl">
+      <span class="inline-flex items-center gap-2 rounded-full bg-sand/70 px-3 py-1 ring-1 ring-charcoal/10 uppercase tracking-[.22em] text-[11px] text-charcoal/80">Policy</span>
+      <h1 class="mt-3 font-heading text-3xl md:text-4xl font-bold">Privacy Policy</h1>
+      <p class="mt-2 text-charcoal/80">Last updated: <time datetime="2025-08-22">August 22, 2025</time></p>
+      <p class="mt-4 text-charcoal/90">
+        Your privacy matters to us. This policy explains how <strong>Soul Care Counselling</strong> (“we”, “us”, “our”) collects, uses, discloses, and protects your personal information in connection with our website and services. We aim to align with Canadian privacy requirements, including PIPEDA and applicable provincial standards for health information where relevant.
+      </p>
+    </section>
+
+    <!-- Table of contents -->
+    <nav class="mx-auto max-w-3xl mt-8 rounded-2xl bg-white p-6 ring-1 ring-charcoal/10 shadow-sm" aria-label="Table of contents">
+      <ol class="list-decimal pl-5 space-y-2">
+        <li><a class="underline decoration-charcoal/30 underline-offset-4 hover:opacity-80" href="#info-we-collect">Information We Collect</a></li>
+        <li><a class="underline decoration-charcoal/30 underline-offset-4 hover:opacity-80" href="#how-we-use">How We Use Your Information</a></li>
+        <li><a class="underline decoration-charcoal/30 underline-offset-4 hover:opacity-80" href="#sharing-disclosure">Sharing & Disclosure</a></li>
+        <li><a class="underline decoration-charcoal/30 underline-offset-4 hover:opacity-80" href="#cookies-analytics">Cookies & Analytics</a></li>
+        <li><a class="underline decoration-charcoal/30 underline-offset-4 hover:opacity-80" href="#telehealth-platforms">Telehealth & Booking Platforms</a></li>
+        <li><a class="underline decoration-charcoal/30 underline-offset-4 hover:opacity-80" href="#security">Information Security</a></li>
+        <li><a class="underline decoration-charcoal/30 underline-offset-4 hover:opacity-80" href="#retention">Retention</a></li>
+        <li><a class="underline decoration-charcoal/30 underline-offset-4 hover:opacity-80" href="#your-rights">Your Rights</a></li>
+        <li><a class="underline decoration-charcoal/30 underline-offset-4 hover:opacity-80" href="#childrens-privacy">Children’s Privacy</a></li>
+        <li><a class="underline decoration-charcoal/30 underline-offset-4 hover:opacity-80" href="#international">International Transfers</a></li>
+        <li><a class="underline decoration-charcoal/30 underline-offset-4 hover:opacity-80" href="#changes">Changes to this Policy</a></li>
+        <li><a class="underline decoration-charcoal/30 underline-offset-4 hover:opacity-80" href="#contact">Contact Us</a></li>
+      </ol>
+    </nav>
+
+    <!-- Sections -->
+    <section id="info-we-collect" class="mx-auto max-w-3xl mt-12">
+      <h2 class="font-heading text-2xl md:text-3xl font-bold">1) Information We Collect</h2>
+      <p class="mt-4">We collect information that you provide directly to us and information collected automatically:</p>
+      <ul class="mt-4 space-y-2">
+        <li><strong>Contact details</strong> (e.g., name, email, phone) when you inquire, book, or join an interest list.</li>
+        <li><strong>Client intake & clinical information</strong> relevant to assessment and therapy (subject to health privacy laws and professional standards).</li>
+        <li><strong>Billing information</strong> as required to process payments (handled by our third-party payment/booking provider).</li>
+        <li><strong>Technical data</strong> such as IP address, device/browser type, and pages visited, collected via cookies or similar technologies for basic site functionality and performance.</li>
+      </ul>
+    </section>
+
+    <section id="how-we-use" class="mx-auto max-w-3xl mt-12">
+      <h2 class="font-heading text-2xl md:text-3xl font-bold">2) How We Use Your Information</h2>
+      <ul class="mt-4 space-y-2">
+        <li>To provide counselling, care coordination, and client support.</li>
+        <li>To schedule, confirm, and manage appointments.</li>
+        <li>To process payments and issue receipts.</li>
+        <li>To respond to inquiries and send essential service messages.</li>
+        <li>To maintain security, troubleshoot issues, and improve our website and services.</li>
+        <li>To meet legal, regulatory, and professional obligations.</li>
+      </ul>
+      <p class="mt-4 text-charcoal/80">We rely on your consent and/or other lawful bases (e.g., contract, legitimate interests, legal requirements) depending on the activity and jurisdiction.</p>
+    </section>
+
+    <section id="sharing-disclosure" class="mx-auto max-w-3xl mt-12">
+      <h2 class="font-heading text-2xl md:text-3xl font-bold">3) Sharing & Disclosure</h2>
+      <p class="mt-4">We do not sell your personal information. We may share information:</p>
+      <ul class="mt-4 space-y-2">
+        <li><strong>Service providers</strong> who support booking, telehealth, payments, email, or IT/security—only as needed to perform their services and subject to appropriate safeguards.</li>
+        <li><strong>Legal/professional obligations</strong>, such as duty to report, court orders, or to protect safety and prevent harm.</li>
+        <li><strong>With your consent</strong>, for coordination of care or other requested purposes.</li>
+      </ul>
+    </section>
+
+    <section id="cookies-analytics" class="mx-auto max-w-3xl mt-12">
+      <h2 class="font-heading text-2xl md:text-3xl font-bold">4) Cookies & Analytics</h2>
+      <p class="mt-4">Our site may use essential cookies for functionality (e.g., navigation, page rendering) and limited analytics to understand site performance. You can adjust your browser settings to manage cookies. Disabling some cookies may affect site features.</p>
+    </section>
+
+    <section id="telehealth-platforms" class="mx-auto max-w-3xl mt-12">
+      <h2 class="font-heading text-2xl md:text-3xl font-bold">5) Telehealth & Booking Platforms</h2>
+      <p class="mt-4">We use reputable third-party platforms for booking, telehealth, and payments. When you follow links to these platforms, your information will be processed according to their privacy policies and security practices. Please review those policies before submitting information on their sites.</p>
+      <div class="mt-4">
+        <a href="https://thesoulcarecounsellor.janeapp.com" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center justify-center rounded-lg bg-sand px-4 py-2.5 font-semibold text-charcoal ring-1 ring-charcoal/10 hover:bg-sand/90">
+          Book via our secure portal
+        </a>
+      </div>
+    </section>
+
+    <section id="security" class="mx-auto max-w-3xl mt-12">
+      <h2 class="font-heading text-2xl md:text-3xl font-bold">6) Information Security</h2>
+      <p class="mt-4">We take reasonable physical, technical, and administrative measures to safeguard personal information against loss, theft, misuse, unauthorized access, disclosure, alteration, and destruction. No method of transmission or storage is 100% secure; we encourage you to use strong, unique passwords and keep them confidential.</p>
+    </section>
+
+    <section id="retention" class="mx-auto max-w-3xl mt-12">
+      <h2 class="font-heading text-2xl md:text-3xl font-bold">7) Retention</h2>
+      <p class="mt-4">We keep personal information only as long as necessary to provide services, meet legal and professional standards (including health record retention rules), resolve disputes, and enforce agreements. When no longer required, we aim to securely delete or de-identify information.</p>
+    </section>
+
+    <section id="your-rights" class="mx-auto max-w-3xl mt-12">
+      <h2 class="font-heading text-2xl md:text-3xl font-bold">8) Your Rights</h2>
+      <p class="mt-4">Subject to applicable laws, you may have rights to:</p>
+      <ul class="mt-4 space-y-2">
+        <li>Access your personal information and request a copy.</li>
+        <li>Request corrections to incomplete or inaccurate information.</li>
+        <li>Withdraw consent where processing is based on consent (does not affect prior processing).</li>
+        <li>Complain to a privacy regulator if you believe your rights have been infringed.</li>
+      </ul>
+      <p class="mt-4">To exercise your rights, contact us using the details below. We may need to verify your identity.</p>
+    </section>
+
+    <section id="childrens-privacy" class="mx-auto max-w-3xl mt-12">
+      <h2 class="font-heading text-2xl md:text-3xl font-bold">9) Children’s Privacy</h2>
+      <p class="mt-4">We provide services to children and youth with appropriate consent/authorization in line with applicable laws. If you are a parent/guardian with questions about a child’s information, please contact us.</p>
+    </section>
+
+    <section id="international" class="mx-auto max-w-3xl mt-12">
+      <h2 class="font-heading text-2xl md:text-3xl font-bold">10) International Transfers</h2>
+      <p class="mt-4">Some service providers may store or process information outside of your province or outside Canada. In such cases, information may be subject to the laws of those jurisdictions. We aim to work with providers that implement appropriate safeguards.</p>
+    </section>
+
+    <section id="changes" class="mx-auto max-w-3xl mt-12">
+      <h2 class="font-heading text-2xl md:text-3xl font-bold">11) Changes to this Policy</h2>
+      <p class="mt-4">We may update this policy from time to time. We will revise the “Last updated” date and, where appropriate, notify you by reasonable means.</p>
+    </section>
+
+    <section id="contact" class="mx-auto max-w-3xl mt-12">
+      <h2 class="font-heading text-2xl md:text-3xl font-bold">12) Contact Us</h2>
+      <p class="mt-4">For questions about this policy or your personal information, contact:</p>
+      <div class="mt-4 rounded-xl bg-white p-6 ring-1 ring-charcoal/10 shadow-sm">
+        <p class="font-semibold">Soul Care Counselling</p>
+        <p class="mt-1"><a href="./contact.html" class="underline underline-offset-4 decoration-charcoal/30 hover:opacity-80">Contact page</a></p>
+        <p class="mt-1">Email: <a href="mailto:info@thesoulcarecounsellor.com" class="underline underline-offset-4 decoration-charcoal/30 hover:opacity-80">info@thesoulcarecounsellor.com</a></p>
+      </div>
+      <p class="mt-6">
+        If we cannot resolve your concern, you may contact the Office of the Privacy Commissioner of Canada or your provincial/territorial privacy regulator.
+      </p>
+      <div class="mt-8">
+        <a href="#top" class="inline-flex items-center justify-center rounded-lg bg-sand px-4 py-2.5 font-semibold text-charcoal ring-1 ring-charcoal/10 hover:bg-sand/90">Back to top</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER (included via partial) ===== -->
+  <div data-include="partials/footer.html"></div>
+
+  <!-- ===== Same JS as homepage ===== -->
+  <script>
+    async function includePartials() {
+      const nodes = document.querySelectorAll("[data-include]");
+      const isDev = ['localhost','127.0.0.1'].includes(location.hostname);
+      await Promise.all([...nodes].map(async el => {
+        const url  = el.getAttribute("data-include");
+        const bust = isDev ? `?v=${Date.now()}` : "";
+        const res  = await fetch(url + bust, { cache: isDev ? "no-store" : "default" });
+        el.outerHTML = await res.text();
+      }));
+    }
+
+    function setActiveNav() {
+      const file = location.pathname.split('/').pop() || 'index.html';
+      document.querySelectorAll('a[data-nav]').forEach(a => {
+        if (a.getAttribute('data-nav') === file) {
+          a.setAttribute('aria-current', 'page');
+          a.classList.add('text-cream','font-semibold','underline','underline-offset-8','decoration-cream');
+        }
+      });
+    }
+
+    function wireSimpleDrawer() {
+      const openBtn = document.getElementById('menuOpen');
+      const closeBtn= document.getElementById('menuClose');
+      const panel   = document.getElementById('menuPanel');
+      const backdrop= document.getElementById('menuBackdrop');
+      if (!(openBtn && closeBtn && panel && backdrop)) return;
+
+      const open = () => {
+        panel.classList.remove('hidden');
+        backdrop.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+        openBtn.setAttribute('aria-expanded','true');
+        panel.setAttribute('aria-hidden','false');
+        panel.focus({preventScroll:true});
+      };
+      const close = () => {
+        panel.classList.add('hidden');
+        backdrop.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+        openBtn.setAttribute('aria-expanded','false');
+        panel.setAttribute('aria-hidden','true');
+        openBtn.focus();
+      };
+
+      openBtn.addEventListener('click', open);
+      closeBtn.addEventListener('click', close);
+      backdrop.addEventListener('click', close);
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+    }
+
+    (async function boot(){
+      await includePartials();
+      wireSimpleDrawer();
+      setActiveNav();
+      const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
+    })();
+  </script>
+</body>
+</html>

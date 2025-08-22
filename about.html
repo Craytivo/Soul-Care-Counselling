@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Soul Care — About Us</title>
+  <meta name="description" content="About Soul Care Counselling — faith-centered, culturally responsive therapy. Our mission, pillars, and team." />
+
+  <!-- Fonts (optional) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind via CDN with your palette -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        colors: {
+          transparent: 'transparent',
+          current: 'currentColor',
+          white: '#ffffff',
+          black: '#000000',
+          cream:    '#F8F5EC',
+          sand:     '#E6DDC6',
+          clay:     '#C49A6C',
+          bark:     '#6E4B3A',
+          charcoal: '#23201B'
+        },
+        extend: {
+          fontFamily: {
+            heading: ['Poppins','ui-sans-serif','system-ui','sans-serif'],
+            body: ['Inter','ui-sans-serif','system-ui','sans-serif']
+          }
+        }
+      },
+      safelist: [
+        'hidden','backdrop-blur','py-2','py-3','overflow-hidden',
+        'translate-x-full','translate-x-0','opacity-0',
+        'text-cream','underline','underline-offset-8','decoration-cream','font-semibold'
+      ]
+    }
+  </script>
+  <style> html{scroll-behavior:smooth} </style>
+</head>
+
+<body class="bg-cream text-charcoal font-body antialiased">
+
+ <header data-site-header class="sticky top-0 z-50 bg-bark/90 text-cream supports-[backdrop-filter]:bg-bark/70 backdrop-blur">
+  <div class="mx-auto max-w-7xl px-4 py-3 grid grid-cols-[auto_1fr_auto] items-center gap-4">
+    <!-- LEFT: Brand -->
+    <a href="./index.html" class="flex items-center gap-2">
+      <span class="inline-block h-9 w-9 rounded-md bg-cream/10 ring-1 ring-cream/20"></span>
+      <span class="text-sm sm:text-base font-semibold tracking-wide">Soul Care Counselling</span>
+    </a>
+
+    <!-- CENTER: Desktop nav (5 items) -->
+    <nav class="hidden lg:flex items-center justify-center gap-6" aria-label="Primary">
+      <a href="./index.html"        class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="index.html">Home</a>
+      <a href="./about.html"        class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="about.html">About Us</a>
+      <a href="./core-values.html"  class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="core-values.html">Core Values</a>
+      <a href="./services.html"     class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="services.html">Services</a>
+      <a href="./areas.html"        class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="areas.html">Areas of Focus</a>
+    </nav>
+
+    <!-- RIGHT: Hamburger (fixed size) -->
+    <button id="menuOpen"
+      class="justify-self-end shrink-0 inline-flex items-center justify-center h-10 w-10 rounded-md ring-1 ring-cream/20 hover:bg-cream/10"
+      aria-controls="menuPanel" aria-expanded="false" aria-label="Open menu">
+      <svg class="h-5 w-5 text-cream" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- Backdrop -->
+<div id="menuBackdrop" class="fixed inset-0 bg-charcoal/50 hidden z-[59]"></div>
+
+<!-- SIMPLE PANEL: full height, panel scrolls -->
+<aside id="menuPanel"
+  class="fixed right-0 top-0 z-[60] h-screen w-[86%] max-w-sm bg-bark text-cream shadow-xl border-l border-cream/15 hidden overflow-y-auto"
+  aria-hidden="true" tabindex="-1">
+
+  <!-- Sticky header inside panel -->
+  <div class="sticky top-0 bg-bark/95 backdrop-blur px-4 py-3 border-b border-cream/15 flex items-center justify-between">
+    <span class="text-sm font-semibold tracking-wide uppercase">Menu</span>
+    <button id="menuClose" class="inline-flex items-center justify-center rounded-md p-2 ring-1 ring-cream/20 hover:bg-cream/10" aria-label="Close menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-cream" aria-hidden="true">
+        <path d="M18 6 6 18M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- FULL static list (each link = block so it stacks) -->
+  <nav class="px-4 py-4 text-sm" aria-label="All pages">
+    <!-- desktop items duplicated -->
+    <a href="./index.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="index.html">Home</a>
+    <a href="./about.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="about.html">About Us</a>
+    <a href="./core-values.html"  class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="core-values.html">Core Values</a>
+    <a href="./services.html"     class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="services.html">Services</a>
+    <a href="./areas.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="areas.html">Areas of Focus</a>
+
+    <hr class="my-3 border-cream/15">
+
+    <!-- extras -->
+    <a href="./faq.html"          class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="faq.html">FAQs</a>
+    <a href="./notes.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="notes.html">Notes from Soul Care</a>
+    <a href="./workshops.html"    class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="workshops.html">Wellness Workshops</a>
+    <a href="./contact.html"      class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="contact.html">Contact</a>
+
+    <a href="https://thesoulcarecounsellor.janeapp.com"
+       target="_blank" rel="noopener noreferrer"
+       class="mt-4 inline-flex items-center justify-center rounded-md bg-clay px-4 py-2 font-semibold tracking-wide text-charcoal hover:bg-clay/90">
+      Book a Free Consultation
+    </a>
+  </nav>
+</aside>
+
+  <main id="main" class="mx-auto max-w-7xl px-4 py-12 md:py-16">
+
+    <!-- Page hero -->
+<section class="relative overflow-hidden rounded-2xl bg-bark text-cream ring-1 ring-cream/15">
+  <!-- Decorative gradient blur -->
+  <div class="absolute -right-12 -top-12 h-56 w-56 rounded-full bg-gradient-to-br from-clay/40 to-cream/10 blur-2xl" aria-hidden="true"></div>
+
+  <div class="relative z-10 grid md:grid-cols-2 gap-10 items-center px-6 py-10 md:px-10 md:py-14">
+    <!-- LEFT: Text -->
+    <div>
+      <span class="inline-flex items-center gap-2 rounded-full bg-cream/10 px-3 py-1 ring-1 ring-cream/30 uppercase tracking-[.22em] text-[11px]">About Us</span>
+      <h1 class="mt-3 font-heading text-3xl md:text-4xl font-bold">Faith-centered therapy, culturally responsive care</h1>
+      <p class="mt-3 max-w-3xl text-cream/85">
+        We integrate Christian faith with evidence-based practice to support the whole person—mind, body, and spirit—within a culturally safe, welcoming space.
+      </p>
+    </div>
+
+    <!-- RIGHT: Cropped Image -->
+    <div class="relative flex justify-center overflow-hidden rounded-xl shadow-lg">
+      <img
+        src="assets\img\content\rs=w_984,h_657.webp"
+        alt="Counselling session"
+        class="w-full max-w-[600px] h-auto object-cover object-top"
+        style="object-position: 0 -20%;" 
+        loading="eager"
+        decoding="async"
+      />
+    </div>
+  </div>
+</section>
+
+
+
+
+
+   <!-- WELCOME + PILLARS (side by side layout) -->
+<section class="mt-14 md:mt-16">
+  <div class="grid gap-12 md:grid-cols-2 items-start">
+    
+    <!-- LEFT: Welcome -->
+    <div>
+      <header class="max-w-3xl">
+        <h2 class="font-heading text-2xl md:text-3xl font-bold">Welcome</h2>
+      </header>
+      <div class="mt-4 space-y-4 text-charcoal/85">
+        <p>Welcome to Soul Care Christian Counselling, a space dedicated to nurturing the mental and spiritual well-being of the Black community. With a profound understanding of the intricate relationship between faith and mental health in our community, our practice is rooted in compassion, empathy, and culturally sensitive care. As a team of devoted mental health professionals we are committed to providing holistic support that honours the diverse intersections of faith and mental wellness.</p>
+
+        <p>Our mission is clear: to integrate faith-based perspectives with evidence-based practices, offering tailored counselling and consulting services that resonate with the unique experiences of the Black community.</p>
+
+        <p>Our foundational pillars—spiritual care, body care, mindfulness, self-love, and community—serve as guiding principles in our therapeutic approach. We recognize the importance of addressing the whole person—mind, body, and spirit—while fostering an environment that embraces self-discovery, healing, and growth.</p>
+
+        <p>At Soul Care, we understand the significance of cultural context and create a safe, non-judgmental space where individuals can explore their faith, navigate mental health challenges, and find strength in community. We are here to walk alongside you on your journey towards inner peace, empowerment, and resilience.</p>
+
+        <p>Whether you seek guidance in reconciling faith and mental well-being, enhancing mindfulness practices, or fostering a deeper sense of self-love and acceptance, our team is dedicated to supporting you every step of the way.</p>
+
+        <p>Together, let's embark on a transformative journey towards holistic healing and spiritual fulfillment.</p>
+      </div>
+    </div>
+
+    <!-- RIGHT: Pillars -->
+    <div>
+      <h3 class="font-heading text-xl md:text-2xl font-semibold">Foundational pillars</h3>
+      <ul class="mt-6 grid gap-6 sm:grid-cols-2">
+        <li class="rounded-xl bg-sand p-5 ring-1 ring-charcoal/10">
+          <div class="flex items-start gap-3">
+            <svg class="h-5 w-5 text-bark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M6 9l6-6 6 6"/></svg>
+            <div>
+              <h4 class="font-semibold">Spiritual care</h4>
+              <p class="mt-1 text-sm text-charcoal/80">Faith is welcomed in the room and integrated at your pace.</p>
+            </div>
+          </div>
+        </li>
+        <li class="rounded-xl bg-sand p-5 ring-1 ring-charcoal/10">
+          <div class="flex items-start gap-3">
+            <svg class="h-5 w-5 text-bark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M7 12h10"/></svg>
+            <div>
+              <h4 class="font-semibold">Body care</h4>
+              <p class="mt-1 text-sm text-charcoal/80">Attending to how stress and trauma live in the body.</p>
+            </div>
+          </div>
+        </li>
+        <li class="rounded-xl bg-sand p-5 ring-1 ring-charcoal/10">
+          <div class="flex items-start gap-3">
+            <svg class="h-5 w-5 text-bark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M16 8l3-3M5 19l3-3"/></svg>
+            <div>
+              <h4 class="font-semibold">Mindfulness</h4>
+              <p class="mt-1 text-sm text-charcoal/80">Grounding practices that build presence and resilience.</p>
+            </div>
+          </div>
+        </li>
+        <li class="rounded-xl bg-sand p-5 ring-1 ring-charcoal/10">
+          <div class="flex items-start gap-3">
+            <svg class="h-5 w-5 text-bark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+            <div>
+              <h4 class="font-semibold">Self-love</h4>
+              <p class="mt-1 text-sm text-charcoal/80">Compassionate, practical steps toward wholeness.</p>
+            </div>
+          </div>
+        </li>
+        <li class="rounded-xl bg-sand p-5 ring-1 ring-charcoal/10">
+          <div class="flex items-start gap-3">
+            <svg class="h-5 w-5 text-bark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="7" r="3"/><circle cx="17" cy="7" r="3"/><path d="M2 21a7 7 0 0 1 14 0M8 21h10a6 6 0 0 0-6-6"/></svg>
+            <div>
+              <h4 class="font-semibold">Community</h4>
+              <p class="mt-1 text-sm text-charcoal/80">Healing happens in relationship—we honour that.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+
+    <!-- Director -->
+    <section id="jessica-robinson-grant" class="mt-16 md:mt-20">
+      <div class="grid items-center gap-8 md:grid-cols-12">
+        <div class="md:col-span-5">
+          <figure class="rounded-2xl bg-sand p-2 ring-1 ring-charcoal/10 shadow">
+            <img src="assets/img/team/rs=w_365,h_365,cg_true,m.webp" width="365" height="365" alt="Jessica Robinson-Grant portrait"
+                 class="block w-full h-auto rounded-xl object-cover aspect-square" loading="lazy" decoding="async">
+          </figure>
+        </div>
+        <div class="md:col-span-7">
+          <span class="inline-flex items-center gap-2 rounded-full bg-sand/70 px-3 py-1 ring-1 ring-charcoal/10 uppercase tracking-[.22em] text-[11px] text-charcoal/80">Clinical Director</span>
+          <h3 class="mt-3 font-heading text-2xl md:text-3xl font-bold">Jessica Robinson-Grant, MSW, RSW</h3>
+          <p class="mt-3 text-charcoal/85">
+            Jessica leads Soul Care with a commitment to holistic, culturally responsive practice rooted in Christian faith and community advocacy.
+          </p>
+          <blockquote class="mt-4 border-l-4 border-clay pl-4 text-charcoal/90">
+            <p class="font-heading italic">“It is the will of the Father that you are well.”</p>
+          </blockquote>
+          <div class="mt-5 flex flex-wrap gap-3">
+            <a href="https://thesoulcarecounsellor.janeapp.com" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center justify-center rounded-md bg-clay px-4 py-2 font-semibold text-charcoal hover:bg-clay/90 ring-1 ring-charcoal/10">
+              Book a Free Consultation
+            </a>
+            <a href="https://www.psychologytoday.com/" target="_blank" rel="noopener noreferrer nofollow" class="inline-block" aria-label="Verified by Psychology Today">
+              <img src="assets/img/icons/psychology-today.png" alt="Verified by Psychology Today" class="h-8 md:h-10 w-auto hover:opacity-90" width="320" height="110" loading="lazy" decoding="async">
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Meet the team (anchors for deep-links) -->
+    <section class="mt-16 md:mt-20">
+      <header class="max-w-2xl">
+        <h3 class="font-heading text-xl md:text-2xl font-semibold">Meet the team</h3>
+        <p class="mt-2 text-charcoal/80">Brief intros below. You can book directly via our online system.</p>
+      </header>
+
+      <div class="mt-8 grid gap-8 sm:grid-cols-2">
+        <article id="davene-harris" class="rounded-2xl bg-white p-6 ring-1 ring-charcoal/10">
+          <div class="flex items-center gap-4">
+            <img src="assets/img/team/rs=w_365,h_365,cg_true,m%20(1).webp" alt="Davene Harris" class="h-16 w-16 rounded-lg object-cover ring-1 ring-charcoal/10" width="64" height="64" loading="lazy" decoding="async">
+            <div>
+              <h4 class="font-heading font-semibold">Davene Harris</h4>
+              <p class="text-sm text-charcoal/80">MA — Associate Christian Therapist</p>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-charcoal/85">Warm, practical, and collaborative care with a focus on whole-person healing.</p>
+          <div class="mt-4">
+            <a href="https://thesoulcarecounsellor.janeapp.com" class="text-sm font-semibold underline underline-offset-4 decoration-charcoal/30 hover:decoration-charcoal">Book with Davene</a>
+          </div>
+        </article>
+
+        <article id="princeton-grant" class="rounded-2xl bg-white p-6 ring-1 ring-charcoal/10">
+          <div class="flex items-center gap-4">
+            <img src="assets/img/team/rs=w_365,h_365,cg_true.webp" alt="Princeton Grant" class="h-16 w-16 rounded-lg object-cover ring-1 ring-charcoal/10" width="64" height="64" loading="lazy" decoding="async">
+            <div>
+              <h4 class="font-heading font-semibold">Princeton Grant</h4>
+              <p class="text-sm text-charcoal/80">ECE — Coach</p>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-charcoal/85">Coaching to support practical growth, clarity, and next steps.</p>
+          <div class="mt-4">
+            <a href="https://thesoulcarecounsellor.janeapp.com" class="text-sm font-semibold underline underline-offset-4 decoration-charcoal/30 hover:decoration-charcoal">Book with Princeton</a>
+          </div>
+        </article>
+
+        <article id="natalie-willis" class="rounded-2xl bg-white p-6 ring-1 ring-charcoal/10">
+          <div class="flex items-center gap-4">
+            <img src="assets/img/team/rs=w_365,h_365,cg_true,m%20(2).webp" alt="Natalie Willis" class="h-16 w-16 rounded-lg object-cover ring-1 ring-charcoal/10" width="64" height="64" loading="lazy" decoding="async">
+            <div>
+              <h4 class="font-heading font-semibold">Natalie Willis</h4>
+              <p class="text-sm text-charcoal/80">RPN, BA, MDiv — Associate Christian Therapist</p>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-charcoal/85">Compassionate support informed by faith and evidence-based modalities.</p>
+          <div class="mt-4">
+            <a href="https://thesoulcarecounsellor.janeapp.com" class="text-sm font-semibold underline underline-offset-4 decoration-charcoal/30 hover:decoration-charcoal">Book with Natalie</a>
+          </div>
+        </article>
+
+        <article id="nigel-bucknor" class="rounded-2xl bg-white p-6 ring-1 ring-charcoal/10">
+          <div class="flex items-center gap-4">
+            <img src="assets/img/team/rs=w_365,h_365,cg_true,m%20(3).webp" alt="Nigel Bucknor" class="h-16 w-16 rounded-lg object-cover ring-1 ring-charcoal/10" width="64" height="64" loading="lazy" decoding="async">
+            <div>
+              <h4 class="font-heading font-semibold">Nigel Bucknor</h4>
+              <p class="text-sm text-charcoal/80">BA, MA, CCC — Associate Christian Therapist</p>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-charcoal/85">Trauma-informed, collaborative work with teens, adults, and couples.</p>
+          <div class="mt-4">
+            <a href="https://thesoulcarecounsellor.janeapp.com" class="text-sm font-semibold underline underline-offset-4 decoration-charcoal/30 hover:decoration-charcoal">Book with Nigel</a>
+          </div>
+        </article>
+
+        <article id="khadian-gooden" class="rounded-2xl bg-white p-6 ring-1 ring-charcoal/10">
+          <div class="flex items-center gap-4">
+            <img src="assets/img/team/rs=w_365,h_365,cg_true,m%20(4).webp" alt="Khadian Gooden" class="h-16 w-16 rounded-lg object-cover ring-1 ring-charcoal/10" width="64" height="64" loading="lazy" decoding="async">
+            <div>
+              <h4 class="font-heading font-semibold">Khadian Gooden</h4>
+              <p class="text-sm text-charcoal/80">BA, MDiv, RP, CCC — Associate Christian Therapist</p>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-charcoal/85">Client-centred care integrating spirituality and clinical best practice.</p>
+          <div class="mt-4">
+            <a href="https://thesoulcarecounsellor.janeapp.com" class="text-sm font-semibold underline underline-offset-4 decoration-charcoal/30 hover:decoration-charcoal">Book with Khadian</a>
+          </div>
+        </article>
+
+        <article id="josh-dale" class="rounded-2xl bg-white p-6 ring-1 ring-charcoal/10">
+          <div class="flex items-center gap-4">
+            <img src="assets/img/team/rs=w_365,h_365,cg_true,m%20(5).webp" alt="Josh Dale" class="h-16 w-16 rounded-lg object-cover ring-1 ring-charcoal/10" width="64" height="64" loading="lazy" decoding="async">
+            <div>
+              <h4 class="font-heading font-semibold">Josh Dale</h4>
+              <p class="text-sm text-charcoal/80">MDiv, RP, CCTS-I — Associate Christian Therapist</p>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-charcoal/85">Grounded, supportive therapy with a calm, relational style.</p>
+          <div class="mt-4">
+            <a href="https://thesoulcarecounsellor.janeapp.com" class="text-sm font-semibold underline underline-offset-4 decoration-charcoal/30 hover:decoration-charcoal">Book with Josh</a>
+          </div>
+        </article>
+
+        <article id="anita-kangabe" class="rounded-2xl bg-white p-6 ring-1 ring-charcoal/10">
+          <div class="flex items-center gap-4">
+            <img src="assets/img/team/rs=w_365,h_365,cg_true,m%20(6).webp" alt="Anita Kangabe" class="h-16 w-16 rounded-lg object-cover ring-1 ring-charcoal/10" width="64" height="64" loading="lazy" decoding="async">
+            <div>
+              <h4 class="font-heading font-semibold">Anita Kangabe</h4>
+              <p class="text-sm text-charcoal/80">MSW, RSW — Associate Christian Therapist · Bilingual (EN/FR)</p>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-charcoal/85">Compassionate, bilingual care for individuals and families.</p>
+          <div class="mt-4">
+            <a href="https://thesoulcarecounsellor.janeapp.com" class="text-sm font-semibold underline underline-offset-4 decoration-charcoal/30 hover:decoration-charcoal">Book with Anita</a>
+          </div>
+        </article>
+
+        <article id="baraka-boafo" class="rounded-2xl bg-white p-6 ring-1 ring-charcoal/10">
+          <div class="flex items-center gap-4">
+            <img src="assets/img/team/rs=w_365,h_365,cg_true,m%20(7).webp" alt="Baraka Boafo" class="h-16 w-16 rounded-lg object-cover ring-1 ring-charcoal/10" width="64" height="64" loading="lazy" decoding="async">
+            <div>
+              <h4 class="font-heading font-semibold">Baraka Boafo</h4>
+              <p class="text-sm text-charcoal/80">BA, RP (Qualifying) — Associate Christian Therapist</p>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-charcoal/85">Support that balances clinical skill and spiritual care.</p>
+          <div class="mt-4">
+            <a href="https://thesoulcarecounsellor.janeapp.com" class="text-sm font-semibold underline underline-offset-4 decoration-charcoal/30 hover:decoration-charcoal">Book with Baraka</a>
+          </div>
+        </article>
+
+        <article id="oluseye-ashiru" class="rounded-2xl bg-white p-6 ring-1 ring-charcoal/10">
+          <div class="flex items-center gap-4">
+            <img src="assets/img/team/rs=w_365,h_365,cg_true,m%20(8).webp" alt="Oluseye Ashiru" class="h-16 w-16 rounded-lg object-cover ring-1 ring-charcoal/10" width="64" height="64" loading="lazy" decoding="async">
+            <div>
+              <h4 class="font-heading font-semibold">Oluseye Ashiru</h4>
+              <p class="text-sm text-charcoal/80">BSc, MSc — Associate Christian Therapist</p>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-charcoal/85">Family-centred work with an encouraging, strengths-based lens.</p>
+          <div class="mt-4">
+            <a href="https://thesoulcarecounsellor.janeapp.com" class="text-sm font-semibold underline underline-offset-4 decoration-charcoal/30 hover:decoration-charcoal">Book with Oluseye</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="mt-16 md:mt-20 rounded-2xl bg-sand p-6 md:p-8 ring-1 ring-charcoal/10">
+      <div class="grid gap-6 md:grid-cols-3 md:items-center">
+        <div class="md:col-span-2">
+          <h3 class="font-heading text-xl md:text-2xl font-semibold">Let’s take the next step together</h3>
+          <p class="mt-2 text-charcoal/80">Free 15-minute consultation to see if we’re a fit.</p>
+        </div>
+        <div class="md:justify-self-end">
+          <a href="https://thesoulcarecounsellor.janeapp.com" target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center justify-center rounded-md bg-clay px-5 py-2.5 font-semibold text-charcoal hover:bg-clay/90 ring-1 ring-charcoal/10">
+            Book a Free Consultation
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer include -->
+  <div data-include="partials/footer.html"></div>
+
+  <!-- Include loader + header behavior -->
+   <!-- ===== Scripts: same behavior style as index ===== -->
+  <script>
+    // Include partials (footer)
+    async function includePartials() {
+      const nodes = document.querySelectorAll("[data-include]");
+      const isDev = ['localhost','127.0.0.1'].includes(location.hostname);
+      await Promise.all([...nodes].map(async el => {
+        const url = el.getAttribute("data-include");
+        const bust = isDev ? `?v=${Date.now()}` : "";
+        const res = await fetch(url + bust, { cache: isDev ? "no-store" : "default" });
+        el.outerHTML = await res.text();
+      }));
+    }
+
+    // Highlight current page link in both desktop + drawer nav
+    function setActiveNav() {
+      const file = location.pathname.split('/').pop() || 'index.html';
+      document.querySelectorAll('a[data-nav]').forEach(a => {
+        if (a.getAttribute('data-nav') === file) {
+          a.setAttribute('aria-current', 'page');
+          a.classList.add('text-cream','font-semibold','underline','underline-offset-8','decoration-cream');
+        }
+      });
+    }
+
+    // Header shrink on scroll
+    function initHeaderScroll() {
+      const header = document.querySelector('[data-site-header]');
+      if (!header) return;
+      let ticking = false;
+      function onScroll() {
+        const y = window.scrollY;
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            header.classList.toggle("backdrop-blur", y > 4);
+            header.classList.toggle("py-2", y > 8);
+            header.classList.toggle("py-3", y <= 8);
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }
+      onScroll();
+      addEventListener('scroll', onScroll, { passive: true });
+    }
+
+    // Simple hamburger (IDs: menuOpen, menuClose, menuBackdrop, menuPanel)
+    function initMenu() {
+      const openBtn   = document.getElementById('menuOpen');
+      const closeBtn  = document.getElementById('menuClose');
+      const backdrop  = document.getElementById('menuBackdrop');
+      const panel     = document.getElementById('menuPanel');
+      if (!openBtn || !closeBtn || !backdrop || !panel) return;
+
+      const focusable = () => panel.querySelector('a,button,[href],[tabindex]:not([tabindex="-1"])');
+
+      const open = () => {
+        panel.classList.remove('hidden');
+        backdrop.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+        openBtn.setAttribute('aria-expanded','true');
+        panel.setAttribute('aria-hidden','false');
+        const first = focusable();
+        (first || panel).focus({ preventScroll:true });
+      };
+
+      const close = () => {
+        panel.classList.add('hidden');
+        backdrop.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+        openBtn.setAttribute('aria-expanded','false');
+        panel.setAttribute('aria-hidden','true');
+        openBtn.focus();
+      };
+
+      openBtn.addEventListener('click', open);
+      closeBtn.addEventListener('click', close);
+      backdrop.addEventListener('click', close);
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') close();
+      });
+
+      // close when a nav link inside panel is clicked
+      panel.addEventListener('click', (e) => {
+        const t = e.target;
+        if (t.matches('a[href]')) close();
+      });
+    }
+
+    (async function boot() {
+      await includePartials();
+      setActiveNav();
+      initHeaderScroll();
+      initMenu();
+      const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
+    })();
+  </script>
+</body>
+</html>

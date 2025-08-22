@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Soul Care — Natalie Willis</title>
+  <meta name="description" content="Bio for Natalie Willis — Therapist & Registered Nurse at Soul Care Christian Counselling." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind via CDN with your palette -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        colors: {
+          transparent: 'transparent',
+          current: 'currentColor',
+          white: '#ffffff',
+          black: '#000000',
+          cream:    '#F8F5EC',
+          sand:     '#E6DDC6',
+          clay:     '#C49A6C',
+          bark:     '#6E4B3A',
+          charcoal: '#23201B'
+        },
+        extend: {
+          fontFamily: {
+            heading: ['Poppins','ui-sans-serif','system-ui','sans-serif'],
+            body: ['Inter','ui-sans-serif','system-ui','sans-serif']
+          }
+        }
+      },
+      safelist: [
+        'hidden','backdrop-blur','py-2','py-3','overflow-hidden',
+        'translate-x-full','translate-x-0','opacity-0',
+        'text-cream','underline','underline-offset-8','decoration-cream','font-semibold'
+      ]
+    }
+  </script>
+  <style> html{scroll-behavior:smooth} </style>
+</head>
+
+<body class="bg-cream text-charcoal font-body antialiased">
+
+  <!-- ===== Header (same rules) ===== -->
+  <header data-site-header class="sticky top-0 z-50 bg-bark/90 text-cream supports-[backdrop-filter]:bg-bark/70 backdrop-blur">
+    <div class="mx-auto max-w-7xl px-4 py-3 grid grid-cols-[auto_1fr_auto] items-center gap-4">
+      <!-- LEFT: Brand -->
+      <a href="./index.html" class="flex items-center gap-2">
+        <span class="inline-block h-9 w-9 rounded-md bg-cream/10 ring-1 ring-cream/20"></span>
+        <span class="text-sm sm:text-base font-semibold tracking-wide">Soul Care Counselling</span>
+      </a>
+
+      <!-- CENTER: Desktop nav -->
+      <nav class="hidden lg:flex items-center justify-center gap-6" aria-label="Primary">
+        <a href="./index.html"        class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="index.html">Home</a>
+        <a href="./about.html"        class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="about.html">About Us</a>
+        <a href="./core-values.html"  class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="core-values.html">Core Values</a>
+        <a href="./services.html"     class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="services.html">Services</a>
+        <a href="./areas.html"        class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="areas.html">Areas of Focus</a>
+      </nav>
+
+      <!-- RIGHT: Hamburger -->
+      <button id="menuOpen"
+        class="justify-self-end shrink-0 inline-flex items-center justify-center h-10 w-10 rounded-md ring-1 ring-cream/20 hover:bg-cream/10"
+        aria-controls="menuPanel" aria-expanded="false" aria-label="Open menu">
+        <svg class="h-5 w-5 text-cream" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Backdrop -->
+  <div id="menuBackdrop" class="fixed inset-0 bg-charcoal/50 hidden z-[59]"></div>
+
+  <!-- Drawer -->
+  <aside id="menuPanel"
+    class="fixed right-0 top-0 z-[60] h-screen w-[86%] max-w-sm bg-bark text-cream shadow-xl border-l border-cream/15 hidden overflow-y-auto"
+    aria-hidden="true" tabindex="-1">
+
+    <div class="sticky top-0 bg-bark/95 backdrop-blur px-4 py-3 border-b border-cream/15 flex items-center justify-between">
+      <span class="text-sm font-semibold tracking-wide uppercase">Menu</span>
+      <button id="menuClose" class="inline-flex items-center justify-center rounded-md p-2 ring-1 ring-cream/20 hover:bg-cream/10" aria-label="Close menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-cream" aria-hidden="true">
+          <path d="M18 6 6 18M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="px-4 py-4 text-sm" aria-label="All pages">
+      <a href="./index.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="index.html">Home</a>
+      <a href="./about.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="about.html">About Us</a>
+      <a href="./core-values.html"  class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="core-values.html">Core Values</a>
+      <a href="./services.html"     class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="services.html">Services</a>
+      <a href="./areas.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="areas.html">Areas of Focus</a>
+
+      <hr class="my-3 border-cream/15">
+
+      <a href="./faq.html"          class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="faq.html">FAQs</a>
+      <a href="./notes.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="notes.html">Notes from Soul Care</a>
+      <a href="./workshops.html"    class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="workshops.html">Wellness Workshops</a>
+      <a href="./contact.html"      class="block py-2 uppercase tracking-[.15em] text-cream/90 hover:text-cream" data-nav="contact.html">Contact</a>
+
+      <a href="https://thesoulcarecounsellor.janeapp.com"
+         target="_blank" rel="noopener noreferrer"
+         class="mt-4 inline-flex items-center justify-center rounded-md bg-clay px-4 py-2 font-semibold tracking-wide text-charcoal hover:bg-clay/90">
+        Book a Free Consultation
+      </a>
+    </nav>
+  </aside>
+
+  <main id="main" class="mx-auto max-w-7xl px-4 py-12 md:py-16">
+
+    <!-- Hero (same pattern as other bios) -->
+    <section class="relative overflow-hidden rounded-2xl bg-bark text-cream ring-1 ring-cream/15">
+      <div class="relative z-10 grid md:grid-cols-12 gap-8 items-center px-6 py-10 md:px-10 md:py-14">
+        <!-- LEFT: Text -->
+        <div class="md:col-span-7">
+          <span class="inline-flex items-center gap-2 rounded-full bg-cream/10 px-3 py-1 ring-1 ring-cream/30 uppercase tracking-[.22em] text-[11px]">Clinician Bio</span>
+          <h1 class="mt-3 font-heading text-3xl md:text-4xl font-bold">Natalie Willis</h1>
+          <p class="mt-2 text-cream/85">RPN, BA, MDiv — Associate Christian Therapist</p>
+        </div>
+
+        <!-- RIGHT: Portrait -->
+        <div class="md:col-span-5">
+          <figure class="rounded-2xl bg-sand p-2 ring-1 ring-charcoal/10 shadow">
+            <img src="assets/img/team/rs=w_365,h_365,cg_true,m%20(2).webp"
+                 width="365" height="365" alt="Portrait of Natalie Willis"
+                 class="block w-full h-auto rounded-xl object-cover aspect-square"
+                 loading="eager" decoding="async">
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bio content -->
+    <section class="mt-14 md:mt-16 grid gap-10 md:grid-cols-12 md:items-start">
+      <!-- LEFT: Main narrative -->
+      <article class="md:col-span-7 space-y-5 text-charcoal/90">
+        <h2 class="font-heading text-xl md:text-2xl font-semibold">About Natalie</h2>
+
+        <p>When “life,” happens, where can we go? Who can we turn to for help? The challenges that accompany this journey are inevitable and real, but journeying alone does not have to be. Whether you are experiencing life transitions, burn out, anxiety, depression, trauma, self-esteem issues, unhealthy thought patterns or relationship strains, you are welcomed into a validating, strengths based and non-judgmental/safe space.</p>
+
+        <p>My name is Natalie Willis, and I am a Therapist and Registered Nurse. I hold a Masters in Clinical Counselling (MDiv.) from Tyndale University & Seminary, and serve as a Psychotherapist.</p>
+
+        <p>I am passionate about walking alongside, empowering and equipping individuals through sound counsel and practical steps, on how to navigate and overcome life's difficulties.  My specialties involve therapy from a strengths’ based, trauma lens, and Cognitive-Behavioural approach (to name a few), that include, but are not limited to, Post-traumatic stress growth, anxiety and depression support, identity development and more.</p>
+
+        <p>My hope is that in our time together, true and lasting growth will occur, and as we partner, seeds will be planted and you will feel empowered to reclaim your life back, piece at a time.</p>
+      </article>
+
+      <!-- RIGHT: Quick facts / booking -->
+      <aside class="md:col-span-5 space-y-6">
+        <div class="rounded-2xl bg-white p-5 ring-1 ring-charcoal/10">
+          <h3 class="font-heading font-semibold">Areas of Focus</h3>
+          <ul class="mt-3 grid grid-cols-1 gap-2 text-sm text-charcoal/85">
+            <li>Life transitions &amp; burnout</li>
+            <li>Anxiety &amp; depression support</li>
+            <li>Trauma-informed care</li>
+            <li>Identity development</li>
+            <li>Cognitive-Behavioural strategies</li>
+            <li>Strengths-based approach</li>
+          </ul>
+        </div>
+
+        <div class="rounded-2xl bg-sand p-5 ring-1 ring-charcoal/10">
+          <h3 class="font-heading font-semibold">Book with Natalie</h3>
+          <p class="mt-2 text-sm text-charcoal/85">Free 15-minute consultation to explore fit and next steps.</p>
+          <a href="https://thesoulcarecounsellor.janeapp.com" target="_blank" rel="noopener noreferrer"
+             class="mt-3 inline-flex items-center justify-center rounded-md bg-bark px-4 py-2 font-semibold text-cream hover:bg-bark/90 ring-1 ring-charcoal/10">
+            Book a Free Consultation
+          </a>
+        </div>
+      </aside>
+    </section>
+
+    <!-- CTA -->
+    <section class="mt-16 md:mt-20 rounded-2xl bg-sand p-6 md:p-8 ring-1 ring-charcoal/10">
+      <div class="grid gap-6 md:grid-cols-3 md:items-center">
+        <div class="md:col-span-2">
+          <h3 class="font-heading text-xl md:text-2xl font-semibold">Looking for another clinician?</h3>
+          <p class="mt-2 text-charcoal/80">Browse our team and book with the counsellor that fits your needs.</p>
+        </div>
+        <div class="md:justify-self-end">
+          <a href="./about.html#meet-the-team"
+             class="inline-flex items-center justify-center rounded-md bg-clay px-5 py-2.5 font-semibold text-charcoal hover:bg-clay/90 ring-1 ring-charcoal/10">
+            Meet the Team
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer include -->
+  <div data-include="partials/footer.html"></div>
+
+  <!-- ===== Scripts (same loader + header behavior) ===== -->
+  <script>
+  async function includePartials() {
+    const nodes = document.querySelectorAll("[data-include]");
+    const isDev = ['localhost','127.0.0.1'].includes(location.hostname);
+    await Promise.all([...nodes].map(async el => {
+      const url  = el.getAttribute("data-include");
+      const bust = isDev ? `?v=${Date.now()}` : "";
+      const res  = await fetch(url + bust, { cache: isDev ? "no-store" : "default" });
+      el.outerHTML = await res.text();
+    }));
+  }
+
+  function setActiveNav() {
+    const file = location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('a[data-nav]').forEach(a => {
+      if (a.getAttribute('data-nav') === file) {
+        a.setAttribute('aria-current', 'page');
+        a.classList.add('text-cream','font-semibold','underline','underline-offset-8','decoration-cream');
+      }
+    });
+  }
+
+  function wireSimpleDrawer() {
+    const openBtn = document.getElementById('menuOpen');
+    const closeBtn= document.getElementById('menuClose');
+    const panel   = document.getElementById('menuPanel');
+    const backdrop= document.getElementById('menuBackdrop');
+    if (!(openBtn && closeBtn && panel && backdrop)) return;
+
+    const open = () => {
+      panel.classList.remove('hidden');
+      backdrop.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+      openBtn.setAttribute('aria-expanded','true');
+      panel.setAttribute('aria-hidden','false');
+      panel.focus({preventScroll:true});
+    };
+    const close = () => {
+      panel.classList.add('hidden');
+      backdrop.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+      openBtn.setAttribute('aria-expanded','false');
+      panel.setAttribute('aria-hidden','true');
+      openBtn.focus();
+    };
+
+    openBtn.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
+    backdrop.addEventListener('click', close);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') close();
+    });
+  }
+
+  (async function boot(){
+    await includePartials();
+    wireSimpleDrawer();
+    setActiveNav();
+    const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
+  })();
+  </script>
+</body>
+</html>

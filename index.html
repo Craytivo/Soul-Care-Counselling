@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Soul Care — Home</title>
+  <meta name="description" content="Faith-centered, culturally sensitive therapy. Virtual across Canada." />
+
+  <!-- Fonts (optional) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Earth palette (ONLY these colors are available)
+    tailwind.config = {
+      theme: {
+        colors: {
+          transparent: 'transparent',
+          current: 'currentColor',
+          white: '#ffffff',
+          black: '#000000',
+          cream:    '#F8F5EC',
+          sand:     '#E6DDC6',
+          clay:     '#C49A6C',
+          bark:     '#6E4B3A',
+          charcoal: '#23201B'
+        },
+        extend: {
+          fontFamily: {
+            heading: ['Poppins','ui-sans-serif','system-ui','sans-serif'],
+            body: ['Inter','ui-sans-serif','system-ui','sans-serif']
+          }
+        }
+      },
+      safelist: [
+        'hidden','backdrop-blur','py-2','py-3','overflow-hidden',
+        'translate-x-full','translate-x-0','opacity-0',
+        'text-cream','underline','underline-offset-8','decoration-cream','font-semibold'
+      ]
+    }
+  </script>
+
+  <style>html{scroll-behavior:smooth}</style>
+  <style>
+  /* Make every team CTA exactly two text lines tall */
+  #team .team-cta { min-height: 3.5rem; } /* ≈ 2 lines of text-sm + padding */
+  #team .team-cta .cta-label {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;   /* clamp to 2 lines */
+    overflow: hidden;
+  }
+</style>
+
+</head>
+<body class="bg-cream text-charcoal font-body antialiased">
+
+  <header data-site-header class="sticky top-0 z-50 bg-bark/90 text-cream supports-[backdrop-filter]:bg-bark/70 backdrop-blur">
+  <div class="mx-auto max-w-7xl px-4 py-3 grid grid-cols-[auto_1fr_auto] items-center gap-4">
+    <!-- LEFT: Brand -->
+    <a href="./index.html" class="flex items-center gap-2">
+      <span class="inline-block h-9 w-9 rounded-md bg-cream/10 ring-1 ring-cream/20"></span>
+      <span class="text-sm sm:text-base font-semibold tracking-wide">Soul Care Counselling</span>
+    </a>
+
+    <!-- CENTER: Desktop nav (5 items) -->
+    <nav class="hidden lg:flex items-center justify-center gap-6" aria-label="Primary">
+      <a href="./index.html"        class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="index.html">Home</a>
+      <a href="./about.html"        class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="about.html">About Us</a>
+      <a href="./core-values.html"  class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="core-values.html">Core Values</a>
+      <a href="./services.html"     class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="services.html">Services</a>
+      <a href="./areas.html"        class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="areas.html">Areas of Focus</a>
+    </nav>
+
+    <!-- RIGHT: Hamburger (fixed size) -->
+    <button id="menuOpen"
+      class="justify-self-end shrink-0 inline-flex items-center justify-center h-10 w-10 rounded-md ring-1 ring-cream/20 hover:bg-cream/10"
+      aria-controls="menuPanel" aria-expanded="false" aria-label="Open menu">
+      <svg class="h-5 w-5 text-cream" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- Backdrop -->
+<div id="menuBackdrop" class="fixed inset-0 bg-charcoal/50 hidden z-[59]"></div>
+
+<!-- SIMPLE PANEL: full height, panel scrolls -->
+<aside id="menuPanel"
+  class="fixed right-0 top-0 z-[60] h-screen w-[86%] max-w-sm bg-bark text-cream shadow-xl border-l border-cream/15 hidden overflow-y-auto"
+  aria-hidden="true" tabindex="-1">
+
+  <!-- Sticky header inside panel -->
+  <div class="sticky top-0 bg-bark/95 backdrop-blur px-4 py-3 border-b border-cream/15 flex items-center justify-between">
+    <span class="text-sm font-semibold tracking-wide uppercase">Menu</span>
+    <button id="menuClose" class="inline-flex items-center justify-center rounded-md p-2 ring-1 ring-cream/20 hover:bg-cream/10" aria-label="Close menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-cream" aria-hidden="true">
+        <path d="M18 6 6 18M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- FULL static list (each link = block so it stacks) -->
+  <nav class="px-4 py-4 text-sm" aria-label="All pages">
+    <!-- desktop items duplicated -->
+    <a href="./index.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="index.html">Home</a>
+    <a href="./about.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="about.html">About Us</a>
+    <a href="./core-values.html"  class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="core-values.html">Core Values</a>
+    <a href="./services.html"     class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="services.html">Services</a>
+    <a href="./areas.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="areas.html">Areas of Focus</a>
+
+    <hr class="my-3 border-cream/15">
+
+    <!-- extras -->
+    <a href="./faq.html"          class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="faq.html">FAQs</a>
+    <a href="./notes.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="notes.html">Notes from Soul Care</a>
+    <a href="./workshops.html"    class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="workshops.html">Wellness Workshops</a>
+    <a href="./contact.html"      class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="contact.html">Contact</a>
+
+    <a href="https://thesoulcarecounsellor.janeapp.com"
+       target="_blank" rel="noopener noreferrer"
+       class="mt-4 inline-flex items-center justify-center rounded-md bg-clay px-4 py-2 font-semibold tracking-wide text-charcoal hover:bg-clay/90">
+      Book a Free Consultation
+    </a>
+  </nav>
+</aside>
+
+  <main id="main" class="mx-auto max-w-7xl px-4 py-12 min-h-[60vh]">
+
+    <!-- HERO (no-crop: image is always fully visible) -->
+    <section class="relative bg-cream">
+      <div class="mx-auto max-w-7xl px-4 py-12 md:py-16">
+        <div class="grid items-center gap-8 md:grid-cols-12">
+          <!-- Text column (premium) -->
+          <div class="md:col-span-4">
+            <span class="inline-flex items-center gap-2 rounded-full bg-sand/70 px-3 py-1 ring-1 ring-charcoal/10 uppercase tracking-[.22em] text-[11px] text-charcoal/80">
+              Soul Care Counselling
+            </span>
+
+            <h1 class="mt-3 font-heading text-3xl md:text-4xl font-bold text-charcoal">
+              Faith-centered therapy,
+              <span class="bg-gradient-to-r from-clay to-bark bg-clip-text text-transparent">culturally sensitive care</span>
+            </h1>
+
+            <p class="mt-4 text-charcoal/80">
+              Virtual counselling across Canada with a warm, practical approach rooted in evidence-based care.
+            </p>
+
+            <div class="mt-6 flex flex-wrap gap-3">
+              <a href="https://thesoulcarecounsellor.janeapp.com" target="_blank" rel="noopener noreferrer"
+                 class="inline-flex items-center justify-center rounded-lg bg-clay px-5 py-2.5 font-semibold text-charcoal shadow-sm ring-1 ring-charcoal/10 transition hover:bg-clay/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cream/60">
+                Book a Free Consultation
+              </a>
+              <a href="./services.html"
+                 class="inline-flex items-center justify-center rounded-lg bg-sand px-5 py-2.5 font-semibold text-charcoal shadow-sm ring-1 ring-charcoal/10 transition hover:bg-sand/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cream/60">
+                View Services
+              </a>
+            </div>
+
+            <ul class="mt-6 space-y-2 text-charcoal/80">
+              <li class="flex items-start gap-2">
+                <svg class="mt-[2px] h-4 w-4 text-bark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M12 3l7 4v5a9 9 0 0 1-7 8 9 9 0 0 1-7-8V7l7-4z"/><path d="M9 12l2 2 4-4"/>
+                </svg>
+                <span>Secure telehealth platform</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="mt-[2px] h-4 w-4 text-bark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <circle cx="12" cy="12" r="9"/><path d="M2.5 12h19M12 2.5c3 3 3 16 0 19M12 2.5c-3 3-3 16 0 19"/>
+                </svg>
+                <span>Virtual care across Canada</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="mt-[2px] h-4 w-4 text-bark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M5 19c5-1 10-6 12-12 1.5 2 2 5 1 7-1 3-4 5-7 6-2 .5-4 .4-6-1z"/><path d="M5 19c0-3 1-6 3-8s5-3 8-3"/>
+                </svg>
+                <span>Culturally responsive &amp; evidence-based</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Image column (premium, NO CROPPING, with quote) -->
+          <div class="md:col-span-8">
+            <figure class="relative">
+              <div aria-hidden="true" class="pointer-events-none absolute -right-6 -top-6 h-40 w-40 rounded-full bg-gradient-to-br from-clay/30 to-bark/20 blur-2xl"></div>
+
+              <div class="rounded-3xl bg-sand p-2 ring-1 ring-charcoal/10 shadow-xl">
+                <div class="rounded-[18px] bg-cream ring-1 ring-charcoal/10">
+                  <img
+                    src="assets/img/hero/hero=w_984,h_492.webp"
+                    width="984" height="492"
+                    alt="Calm, earthy therapy scene conveying warmth and care"
+                    class="block w-full h-auto object-contain rounded-[14px]"
+                    style="aspect-ratio: 984 / 492;"
+                    decoding="async" fetchpriority="high">
+                </div>
+              </div>
+
+              <figcaption class="mt-4">
+                <blockquote class="relative pl-4 border-l-4 border-clay text-charcoal/90">
+                  <p class="font-heading text-lg md:text-xl italic leading-snug">
+                    “It is the will of the Father that you are well”
+                  </p>
+                </blockquote>
+                <div class="mt-2 text-sm text-charcoal/70">— Jessica Robinson-Grant</div>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<!-- TEAM -->
+<section id="team" class="mt-16 md:mt-24">
+  <div class="mx-auto max-w-7xl">
+    <header class="max-w-2xl">
+      <span class="inline-flex items-center gap-2 rounded-full bg-sand/70 px-3 py-1 ring-1 ring-charcoal/10 uppercase tracking-[.22em] text-[11px] text-charcoal/80">Our Team</span>
+      <h2 class="mt-3 font-heading text-2xl md:text-3xl font-bold text-charcoal">Warm, culturally responsive clinicians</h2>
+      <p class="mt-3 text-charcoal/80">Faith-informed and evidence-based care. Meet the people who will support your healing.</p>
+    </header>
+
+    <!-- Toolbar -->
+    <div class="mt-6 flex flex-wrap items-center gap-3">
+      <label for="teamSearch" class="sr-only">Search team</label>
+      <input id="teamSearch" type="search" placeholder="Search by name, role, credential…"
+             class="w-full sm:w-80 rounded-md border border-charcoal/20 bg-white px-3 py-2 text-sm outline-none ring-0 focus:border-clay"
+             autocomplete="off" />
+      <div class="flex flex-wrap gap-2" aria-label="Filter tags">
+        <button class="team-tag px-3 py-1 rounded-full text-xs font-semibold ring-1 ring-charcoal/15 bg-white hover:bg-sand" data-filter="therapist" aria-pressed="false">Therapists</button>
+        <button class="team-tag px-3 py-1 rounded-full text-xs font-semibold ring-1 ring-charcoal/15 bg-white hover:bg-sand" data-filter="coach" aria-pressed="false">Coach</button>
+        <button class="team-tag px-3 py-1 rounded-full text-xs font-semibold ring-1 ring-charcoal/15 bg-white hover:bg-sand" data-filter="bilingual" aria-pressed="false">Bilingual</button>
+        <button class="team-tag px-3 py-1 rounded-full text-xs font-semibold ring-1 ring-charcoal/15 bg-white hover:bg-sand" data-filter="director" aria-pressed="false">Director</button>
+        <button class="team-tag px-3 py-1 rounded-full text-xs font-semibold ring-1 ring-charcoal/15 bg-white hover:bg-sand" data-filter="qualifying" aria-pressed="false">RP (Qualifying)</button>
+        <button class="team-tag px-3 py-1 rounded-full text-xs font-semibold ring-1 ring-charcoal/15 bg-white hover:bg-sand" data-filter="all" aria-pressed="true">All</button>
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <ul role="list" class="mt-8 grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-stretch">
+
+      <!-- 1 Jessica -->
+      <li class="team-card group flex flex-col rounded-2xl bg-sand p-5 md:p-6 ring-1 ring-charcoal/10 shadow-sm hover:-translate-y-0.5 hover:shadow-lg transition"
+          data-tags="therapist director msw rsw">
+        <figure class="relative overflow-hidden rounded-xl ring-1 ring-charcoal/10">
+          <img src="assets/img/team/rs=w_365,h_365,cg_true,m.webp" width="365" height="365"
+               alt="Portrait of Jessica Robinson-Grant"
+               loading="eager" decoding="async"
+               sizes="(min-width:1024px) 260px, (min-width:640px) 45vw, 90vw"
+               class="block w-full h-auto object-cover aspect-square">
+          <span aria-hidden="true" class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-10 transition bg-gradient-to-t from-bark to-transparent"></span>
+        </figure>
+        <div class="mt-5 flex-1 flex flex-col">
+          <h3 data-name class="font-heading text-lg font-semibold text-charcoal">Jessica Robinson-Grant</h3>
+          <p class="text-sm text-charcoal/80">MSW, RSW</p>
+          <p class="text-xs uppercase tracking-wide text-charcoal/70">Clinical Director &amp; Practice Owner</p>
+          <div class="mt-auto pt-4 border-t border-charcoal/10">
+            <a href="./Jessica.html" class="team-cta inline-flex justify-between items-start w-full gap-2 rounded-lg bg-bark px-4 py-2 text-sm font-semibold text-cream hover:bg-bark/90" data-prefetch>
+              <span class="cta-label">Learn more</span>
+              <svg class="h-4 w-4 mt-[2px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <!-- 2 Davene -->
+      <li class="team-card group flex flex-col rounded-2xl bg-sand p-5 md:p-6 ring-1 ring-charcoal/10 shadow-sm hover:-translate-y-0.5 hover:shadow-lg transition"
+          data-tags="therapist ma">
+        <figure class="relative overflow-hidden rounded-xl ring-1 ring-charcoal/10">
+          <img src="assets/img/team/rs=w_365,h_365,cg_true,m%20(1).webp" width="365" height="365"
+               alt="Portrait of Davene Harris"
+               loading="eager" decoding="async"
+               sizes="(min-width:1024px) 260px, (min-width:640px) 45vw, 90vw"
+               class="block w-full h-auto object-cover aspect-square">
+          <span aria-hidden="true" class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-10 transition bg-gradient-to-t from-bark to-transparent"></span>
+        </figure>
+        <div class="mt-5 flex-1 flex flex-col">
+          <h3 data-name class="font-heading text-lg font-semibold text-charcoal">Davene Harris</h3>
+          <p class="text-sm text-charcoal/80">MA</p>
+          <p class="text-xs uppercase tracking-wide text-charcoal/70">Associate Christian Therapist</p>
+          <div class="mt-auto pt-4 border-t border-charcoal/10">
+            <a href="./Davene.html" class="team-cta inline-flex justify-between items-start w-full gap-2 rounded-lg bg-bark px-4 py-2 text-sm font-semibold text-cream hover:bg-bark/90" data-prefetch>
+              <span class="cta-label">Learn more</span>
+              <svg class="h-4 w-4 mt-[2px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <!-- 3 Princeton -->
+      <li class="team-card group flex flex-col rounded-2xl bg-sand p-5 md:p-6 ring-1 ring-charcoal/10 shadow-sm hover:-translate-y-0.5 hover:shadow-lg transition"
+          data-tags="coach ece">
+        <figure class="relative overflow-hidden rounded-xl ring-1 ring-charcoal/10">
+          <img src="assets/img/team/rs=w_365,h_365,cg_true.webp" width="365" height="365"
+               alt="Portrait of Princeton Grant"
+               loading="lazy" decoding="async"
+               sizes="(min-width:1024px) 260px, (min-width:640px) 45vw, 90vw"
+               class="block w-full h-auto object-cover aspect-square">
+          <span aria-hidden="true" class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-10 transition bg-gradient-to-t from-bark to-transparent"></span>
+        </figure>
+        <div class="mt-5 flex-1 flex flex-col">
+          <h3 data-name class="font-heading text-lg font-semibold text-charcoal">Princeton Grant</h3>
+          <p class="text-sm text-charcoal/80">ECE</p>
+          <p class="text-xs uppercase tracking-wide text-charcoal/70">Coach</p>
+          <div class="mt-auto pt-4 border-t border-charcoal/10">
+            <a href="./Princeton.html" class="team-cta inline-flex justify-between items-start w-full gap-2 rounded-lg bg-bark px-4 py-2 text-sm font-semibold text-cream hover:bg-bark/90" data-prefetch>
+              <span class="cta-label">Learn more</span>
+              <svg class="h-4 w-4 mt-[2px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <!-- 4 Natalie -->
+      <li class="team-card group flex flex-col rounded-2xl bg-sand p-5 md:p-6 ring-1 ring-charcoal/10 shadow-sm hover:-translate-y-0.5 hover:shadow-lg transition"
+          data-tags="therapist rpn ba mdiv">
+        <figure class="relative overflow-hidden rounded-xl ring-1 ring-charcoal/10">
+          <img src="assets/img/team/rs=w_365,h_365,cg_true,m%20(2).webp" width="365" height="365"
+               alt="Portrait of Natalie Willis"
+               loading="lazy" decoding="async"
+               sizes="(min-width:1024px) 260px, (min-width:640px) 45vw, 90vw"
+               class="block w-full h-auto object-cover aspect-square">
+          <span aria-hidden="true" class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-10 transition bg-gradient-to-t from-bark to-transparent"></span>
+        </figure>
+        <div class="mt-5 flex-1 flex flex-col">
+          <h3 data-name class="font-heading text-lg font-semibold text-charcoal">Natalie Willis</h3>
+          <p class="text-sm text-charcoal/80">RPN, BA, MDiv</p>
+          <p class="text-xs uppercase tracking-wide text-charcoal/70">Associate Christian Therapist</p>
+          <div class="mt-auto pt-4 border-t border-charcoal/10">
+            <a href="./Natalie.html" class="team-cta inline-flex justify-between items-start w-full gap-2 rounded-lg bg-bark px-4 py-2 text-sm font-semibold text-cream hover:bg-bark/90" data-prefetch>
+              <span class="cta-label">Learn more</span>
+              <svg class="h-4 w-4 mt-[2px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <!-- 5 Nigel -->
+      <li class="team-card group flex flex-col rounded-2xl bg-sand p-5 md:p-6 ring-1 ring-charcoal/10 shadow-sm hover:-translate-y-0.5 hover:shadow-lg transition"
+          data-tags="therapist ba ma ccc">
+        <figure class="relative overflow-hidden rounded-xl ring-1 ring-charcoal/10">
+          <img src="assets/img/team/rs=w_365,h_365,cg_true,m%20(3).webp" width="365" height="365"
+               alt="Portrait of Nigel Bucknor"
+               loading="lazy" decoding="async"
+               sizes="(min-width:1024px) 260px, (min-width:640px) 45vw, 90vw"
+               class="block w-full h-auto object-cover aspect-square">
+          <span aria-hidden="true" class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-10 transition bg-gradient-to-t from-bark to-transparent"></span>
+        </figure>
+        <div class="mt-5 flex-1 flex flex-col">
+          <h3 data-name class="font-heading text-lg font-semibold text-charcoal">Nigel Bucknor</h3>
+          <p class="text-sm text-charcoal/80">BA, MA, CCC</p>
+          <p class="text-xs uppercase tracking-wide text-charcoal/70">Associate Christian Therapist</p>
+          <div class="mt-auto pt-4 border-t border-charcoal/10">
+            <a href="./Nigel.html" class="team-cta inline-flex justify-between items-start w-full gap-2 rounded-lg bg-bark px-4 py-2 text-sm font-semibold text-cream hover:bg-bark/90" data-prefetch>
+              <span class="cta-label">Learn more</span>
+              <svg class="h-4 w-4 mt-[2px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <!-- 6 Khadian -->
+      <li class="team-card group flex flex-col rounded-2xl bg-sand p-5 md:p-6 ring-1 ring-charcoal/10 shadow-sm hover:-translate-y-0.5 hover:shadow-lg transition"
+          data-tags="therapist ba mdiv rp ccc">
+        <figure class="relative overflow-hidden rounded-xl ring-1 ring-charcoal/10">
+          <img src="assets/img/team/rs=w_365,h_365,cg_true,m%20(4).webp" width="365" height="365"
+               alt="Portrait of Khadian Gooden"
+               loading="lazy" decoding="async"
+               sizes="(min-width:1024px) 260px, (min-width:640px) 45vw, 90vw"
+               class="block w-full h-auto object-cover aspect-square">
+          <span aria-hidden="true" class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-10 transition bg-gradient-to-t from-bark to-transparent"></span>
+        </figure>
+        <div class="mt-5 flex-1 flex flex-col">
+          <h3 data-name class="font-heading text-lg font-semibold text-charcoal">Khadian Gooden</h3>
+          <p class="text-sm text-charcoal/80">BA, MDiv, RP, CCC</p>
+          <p class="text-xs uppercase tracking-wide text-charcoal/70">Associate Christian Therapist</p>
+          <div class="mt-auto pt-4 border-t border-charcoal/10">
+            <a href="./Khadian.html" class="team-cta inline-flex justify-between items-start w-full gap-2 rounded-lg bg-bark px-4 py-2 text-sm font-semibold text-cream hover:bg-bark/90" data-prefetch>
+              <span class="cta-label">Learn more</span>
+              <svg class="h-4 w-4 mt-[2px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <!-- 7 Josh -->
+      <li class="team-card group flex flex-col rounded-2xl bg-sand p-5 md:p-6 ring-1 ring-charcoal/10 shadow-sm hover:-translate-y-0.5 hover:shadow-lg transition"
+          data-tags="therapist mdiv rp trauma">
+        <figure class="relative overflow-hidden rounded-xl ring-1 ring-charcoal/10">
+          <img src="assets/img/team/rs=w_365,h_365,cg_true,m%20(5).webp" width="365" height="365"
+               alt="Portrait of Josh Dale"
+               loading="lazy" decoding="async"
+               sizes="(min-width:1024px) 260px, (min-width:640px) 45vw, 90vw"
+               class="block w-full h-auto object-cover aspect-square">
+          <span aria-hidden="true" class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-10 transition bg-gradient-to-t from-bark to-transparent"></span>
+        </figure>
+        <div class="mt-5 flex-1 flex flex-col">
+          <h3 data-name class="font-heading text-lg font-semibold text-charcoal">Josh Dale</h3>
+          <p class="text-sm text-charcoal/80">MDiv, RP, CCTS-I</p>
+          <p class="text-xs uppercase tracking-wide text-charcoal/70">Associate Christian Therapist</p>
+          <div class="mt-auto pt-4 border-t border-charcoal/10">
+            <a href="./Josh.html" class="team-cta inline-flex justify-between items-start w-full gap-2 rounded-lg bg-bark px-4 py-2 text-sm font-semibold text-cream hover:bg-bark/90" data-prefetch>
+              <span class="cta-label">Learn more</span>
+              <svg class="h-4 w-4 mt-[2px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <!-- 8 Anita -->
+      <li class="team-card group flex flex-col rounded-2xl bg-sand p-5 md:p-6 ring-1 ring-charcoal/10 shadow-sm hover:-translate-y-0.5 hover:shadow-lg transition"
+          data-tags="therapist bilingual msw rsw">
+        <figure class="relative overflow-hidden rounded-xl ring-1 ring-charcoal/10">
+          <img src="assets/img/team/rs=w_365,h_365,cg_true,m%20(6).webp" width="365" height="365"
+               alt="Portrait of Anita Kangabe"
+               loading="lazy" decoding="async"
+               sizes="(min-width:1024px) 260px, (min-width:640px) 45vw, 90vw"
+               class="block w-full h-auto object-cover aspect-square">
+          <span aria-hidden="true" class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-10 transition bg-gradient-to-t from-bark to-transparent"></span>
+        </figure>
+        <div class="mt-5 flex-1 flex flex-col">
+          <h3 data-name class="font-heading text-lg font-semibold text-charcoal">Anita Kangabe</h3>
+          <p class="text-sm text-charcoal/80">MSW, RSW</p>
+          <p class="text-xs uppercase tracking-wide text-charcoal/70">Associate Christian Therapist · Bilingual</p>
+          <div class="mt-auto pt-4 border-t border-charcoal/10">
+            <a href="./Anita.html" class="team-cta inline-flex justify-between items-start w-full gap-2 rounded-lg bg-bark px-4 py-2 text-sm font-semibold text-cream hover:bg-bark/90" data-prefetch>
+              <span class="cta-label">Learn more</span>
+              <svg class="h-4 w-4 mt-[2px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <!-- 9 Baraka -->
+      <li class="team-card group flex flex-col rounded-2xl bg-sand p-5 md:p-6 ring-1 ring-charcoal/10 shadow-sm hover:-translate-y-0.5 hover:shadow-lg transition"
+          data-tags="therapist qualifying ba">
+        <figure class="relative overflow-hidden rounded-xl ring-1 ring-charcoal/10">
+          <img src="assets/img/team/rs=w_365,h_365,cg_true,m%20(7).webp" width="365" height="365"
+               alt="Portrait of Baraka Boafo"
+               loading="lazy" decoding="async"
+               sizes="(min-width:1024px) 260px, (min-width:640px) 45vw, 90vw"
+               class="block w-full h-auto object-cover aspect-square">
+          <span aria-hidden="true" class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-10 transition bg-gradient-to-t from-bark to-transparent"></span>
+        </figure>
+        <div class="mt-5 flex-1 flex flex-col">
+          <h3 data-name class="font-heading text-lg font-semibold text-charcoal">Baraka Boafo</h3>
+          <p class="text-sm text-charcoal/80">BA, RP (Qualifying)</p>
+          <p class="text-xs uppercase tracking-wide text-charcoal/70">Associate Christian Therapist</p>
+          <div class="mt-auto pt-4 border-t border-charcoal/10">
+            <a href="./Baraka.html" class="team-cta inline-flex justify-between items-start w-full gap-2 rounded-lg bg-bark px-4 py-2 text-sm font-semibold text-cream hover:bg-bark/90" data-prefetch>
+              <span class="cta-label">Learn more</span>
+              <svg class="h-4 w-4 mt-[2px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <!-- 10 Oluseye -->
+      <li class="team-card group flex flex-col rounded-2xl bg-sand p-5 md:p-6 ring-1 ring-charcoal/10 shadow-sm hover:-translate-y-0.5 hover:shadow-lg transition"
+          data-tags="therapist bsc msc">
+        <figure class="relative overflow-hidden rounded-xl ring-1 ring-charcoal/10">
+          <img src="assets/img/team/rs=w_365,h_365,cg_true,m%20(8).webp" width="365" height="365"
+               alt="Portrait of Oluseye Ashiru"
+               loading="lazy" decoding="async"
+               sizes="(min-width:1024px) 260px, (min-width:640px) 45vw, 90vw"
+               class="block w-full h-auto object-cover aspect-square">
+          <span aria-hidden="true" class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-10 transition bg-gradient-to-t from-bark to-transparent"></span>
+        </figure>
+        <div class="mt-5 flex-1 flex flex-col">
+          <h3 data-name class="font-heading text-lg font-semibold text-charcoal">Oluseye Ashiru</h3>
+          <p class="text-sm text-charcoal/80">BSc, MSc</p>
+          <p class="text-xs uppercase tracking-wide text-charcoal/70">Associate Christian Therapist</p>
+          <div class="mt-auto pt-4 border-t border-charcoal/10">
+            <a href="./Oluseye.html" class="team-cta inline-flex justify-between items-start w-full gap-2 rounded-lg bg-bark px-4 py-2 text-sm font-semibold text-cream hover:bg-bark/90" data-prefetch>
+              <span class="cta-label">Learn more</span>
+              <svg class="h-4 w-4 mt-[2px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+</section>
+
+<!-- Team search + tags + prefetch JS -->
+<script>
+(function(){
+  const grid = document.querySelector('#team ul[role="list"]');
+  if (!grid) return;
+
+  const search = document.getElementById('teamSearch');
+  const tagBtns = [...document.querySelectorAll('.team-tag')];
+  let activeFilter = 'all';
+
+  const cards = [...grid.querySelectorAll('.team-card')].map(card => ({
+    el: card,
+    name: (card.querySelector('[data-name]')?.textContent || '').toLowerCase(),
+    text: card.textContent.toLowerCase(),
+    tags: (card.getAttribute('data-tags') || '').toLowerCase().split(/\s+/)
+  }));
+
+  function applyFilters() {
+    const q = (search?.value || '').trim().toLowerCase();
+    cards.forEach(({el, name, text, tags}) => {
+      const matchText = !q || name.includes(q) || text.includes(q);
+      const matchTag  = activeFilter === 'all' || tags.includes(activeFilter);
+      el.classList.toggle('hidden', !(matchText && matchTag));
+    });
+  }
+
+  if (search) search.addEventListener('input', applyFilters);
+
+  tagBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tagBtns.forEach(b => b.setAttribute('aria-pressed', 'false'));
+      btn.setAttribute('aria-pressed', 'true');
+      activeFilter = btn.dataset.filter || 'all';
+      applyFilters();
+    });
+  });
+
+  const prefetch = href => {
+    if (!href || document.querySelector(`link[rel="prefetch"][href="${href}"]`)) return;
+    const l = document.createElement('link');
+    l.rel = 'prefetch'; l.href = href; l.as = 'document';
+    document.head.appendChild(l);
+  };
+  grid.querySelectorAll('[data-prefetch]').forEach(a => {
+    const href = a.getAttribute('href');
+    ['mouseenter','focus'].forEach(evt => a.addEventListener(evt, () => prefetch(href)));
+  });
+
+  applyFilters();
+})();
+</script>
+
+
+
+
+
+
+  </main>
+
+  <div data-include="partials/footer.html"></div>
+
+
+  <!-- Include loader + header behavior -->
+  <script>
+  async function includePartials() {
+    const nodes = document.querySelectorAll("[data-include]");
+    const isDev = ['localhost','127.0.0.1'].includes(location.hostname);
+    await Promise.all([...nodes].map(async el => {
+      const url  = el.getAttribute("data-include");
+      const bust = isDev ? `?v=${Date.now()}` : "";
+      const res  = await fetch(url + bust, { cache: isDev ? "no-store" : "default" });
+      el.outerHTML = await res.text();
+    }));
+  }
+
+  function setActiveNav() {
+    const file = location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('a[data-nav]').forEach(a => {
+      if (a.getAttribute('data-nav') === file) {
+        a.setAttribute('aria-current', 'page');
+        a.classList.add('text-cream','font-semibold','underline','underline-offset-8','decoration-cream');
+      }
+    });
+  }
+
+  function wireSimpleDrawer() {
+    const openBtn = document.getElementById('menuOpen');
+    const closeBtn= document.getElementById('menuClose');
+    const panel   = document.getElementById('menuPanel');
+    const backdrop= document.getElementById('menuBackdrop');
+    if (!(openBtn && closeBtn && panel && backdrop)) return;
+
+    const open = () => {
+      panel.classList.remove('hidden');
+      backdrop.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+      openBtn.setAttribute('aria-expanded','true');
+      panel.setAttribute('aria-hidden','false');
+      panel.focus({preventScroll:true});
+    };
+    const close = () => {
+      panel.classList.add('hidden');
+      backdrop.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+      openBtn.setAttribute('aria-expanded','false');
+      panel.setAttribute('aria-hidden','true');
+      openBtn.focus();
+    };
+
+    openBtn.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
+    backdrop.addEventListener('click', close);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  }
+
+  (async function boot(){
+    await includePartials();        // header now in DOM
+    wireSimpleDrawer();             // hook up open/close
+    setActiveNav();                 // underline current link(s)
+    const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
+  })();
+</script>
+
+<script>
+  (function () {
+    document.querySelectorAll('#team .team-card').forEach(card => {
+      const nameEl = card.querySelector('[data-name]');
+      const btn    = card.querySelector('.team-cta');
+      if (!nameEl || !btn) return;
+
+      // Ensure visual classes for wrapping + consistent height
+      btn.classList.add('whitespace-normal','text-left','items-start','min-h-[3.5rem]');
+
+      // Ensure we have a label span we can clamp to 2 lines
+      let label = btn.querySelector('.cta-label');
+      if (!label) {
+        label = document.createElement('span');
+        label.className = 'cta-label';
+        // Remove any direct text nodes on the button (e.g., "Learn more")
+        btn.childNodes.forEach(n => { if (n.nodeType === Node.TEXT_NODE) n.remove(); });
+        const icon = btn.querySelector('svg');
+        if (icon) { btn.insertBefore(label, icon); } else { btn.appendChild(label); }
+      }
+
+      // Set text and ARIA using the person's name (now just the name in <h3>)
+      const name = nameEl.textContent.trim();
+      label.textContent = `Learn more about ${name}`;
+      btn.setAttribute('aria-label', `Learn more about ${name}`);
+
+      // Deep-link to About page anchor by slugifying the name
+      const base = btn.getAttribute('href') || './about.html';
+      const slug = name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+      btn.setAttribute('href', `${base.split('#')[0]}#${slug}`);
+
+      // Optional: nudge the arrow icon so it aligns nicely with multi-line text
+      const icon = btn.querySelector('svg');
+      if (icon) icon.classList.add('mt-[2px]','shrink-0');
+    });
+  })();
+</script>
+
+
+
+
+
+
+</body>
+</html>

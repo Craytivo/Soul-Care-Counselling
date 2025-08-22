@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Soul Care — Areas of Focus</title>
+  <meta name="description" content="Trauma, Life Transition, Identity, Relationships, Anxiety, Depression, and Stress Management." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind via CDN with your palette -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        colors: {
+          transparent: 'transparent',
+          current: 'currentColor',
+          white: '#ffffff',
+          black: '#000000',
+          cream:    '#F8F5EC',
+          sand:     '#E6DDC6',
+          clay:     '#C49A6C',
+          bark:     '#6E4B3A',
+          charcoal: '#23201B'
+        },
+        extend: {
+          fontFamily: {
+            heading: ['Poppins','ui-sans-serif','system-ui','sans-serif'],
+            body: ['Inter','ui-sans-serif','system-ui','sans-serif']
+          }
+        }
+      },
+      safelist: [
+        'hidden','backdrop-blur','py-2','py-3','overflow-hidden',
+        'translate-x-full','translate-x-0','opacity-0',
+        'text-cream','underline','underline-offset-8','decoration-cream','font-semibold'
+      ]
+    }
+  </script>
+  <style> html{scroll-behavior:smooth} </style>
+</head>
+
+<body class="bg-cream text-charcoal font-body antialiased">
+
+  <!-- ===== Header (same rules) ===== -->
+  <header data-site-header class="sticky top-0 z-50 bg-bark/90 text-cream supports-[backdrop-filter]:bg-bark/70 backdrop-blur">
+    <div class="mx-auto max-w-7xl px-4 py-3 grid grid-cols-[auto_1fr_auto] items-center gap-4">
+      <!-- LEFT: Brand -->
+      <a href="./index.html" class="flex items-center gap-2">
+        <span class="inline-block h-9 w-9 rounded-md bg-cream/10 ring-1 ring-cream/20"></span>
+        <span class="text-sm sm:text-base font-semibold tracking-wide">Soul Care Counselling</span>
+      </a>
+
+      <!-- CENTER: Desktop nav (5 items) -->
+      <nav class="hidden lg:flex items-center justify-center gap-6" aria-label="Primary">
+        <a href="./index.html"        class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="index.html">Home</a>
+        <a href="./about.html"        class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="about.html">About Us</a>
+        <a href="./core-values.html"  class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="core-values.html">Core Values</a>
+        <a href="./services.html"     class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="services.html">Services</a>
+        <a href="./areas.html"        class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="areas.html">Areas of Focus</a>
+      </nav>
+
+      <!-- RIGHT: Hamburger (fixed size) -->
+      <button id="menuOpen"
+        class="justify-self-end shrink-0 inline-flex items-center justify-center h-10 w-10 rounded-md ring-1 ring-cream/20 hover:bg-cream/10"
+        aria-controls="menuPanel" aria-expanded="false" aria-label="Open menu">
+        <svg class="h-5 w-5 text-cream" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Backdrop -->
+  <div id="menuBackdrop" class="fixed inset-0 bg-charcoal/50 hidden z-[59]"></div>
+
+  <!-- SIMPLE PANEL -->
+  <aside id="menuPanel"
+    class="fixed right-0 top-0 z-[60] h-screen w-[86%] max-w-sm bg-bark text-cream shadow-xl border-l border-cream/15 hidden overflow-y-auto"
+    aria-hidden="true" tabindex="-1">
+
+    <!-- Sticky header inside panel -->
+    <div class="sticky top-0 bg-bark/95 backdrop-blur px-4 py-3 border-b border-cream/15 flex items-center justify-between">
+      <span class="text-sm font-semibold tracking-wide uppercase">Menu</span>
+      <button id="menuClose" class="inline-flex items-center justify-center rounded-md p-2 ring-1 ring-cream/20 hover:bg-cream/10" aria-label="Close menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-cream" aria-hidden="true">
+          <path d="M18 6 6 18M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- FULL static list -->
+    <nav class="px-4 py-4 text-sm" aria-label="All pages">
+      <a href="./index.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="index.html">Home</a>
+      <a href="./about.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="about.html">About Us</a>
+      <a href="./core-values.html"  class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="core-values.html">Core Values</a>
+      <a href="./services.html"     class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="services.html">Services</a>
+      <a href="./areas.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="areas.html">Areas of Focus</a>
+
+      <hr class="my-3 border-cream/15">
+
+      <a href="./faq.html"          class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="faq.html">FAQs</a>
+      <a href="./notes.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="notes.html">Notes from Soul Care</a>
+      <a href="./workshops.html"    class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="workshops.html">Wellness Workshops</a>
+      <a href="./contact.html"      class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="contact.html">Contact</a>
+
+      <a href="https://thesoulcarecounsellor.janeapp.com"
+         target="_blank" rel="noopener noreferrer"
+         class="mt-4 inline-flex items-center justify-center rounded-md bg-clay px-4 py-2 font-semibold tracking-wide text-charcoal hover:bg-clay/90">
+        Book a Free Consultation
+      </a>
+    </nav>
+  </aside>
+
+  <main id="main" class="mx-auto max-w-7xl px-4 py-12 md:py-16">
+
+    <!-- Hero -->
+    <section class="relative overflow-hidden rounded-2xl bg-bark text-cream ring-1 ring-cream/15">
+      <div class="absolute -right-12 -top-12 h-56 w-56 rounded-full bg-gradient-to-br from-clay/40 to-cream/10 blur-2xl" aria-hidden="true"></div>
+      <div class="relative z-10 px-6 py-10 md:px-10 md:py-14">
+        <span class="inline-flex items-center gap-2 rounded-full bg-cream/10 px-3 py-1 ring-1 ring-cream/30 uppercase tracking-[.22em] text-[11px]">Areas of Focus</span>
+        <h1 class="mt-3 font-heading text-3xl md:text-4xl font-bold">Support for your season</h1>
+        <p class="mt-3 max-w-3xl text-cream/85">
+          Explore the areas we commonly work with, delivered through faith-integrated, evidence-based care.
+        </p>
+      </div>
+    </section>
+
+    <!-- Content -->
+    <section class="mt-14 md:mt-16 space-y-12">
+
+      <!-- Trauma -->
+      <article id="trauma" class="rounded-2xl bg-white p-6 ring-1 ring-charcoal/10">
+        <h2 class="font-heading text-xl md:text-2xl font-semibold">Trauma</h2>
+        <div class="mt-3 space-y-4 text-charcoal/85">
+          <p>Trauma is a word that is often thrown around in conversation today, but today’s generation is in tuned with what trauma is and how it can affect day to day living. However, one of the most difficult aspects of trauma is working through it, especially when life seems a little overwhelming.</p>
+
+          <p>As we journey through healing from trauma, there are a few areas that we can explore:</p>
+
+          <ul class="list-disc pl-6">
+            <li>Developmental trauma</li>
+            <li>Emotional and psychological traumas</li>
+            <li>Intergenerational trauma</li>
+            <li>Complex trauma</li>
+          </ul>
+
+          <p>Trauma tends to show up in our everyday lives as we navigate through different types of relationships. Sometimes we may find ourselves in a cycle of unhealthy relationships, whether romantic or platonic. Trauma shows up in the way we view ourselves and the world around us. It shows up in how we balance our priorities, how much we prioritize ourselves and our ability to cope with everyday stress. As we work together, we will work towards post-traumatic growth and change, realizing that there is life after trauma.</p>
+
+          <p>Together we will work on your strengths and we will meet you where you’re at.</p>
+        </div>
+      </article>
+
+      <!-- Life Transition -->
+      <article id="life-transition" class="rounded-2xl bg-white p-6 ring-1 ring-charcoal/10">
+        <h2 class="font-heading text-xl md:text-2xl font-semibold">Life Transition</h2>
+        <div class="mt-3 space-y-4 text-charcoal/85">
+          <p>Feeling stuck? Not sure of next steps? Feel like everyone around you is “winning” and you’re going in circles? Or do you feel like you need a change? This is called a transition. Life comes with many ups and downs, and it is quite the journey. Along the way, we can experience many difficult transitions, particularly when you don’t have a strong support system or a clear view of where you want to go.</p>
+
+          <p>If you need support navigating through:</p>
+
+          <ul class="list-disc pl-6">
+            <li>Day to day life as a youth or young adult</li>
+            <li>Career or academic changes</li>
+            <li>Relationships</li>
+            <li>New church environments</li>
+            <li>Engagement and marriage</li>
+            <li>A new life change</li>
+          </ul>
+
+          <p>We would love to journey with you. Together we will work on a roadmap and vision for your life; we will set some goals and at your own pace, with a clear view in mind this transition just may become a little easier.</p>
+        </div>
+      </article>
+
+      <!-- Identity -->
+      <article id="identity" class="rounded-2xl bg-white p-6 ring-1 ring-charcoal/10">
+        <h2 class="font-heading text-xl md:text-2xl font-semibold">Identity</h2>
+        <div class="mt-3 space-y-4 text-charcoal/85">
+          <p>When we have a healthy view of ourselves, having a healthy view of others and the world around us will become a little easier. Our identity is not only about what we see on the outside; it is more about what is taking place on the inside. When we are comfortable and at peace with the different expressions of who we are, whether it’s our spiritual beliefs, gender, race or even our profession, we begin to show up differently in the world. Our confidence shifts, we are no longer afraid to prioritize our needs and we accept ourselves with all our flaws and imperfections. As we work together to rebuild identity and good self-esteem, we will get to the core of who you are, and who you were created to be.</p>
+        </div>
+      </article>
+
+      <!-- Relationships -->
+      <article id="relationships" class="rounded-2xl bg-white p-6 ring-1 ring-charcoal/10">
+        <h2 class="font-heading text-xl md:text-2xl font-semibold">Relationships</h2>
+        <div class="mt-3 space-y-4 text-charcoal/85">
+          <p>Relationships, whether romantic, platonic or family, can be quite complex and complicated. Our relationships are a good reflection of who we are, and where we are at in our lives. Are your relationships unhealthy and toxic? Do you find yourself in these relationships more often than you would like? Let’s work through this together. In order to create a foundation for healthy relationships, the way we view ourselves will need to shift. This can be achieved through building healthy boundaries, healthy communication, and a positive sense of self.</p>
+        </div>
+      </article>
+
+      <!-- Anxiety -->
+      <article id="anxiety" class="rounded-2xl bg-white p-6 ring-1 ring-charcoal/10">
+        <h2 class="font-heading text-xl md:text-2xl font-semibold">Anxiety</h2>
+        <div class="mt-3 space-y-4 text-charcoal/85">
+          <p>We have all experienced various levels of fear, or something that keeps us up at night. However, sometimes these levels of fear, or the things that keep us up at night can become more than we can handle. We find that our body is a little more tense than usual, our chest is tight, our palms are sweaty, or we just can’t focus on our present day to day activities. Anxiety is not uncommon, and neither is the ability to cope. With the right tools and support we can work through controlling anxious thoughts that may affect day to day life.</p>
+        </div>
+      </article>
+
+      <!-- Depression -->
+      <article id="depression" class="rounded-2xl bg-white p-6 ring-1 ring-charcoal/10">
+        <h2 class="font-heading text-xl md:text-2xl font-semibold">Depression</h2>
+        <div class="mt-3 space-y-4 text-charcoal/85">
+          <p>A lack of joy, hopelessness, or the ability to get out of bed to perform day to day activities are some common signs of depression. Unfortunately, individuals who experience depression often think this is it- enjoying the things they once loved or feeling hopeful again is not an option. On our journey together we will navigate through some of the root causes of your experience, and we will address those root causes. Consequently, we will aim to rebuild hope, finding meaning in life and navigate through what brings you joy. You deserve the ability to have hope, dream again and wake up with purpose each and everyday.</p>
+        </div>
+      </article>
+
+      <!-- Stress Management -->
+      <article id="stress-management" class="rounded-2xl bg-white p-6 ring-1 ring-charcoal/10">
+        <h2 class="font-heading text-xl md:text-2xl font-semibold">Stress Management</h2>
+        <div class="mt-3 space-y-4 text-charcoal/85">
+          <p>We all have a degree of stress that we can manage. There is positive stress which helps motivate you, challenges you to be better and drives you towards achieving your life goals. Of course, there is also negative stress. The type of stress that creates an inability to cope. The type of stress that results in you feeling overworked and burned out. Managing this negative stress can be difficult, but it’s not impossible. With the proper support and right tools, we will aim to determine the root of your current stressors, creating balance and putting systems in place to navigate your current season of life.</p>
+        </div>
+      </article>
+
+      <!-- CTA -->
+      <section class="rounded-2xl bg-sand p-6 md:p-8 ring-1 ring-charcoal/10">
+        <div class="grid gap-6 md:grid-cols-3 md:items-center">
+          <div class="md:col-span-2">
+            <h3 class="font-heading text-xl md:text-2xl font-semibold">Ready to begin?</h3>
+            <p class="mt-2 text-charcoal/80">Book a free 15-minute consultation to explore fit and next steps.</p>
+          </div>
+          <div class="md:justify-self-end">
+            <a href="https://thesoulcarecounsellor.janeapp.com" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center justify-center rounded-md bg-clay px-5 py-2.5 font-semibold text-charcoal hover:bg-clay/90 ring-1 ring-charcoal/10">
+              Book a Free Consultation
+            </a>
+          </div>
+        </div>
+      </section>
+
+    </section>
+  </main>
+
+  <!-- Footer include -->
+  <div data-include="partials/footer.html"></div>
+
+  <!-- ===== Scripts (same loader + header behavior) ===== -->
+  <script>
+  async function includePartials() {
+    const nodes = document.querySelectorAll("[data-include]");
+    const isDev = ['localhost','127.0.0.1'].includes(location.hostname);
+    await Promise.all([...nodes].map(async el => {
+      const url  = el.getAttribute("data-include");
+      const bust = isDev ? `?v=${Date.now()}` : "";
+      const res  = await fetch(url + bust, { cache: isDev ? "no-store" : "default" });
+      el.outerHTML = await res.text();
+    }));
+  }
+
+  function setActiveNav() {
+    const file = location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('a[data-nav]').forEach(a => {
+      if (a.getAttribute('data-nav') === file) {
+        a.setAttribute('aria-current', 'page');
+        a.classList.add('text-cream','font-semibold','underline','underline-offset-8','decoration-cream');
+      }
+    });
+  }
+
+  function wireSimpleDrawer() {
+    const openBtn = document.getElementById('menuOpen');
+    const closeBtn= document.getElementById('menuClose');
+    const panel   = document.getElementById('menuPanel');
+    const backdrop= document.getElementById('menuBackdrop');
+    if (!(openBtn && closeBtn && panel && backdrop)) return;
+
+    const open = () => {
+      panel.classList.remove('hidden');
+      backdrop.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+      openBtn.setAttribute('aria-expanded','true');
+      panel.setAttribute('aria-hidden','false');
+      panel.focus({preventScroll:true});
+    };
+    const close = () => {
+      panel.classList.add('hidden');
+      backdrop.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+      openBtn.setAttribute('aria-expanded','false');
+      panel.setAttribute('aria-hidden','true');
+      openBtn.focus();
+    };
+
+    openBtn.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
+    backdrop.addEventListener('click', close);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  }
+
+  (async function boot(){
+    await includePartials();
+    wireSimpleDrawer();
+    setActiveNav();
+    const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
+  })();
+  </script>
+</body>
+</html>
