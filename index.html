@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Soul Care — Home</title>
+  <meta name="description" content="Faith-centered, culturally sensitive therapy. Virtual across Canada." />
+  
+  <!-- Netlify Identity Widget -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Earth palette (ONLY these colors are available)
+    tailwind.config = {
+      theme: {
+        colors: {
+          transparent: 'transparent',
+          current: 'currentColor',
+          white: '#ffffff',
+          black: '#000000',
+          cream:    '#F8F5EC',
+          sand:     '#E6DDC6',
+          clay:     '#C49A6C',
+          bark:     '#6E4B3A',
+          charcoal: '#23201B'
+        },
+        extend: {
+          fontFamily: {
+            heading: ['Poppins','ui-sans-serif','system-ui','sans-serif'],
+            body: ['Inter','ui-sans-serif','system-ui','sans-serif']
+          }
+        }
+      },
+      safelist: [
+        'hidden','backdrop-blur','py-2','py-3','overflow-hidden',
+        'translate-x-full','translate-x-0','opacity-0',
+        'text-cream','underline','underline-offset-8','decoration-cream','font-semibold'
+      ]
+    }
+  </script>
+
+  <style>html{scroll-behavior:smooth}</style>
+  <style>
+  /* Make every team CTA exactly two text lines tall */
+  #team .team-cta { min-height: 3.5rem; } /* ≈ 2 lines of text-sm + padding */
+  #team .team-cta .cta-label {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;   /* clamp to 2 lines */
+    line-clamp: 2;           /* standard property */
+    overflow: hidden;
+  }
+  
+  /* Editable content styles */
+  .editable {
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    padding: 2px 4px;
+    min-height: 1.2em;
+  }
+  
+  .editable:hover {
+    background-color: rgba(196, 154, 108, 0.1);
+    outline: 1px dashed #C49A6C;
+  }
+  
+  .editable:focus {
+    background-color: rgba(196, 154, 108, 0.15);
+    outline: 2px solid #C49A6C;
+    outline-offset: 2px;
+  }
+  
+  .edit-active {
+    background-color: rgba(196, 154, 108, 0.1) !important;
+    outline: 1px dashed #C49A6C !important;
+  }
+</style>
+</head>
+<body class="bg-cream text-charcoal font-body antialiased">
+  <header data-site-header class="sticky top-0 z-50 bg-bark/90 text-cream supports-[backdrop-filter]:bg-bark/70 backdrop-blur">
+  <div class="mx-auto max-w-7xl px-4 py-3 grid grid-cols-[auto_1fr_auto] items-center gap-4">
+    <!-- LEFT: Brand -->
+    <a href="./index.html" class="flex items-center gap-2">
+      <span class="inline-block h-9 w-9 rounded-md bg-cream/10 ring-1 ring-cream/20"></span>
+      <span class="text-sm sm:text-base font-semibold tracking-wide editable" contenteditable="true">Soul Care Counselling</span>
+    </a>
+
+    <!-- CENTER: Desktop nav (5 items) -->
+    <nav class="hidden lg:flex items-center justify-center gap-6" aria-label="Primary">
+      <a href="./index.html"        class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap editable" data-nav="index.html" contenteditable="true">Home</a>
+      <a href="./about.html"        class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap editable" data-nav="about.html" contenteditable="true">About Us</a>
+      <a href="./core-values.html"  class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap editable" data-nav="core-values.html" contenteditable="true">Core Values</a>
+      <a href="./services.html"     class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap editable" data-nav="services.html" contenteditable="true">Services</a>
+      <a href="./areas.html"        class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap editable" data-nav="areas.html" contenteditable="true">Areas of Focus</a>
+    </nav>
+
+    <!-- RIGHT: Hamburger (fixed size) -->
+    <button id="menuOpen"
+      class="justify-self-end shrink-0 inline-flex items-center justify-center h-10 w-10 rounded-md ring-1 ring-cream/20 hover:bg-cream/10"
+      aria-controls="menuPanel" aria-expanded="false" aria-label="Open menu">
+      <svg class="h-5 w-5 text-cream" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- Backdrop -->
+<div id="menuBackdrop" class="fixed inset-0 bg-charcoal/50 hidden z-[59]"></div>
+
+<!-- SIMPLE PANEL: full height, panel scrolls -->
+<aside id="menuPanel"
+  class="fixed right-0 top-0 z-[60] h-screen w-[86%] max-w-sm bg-bark text-cream shadow-xl border-l border-cream/15 hidden overflow-y-auto"
+  aria-hidden="true" tabindex="-1">
+
+  <!-- Sticky header inside panel -->
+  <div class="sticky top-0 bg-bark/95 backdrop-blur px-4 py-3 border-b border-cream/15 flex items-center justify-between">
+    <span class="text-sm font-semibold tracking-wide uppercase editable" contenteditable="true">Menu</span>
+    <button id="menuClose" class="inline-flex items-center justify-center rounded-md p-2 ring-1 ring-cream/20 hover:bg-cream/10" aria-label="Close menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-cream" aria-hidden="true">
+        <path d="M18 6 6 18M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- FULL static list (each link = block so it stacks) -->
+  <nav class="px-4 py-4 text-sm" aria-label="All pages">
+    <!-- desktop items duplicated -->
+    <a href="./index.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream editable" data-nav="index.html" contenteditable="true">Home</a>
+    <a href="./about.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream editable" data-nav="about.html" contenteditable="true">About Us</a>
+    <a href="./core-values.html"  class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream editable" data-nav="core-values.html" contenteditable="true">Core Values</a>
+    <a href="./services.html"     class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream editable" data-nav="services.html" contenteditable="true">Services</a>
+    <a href="./areas.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream editable" data-nav="areas.html" contenteditable="true">Areas of Focus</a>
+
+    <hr class="my-3 border-cream/15">
+
+    <!-- extras -->
+    <a href="./faq.html"          class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream editable" data-nav="faq.html" contenteditable="true">FAQs</a>
+    <a href="./notes.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream editable" data-nav="notes.html" contenteditable="true">Notes from Soul Care</a>
+    <a href="./workshops.html"    class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream editable" data-nav="workshops.html" contenteditable="true">Wellness Workshops</a>
+    <a href="./contact.html"      class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream editable" data-nav="contact.html" contenteditable="true">Contact</a>
+
+    <a href="https://thesoulcarecounsellor.janeapp.com"
+       target="_blank" rel="noopener noreferrer"
+       class="mt-4 inline-flex items-center justify-center rounded-md bg-clay px-4 py-2 font-semibold tracking-wide text-charcoal hover:bg-clay/90 editable" contenteditable="true">
+      Book a Free Consultation
+    </a>
+  </nav>
+</aside>
+
+  <main id="main" class="mx-auto max-w-7xl px-4 py-12 min-h-[60vh]">
+
+    <!-- HERO (no-crop: image is always fully visible) -->
+    <section class="relative bg-cream">
+      <div class="mx-auto max-w-7xl px-4 py-12 md:py-16">
+        <div class="grid items-center gap-8 md:grid-cols-12">
+          <!-- Text column (premium) -->
+          <div class="md:col-span-4">
+            <span class="inline-flex items-center gap-2 rounded-full bg-sand/70 px-3 py-1 ring-1 ring-charcoal/10 uppercase tracking-[.22em] text-[11px] text-charcoal/80 editable" contenteditable="true" data-hero-badge>
+              Faith-centered, culturally sensitive therapy
+            </span>
+
+            <h1 class="mt-3 font-heading text-3xl md:text-4xl font-bold text-charcoal editable" contenteditable="true" data-hero-title>
+              Virtual therapy across Canada
+            </h1>
+
+            <p class="mt-4 text-charcoal/80 editable" contenteditable="true" data-hero-subtitle>
+              Providing compassionate, faith-centered therapy that honors your cultural background and personal journey toward healing and growth.
+            </p>
+
+            <div class="mt-6 flex flex-wrap gap-3">
+              <a href="https://thesoulcarecounsellor.janeapp.com" target="_blank" rel="noopener noreferrer" data-hero-booking-url
+                 class="inline-flex items-center justify-center rounded-lg bg-clay px-5 py-2.5 font-semibold text-charcoal shadow-sm ring-1 ring-charcoal/10 transition hover:bg-clay/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cream/60">
+                <span class="editable" contenteditable="true" data-hero-booking-text>Book a Free Consultation</span>
+              </a>
+              <a href="./services.html"
+                 class="inline-flex items-center justify-center rounded-lg bg-sand px-5 py-2.5 font-semibold text-charcoal shadow-sm ring-1 ring-charcoal/10 transition hover:bg-sand/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cream/60">
+                <span class="editable" contenteditable="true" data-hero-services-text>View Services</span>
+              </a>
+            </div>
+
+            <ul class="mt-6 space-y-2 text-charcoal/80" data-hero-features>
+              <li class="flex items-center gap-2">
+                <svg class="h-4 w-4 text-clay flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="editable" contenteditable="true">Virtual sessions across Canada</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="h-4 w-4 text-clay flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="editable" contenteditable="true">Faith-centered approach</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="h-4 w-4 text-clay flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="editable" contenteditable="true">Culturally sensitive care</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Image column (premium, NO CROPPING, with quote) -->
+          <div class="md:col-span-8">
+            <figure class="relative">
+              <div aria-hidden="true" class="pointer-events-none absolute -right-6 -top-6 h-40 w-40 rounded-full bg-gradient-to-br from-clay/30 to-bark/20 blur-2xl"></div>
+
+              <div class="rounded-3xl bg-sand p-2 ring-1 ring-charcoal/10 shadow-xl">
+                <div class="rounded-[18px] bg-cream ring-1 ring-charcoal/10">
+                  <div class="w-full h-64 bg-gradient-to-br from-sand to-clay/20 rounded-[14px] flex items-center justify-center">
+                    <div class="text-center text-charcoal/60">
+                      <svg class="h-16 w-16 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
+                      </svg>
+                      <p class="text-sm editable" contenteditable="true">Calm, earthy therapy scene conveying warmth and care</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <figcaption class="mt-4">
+                <blockquote class="relative pl-4 border-l-4 border-clay text-charcoal/90">
+                  <p class="font-heading text-lg md:text-xl italic leading-snug editable" contenteditable="true" data-hero-quote>
+                    "Healing begins when we feel safe, understood, and valued for who we are."
+                  </p>
+                </blockquote>
+                <div class="mt-2 text-sm text-charcoal/70 editable" contenteditable="true" data-hero-quote-author>— Soul Care Counselling Team</div>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<!-- TEAM -->
+<section id="team" class="mt-16 md:mt-24">
+  <div class="mx-auto max-w-7xl">
+    <header class="max-w-2xl">
+      <span class="inline-flex items-center gap-2 rounded-full bg-sand/70 px-3 py-1 ring-1 ring-charcoal/10 uppercase tracking-[.22em] text-[11px] text-charcoal/80 editable" contenteditable="true" data-team-badge>Meet our team</span>
+      <h2 class="mt-3 font-heading text-2xl md:text-3xl font-bold text-charcoal editable" contenteditable="true" data-team-title>Experienced professionals dedicated to your healing</h2>
+      <p class="mt-3 text-charcoal/80 editable" contenteditable="true" data-team-subtitle>Our diverse team of therapists, coaches, and wellness professionals brings together years of experience in faith-centered, culturally sensitive care.</p>
+    </header>
+
+    <!-- Toolbar -->
+    <div class="mt-6 flex flex-wrap items-center gap-3">
+      <label for="teamSearch" class="sr-only">Search team</label>
+      <input id="teamSearch" type="search" placeholder="Search by name, role, credential…"
+             class="w-full sm:w-80 rounded-md border border-charcoal/20 bg-white px-3 py-2 text-sm outline-none ring-0 focus:border-clay"
+             autocomplete="off" />
+      <div class="flex flex-wrap gap-2" aria-label="Filter tags">
+        <button class="team-tag px-3 py-1 rounded-full text-xs font-semibold ring-1 ring-charcoal/15 bg-white hover:bg-sand" data-filter="therapist" aria-pressed="false">Therapists</button>
+        <button class="team-tag px-3 py-1 rounded-full text-xs font-semibold ring-1 ring-charcoal/15 bg-white hover:bg-sand" data-filter="coach" aria-pressed="false">Coach</button>
+        <button class="team-tag px-3 py-1 rounded-full text-xs font-semibold ring-1 ring-charcoal/15 bg-white hover:bg-sand" data-filter="bilingual" aria-pressed="false">Bilingual</button>
+        <button class="team-tag px-3 py-1 rounded-full text-xs font-semibold ring-1 ring-charcoal/15 bg-white hover:bg-sand" data-filter="director" aria-pressed="false">Director</button>
+        <button class="team-tag px-3 py-1 rounded-full text-xs font-semibold ring-1 ring-charcoal/15 bg-white hover:bg-sand" data-filter="qualifying" aria-pressed="false">RP (Qualifying)</button>
+        <button class="team-tag px-3 py-1 rounded-full text-xs font-semibold ring-1 ring-charcoal/15 bg-white hover:bg-sand" data-filter="all" aria-pressed="true">All</button>
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <ul role="list" class="mt-8 grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-stretch" data-team-grid>
+      <!-- Team members will be loaded dynamically -->
+      <li class="team-card" data-tags="therapist qualifying">
+        <div class="bg-white rounded-lg shadow-sm ring-1 ring-charcoal/10 overflow-hidden h-full flex flex-col">
+          <div class="aspect-square bg-gradient-to-br from-sand to-clay/20 flex items-center justify-center">
+            <svg class="h-16 w-16 text-charcoal/40" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <div class="p-4 flex-1 flex flex-col">
+            <h3 class="font-heading text-lg font-semibold text-charcoal editable" contenteditable="true" data-name>Sarah Johnson</h3>
+            <p class="text-sm text-charcoal/70 mt-1 editable" contenteditable="true">Registered Psychotherapist (Qualifying)</p>
+            <p class="text-sm text-charcoal/80 mt-2 flex-1 editable" contenteditable="true">Specializing in anxiety, depression, and trauma recovery with a faith-centered approach.</p>
+            <div class="mt-4">
+              <a href="#" class="team-cta inline-flex items-center justify-center w-full rounded-md bg-clay px-3 py-2 text-sm font-semibold text-charcoal hover:bg-clay/90 transition">
+                <span class="cta-label editable" contenteditable="true">Book with Sarah</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </li>
+      
+      <li class="team-card" data-tags="coach">
+        <div class="bg-white rounded-lg shadow-sm ring-1 ring-charcoal/10 overflow-hidden h-full flex flex-col">
+          <div class="aspect-square bg-gradient-to-br from-sand to-clay/20 flex items-center justify-center">
+            <svg class="h-16 w-16 text-charcoal/40" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <div class="p-4 flex-1 flex flex-col">
+            <h3 class="font-heading text-lg font-semibold text-charcoal editable" contenteditable="true" data-name>Michael Chen</h3>
+            <p class="text-sm text-charcoal/70 mt-1 editable" contenteditable="true">Wellness Coach</p>
+            <p class="text-sm text-charcoal/80 mt-2 flex-1 editable" contenteditable="true">Life coaching and wellness strategies for personal growth and spiritual development.</p>
+            <div class="mt-4">
+              <a href="#" class="team-cta inline-flex items-center justify-center w-full rounded-md bg-clay px-3 py-2 text-sm font-semibold text-charcoal hover:bg-clay/90 transition">
+                <span class="cta-label editable" contenteditable="true">Book with Michael</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </li>
+      
+      <li class="team-card" data-tags="bilingual director qualifying">
+        <div class="bg-white rounded-lg shadow-sm ring-1 ring-charcoal/10 overflow-hidden h-full flex flex-col">
+          <div class="aspect-square bg-gradient-to-br from-sand to-clay/20 flex items-center justify-center">
+            <svg class="h-16 w-16 text-charcoal/40" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <div class="p-4 flex-1 flex flex-col">
+            <h3 class="font-heading text-lg font-semibold text-charcoal editable" contenteditable="true" data-name>Dr. Maria Rodriguez</h3>
+            <p class="text-sm text-charcoal/70 mt-1 editable" contenteditable="true">Bilingual Director, RP (Qualifying)</p>
+            <p class="text-sm text-charcoal/80 mt-2 flex-1 editable" contenteditable="true">Bilingual therapy services and clinical supervision with expertise in cultural sensitivity.</p>
+            <div class="mt-4">
+              <a href="#" class="team-cta inline-flex items-center justify-center w-full rounded-md bg-clay px-3 py-2 text-sm font-semibold text-charcoal hover:bg-clay/90 transition">
+                <span class="cta-label editable" contenteditable="true">Book with Dr. Rodriguez</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+  </main>
+
+  <footer class="bg-bark text-cream">
+    <div class="mx-auto max-w-7xl px-4 py-12">
+      <div class="grid gap-8 md:grid-cols-3">
+        <div>
+          <h3 class="font-heading text-lg font-semibold mb-4 editable" contenteditable="true">Soul Care Counselling</h3>
+          <p class="text-cream/80 text-sm editable" contenteditable="true">Providing faith-centered, culturally sensitive therapy across Canada. Your journey to healing and growth starts here.</p>
+        </div>
+        <div>
+          <h4 class="font-heading text-sm font-semibold uppercase tracking-wide mb-4 editable" contenteditable="true">Quick Links</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="./index.html" class="text-cream/80 hover:text-cream transition editable" contenteditable="true">Home</a></li>
+            <li><a href="./about.html" class="text-cream/80 hover:text-cream transition editable" contenteditable="true">About Us</a></li>
+            <li><a href="./services.html" class="text-cream/80 hover:text-cream transition editable" contenteditable="true">Services</a></li>
+            <li><a href="./contact.html" class="text-cream/80 hover:text-cream transition editable" contenteditable="true">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-heading text-sm font-semibold uppercase tracking-wide mb-4 editable" contenteditable="true">Resources</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="./faq.html" class="text-cream/80 hover:text-cream transition editable" contenteditable="true">FAQs</a></li>
+            <li><a href="./notes.html" class="text-cream/80 hover:text-cream transition editable" contenteditable="true">Notes from Soul Care</a></li>
+            <li><a href="./workshops.html" class="text-cream/80 hover:text-cream transition editable" contenteditable="true">Wellness Workshops</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-8 pt-8 border-t border-cream/15 text-center text-sm text-cream/70">
+        <p class="editable" contenteditable="true">&copy; <span id="year">2024</span> Soul Care Counselling. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Edit Mode Toggle -->
+  <div class="fixed bottom-4 right-4 z-50">
+    <button id="edit-toggle" class="inline-flex items-center gap-2 rounded-lg bg-clay px-4 py-2 font-semibold text-charcoal shadow-lg hover:bg-clay/90 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-cream/60" role="button">
+      <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+      </svg>
+      <span>Edit Mode</span>
+    </button>
+  </div>
+
+  <!-- Include loader + header behavior -->
+  <script>
+  async function includePartials() {
+    const nodes = document.querySelectorAll("[data-include]");
+    const isDev = ['localhost','127.0.0.1'].includes(location.hostname);
+    await Promise.all([...nodes].map(async el => {
+      const url  = el.getAttribute("data-include");
+      const bust = isDev ? `?v=${Date.now()}` : "";
+      const res  = await fetch(url + bust, { cache: isDev ? "no-store" : "default" });
+      el.outerHTML = await res.text();
+    }));
+  }
+
+  function setActiveNav() {
+    const file = location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('a[data-nav]').forEach(a => {
+      if (a.getAttribute('data-nav') === file) {
+        a.setAttribute('aria-current', 'page');
+        a.classList.add('text-cream','font-semibold','underline','underline-offset-8','decoration-cream');
+      }
+    });
+  }
+
+  function wireSimpleDrawer() {
+    const openBtn = document.getElementById('menuOpen');
+    const closeBtn= document.getElementById('menuClose');
+    const panel   = document.getElementById('menuPanel');
+    const backdrop= document.getElementById('menuBackdrop');
+    if (!(openBtn && closeBtn && panel && backdrop)) return;
+
+    const open = () => {
+      panel.classList.remove('hidden');
+      backdrop.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+      openBtn.setAttribute('aria-expanded','true');
+      panel.setAttribute('aria-hidden','false');
+      panel.focus({preventScroll:true});
+    };
+    const close = () => {
+      panel.classList.add('hidden');
+      backdrop.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+      openBtn.setAttribute('aria-expanded','false');
+      panel.setAttribute('aria-hidden','true');
+      openBtn.focus();
+    };
+
+    openBtn.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
+    backdrop.addEventListener('click', close);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  }
+
+  // Team search + tags functionality
+  function initTeamSearch() {
+    const grid = document.querySelector('#team ul[role="list"]');
+    if (!grid) return;
+
+    const search = document.getElementById('teamSearch');
+    const tagBtns = [...document.querySelectorAll('.team-tag')];
+    let activeFilter = 'all';
+
+    const cards = [...grid.querySelectorAll('.team-card')].map(card => ({
+      el: card,
+      name: (card.querySelector('[data-name]')?.textContent || '').toLowerCase(),
+      text: card.textContent.toLowerCase(),
+      tags: (card.getAttribute('data-tags') || '').toLowerCase().split(/\s+/)
+    }));
+
+    function applyFilters() {
+      const q = (search?.value || '').trim().toLowerCase();
+      cards.forEach(({el, name, text, tags}) => {
+        const matchText = !q || name.includes(q) || text.includes(q);
+        const matchTag  = activeFilter === 'all' || tags.includes(activeFilter);
+        el.classList.toggle('hidden', !(matchText && matchTag));
+      });
+    }
+
+    if (search) search.addEventListener('input', applyFilters);
+
+    tagBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tagBtns.forEach(b => b.setAttribute('aria-pressed', 'false'));
+        btn.setAttribute('aria-pressed', 'true');
+        activeFilter = btn.dataset.filter || 'all';
+        applyFilters();
+      });
+    });
+
+    applyFilters();
+  }
+
+  // Edit mode functionality
+  function initEditMode() {
+    const editToggle = document.getElementById('edit-toggle');
+    const editables = document.querySelectorAll('.editable');
+    let editMode = false;
+    
+    // Load saved content from localStorage
+    loadSavedContent();
+    
+    if (editToggle) {
+      editToggle.addEventListener('click', function() {
+        editMode = !editMode;
+        toggleEditMode();
+      });
+    }
+    
+    function toggleEditMode() {
+      if (editMode) {
+        // Enable edit mode
+        editables.forEach(element => {
+          element.contentEditable = true;
+          element.classList.add('edit-active');
+        });
+        editToggle.innerHTML = `
+          <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+          </svg>
+          <span>Save Changes</span>
+        `;
+        editToggle.classList.add('bg-green-600', 'hover:bg-green-700');
+        editToggle.classList.remove('bg-clay', 'hover:bg-clay/90');
+        
+        // Add save functionality
+        addSaveListeners();
+      } else {
+        // Disable edit mode
+        editables.forEach(element => {
+          element.contentEditable = false;
+          element.classList.remove('edit-active');
+        });
+        editToggle.innerHTML = `
+          <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+          </svg>
+          <span>Edit Mode</span>
+        `;
+        editToggle.classList.remove('bg-green-600', 'hover:bg-green-700');
+        editToggle.classList.add('bg-clay', 'hover:bg-clay/90');
+        
+        // Save content to localStorage
+        saveContent();
+        showSaveNotification();
+      }
+    }
+    
+    function addSaveListeners() {
+      editables.forEach(element => {
+        element.addEventListener('blur', function() {
+          // Auto-save on blur
+          saveContent();
+        });
+        
+        element.addEventListener('keydown', function(e) {
+          // Save on Ctrl+S or Cmd+S
+          if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+            e.preventDefault();
+            saveContent();
+            showSaveNotification();
+          }
+        });
+      });
+    }
+    
+    function saveContent() {
+      const content = {};
+      editables.forEach((element, index) => {
+        const key = element.tagName.toLowerCase() + '_' + index;
+        content[key] = element.innerHTML;
+      });
+      localStorage.setItem('soulcare_content', JSON.stringify(content));
+    }
+    
+    function loadSavedContent() {
+      const savedContent = localStorage.getItem('soulcare_content');
+      if (savedContent) {
+        try {
+          const content = JSON.parse(savedContent);
+          editables.forEach((element, index) => {
+            const key = element.tagName.toLowerCase() + '_' + index;
+            if (content[key]) {
+              element.innerHTML = content[key];
+            }
+          });
+        } catch (e) {
+          console.log('No saved content found or error loading content');
+        }
+      }
+    }
+    
+    function showSaveNotification() {
+      // Create notification element
+      const notification = document.createElement('div');
+      notification.className = 'save-notification';
+      notification.innerHTML = `
+        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+        </svg>
+        Changes saved successfully!
+      `;
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: #C49A6C;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        z-index: 1001;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        animation: slideIn 0.3s ease;
+      `;
+      
+      // Add animation styles
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes slideIn {
+          from { transform: translateX(100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+          from { transform: translateX(0); opacity: 1; }
+          to { transform: translateX(100%); opacity: 0; }
+        }
+      `;
+      document.head.appendChild(style);
+      
+      document.body.appendChild(notification);
+      
+      // Remove notification after 3 seconds
+      setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => {
+          if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+          }
+        }, 300);
+      }, 3000);
+    }
+  }
+
+  // Load content from CMS
+  async function loadCMSContent() {
+    try {
+      // Load hero content
+      const heroResponse = await fetch('./content/hero/hero.md');
+      if (heroResponse.ok) {
+        const heroText = await heroResponse.text();
+        const heroData = parseMarkdownFrontmatter(heroText);
+        updateHeroContent(heroData);
+      }
+
+      // Load team content
+      const teamFiles = ['sarah-johnson.md', 'michael-chen.md', 'maria-rodriguez.md'];
+      const teamData = [];
+      
+      for (const file of teamFiles) {
+        const response = await fetch(`./content/team/${file}`);
+        if (response.ok) {
+          const text = await response.text();
+          const data = parseMarkdownFrontmatter(text);
+          teamData.push(data);
+        }
+      }
+      
+      updateTeamContent(teamData);
+
+      // Load settings
+      const settingsFiles = ['general.json', 'navigation.json', 'team_section.json', 'footer.json'];
+      const settings = {};
+      
+      for (const file of settingsFiles) {
+        const response = await fetch(`./content/settings/${file}`);
+        if (response.ok) {
+          const data = await response.json();
+          Object.assign(settings, data);
+        }
+      }
+      
+      updateSettingsContent(settings);
+
+    } catch (error) {
+      console.log('CMS content not available, using default content');
+    }
+  }
+
+  function parseMarkdownFrontmatter(text) {
+    const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
+    const match = text.match(frontmatterRegex);
+    
+    if (match) {
+      const frontmatter = match[1];
+      const content = match[2];
+      const data = {};
+      
+      // Simple YAML parsing for our use case
+      frontmatter.split('\n').forEach(line => {
+        const colonIndex = line.indexOf(':');
+        if (colonIndex > 0) {
+          const key = line.substring(0, colonIndex).trim();
+          let value = line.substring(colonIndex + 1).trim();
+          
+          // Remove quotes
+          if ((value.startsWith('"') && value.endsWith('"')) || 
+              (value.startsWith("'") && value.endsWith("'"))) {
+            value = value.slice(1, -1);
+          }
+          
+          data[key] = value;
+        }
+      });
+      
+      return data;
+    }
+    
+    return {};
+  }
+
+  function updateHeroContent(data) {
+    if (data.badge) {
+      const badge = document.querySelector('[data-hero-badge]');
+      if (badge) badge.textContent = data.badge;
+    }
+    
+    if (data.title) {
+      const title = document.querySelector('[data-hero-title]');
+      if (title) title.textContent = data.title;
+    }
+    
+    if (data.subtitle) {
+      const subtitle = document.querySelector('[data-hero-subtitle]');
+      if (subtitle) subtitle.textContent = data.subtitle;
+    }
+    
+    if (data.booking_text) {
+      const bookingText = document.querySelector('[data-hero-booking-text]');
+      if (bookingText) bookingText.textContent = data.booking_text;
+    }
+    
+    if (data.booking_url) {
+      const bookingUrl = document.querySelector('[data-hero-booking-url]');
+      if (bookingUrl) bookingUrl.href = data.booking_url;
+    }
+    
+    if (data.services_text) {
+      const servicesText = document.querySelector('[data-hero-services-text]');
+      if (servicesText) servicesText.textContent = data.services_text;
+    }
+    
+    if (data.quote) {
+      const quote = document.querySelector('[data-hero-quote]');
+      if (quote) quote.textContent = data.quote;
+    }
+    
+    if (data.quote_author) {
+      const quoteAuthor = document.querySelector('[data-hero-quote-author]');
+      if (quoteAuthor) quoteAuthor.textContent = data.quote_author;
+    }
+  }
+
+  function updateTeamContent(teamData) {
+    const teamGrid = document.querySelector('[data-team-grid]');
+    if (!teamGrid) return;
+    
+    // Clear existing team cards
+    teamGrid.innerHTML = '';
+    
+    teamData.forEach(member => {
+      const teamCard = createTeamCard(member);
+      teamGrid.appendChild(teamCard);
+    });
+  }
+
+  function createTeamCard(member) {
+    const li = document.createElement('li');
+    li.className = 'team-card';
+    li.setAttribute('data-tags', member.tags ? member.tags.join(' ') : '');
+    
+    li.innerHTML = `
+      <div class="bg-white rounded-lg shadow-sm ring-1 ring-charcoal/10 overflow-hidden h-full flex flex-col">
+        <div class="aspect-square bg-gradient-to-br from-sand to-clay/20 flex items-center justify-center">
+          <svg class="h-16 w-16 text-charcoal/40" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+        <div class="p-4 flex-1 flex flex-col">
+          <h3 class="font-heading text-lg font-semibold text-charcoal editable" contenteditable="true" data-name>${member.name || ''}</h3>
+          <p class="text-sm text-charcoal/70 mt-1 editable" contenteditable="true">${member.title || ''}</p>
+          <p class="text-sm text-charcoal/80 mt-2 flex-1 editable" contenteditable="true">${member.description || ''}</p>
+          <div class="mt-4">
+            <a href="${member.booking_url || '#'}" class="team-cta inline-flex items-center justify-center w-full rounded-md bg-clay px-3 py-2 text-sm font-semibold text-charcoal hover:bg-clay/90 transition">
+              <span class="cta-label editable" contenteditable="true">${member.booking_text || 'Book Now'}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    `;
+    
+    return li;
+  }
+
+  function updateSettingsContent(settings) {
+    // Update brand name
+    if (settings.brand_name) {
+      const brandElements = document.querySelectorAll('.editable');
+      brandElements.forEach(el => {
+        if (el.textContent.includes('Soul Care Counselling')) {
+          el.textContent = settings.brand_name;
+        }
+      });
+    }
+    
+    // Update team section
+    if (settings.badge) {
+      const badge = document.querySelector('[data-team-badge]');
+      if (badge) badge.textContent = settings.badge;
+    }
+    
+    if (settings.title) {
+      const title = document.querySelector('[data-team-title]');
+      if (title) title.textContent = settings.title;
+    }
+    
+    if (settings.subtitle) {
+      const subtitle = document.querySelector('[data-team-subtitle]');
+      if (subtitle) subtitle.textContent = settings.subtitle;
+    }
+  }
+
+  (async function boot(){
+    await includePartials();        // header now in DOM
+    wireSimpleDrawer();             // hook up open/close
+    setActiveNav();                 // underline current link(s)
+    await loadCMSContent();         // load content from CMS
+    initTeamSearch();               // team search functionality
+    initEditMode();                 // edit mode functionality
+    const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+{
+  "main_nav": [
+    {
+      "label": "Home",
+      "url": "./index.html"
+    },
+    {
+      "label": "About Us",
+      "url": "./about.html"
+    },
+    {
+      "label": "Core Values",
+      "url": "./core-values.html"
+    },
+    {
+      "label": "Services",
+      "url": "./services.html"
+    },
+    {
+      "label": "Areas of Focus",
+      "url": "./areas.html"
+    }
+  ],
+  "footer_nav": [
+    {
+      "label": "FAQs",
+      "url": "./faq.html"
+    },
+    {
+      "label": "Notes from Soul Care",
+      "url": "./notes.html"
+    },
+    {
+      "label": "Wellness Workshops",
+      "url": "./workshops.html"
+    },
+    {
+      "label": "Contact",
+      "url": "./contact.html"
+    }
+  ]
+}

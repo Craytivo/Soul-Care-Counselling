@@ -1,0 +1,131 @@
+backend:
+  name: git-gateway
+  branch: main # Branch to update (optional; defaults to master)
+
+media_folder: "assets/img/uploads" # Media files will be stored in the repo under assets/img/uploads
+public_folder: "/assets/img/uploads" # The src attribute for uploaded media will begin with /assets/img/uploads
+
+collections:
+  # Hero Section
+  - name: "hero"
+    label: "Hero Section"
+    folder: "content/hero"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Badge Text", name: "badge", widget: "string"}
+      - {label: "Main Title", name: "title", widget: "string"}
+      - {label: "Subtitle", name: "subtitle", widget: "text"}
+      - {label: "Booking Button Text", name: "booking_text", widget: "string"}
+      - {label: "Booking URL", name: "booking_url", widget: "string"}
+      - {label: "Services Button Text", name: "services_text", widget: "string"}
+      - {label: "Quote", name: "quote", widget: "text"}
+      - {label: "Quote Author", name: "quote_author", widget: "string"}
+      - label: "Features"
+        name: "features"
+        widget: "list"
+        fields:
+          - {label: "Feature Text", name: "text", widget: "string"}
+
+  # Team Members
+  - name: "team"
+    label: "Team Members"
+    folder: "content/team"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Name", name: "name", widget: "string"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Booking Button Text", name: "booking_text", widget: "string"}
+      - {label: "Booking URL", name: "booking_url", widget: "string"}
+      - label: "Tags"
+        name: "tags"
+        widget: "list"
+        default: []
+        field: {label: "Tag", name: "tag", widget: "string"}
+      - {label: "Photo", name: "photo", widget: "image", required: false}
+
+  # Site Settings
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - label: "General Settings"
+        name: "general"
+        file: "content/settings/general.json"
+        fields:
+          - {label: "Site Title", name: "site_title", widget: "string"}
+          - {label: "Site Description", name: "site_description", widget: "text"}
+          - {label: "Brand Name", name: "brand_name", widget: "string"}
+          - {label: "Contact Email", name: "contact_email", widget: "string"}
+          - {label: "Contact Phone", name: "contact_phone", widget: "string"}
+          - {label: "Contact Address", name: "contact_address", widget: "text"}
+
+      - label: "Navigation"
+        name: "navigation"
+        file: "content/settings/navigation.json"
+        fields:
+          - label: "Main Navigation"
+            name: "main_nav"
+            widget: "list"
+            fields:
+              - {label: "Label", name: "label", widget: "string"}
+              - {label: "URL", name: "url", widget: "string"}
+          - label: "Footer Navigation"
+            name: "footer_nav"
+            widget: "list"
+            fields:
+              - {label: "Label", name: "label", widget: "string"}
+              - {label: "URL", name: "url", widget: "string"}
+
+      - label: "Team Section"
+        name: "team_section"
+        file: "content/settings/team_section.json"
+        fields:
+          - {label: "Badge", name: "badge", widget: "string"}
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Subtitle", name: "subtitle", widget: "text"}
+
+      - label: "Footer"
+        name: "footer"
+        file: "content/settings/footer.json"
+        fields:
+          - {label: "Company Description", name: "description", widget: "text"}
+          - {label: "Copyright Text", name: "copyright", widget: "string"}
+          - label: "Quick Links"
+            name: "quick_links"
+            widget: "list"
+            fields:
+              - {label: "Label", name: "label", widget: "string"}
+              - {label: "URL", name: "url", widget: "string"}
+          - label: "Resources"
+            name: "resources"
+            widget: "list"
+            fields:
+              - {label: "Label", name: "label", widget: "string"}
+              - {label: "URL", name: "url", widget: "string"}
+
+  # Pages
+  - name: "pages"
+    label: "Pages"
+    files:
+      - label: "About Page"
+        name: "about"
+        file: "content/pages/about.md"
+        fields:
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Content", name: "body", widget: "markdown"}
+
+      - label: "Services Page"
+        name: "services"
+        file: "content/pages/services.md"
+        fields:
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Content", name: "body", widget: "markdown"}
+
+      - label: "Contact Page"
+        name: "contact"
+        file: "content/pages/contact.md"
+        fields:
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Content", name: "body", widget: "markdown"}
