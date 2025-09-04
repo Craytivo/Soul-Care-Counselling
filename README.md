@@ -1,88 +1,36 @@
-# Soul Care Counselling Website
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-A simple, clean website built specifically for Netlify CMS management.
+## Getting Started
 
-## Features
+First, run the development server:
 
-- ✅ **Clean, Simple Design** - Easy to understand and maintain
-- ✅ **Netlify CMS Integration** - Edit content through admin panel
-- ✅ **Completely Secure** - No editing capabilities on live site
-- ✅ **Responsive Design** - Works on all devices
-- ✅ **Fast Loading** - Optimized for performance
-
-## Content Management
-
-All content is managed through Netlify CMS at `/admin/`:
-
-### Site Settings
-- **General Settings** - Site title, description, contact info
-- **Hero Section** - Main banner content and call-to-action
-- **Team Section** - Team members and their information
-- **Footer** - Footer content and branding
-
-### How to Edit Content
-
-1. **Access Admin Panel:**
-   - Go to `https://your-site.netlify.app/admin/`
-   - Log in with your Netlify Identity credentials
-
-2. **Edit Content:**
-   - Click on any section (General, Hero, Team, Footer)
-   - Make your changes
-   - Click "Save" to publish
-
-3. **View Changes:**
-   - Changes appear on your live site immediately
-   - No build process required
-
-## Security
-
-- **No Live Editing** - Users cannot edit content on the live site
-- **Admin Only** - Only authenticated users can access `/admin/`
-- **Git-Based** - All changes are tracked in your repository
-
-## Setup
-
-1. **Deploy to Netlify:**
-   - Connect your GitHub repository
-   - Enable Git Gateway in Netlify settings
-   - Enable Identity in Netlify settings
-
-2. **Configure Admin Access:**
-   - Set Identity registration to "Invite only"
-   - Invite yourself as an admin user
-   - Access admin panel at `/admin/`
-
-## File Structure
-
-```
-/
-├── index.html              # Main website file
-├── admin/
-│   ├── index.html          # CMS admin interface
-│   └── config.yml          # CMS configuration
-├── content/
-│   └── settings/           # Content files
-│       ├── general.json    # General site settings
-│       ├── hero.json       # Hero section content
-│       ├── team.json       # Team section content
-│       └── footer.json     # Footer content
-├── netlify.toml            # Netlify configuration
-└── README.md               # This file
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-## Customization
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-The website is designed to be easily expandable:
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-- **Add New Sections** - Update `index.html` and `admin/config.yml`
-- **Add New Content Types** - Create new collections in CMS config
-- **Modify Styling** - Update Tailwind classes in `index.html`
-- **Add Pages** - Create new HTML files and add to navigation
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Support
+## Learn More
 
-For questions or issues:
-1. Check Netlify documentation
-2. Review CMS configuration
-3. Verify Identity and Git Gateway settings
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

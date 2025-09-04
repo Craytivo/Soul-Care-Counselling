@@ -1,6 +1,0 @@
-# Netlify CMS Admin
-/admin/*  /admin/index.html  200
-
-# API and Identity
-/.netlify/identity/*  /.netlify/identity  200
-/.netlify/git/*  /.netlify/git  200
