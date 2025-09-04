@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager</title>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-</head>
-<body>
-  <!-- Include the script that builds the page and powers Netlify CMS -->
   <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+  
+  <!-- Visual Editor Integration -->
   <script>
+    // Initialize Netlify Identity
     if (window.netlifyIdentity) {
       window.netlifyIdentity.on("init", user => {
         if (!user) {
@@ -19,6 +19,180 @@
         }
       });
     }
+
+    // Visual Editor Configuration
+    CMS.registerEditorComponent({
+      id: "visual-editor",
+      label: "Visual Editor",
+      fields: [
+        {
+          name: "content",
+          label: "Content",
+          widget: "markdown"
+        }
+      ],
+      pattern: /^visual-editor$/,
+      fromBlock: function(match) {
+        return {
+          content: match[1]
+        };
+      },
+      toBlock: function(obj) {
+        return `visual-editor: ${obj.content}`;
+      },
+      toPreview: function(obj) {
+        return obj.content;
+      }
+    });
+
+    // Enhanced preview for visual editing
+    CMS.registerPreviewStyle("/assets/css/main.css");
+    CMS.registerPreviewTemplate("hero", HeroPreview);
+    CMS.registerPreviewTemplate("team", TeamPreview);
+    CMS.registerPreviewTemplate("settings", SettingsPreview);
+
+    // Preview templates
+    function HeroPreview({ entry, widgetFor }) {
+      const title = entry.getIn(['data', 'title']);
+      const subtitle = entry.getIn(['data', 'subtitle']);
+      const badge = entry.getIn(['data', 'badge']);
+      
+      return h('div', { className: 'hero-preview' },
+        h('div', { className: 'hero-badge' }, badge),
+        h('h1', { className: 'hero-title' }, title),
+        h('p', { className: 'hero-subtitle' }, subtitle)
+      );
+    }
+
+    function TeamPreview({ entry, widgetFor }) {
+      const name = entry.getIn(['data', 'name']);
+      const title = entry.getIn(['data', 'title']);
+      const description = entry.getIn(['data', 'description']);
+      
+      return h('div', { className: 'team-preview' },
+        h('h3', { className: 'team-name' }, name),
+        h('p', { className: 'team-title' }, title),
+        h('p', { className: 'team-description' }, description)
+      );
+    }
+
+    function SettingsPreview({ entry, widgetFor }) {
+      const siteTitle = entry.getIn(['data', 'site_title']);
+      const brandName = entry.getIn(['data', 'brand_name']);
+      
+      return h('div', { className: 'settings-preview' },
+        h('h2', { className: 'site-title' }, siteTitle),
+        h('p', { className: 'brand-name' }, brandName)
+      );
+    }
+  </script>
+
+  <style>
+    /* Visual Editor Styles */
+    .hero-preview {
+      padding: 20px;
+      border: 2px dashed #C49A6C;
+      border-radius: 8px;
+      margin: 10px 0;
+      background: #F8F5EC;
+    }
+    
+    .hero-badge {
+      background: #E6DDC6;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+    
+    .hero-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #23201B;
+      margin: 10px 0;
+    }
+    
+    .hero-subtitle {
+      color: #23201B;
+      opacity: 0.8;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+    
+    .team-preview {
+      padding: 15px;
+      border: 1px solid #C49A6C;
+      border-radius: 8px;
+      margin: 10px 0;
+      background: white;
+    }
+    
+    .team-name {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #23201B;
+      margin: 0 0 5px 0;
+    }
+    
+    .team-title {
+      color: #23201B;
+      opacity: 0.7;
+      font-size: 0.875rem;
+      margin: 0 0 10px 0;
+    }
+    
+    .team-description {
+      color: #23201B;
+      opacity: 0.8;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      margin: 0;
+    }
+    
+    .settings-preview {
+      padding: 15px;
+      border: 1px solid #6E4B3A;
+      border-radius: 8px;
+      margin: 10px 0;
+      background: #6E4B3A;
+      color: #F8F5EC;
+    }
+    
+    .site-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 0 0 10px 0;
+    }
+    
+    .brand-name {
+      font-size: 1rem;
+      margin: 0;
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    // Initialize CMS
+    CMS.init({
+      config: {
+        load_config_file: true,
+        backend: {
+          name: 'git-gateway',
+          branch: 'main'
+        },
+        media_folder: 'assets/img/uploads',
+        public_folder: '/assets/img/uploads',
+        display_url: 'https://soul-care-counselling.netlify.app',
+        site_url: 'https://soul-care-counselling.netlify.app'
+      }
+    });
   </script>
 </body>
 </html>

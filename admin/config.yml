@@ -1,40 +1,44 @@
 backend:
   name: git-gateway
-  branch: main # Branch to update (optional; defaults to master)
-
-# Enable Visual Editor
-publish_mode: editorial_workflow
-
-media_folder: "assets/img/uploads" # Media files will be stored in the repo under assets/img/uploads
-public_folder: "/assets/img/uploads" # The src attribute for uploaded media will begin with /assets/img/uploads
+  branch: main
 
 # Visual Editor Configuration
+publish_mode: editorial_workflow
 display_url: https://soul-care-counselling.netlify.app
 site_url: https://soul-care-counselling.netlify.app
 
+# Media Configuration
+media_folder: "assets/img/uploads"
+public_folder: "/assets/img/uploads"
+
+# Visual Editor Settings
+local_backend: false
+load_config_file: true
+
 collections:
-  # Hero Section
+  # Hero Section - Single Page Content
   - name: "hero"
     label: "Hero Section"
-    folder: "content/hero"
-    create: true
-    slug: "{{slug}}"
-    preview_path: "/"
-    fields:
-      - {label: "Badge Text", name: "badge", widget: "string", hint: "Small text above the main title"}
-      - {label: "Main Title", name: "title", widget: "string", hint: "Large heading text"}
-      - {label: "Subtitle", name: "subtitle", widget: "text", hint: "Description text below the title"}
-      - {label: "Booking Button Text", name: "booking_text", widget: "string", hint: "Text for the main call-to-action button"}
-      - {label: "Booking URL", name: "booking_url", widget: "string", hint: "Link for the booking button"}
-      - {label: "Services Button Text", name: "services_text", widget: "string", hint: "Text for the secondary button"}
-      - {label: "Quote", name: "quote", widget: "text", hint: "Inspirational quote text"}
-      - {label: "Quote Author", name: "quote_author", widget: "string", hint: "Who said the quote"}
-      - label: "Features"
-        name: "features"
-        widget: "list"
-        hint: "List of key features/benefits"
+    files:
+      - label: "Hero Content"
+        name: "hero"
+        file: "content/hero/hero.md"
+        preview_path: "/"
         fields:
-          - {label: "Feature Text", name: "text", widget: "string"}
+          - {label: "Badge Text", name: "badge", widget: "string", hint: "Small text above the main title"}
+          - {label: "Main Title", name: "title", widget: "string", hint: "Large heading text"}
+          - {label: "Subtitle", name: "subtitle", widget: "text", hint: "Description text below the title"}
+          - {label: "Booking Button Text", name: "booking_text", widget: "string", hint: "Text for the main call-to-action button"}
+          - {label: "Booking URL", name: "booking_url", widget: "string", hint: "Link for the booking button"}
+          - {label: "Services Button Text", name: "services_text", widget: "string", hint: "Text for the secondary button"}
+          - {label: "Quote", name: "quote", widget: "text", hint: "Inspirational quote text"}
+          - {label: "Quote Author", name: "quote_author", widget: "string", hint: "Who said the quote"}
+          - label: "Features"
+            name: "features"
+            widget: "list"
+            hint: "List of key features/benefits"
+            fields:
+              - {label: "Feature Text", name: "text", widget: "string"}
 
   # Team Members
   - name: "team"
@@ -69,12 +73,30 @@ collections:
           - {label: "Site Title", name: "site_title", widget: "string", hint: "Main site title for SEO"}
           - {label: "Site Description", name: "site_description", widget: "text", hint: "Site description for SEO"}
           - {label: "Brand Name", name: "brand_name", widget: "string", hint: "Company/brand name"}
-          - {label: "Contact Email", name: "contact_email", widget: "string", hint: "Main contact email"}
-          - {label: "Contact Phone", name: "contact_phone", widget: "string", hint: "Main contact phone"}
-          - {label: "Contact Address", name: "contact_address", widget: "text", hint: "Physical address"}
 
-      - label: "Navigation"
-        name: "navigation"
+      - label: "Team Section"
+        name: "team_section"
+        file: "content/settings/team_section.json"
+        preview_path: "/#team"
+        fields:
+          - {label: "Badge", name: "team_badge", widget: "string", hint: "Small text above team section title"}
+          - {label: "Title", name: "team_title", widget: "string", hint: "Main team section heading"}
+          - {label: "Subtitle", name: "team_subtitle", widget: "text", hint: "Description of the team section"}
+
+      - label: "Footer"
+        name: "footer"
+        file: "content/settings/footer.json"
+        preview_path: "/"
+        fields:
+          - {label: "Company Description", name: "footer_description", widget: "text", hint: "Brief company description for footer"}
+          - {label: "Copyright Text", name: "footer_copyright", widget: "string", hint: "Copyright notice text"}
+
+  # Navigation
+  - name: "navigation"
+    label: "Navigation"
+    files:
+      - label: "Main Navigation"
+        name: "main_nav"
         file: "content/settings/navigation.json"
         preview_path: "/"
         fields:
@@ -89,37 +111,6 @@ collections:
             name: "footer_nav"
             widget: "list"
             hint: "Footer navigation menu items"
-            fields:
-              - {label: "Label", name: "label", widget: "string"}
-              - {label: "URL", name: "url", widget: "string"}
-
-      - label: "Team Section"
-        name: "team_section"
-        file: "content/settings/team_section.json"
-        preview_path: "/#team"
-        fields:
-          - {label: "Badge", name: "badge", widget: "string", hint: "Small text above team section title"}
-          - {label: "Title", name: "title", widget: "string", hint: "Main team section heading"}
-          - {label: "Subtitle", name: "subtitle", widget: "text", hint: "Description of the team section"}
-
-      - label: "Footer"
-        name: "footer"
-        file: "content/settings/footer.json"
-        preview_path: "/"
-        fields:
-          - {label: "Company Description", name: "description", widget: "text", hint: "Brief company description for footer"}
-          - {label: "Copyright Text", name: "copyright", widget: "string", hint: "Copyright notice text"}
-          - label: "Quick Links"
-            name: "quick_links"
-            widget: "list"
-            hint: "Quick access links in footer"
-            fields:
-              - {label: "Label", name: "label", widget: "string"}
-              - {label: "URL", name: "url", widget: "string"}
-          - label: "Resources"
-            name: "resources"
-            widget: "list"
-            hint: "Resource links in footer"
             fields:
               - {label: "Label", name: "label", widget: "string"}
               - {label: "URL", name: "url", widget: "string"}

@@ -1,21 +1,21 @@
 [build]
   publish = "."
-  command = "echo 'No build step required'"
+  command = ""
 
 [[redirects]]
   from = "/admin/*"
   to = "/admin/index.html"
   status = 200
 
-[[redirects]]
-  from = "/.netlify/identity/*"
-  to = "/.netlify/identity"
-  status = 200
-
-[[redirects]]
-  from = "/.netlify/git/*"
-  to = "/.netlify/git"
-  status = 200
-
 [build.environment]
   NODE_VERSION = "18"
+
+# Visual Editor Configuration
+[context.production.environment]
+  NETLIFY_CMS_BACKEND = "git-gateway"
+  NETLIFY_CMS_PREVIEW_PATH = "/"
+
+# Enable Visual Editor
+[context.production]
+  command = ""
+  publish = "."

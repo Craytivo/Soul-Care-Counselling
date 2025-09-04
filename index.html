@@ -56,6 +56,28 @@
     line-clamp: 2;           /* standard property */
     overflow: hidden;
   }
+  
+  /* Visual Editor Styles */
+  [data-visual-editor] {
+    position: relative;
+  }
+  
+  [data-visual-editor]:hover::after {
+    content: "✏️";
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #C49A6C;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    z-index: 1000;
+  }
 </style>
 </head>
 <body class="bg-cream text-charcoal font-body antialiased">
@@ -64,16 +86,16 @@
     <!-- LEFT: Brand -->
     <a href="./index.html" class="flex items-center gap-2">
       <span class="inline-block h-9 w-9 rounded-md bg-cream/10 ring-1 ring-cream/20"></span>
-      <span class="text-sm sm:text-base font-semibold tracking-wide">Soul Care Counselling</span>
+      <span class="text-sm sm:text-base font-semibold tracking-wide" data-visual-editor="brand-name">Soul Care Counselling</span>
     </a>
 
     <!-- CENTER: Desktop nav (5 items) -->
     <nav class="hidden lg:flex items-center justify-center gap-6" aria-label="Primary">
-      <a href="./index.html"        class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="index.html">Home</a>
-      <a href="./about.html"        class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="about.html">About Us</a>
-      <a href="./core-values.html"  class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="core-values.html">Core Values</a>
-      <a href="./services.html"     class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="services.html">Services</a>
-      <a href="./areas.html"        class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="areas.html">Areas of Focus</a>
+      <a href="./index.html"        class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="index.html" data-visual-editor="nav-home">Home</a>
+      <a href="./about.html"        class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="about.html" data-visual-editor="nav-about">About Us</a>
+      <a href="./core-values.html"  class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="core-values.html" data-visual-editor="nav-values">Core Values</a>
+      <a href="./services.html"     class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="services.html" data-visual-editor="nav-services">Services</a>
+      <a href="./areas.html"        class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="areas.html" data-visual-editor="nav-areas">Areas of Focus</a>
     </nav>
 
     <!-- RIGHT: Hamburger (fixed size) -->
@@ -97,7 +119,7 @@
 
   <!-- Sticky header inside panel -->
   <div class="sticky top-0 bg-bark/95 backdrop-blur px-4 py-3 border-b border-cream/15 flex items-center justify-between">
-    <span class="text-sm font-semibold tracking-wide uppercase">Menu</span>
+    <span class="text-sm font-semibold tracking-wide uppercase" data-visual-editor="menu-title">Menu</span>
     <button id="menuClose" class="inline-flex items-center justify-center rounded-md p-2 ring-1 ring-cream/20 hover:bg-cream/10" aria-label="Close menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-cream" aria-hidden="true">
         <path d="M18 6 6 18M6 6l12 12"/>
@@ -108,23 +130,23 @@
   <!-- FULL static list (each link = block so it stacks) -->
   <nav class="px-4 py-4 text-sm" aria-label="All pages">
     <!-- desktop items duplicated -->
-    <a href="./index.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="index.html">Home</a>
-    <a href="./about.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="about.html">About Us</a>
-    <a href="./core-values.html"  class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="core-values.html">Core Values</a>
-    <a href="./services.html"     class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="services.html">Services</a>
-    <a href="./areas.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="areas.html">Areas of Focus</a>
+    <a href="./index.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="index.html" data-visual-editor="mobile-nav-home">Home</a>
+    <a href="./about.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="about.html" data-visual-editor="mobile-nav-about">About Us</a>
+    <a href="./core-values.html"  class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="core-values.html" data-visual-editor="mobile-nav-values">Core Values</a>
+    <a href="./services.html"     class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="services.html" data-visual-editor="mobile-nav-services">Services</a>
+    <a href="./areas.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="areas.html" data-visual-editor="mobile-nav-areas">Areas of Focus</a>
 
     <hr class="my-3 border-cream/15">
 
     <!-- extras -->
-    <a href="./faq.html"          class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="faq.html">FAQs</a>
-    <a href="./notes.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="notes.html">Notes from Soul Care</a>
-    <a href="./workshops.html"    class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="workshops.html">Wellness Workshops</a>
-    <a href="./contact.html"      class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="contact.html">Contact</a>
+    <a href="./faq.html"          class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="faq.html" data-visual-editor="mobile-nav-faq">FAQs</a>
+    <a href="./notes.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="notes.html" data-visual-editor="mobile-nav-notes">Notes from Soul Care</a>
+    <a href="./workshops.html"    class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="workshops.html" data-visual-editor="mobile-nav-workshops">Wellness Workshops</a>
+    <a href="./contact.html"      class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="contact.html" data-visual-editor="mobile-nav-contact">Contact</a>
 
     <a href="https://thesoulcarecounsellor.janeapp.com"
        target="_blank" rel="noopener noreferrer"
-       class="mt-4 inline-flex items-center justify-center rounded-md bg-clay px-4 py-2 font-semibold tracking-wide text-charcoal hover:bg-clay/90">
+       class="mt-4 inline-flex items-center justify-center rounded-md bg-clay px-4 py-2 font-semibold tracking-wide text-charcoal hover:bg-clay/90" data-visual-editor="mobile-booking-btn">
       Book a Free Consultation
     </a>
   </nav>
@@ -133,52 +155,52 @@
   <main id="main" class="mx-auto max-w-7xl px-4 py-12 min-h-[60vh]">
 
     <!-- HERO (no-crop: image is always fully visible) -->
-    <section class="relative bg-cream">
+    <section class="relative bg-cream" data-visual-editor="hero-section">
       <div class="mx-auto max-w-7xl px-4 py-12 md:py-16">
         <div class="grid items-center gap-8 md:grid-cols-12">
           <!-- Text column (premium) -->
           <div class="md:col-span-4">
-            <span class="inline-flex items-center gap-2 rounded-full bg-sand/70 px-3 py-1 ring-1 ring-charcoal/10 uppercase tracking-[.22em] text-[11px] text-charcoal/80" data-hero-badge>
+            <span class="inline-flex items-center gap-2 rounded-full bg-sand/70 px-3 py-1 ring-1 ring-charcoal/10 uppercase tracking-[.22em] text-[11px] text-charcoal/80" data-visual-editor="hero-badge" data-cms-field="badge">
               Faith-centered, culturally sensitive therapy
             </span>
 
-            <h1 class="mt-3 font-heading text-3xl md:text-4xl font-bold text-charcoal" data-hero-title>
+            <h1 class="mt-3 font-heading text-3xl md:text-4xl font-bold text-charcoal" data-visual-editor="hero-title" data-cms-field="title">
               Virtual therapy across Canada
             </h1>
 
-            <p class="mt-4 text-charcoal/80" data-hero-subtitle>
+            <p class="mt-4 text-charcoal/80" data-visual-editor="hero-subtitle" data-cms-field="subtitle">
               Providing compassionate, faith-centered therapy that honors your cultural background and personal journey toward healing and growth.
             </p>
 
             <div class="mt-6 flex flex-wrap gap-3">
-              <a href="https://thesoulcarecounsellor.janeapp.com" target="_blank" rel="noopener noreferrer" data-hero-booking-url
+              <a href="https://thesoulcarecounsellor.janeapp.com" target="_blank" rel="noopener noreferrer" data-visual-editor="hero-booking-btn" data-cms-field="booking_url"
                  class="inline-flex items-center justify-center rounded-lg bg-clay px-5 py-2.5 font-semibold text-charcoal shadow-sm ring-1 ring-charcoal/10 transition hover:bg-clay/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cream/60">
-                <span data-hero-booking-text>Book a Free Consultation</span>
+                <span data-cms-field="booking_text">Book a Free Consultation</span>
               </a>
-              <a href="./services.html"
+              <a href="./services.html" data-visual-editor="hero-services-btn"
                  class="inline-flex items-center justify-center rounded-lg bg-sand px-5 py-2.5 font-semibold text-charcoal shadow-sm ring-1 ring-charcoal/10 transition hover:bg-sand/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cream/60">
-                <span data-hero-services-text>View Services</span>
+                <span data-cms-field="services_text">View Services</span>
               </a>
             </div>
 
-            <ul class="mt-6 space-y-2 text-charcoal/80" data-hero-features>
+            <ul class="mt-6 space-y-2 text-charcoal/80" data-visual-editor="hero-features" data-cms-field="features">
               <li class="flex items-center gap-2">
                 <svg class="h-4 w-4 text-clay flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                 </svg>
-                <span>Virtual sessions across Canada</span>
+                <span data-cms-field="feature-1">Virtual sessions across Canada</span>
               </li>
               <li class="flex items-center gap-2">
                 <svg class="h-4 w-4 text-clay flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                 </svg>
-                <span>Faith-centered approach</span>
+                <span data-cms-field="feature-2">Faith-centered approach</span>
               </li>
               <li class="flex items-center gap-2">
                 <svg class="h-4 w-4 text-clay flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                 </svg>
-                <span>Culturally sensitive care</span>
+                <span data-cms-field="feature-3">Culturally sensitive care</span>
               </li>
             </ul>
           </div>
@@ -195,7 +217,7 @@
                       <svg class="h-16 w-16 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
                       </svg>
-                      <p class="text-sm">Calm, earthy therapy scene conveying warmth and care</p>
+                      <p class="text-sm" data-visual-editor="hero-image-caption">Calm, earthy therapy scene conveying warmth and care</p>
                     </div>
                   </div>
                 </div>
@@ -203,11 +225,11 @@
 
               <figcaption class="mt-4">
                 <blockquote class="relative pl-4 border-l-4 border-clay text-charcoal/90">
-                  <p class="font-heading text-lg md:text-xl italic leading-snug" data-hero-quote>
+                  <p class="font-heading text-lg md:text-xl italic leading-snug" data-visual-editor="hero-quote" data-cms-field="quote">
                     "Healing begins when we feel safe, understood, and valued for who we are."
                   </p>
                 </blockquote>
-                <div class="mt-2 text-sm text-charcoal/70" data-hero-quote-author>— Soul Care Counselling Team</div>
+                <div class="mt-2 text-sm text-charcoal/70" data-visual-editor="hero-quote-author" data-cms-field="quote_author">— Soul Care Counselling Team</div>
               </figcaption>
             </figure>
           </div>
@@ -216,12 +238,12 @@
     </section>
 
 <!-- TEAM -->
-<section id="team" class="mt-16 md:mt-24">
+<section id="team" class="mt-16 md:mt-24" data-visual-editor="team-section">
   <div class="mx-auto max-w-7xl">
     <header class="max-w-2xl">
-      <span class="inline-flex items-center gap-2 rounded-full bg-sand/70 px-3 py-1 ring-1 ring-charcoal/10 uppercase tracking-[.22em] text-[11px] text-charcoal/80" data-team-badge>Meet our team</span>
-      <h2 class="mt-3 font-heading text-2xl md:text-3xl font-bold text-charcoal" data-team-title>Experienced professionals dedicated to your healing</h2>
-      <p class="mt-3 text-charcoal/80" data-team-subtitle>Our diverse team of therapists, coaches, and wellness professionals brings together years of experience in faith-centered, culturally sensitive care.</p>
+      <span class="inline-flex items-center gap-2 rounded-full bg-sand/70 px-3 py-1 ring-1 ring-charcoal/10 uppercase tracking-[.22em] text-[11px] text-charcoal/80" data-visual-editor="team-badge" data-cms-field="team_badge">Meet our team</span>
+      <h2 class="mt-3 font-heading text-2xl md:text-3xl font-bold text-charcoal" data-visual-editor="team-title" data-cms-field="team_title">Experienced professionals dedicated to your healing</h2>
+      <p class="mt-3 text-charcoal/80" data-visual-editor="team-subtitle" data-cms-field="team_subtitle">Our diverse team of therapists, coaches, and wellness professionals brings together years of experience in faith-centered, culturally sensitive care.</p>
     </header>
 
     <!-- Toolbar -->
@@ -241,9 +263,9 @@
     </div>
 
     <!-- Grid -->
-    <ul role="list" class="mt-8 grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-stretch" data-team-grid>
+    <ul role="list" class="mt-8 grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-stretch" data-visual-editor="team-grid" data-cms-field="team_members">
       <!-- Team members will be loaded dynamically -->
-      <li class="team-card" data-tags="therapist qualifying">
+      <li class="team-card" data-tags="therapist qualifying" data-visual-editor="team-member">
         <div class="bg-white rounded-lg shadow-sm ring-1 ring-charcoal/10 overflow-hidden h-full flex flex-col">
           <div class="aspect-square bg-gradient-to-br from-sand to-clay/20 flex items-center justify-center">
             <svg class="h-16 w-16 text-charcoal/40" fill="currentColor" viewBox="0 0 20 20">
@@ -251,19 +273,19 @@
             </svg>
           </div>
           <div class="p-4 flex-1 flex flex-col">
-            <h3 class="font-heading text-lg font-semibold text-charcoal" data-name>Sarah Johnson</h3>
-            <p class="text-sm text-charcoal/70 mt-1">Registered Psychotherapist (Qualifying)</p>
-            <p class="text-sm text-charcoal/80 mt-2 flex-1">Specializing in anxiety, depression, and trauma recovery with a faith-centered approach.</p>
+            <h3 class="font-heading text-lg font-semibold text-charcoal" data-name data-cms-field="name">Sarah Johnson</h3>
+            <p class="text-sm text-charcoal/70 mt-1" data-cms-field="title">Registered Psychotherapist (Qualifying)</p>
+            <p class="text-sm text-charcoal/80 mt-2 flex-1" data-cms-field="description">Specializing in anxiety, depression, and trauma recovery with a faith-centered approach.</p>
             <div class="mt-4">
-              <a href="#" class="team-cta inline-flex items-center justify-center w-full rounded-md bg-clay px-3 py-2 text-sm font-semibold text-charcoal hover:bg-clay/90 transition">
-                <span class="cta-label">Book with Sarah</span>
+              <a href="#" class="team-cta inline-flex items-center justify-center w-full rounded-md bg-clay px-3 py-2 text-sm font-semibold text-charcoal hover:bg-clay/90 transition" data-cms-field="booking_url">
+                <span class="cta-label" data-cms-field="booking_text">Book with Sarah</span>
               </a>
             </div>
           </div>
         </div>
       </li>
       
-      <li class="team-card" data-tags="coach">
+      <li class="team-card" data-tags="coach" data-visual-editor="team-member">
         <div class="bg-white rounded-lg shadow-sm ring-1 ring-charcoal/10 overflow-hidden h-full flex flex-col">
           <div class="aspect-square bg-gradient-to-br from-sand to-clay/20 flex items-center justify-center">
             <svg class="h-16 w-16 text-charcoal/40" fill="currentColor" viewBox="0 0 20 20">
@@ -271,19 +293,19 @@
             </svg>
           </div>
           <div class="p-4 flex-1 flex flex-col">
-            <h3 class="font-heading text-lg font-semibold text-charcoal" data-name>Michael Chen</h3>
-            <p class="text-sm text-charcoal/70 mt-1">Wellness Coach</p>
-            <p class="text-sm text-charcoal/80 mt-2 flex-1">Life coaching and wellness strategies for personal growth and spiritual development.</p>
+            <h3 class="font-heading text-lg font-semibold text-charcoal" data-name data-cms-field="name">Michael Chen</h3>
+            <p class="text-sm text-charcoal/70 mt-1" data-cms-field="title">Wellness Coach</p>
+            <p class="text-sm text-charcoal/80 mt-2 flex-1" data-cms-field="description">Life coaching and wellness strategies for personal growth and spiritual development.</p>
             <div class="mt-4">
-              <a href="#" class="team-cta inline-flex items-center justify-center w-full rounded-md bg-clay px-3 py-2 text-sm font-semibold text-charcoal hover:bg-clay/90 transition">
-                <span class="cta-label">Book with Michael</span>
+              <a href="#" class="team-cta inline-flex items-center justify-center w-full rounded-md bg-clay px-3 py-2 text-sm font-semibold text-charcoal hover:bg-clay/90 transition" data-cms-field="booking_url">
+                <span class="cta-label" data-cms-field="booking_text">Book with Michael</span>
               </a>
             </div>
           </div>
         </div>
       </li>
       
-      <li class="team-card" data-tags="bilingual director qualifying">
+      <li class="team-card" data-tags="bilingual director qualifying" data-visual-editor="team-member">
         <div class="bg-white rounded-lg shadow-sm ring-1 ring-charcoal/10 overflow-hidden h-full flex flex-col">
           <div class="aspect-square bg-gradient-to-br from-sand to-clay/20 flex items-center justify-center">
             <svg class="h-16 w-16 text-charcoal/40" fill="currentColor" viewBox="0 0 20 20">
@@ -291,12 +313,12 @@
             </svg>
           </div>
           <div class="p-4 flex-1 flex flex-col">
-            <h3 class="font-heading text-lg font-semibold text-charcoal" data-name>Dr. Maria Rodriguez</h3>
-            <p class="text-sm text-charcoal/70 mt-1">Bilingual Director, RP (Qualifying)</p>
-            <p class="text-sm text-charcoal/80 mt-2 flex-1">Bilingual therapy services and clinical supervision with expertise in cultural sensitivity.</p>
+            <h3 class="font-heading text-lg font-semibold text-charcoal" data-name data-cms-field="name">Dr. Maria Rodriguez</h3>
+            <p class="text-sm text-charcoal/70 mt-1" data-cms-field="title">Bilingual Director, RP (Qualifying)</p>
+            <p class="text-sm text-charcoal/80 mt-2 flex-1" data-cms-field="description">Bilingual therapy services and clinical supervision with expertise in cultural sensitivity.</p>
             <div class="mt-4">
-              <a href="#" class="team-cta inline-flex items-center justify-center w-full rounded-md bg-clay px-3 py-2 text-sm font-semibold text-charcoal hover:bg-clay/90 transition">
-                <span class="cta-label">Book with Dr. Rodriguez</span>
+              <a href="#" class="team-cta inline-flex items-center justify-center w-full rounded-md bg-clay px-3 py-2 text-sm font-semibold text-charcoal hover:bg-clay/90 transition" data-cms-field="booking_url">
+                <span class="cta-label" data-cms-field="booking_text">Book with Dr. Rodriguez</span>
               </a>
             </div>
           </div>
@@ -308,33 +330,33 @@
 
   </main>
 
-  <footer class="bg-bark text-cream">
+  <footer class="bg-bark text-cream" data-visual-editor="footer-section">
     <div class="mx-auto max-w-7xl px-4 py-12">
       <div class="grid gap-8 md:grid-cols-3">
         <div>
-          <h3 class="font-heading text-lg font-semibold mb-4">Soul Care Counselling</h3>
-          <p class="text-cream/80 text-sm">Providing faith-centered, culturally sensitive therapy across Canada. Your journey to healing and growth starts here.</p>
+          <h3 class="font-heading text-lg font-semibold mb-4" data-visual-editor="footer-brand" data-cms-field="footer_brand">Soul Care Counselling</h3>
+          <p class="text-cream/80 text-sm" data-visual-editor="footer-description" data-cms-field="footer_description">Providing faith-centered, culturally sensitive therapy across Canada. Your journey to healing and growth starts here.</p>
         </div>
         <div>
-          <h4 class="font-heading text-sm font-semibold uppercase tracking-wide mb-4">Quick Links</h4>
+          <h4 class="font-heading text-sm font-semibold uppercase tracking-wide mb-4" data-visual-editor="footer-links-title">Quick Links</h4>
           <ul class="space-y-2 text-sm">
-            <li><a href="./index.html" class="text-cream/80 hover:text-cream transition">Home</a></li>
-            <li><a href="./about.html" class="text-cream/80 hover:text-cream transition">About Us</a></li>
-            <li><a href="./services.html" class="text-cream/80 hover:text-cream transition">Services</a></li>
-            <li><a href="./contact.html" class="text-cream/80 hover:text-cream transition">Contact</a></li>
+            <li><a href="./index.html" class="text-cream/80 hover:text-cream transition" data-visual-editor="footer-link-home">Home</a></li>
+            <li><a href="./about.html" class="text-cream/80 hover:text-cream transition" data-visual-editor="footer-link-about">About Us</a></li>
+            <li><a href="./services.html" class="text-cream/80 hover:text-cream transition" data-visual-editor="footer-link-services">Services</a></li>
+            <li><a href="./contact.html" class="text-cream/80 hover:text-cream transition" data-visual-editor="footer-link-contact">Contact</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="font-heading text-sm font-semibold uppercase tracking-wide mb-4">Resources</h4>
+          <h4 class="font-heading text-sm font-semibold uppercase tracking-wide mb-4" data-visual-editor="footer-resources-title">Resources</h4>
           <ul class="space-y-2 text-sm">
-            <li><a href="./faq.html" class="text-cream/80 hover:text-cream transition">FAQs</a></li>
-            <li><a href="./notes.html" class="text-cream/80 hover:text-cream transition">Notes from Soul Care</a></li>
-            <li><a href="./workshops.html" class="text-cream/80 hover:text-cream transition">Wellness Workshops</a></li>
+            <li><a href="./faq.html" class="text-cream/80 hover:text-cream transition" data-visual-editor="footer-link-faq">FAQs</a></li>
+            <li><a href="./notes.html" class="text-cream/80 hover:text-cream transition" data-visual-editor="footer-link-notes">Notes from Soul Care</a></li>
+            <li><a href="./workshops.html" class="text-cream/80 hover:text-cream transition" data-visual-editor="footer-link-workshops">Wellness Workshops</a></li>
           </ul>
         </div>
       </div>
       <div class="mt-8 pt-8 border-t border-cream/15 text-center text-sm text-cream/70">
-        <p>&copy; <span id="year">2024</span> Soul Care Counselling. All rights reserved.</p>
+        <p data-visual-editor="footer-copyright" data-cms-field="footer_copyright">&copy; <span id="year">2024</span> Soul Care Counselling. All rights reserved.</p>
       </div>
     </div>
   </footer>
@@ -520,48 +542,48 @@
 
   function updateHeroContent(data) {
     if (data.badge) {
-      const badge = document.querySelector('[data-hero-badge]');
+      const badge = document.querySelector('[data-cms-field="badge"]');
       if (badge) badge.textContent = data.badge;
     }
     
     if (data.title) {
-      const title = document.querySelector('[data-hero-title]');
+      const title = document.querySelector('[data-cms-field="title"]');
       if (title) title.textContent = data.title;
     }
     
     if (data.subtitle) {
-      const subtitle = document.querySelector('[data-hero-subtitle]');
+      const subtitle = document.querySelector('[data-cms-field="subtitle"]');
       if (subtitle) subtitle.textContent = data.subtitle;
     }
     
     if (data.booking_text) {
-      const bookingText = document.querySelector('[data-hero-booking-text]');
+      const bookingText = document.querySelector('[data-cms-field="booking_text"]');
       if (bookingText) bookingText.textContent = data.booking_text;
     }
     
     if (data.booking_url) {
-      const bookingUrl = document.querySelector('[data-hero-booking-url]');
+      const bookingUrl = document.querySelector('[data-cms-field="booking_url"]');
       if (bookingUrl) bookingUrl.href = data.booking_url;
     }
     
     if (data.services_text) {
-      const servicesText = document.querySelector('[data-hero-services-text]');
+      const servicesText = document.querySelector('[data-cms-field="services_text"]');
       if (servicesText) servicesText.textContent = data.services_text;
     }
     
     if (data.quote) {
-      const quote = document.querySelector('[data-hero-quote]');
+      const quote = document.querySelector('[data-cms-field="quote"]');
       if (quote) quote.textContent = data.quote;
     }
     
     if (data.quote_author) {
-      const quoteAuthor = document.querySelector('[data-hero-quote-author]');
+      const quoteAuthor = document.querySelector('[data-cms-field="quote_author"]');
       if (quoteAuthor) quoteAuthor.textContent = data.quote_author;
     }
   }
 
   function updateTeamContent(teamData) {
-    const teamGrid = document.querySelector('[data-team-grid]');
+    const teamGrid = document.querySelector('[data-cms-field="team_members"]');
     if (!teamGrid) return;
     
     // Clear existing team cards
@@ -577,6 +599,7 @@
     const li = document.createElement('li');
     li.className = 'team-card';
     li.setAttribute('data-tags', member.tags ? member.tags.join(' ') : '');
+    li.setAttribute('data-visual-editor', 'team-member');
     
     li.innerHTML = `
       <div class="bg-white rounded-lg shadow-sm ring-1 ring-charcoal/10 overflow-hidden h-full flex flex-col">
@@ -586,12 +609,12 @@
           </svg>
         </div>
         <div class="p-4 flex-1 flex flex-col">
-          <h3 class="font-heading text-lg font-semibold text-charcoal" data-name>${member.name || ''}</h3>
-          <p class="text-sm text-charcoal/70 mt-1">${member.title || ''}</p>
-          <p class="text-sm text-charcoal/80 mt-2 flex-1">${member.description || ''}</p>
+          <h3 class="font-heading text-lg font-semibold text-charcoal" data-name data-cms-field="name">${member.name || ''}</h3>
+          <p class="text-sm text-charcoal/70 mt-1" data-cms-field="title">${member.title || ''}</p>
+          <p class="text-sm text-charcoal/80 mt-2 flex-1" data-cms-field="description">${member.description || ''}</p>
           <div class="mt-4">
-            <a href="${member.booking_url || '#'}" class="team-cta inline-flex items-center justify-center w-full rounded-md bg-clay px-3 py-2 text-sm font-semibold text-charcoal hover:bg-clay/90 transition">
-              <span class="cta-label">${member.booking_text || 'Book Now'}</span>
+            <a href="${member.booking_url || '#'}" class="team-cta inline-flex items-center justify-center w-full rounded-md bg-clay px-3 py-2 text-sm font-semibold text-charcoal hover:bg-clay/90 transition" data-cms-field="booking_url">
+              <span class="cta-label" data-cms-field="booking_text">${member.booking_text || 'Book Now'}</span>
             </a>
           </div>
         </div>
@@ -604,7 +627,7 @@
   function updateSettingsContent(settings) {
     // Update brand name
     if (settings.brand_name) {
-      const brandElements = document.querySelectorAll('span');
+      const brandElements = document.querySelectorAll('[data-visual-editor="brand-name"]');
       brandElements.forEach(el => {
         if (el.textContent.includes('Soul Care Counselling')) {
           el.textContent = settings.brand_name;
@@ -613,19 +636,35 @@
     }
     
     // Update team section
-    if (settings.badge) {
-      const badge = document.querySelector('[data-team-badge]');
-      if (badge) badge.textContent = settings.badge;
+    if (settings.team_badge) {
+      const badge = document.querySelector('[data-cms-field="team_badge"]');
+      if (badge) badge.textContent = settings.team_badge;
     }
     
-    if (settings.title) {
-      const title = document.querySelector('[data-team-title]');
-      if (title) title.textContent = settings.title;
+    if (settings.team_title) {
+      const title = document.querySelector('[data-cms-field="team_title"]');
+      if (title) title.textContent = settings.team_title;
     }
     
-    if (settings.subtitle) {
-      const subtitle = document.querySelector('[data-team-subtitle]');
-      if (subtitle) subtitle.textContent = settings.subtitle;
+    if (settings.team_subtitle) {
+      const subtitle = document.querySelector('[data-cms-field="team_subtitle"]');
+      if (subtitle) subtitle.textContent = settings.team_subtitle;
+    }
+    
+    // Update footer
+    if (settings.footer_brand) {
+      const footerBrand = document.querySelector('[data-cms-field="footer_brand"]');
+      if (footerBrand) footerBrand.textContent = settings.footer_brand;
+    }
+    
+    if (settings.footer_description) {
+      const footerDesc = document.querySelector('[data-cms-field="footer_description"]');
+      if (footerDesc) footerDesc.textContent = settings.footer_description;
+    }
+    
+    if (settings.footer_copyright) {
+      const footerCopyright = document.querySelector('[data-cms-field="footer_copyright"]');
+      if (footerCopyright) footerCopyright.textContent = settings.footer_copyright;
     }
   }
 
@@ -637,6 +676,17 @@
         adminAccess.classList.remove('hidden');
       }
     }
+  }
+
+  // Initialize Netlify Identity
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => {
+          document.location.href = "/admin/";
+        });
+      }
+    });
   }
 
   (async function boot(){
