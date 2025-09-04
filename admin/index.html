@@ -9,16 +9,42 @@
 </head>
 <body>
   <script>
-    // Initialize Netlify Identity
+    // Initialize Netlify Identity and CMS
     if (window.netlifyIdentity) {
       window.netlifyIdentity.on("init", user => {
         if (!user) {
-          window.netlifyIdentity.on("login", () => {
-            document.location.href = "/admin/";
-          });
+          // Show login widget if not authenticated
+          window.netlifyIdentity.open();
         }
       });
+      
+      // Handle successful login
+      window.netlifyIdentity.on("login", () => {
+        // Reload the page to initialize CMS with authenticated user
+        window.location.reload();
+      });
+      
+      // Handle logout
+      window.netlifyIdentity.on("logout", () => {
+        // Redirect to home page on logout
+        window.location.href = "/";
+      });
     }
+
+    // Initialize CMS
+    CMS.init({
+      config: {
+        load_config_file: true,
+        backend: {
+          name: 'git-gateway',
+          branch: 'main'
+        },
+        media_folder: 'assets/img/uploads',
+        public_folder: '/assets/img/uploads',
+        display_url: 'https://soul-care-counselling.netlify.app',
+        site_url: 'https://soul-care-counselling.netlify.app'
+      }
+    });
   </script>
 </body>
 </html>

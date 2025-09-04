@@ -293,9 +293,10 @@
       yearElements.forEach(el => el.textContent = currentYear);
     });
 
-    // Check if user is authenticated and show admin access
+    // Initialize Netlify Identity
     if (window.netlifyIdentity) {
       window.netlifyIdentity.on("init", user => {
+        // Show admin access button if user is authenticated
         if (user) {
           const adminAccess = document.getElementById('admin-access');
           if (adminAccess) {
@@ -303,16 +304,11 @@
           }
         }
       });
-    }
-
-    // Initialize Netlify Identity
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", user => {
-        if (!user) {
-          window.netlifyIdentity.on("login", () => {
-            document.location.href = "/admin/";
-          });
-        }
+      
+      // Handle login redirect to admin
+      window.netlifyIdentity.on("login", () => {
+        // Redirect to admin panel after successful login
+        window.location.href = "/admin/";
       });
     }
   </script>
