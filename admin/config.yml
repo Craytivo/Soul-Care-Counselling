@@ -2,65 +2,10 @@ backend:
   name: git-gateway
   branch: main
 
-# Visual Editor Configuration
-publish_mode: editorial_workflow
-display_url: https://soul-care-counselling.netlify.app
-site_url: https://soul-care-counselling.netlify.app
-
-# Media Configuration
 media_folder: "assets/img/uploads"
 public_folder: "/assets/img/uploads"
 
-# Visual Editor Settings
-local_backend: false
-load_config_file: true
-
 collections:
-  # Hero Section - Single Page Content
-  - name: "hero"
-    label: "Hero Section"
-    files:
-      - label: "Hero Content"
-        name: "hero"
-        file: "content/hero/hero.md"
-        preview_path: "/"
-        fields:
-          - {label: "Badge Text", name: "badge", widget: "string", hint: "Small text above the main title"}
-          - {label: "Main Title", name: "title", widget: "string", hint: "Large heading text"}
-          - {label: "Subtitle", name: "subtitle", widget: "text", hint: "Description text below the title"}
-          - {label: "Booking Button Text", name: "booking_text", widget: "string", hint: "Text for the main call-to-action button"}
-          - {label: "Booking URL", name: "booking_url", widget: "string", hint: "Link for the booking button"}
-          - {label: "Services Button Text", name: "services_text", widget: "string", hint: "Text for the secondary button"}
-          - {label: "Quote", name: "quote", widget: "text", hint: "Inspirational quote text"}
-          - {label: "Quote Author", name: "quote_author", widget: "string", hint: "Who said the quote"}
-          - label: "Features"
-            name: "features"
-            widget: "list"
-            hint: "List of key features/benefits"
-            fields:
-              - {label: "Feature Text", name: "text", widget: "string"}
-
-  # Team Members
-  - name: "team"
-    label: "Team Members"
-    folder: "content/team"
-    create: true
-    slug: "{{slug}}"
-    preview_path: "/#team"
-    fields:
-      - {label: "Name", name: "name", widget: "string", hint: "Full name of the team member"}
-      - {label: "Title", name: "title", widget: "string", hint: "Professional title or credentials"}
-      - {label: "Description", name: "description", widget: "text", hint: "Brief bio or specialization"}
-      - {label: "Booking Button Text", name: "booking_text", widget: "string", hint: "Text for booking button (e.g., 'Book with Sarah')"}
-      - {label: "Booking URL", name: "booking_url", widget: "string", hint: "Link to book with this team member"}
-      - label: "Tags"
-        name: "tags"
-        widget: "list"
-        default: []
-        hint: "Tags for filtering (therapist, coach, bilingual, etc.)"
-        field: {label: "Tag", name: "tag", widget: "string"}
-      - {label: "Photo", name: "photo", widget: "image", required: false, hint: "Professional headshot"}
-
   # Site Settings
   - name: "settings"
     label: "Site Settings"
@@ -68,77 +13,65 @@ collections:
       - label: "General Settings"
         name: "general"
         file: "content/settings/general.json"
-        preview_path: "/"
         fields:
-          - {label: "Site Title", name: "site_title", widget: "string", hint: "Main site title for SEO"}
-          - {label: "Site Description", name: "site_description", widget: "text", hint: "Site description for SEO"}
-          - {label: "Brand Name", name: "brand_name", widget: "string", hint: "Company/brand name"}
+          - {label: "Site Title", name: "site_title", widget: "string"}
+          - {label: "Site Description", name: "site_description", widget: "text"}
+          - {label: "Brand Name", name: "brand_name", widget: "string"}
+          - {label: "Contact Email", name: "contact_email", widget: "string"}
+          - {label: "Contact Phone", name: "contact_phone", widget: "string"}
+          - {label: "Contact Address", name: "contact_address", widget: "text"}
+
+      - label: "Hero Section"
+        name: "hero"
+        file: "content/settings/hero.json"
+        fields:
+          - {label: "Badge Text", name: "hero_badge", widget: "string"}
+          - {label: "Main Title", name: "hero_title", widget: "string"}
+          - {label: "Subtitle", name: "hero_subtitle", widget: "text"}
+          - {label: "Booking Button Text", name: "booking_button_text", widget: "string"}
+          - {label: "Booking URL", name: "booking_url", widget: "string"}
+          - {label: "Services Button Text", name: "services_button_text", widget: "string"}
+          - {label: "Quote", name: "hero_quote", widget: "text"}
+          - {label: "Quote Author", name: "hero_quote_author", widget: "string"}
 
       - label: "Team Section"
-        name: "team_section"
-        file: "content/settings/team_section.json"
-        preview_path: "/#team"
+        name: "team"
+        file: "content/settings/team.json"
         fields:
-          - {label: "Badge", name: "team_badge", widget: "string", hint: "Small text above team section title"}
-          - {label: "Title", name: "team_title", widget: "string", hint: "Main team section heading"}
-          - {label: "Subtitle", name: "team_subtitle", widget: "text", hint: "Description of the team section"}
+          - {label: "Section Badge", name: "team_badge", widget: "string"}
+          - {label: "Section Title", name: "team_title", widget: "string"}
+          - {label: "Section Subtitle", name: "team_subtitle", widget: "text"}
+          - label: "Team Member 1"
+            name: "team_member_1"
+            widget: "object"
+            fields:
+              - {label: "Name", name: "team_member_1_name", widget: "string"}
+              - {label: "Title", name: "team_member_1_title", widget: "string"}
+              - {label: "Description", name: "team_member_1_description", widget: "text"}
+              - {label: "Booking Text", name: "team_member_1_booking_text", widget: "string"}
+              - {label: "Booking URL", name: "team_member_1_booking_url", widget: "string"}
+          - label: "Team Member 2"
+            name: "team_member_2"
+            widget: "object"
+            fields:
+              - {label: "Name", name: "team_member_2_name", widget: "string"}
+              - {label: "Title", name: "team_member_2_title", widget: "string"}
+              - {label: "Description", name: "team_member_2_description", widget: "text"}
+              - {label: "Booking Text", name: "team_member_2_booking_text", widget: "string"}
+              - {label: "Booking URL", name: "team_member_2_booking_url", widget: "string"}
+          - label: "Team Member 3"
+            name: "team_member_3"
+            widget: "object"
+            fields:
+              - {label: "Name", name: "team_member_3_name", widget: "string"}
+              - {label: "Title", name: "team_member_3_title", widget: "string"}
+              - {label: "Description", name: "team_member_3_description", widget: "text"}
+              - {label: "Booking Text", name: "team_member_3_booking_text", widget: "string"}
+              - {label: "Booking URL", name: "team_member_3_booking_url", widget: "string"}
 
       - label: "Footer"
         name: "footer"
         file: "content/settings/footer.json"
-        preview_path: "/"
         fields:
-          - {label: "Company Description", name: "footer_description", widget: "text", hint: "Brief company description for footer"}
-          - {label: "Copyright Text", name: "footer_copyright", widget: "string", hint: "Copyright notice text"}
-
-  # Navigation
-  - name: "navigation"
-    label: "Navigation"
-    files:
-      - label: "Main Navigation"
-        name: "main_nav"
-        file: "content/settings/navigation.json"
-        preview_path: "/"
-        fields:
-          - label: "Main Navigation"
-            name: "main_nav"
-            widget: "list"
-            hint: "Primary navigation menu items"
-            fields:
-              - {label: "Label", name: "label", widget: "string"}
-              - {label: "URL", name: "url", widget: "string"}
-          - label: "Footer Navigation"
-            name: "footer_nav"
-            widget: "list"
-            hint: "Footer navigation menu items"
-            fields:
-              - {label: "Label", name: "label", widget: "string"}
-              - {label: "URL", name: "url", widget: "string"}
-
-  # Pages
-  - name: "pages"
-    label: "Pages"
-    files:
-      - label: "About Page"
-        name: "about"
-        file: "content/pages/about.md"
-        preview_path: "/about"
-        fields:
-          - {label: "Title", name: "title", widget: "string"}
-          - {label: "Content", name: "body", widget: "markdown"}
-
-      - label: "Services Page"
-        name: "services"
-        file: "content/pages/services.md"
-        preview_path: "/services"
-        fields:
-          - {label: "Title", name: "title", widget: "string"}
-          - {label: "Content", name: "body", widget: "markdown"}
-
-      - label: "Contact Page"
-        name: "contact"
-        file: "content/pages/contact.md"
-        preview_path: "/contact"
-        fields:
-          - {label: "Title", name: "title", widget: "string"}
-          - {label: "Content", name: "body", widget: "markdown"}
+          - {label: "Brand Name", name: "footer_brand_name", widget: "string"}
+          - {label: "Description", name: "footer_description", widget: "text"}

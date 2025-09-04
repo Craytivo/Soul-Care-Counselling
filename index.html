@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Soul Care — Home</title>
-  <meta name="description" content="Faith-centered, culturally sensitive therapy. Virtual across Canada." />
+  <title>{{ site_title | default: "Soul Care Counselling" }}</title>
+  <meta name="description" content="{{ site_description | default: "Faith-centered, culturally sensitive therapy. Virtual across Canada." }}" />
   
   <!-- Netlify Identity Widget -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
@@ -16,7 +16,6 @@
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    // Earth palette (ONLY these colors are available)
     tailwind.config = {
       theme: {
         colors: {
@@ -36,334 +35,242 @@
             body: ['Inter','ui-sans-serif','system-ui','sans-serif']
           }
         }
-      },
-      safelist: [
-        'hidden','backdrop-blur','py-2','py-3','overflow-hidden',
-        'translate-x-full','translate-x-0','opacity-0',
-        'text-cream','underline','underline-offset-8','decoration-cream','font-semibold'
-      ]
+      }
     }
   </script>
-
-  <style>html{scroll-behavior:smooth}</style>
-  <style>
-  /* Make every team CTA exactly two text lines tall */
-  #team .team-cta { min-height: 3.5rem; } /* ≈ 2 lines of text-sm + padding */
-  #team .team-cta .cta-label {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;   /* clamp to 2 lines */
-    line-clamp: 2;           /* standard property */
-    overflow: hidden;
-  }
-  
-  /* Visual Editor Styles */
-  [data-visual-editor] {
-    position: relative;
-  }
-  
-  [data-visual-editor]:hover::after {
-    content: "✏️";
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background: #C49A6C;
-    color: white;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    z-index: 1000;
-  }
-</style>
 </head>
 <body class="bg-cream text-charcoal font-body antialiased">
-  <header data-site-header class="sticky top-0 z-50 bg-bark/90 text-cream supports-[backdrop-filter]:bg-bark/70 backdrop-blur">
-  <div class="mx-auto max-w-7xl px-4 py-3 grid grid-cols-[auto_1fr_auto] items-center gap-4">
-    <!-- LEFT: Brand -->
-    <a href="./index.html" class="flex items-center gap-2">
-      <span class="inline-block h-9 w-9 rounded-md bg-cream/10 ring-1 ring-cream/20"></span>
-      <span class="text-sm sm:text-base font-semibold tracking-wide" data-visual-editor="brand-name">Soul Care Counselling</span>
-    </a>
+  
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-bark/90 text-cream backdrop-blur">
+    <div class="mx-auto max-w-7xl px-4 py-3">
+      <div class="flex items-center justify-between">
+        <!-- Brand -->
+        <a href="/" class="flex items-center gap-2">
+          <span class="inline-block h-9 w-9 rounded-md bg-cream/10 ring-1 ring-cream/20"></span>
+          <span class="text-sm sm:text-base font-semibold tracking-wide">{{ brand_name | default: "Soul Care Counselling" }}</span>
+        </a>
 
-    <!-- CENTER: Desktop nav (5 items) -->
-    <nav class="hidden lg:flex items-center justify-center gap-6" aria-label="Primary">
-      <a href="./index.html"        class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="index.html" data-visual-editor="nav-home">Home</a>
-      <a href="./about.html"        class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="about.html" data-visual-editor="nav-about">About Us</a>
-      <a href="./core-values.html"  class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="core-values.html" data-visual-editor="nav-values">Core Values</a>
-      <a href="./services.html"     class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="services.html" data-visual-editor="nav-services">Services</a>
-      <a href="./areas.html"        class="uppercase tracking-[.2em] text-xs text-cream/90 hover:text-cream whitespace-nowrap" data-nav="areas.html" data-visual-editor="nav-areas">Areas of Focus</a>
-    </nav>
+        <!-- Navigation -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/" class="text-cream/90 hover:text-cream transition">Home</a>
+          <a href="/about" class="text-cream/90 hover:text-cream transition">About</a>
+          <a href="/services" class="text-cream/90 hover:text-cream transition">Services</a>
+          <a href="/contact" class="text-cream/90 hover:text-cream transition">Contact</a>
+        </nav>
 
-    <!-- RIGHT: Hamburger (fixed size) -->
-    <button id="menuOpen"
-      class="justify-self-end shrink-0 inline-flex items-center justify-center h-10 w-10 rounded-md ring-1 ring-cream/20 hover:bg-cream/10"
-      aria-controls="menuPanel" aria-expanded="false" aria-label="Open menu">
-      <svg class="h-5 w-5 text-cream" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-        <path d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-    </button>
-  </div>
-</header>
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="md:hidden p-2">
+          <svg class="h-6 w-6 text-cream" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
 
-<!-- Backdrop -->
-<div id="menuBackdrop" class="fixed inset-0 bg-charcoal/50 hidden z-[59]"></div>
-
-<!-- SIMPLE PANEL: full height, panel scrolls -->
-<aside id="menuPanel"
-  class="fixed right-0 top-0 z-[60] h-screen w-[86%] max-w-sm bg-bark text-cream shadow-xl border-l border-cream/15 hidden overflow-y-auto"
-  aria-hidden="true" tabindex="-1">
-
-  <!-- Sticky header inside panel -->
-  <div class="sticky top-0 bg-bark/95 backdrop-blur px-4 py-3 border-b border-cream/15 flex items-center justify-between">
-    <span class="text-sm font-semibold tracking-wide uppercase" data-visual-editor="menu-title">Menu</span>
-    <button id="menuClose" class="inline-flex items-center justify-center rounded-md p-2 ring-1 ring-cream/20 hover:bg-cream/10" aria-label="Close menu">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-cream" aria-hidden="true">
-        <path d="M18 6 6 18M6 6l12 12"/>
-      </svg>
-    </button>
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="md:hidden hidden bg-bark text-cream">
+    <div class="px-4 py-2 space-y-2">
+      <a href="/" class="block py-2 text-cream/90 hover:text-cream">Home</a>
+      <a href="/about" class="block py-2 text-cream/90 hover:text-cream">About</a>
+      <a href="/services" class="block py-2 text-cream/90 hover:text-cream">Services</a>
+      <a href="/contact" class="block py-2 text-cream/90 hover:text-cream">Contact</a>
+    </div>
   </div>
 
-  <!-- FULL static list (each link = block so it stacks) -->
-  <nav class="px-4 py-4 text-sm" aria-label="All pages">
-    <!-- desktop items duplicated -->
-    <a href="./index.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="index.html" data-visual-editor="mobile-nav-home">Home</a>
-    <a href="./about.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="about.html" data-visual-editor="mobile-nav-about">About Us</a>
-    <a href="./core-values.html"  class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="core-values.html" data-visual-editor="mobile-nav-values">Core Values</a>
-    <a href="./services.html"     class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="services.html" data-visual-editor="mobile-nav-services">Services</a>
-    <a href="./areas.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="areas.html" data-visual-editor="mobile-nav-areas">Areas of Focus</a>
-
-    <hr class="my-3 border-cream/15">
-
-    <!-- extras -->
-    <a href="./faq.html"          class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="faq.html" data-visual-editor="mobile-nav-faq">FAQs</a>
-    <a href="./notes.html"        class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="notes.html" data-visual-editor="mobile-nav-notes">Notes from Soul Care</a>
-    <a href="./workshops.html"    class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="workshops.html" data-visual-editor="mobile-nav-workshops">Wellness Workshops</a>
-    <a href="./contact.html"      class="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" data-nav="contact.html" data-visual-editor="mobile-nav-contact">Contact</a>
-
-    <a href="https://thesoulcarecounsellor.janeapp.com"
-       target="_blank" rel="noopener noreferrer"
-       class="mt-4 inline-flex items-center justify-center rounded-md bg-clay px-4 py-2 font-semibold tracking-wide text-charcoal hover:bg-clay/90" data-visual-editor="mobile-booking-btn">
-      Book a Free Consultation
-    </a>
-  </nav>
-</aside>
-
-  <main id="main" class="mx-auto max-w-7xl px-4 py-12 min-h-[60vh]">
-
-    <!-- HERO (no-crop: image is always fully visible) -->
-    <section class="relative bg-cream" data-visual-editor="hero-section">
-      <div class="mx-auto max-w-7xl px-4 py-12 md:py-16">
-        <div class="grid items-center gap-8 md:grid-cols-12">
-          <!-- Text column (premium) -->
-          <div class="md:col-span-4">
-            <span class="inline-flex items-center gap-2 rounded-full bg-sand/70 px-3 py-1 ring-1 ring-charcoal/10 uppercase tracking-[.22em] text-[11px] text-charcoal/80" data-visual-editor="hero-badge" data-cms-field="badge">
-              Faith-centered, culturally sensitive therapy
+  <!-- Main Content -->
+  <main>
+    
+    <!-- Hero Section -->
+    <section class="py-16 md:py-24">
+      <div class="mx-auto max-w-7xl px-4">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          
+          <!-- Hero Text -->
+          <div>
+            <span class="inline-block bg-sand/70 text-charcoal/80 px-3 py-1 rounded-full text-xs uppercase tracking-wide mb-4">
+              {{ hero_badge | default: "Faith-centered, culturally sensitive therapy" }}
             </span>
-
-            <h1 class="mt-3 font-heading text-3xl md:text-4xl font-bold text-charcoal" data-visual-editor="hero-title" data-cms-field="title">
-              Virtual therapy across Canada
+            
+            <h1 class="font-heading text-4xl md:text-5xl font-bold text-charcoal mb-6">
+              {{ hero_title | default: "Virtual therapy across Canada" }}
             </h1>
-
-            <p class="mt-4 text-charcoal/80" data-visual-editor="hero-subtitle" data-cms-field="subtitle">
-              Providing compassionate, faith-centered therapy that honors your cultural background and personal journey toward healing and growth.
+            
+            <p class="text-lg text-charcoal/80 mb-8">
+              {{ hero_subtitle | default: "Providing compassionate, faith-centered therapy that honors your cultural background and personal journey toward healing and growth." }}
             </p>
-
-            <div class="mt-6 flex flex-wrap gap-3">
-              <a href="https://thesoulcarecounsellor.janeapp.com" target="_blank" rel="noopener noreferrer" data-visual-editor="hero-booking-btn" data-cms-field="booking_url"
-                 class="inline-flex items-center justify-center rounded-lg bg-clay px-5 py-2.5 font-semibold text-charcoal shadow-sm ring-1 ring-charcoal/10 transition hover:bg-clay/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cream/60">
-                <span data-cms-field="booking_text">Book a Free Consultation</span>
+            
+            <div class="flex flex-col sm:flex-row gap-4">
+              <a href="{{ booking_url | default: 'https://thesoulcarecounsellor.janeapp.com' }}" 
+                 class="inline-flex items-center justify-center bg-clay text-charcoal px-6 py-3 rounded-lg font-semibold hover:bg-clay/90 transition">
+                {{ booking_button_text | default: "Book a Free Consultation" }}
               </a>
-              <a href="./services.html" data-visual-editor="hero-services-btn"
-                 class="inline-flex items-center justify-center rounded-lg bg-sand px-5 py-2.5 font-semibold text-charcoal shadow-sm ring-1 ring-charcoal/10 transition hover:bg-sand/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cream/60">
-                <span data-cms-field="services_text">View Services</span>
+              <a href="/services" 
+                 class="inline-flex items-center justify-center bg-sand text-charcoal px-6 py-3 rounded-lg font-semibold hover:bg-sand/90 transition">
+                {{ services_button_text | default: "View Services" }}
               </a>
             </div>
-
-            <ul class="mt-6 space-y-2 text-charcoal/80" data-visual-editor="hero-features" data-cms-field="features">
-              <li class="flex items-center gap-2">
-                <svg class="h-4 w-4 text-clay flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                </svg>
-                <span data-cms-field="feature-1">Virtual sessions across Canada</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <svg class="h-4 w-4 text-clay flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                </svg>
-                <span data-cms-field="feature-2">Faith-centered approach</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <svg class="h-4 w-4 text-clay flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                </svg>
-                <span data-cms-field="feature-3">Culturally sensitive care</span>
-              </li>
-            </ul>
           </div>
-
-          <!-- Image column (premium, NO CROPPING, with quote) -->
-          <div class="md:col-span-8">
-            <figure class="relative">
-              <div aria-hidden="true" class="pointer-events-none absolute -right-6 -top-6 h-40 w-40 rounded-full bg-gradient-to-br from-clay/30 to-bark/20 blur-2xl"></div>
-
-              <div class="rounded-3xl bg-sand p-2 ring-1 ring-charcoal/10 shadow-xl">
-                <div class="rounded-[18px] bg-cream ring-1 ring-charcoal/10">
-                  <div class="w-full h-64 bg-gradient-to-br from-sand to-clay/20 rounded-[14px] flex items-center justify-center">
-                    <div class="text-center text-charcoal/60">
-                      <svg class="h-16 w-16 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
-                      </svg>
-                      <p class="text-sm" data-visual-editor="hero-image-caption">Calm, earthy therapy scene conveying warmth and care</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <figcaption class="mt-4">
-                <blockquote class="relative pl-4 border-l-4 border-clay text-charcoal/90">
-                  <p class="font-heading text-lg md:text-xl italic leading-snug" data-visual-editor="hero-quote" data-cms-field="quote">
-                    "Healing begins when we feel safe, understood, and valued for who we are."
-                  </p>
-                </blockquote>
-                <div class="mt-2 text-sm text-charcoal/70" data-visual-editor="hero-quote-author" data-cms-field="quote_author">— Soul Care Counselling Team</div>
-              </figcaption>
-            </figure>
+          
+          <!-- Hero Image/Quote -->
+          <div>
+            <div class="bg-sand rounded-2xl p-8">
+              <blockquote class="text-charcoal/90">
+                <p class="text-xl font-heading italic mb-4">
+                  "{{ hero_quote | default: "Healing begins when we feel safe, understood, and valued for who we are." }}"
+                </p>
+                <cite class="text-sm text-charcoal/70">
+                  — {{ hero_quote_author | default: "Soul Care Counselling Team" }}
+                </cite>
+              </blockquote>
+            </div>
           </div>
+          
         </div>
       </div>
     </section>
 
-<!-- TEAM -->
-<section id="team" class="mt-16 md:mt-24" data-visual-editor="team-section">
-  <div class="mx-auto max-w-7xl">
-    <header class="max-w-2xl">
-      <span class="inline-flex items-center gap-2 rounded-full bg-sand/70 px-3 py-1 ring-1 ring-charcoal/10 uppercase tracking-[.22em] text-[11px] text-charcoal/80" data-visual-editor="team-badge" data-cms-field="team_badge">Meet our team</span>
-      <h2 class="mt-3 font-heading text-2xl md:text-3xl font-bold text-charcoal" data-visual-editor="team-title" data-cms-field="team_title">Experienced professionals dedicated to your healing</h2>
-      <p class="mt-3 text-charcoal/80" data-visual-editor="team-subtitle" data-cms-field="team_subtitle">Our diverse team of therapists, coaches, and wellness professionals brings together years of experience in faith-centered, culturally sensitive care.</p>
-    </header>
+    <!-- Team Section -->
+    <section class="py-16 bg-white">
+      <div class="mx-auto max-w-7xl px-4">
+        
+        <!-- Section Header -->
+        <div class="text-center mb-12">
+          <span class="inline-block bg-sand/70 text-charcoal/80 px-3 py-1 rounded-full text-xs uppercase tracking-wide mb-4">
+            {{ team_badge | default: "Meet our team" }}
+          </span>
+          <h2 class="font-heading text-3xl md:text-4xl font-bold text-charcoal mb-4">
+            {{ team_title | default: "Experienced professionals dedicated to your healing" }}
+          </h2>
+          <p class="text-lg text-charcoal/80 max-w-2xl mx-auto">
+            {{ team_subtitle | default: "Our diverse team of therapists, coaches, and wellness professionals brings together years of experience in faith-centered, culturally sensitive care." }}
+          </p>
+        </div>
 
-    <!-- Toolbar -->
-    <div class="mt-6 flex flex-wrap items-center gap-3">
-      <label for="teamSearch" class="sr-only">Search team</label>
-      <input id="teamSearch" type="search" placeholder="Search by name, role, credential…"
-             class="w-full sm:w-80 rounded-md border border-charcoal/20 bg-white px-3 py-2 text-sm outline-none ring-0 focus:border-clay"
-             autocomplete="off" />
-      <div class="flex flex-wrap gap-2" aria-label="Filter tags">
-        <button class="team-tag px-3 py-1 rounded-full text-xs font-semibold ring-1 ring-charcoal/15 bg-white hover:bg-sand" data-filter="therapist" aria-pressed="false">Therapists</button>
-        <button class="team-tag px-3 py-1 rounded-full text-xs font-semibold ring-1 ring-charcoal/15 bg-white hover:bg-sand" data-filter="coach" aria-pressed="false">Coach</button>
-        <button class="team-tag px-3 py-1 rounded-full text-xs font-semibold ring-1 ring-charcoal/15 bg-white hover:bg-sand" data-filter="bilingual" aria-pressed="false">Bilingual</button>
-        <button class="team-tag px-3 py-1 rounded-full text-xs font-semibold ring-1 ring-charcoal/15 bg-white hover:bg-sand" data-filter="director" aria-pressed="false">Director</button>
-        <button class="team-tag px-3 py-1 rounded-full text-xs font-semibold ring-1 ring-charcoal/15 bg-white hover:bg-sand" data-filter="qualifying" aria-pressed="false">RP (Qualifying)</button>
-        <button class="team-tag px-3 py-1 rounded-full text-xs font-semibold ring-1 ring-charcoal/15 bg-white hover:bg-sand" data-filter="all" aria-pressed="true">All</button>
+        <!-- Team Grid -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          <!-- Team Member 1 -->
+          <div class="bg-white rounded-lg shadow-sm border border-charcoal/10 p-6">
+            <div class="aspect-square bg-gradient-to-br from-sand to-clay/20 rounded-lg mb-4 flex items-center justify-center">
+              <svg class="h-16 w-16 text-charcoal/40" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+            <h3 class="font-heading text-xl font-semibold text-charcoal mb-2">
+              {{ team_member_1_name | default: "Sarah Johnson" }}
+            </h3>
+            <p class="text-clay font-medium mb-3">
+              {{ team_member_1_title | default: "Registered Psychotherapist (Qualifying)" }}
+            </p>
+            <p class="text-charcoal/80 mb-4">
+              {{ team_member_1_description | default: "Specializing in anxiety, depression, and trauma recovery with a faith-centered approach." }}
+            </p>
+            <a href="{{ team_member_1_booking_url | default: '#' }}" 
+               class="inline-flex items-center justify-center w-full bg-clay text-charcoal px-4 py-2 rounded-lg font-semibold hover:bg-clay/90 transition">
+              {{ team_member_1_booking_text | default: "Book with Sarah" }}
+            </a>
+          </div>
+
+          <!-- Team Member 2 -->
+          <div class="bg-white rounded-lg shadow-sm border border-charcoal/10 p-6">
+            <div class="aspect-square bg-gradient-to-br from-sand to-clay/20 rounded-lg mb-4 flex items-center justify-center">
+              <svg class="h-16 w-16 text-charcoal/40" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+            <h3 class="font-heading text-xl font-semibold text-charcoal mb-2">
+              {{ team_member_2_name | default: "Michael Chen" }}
+            </h3>
+            <p class="text-clay font-medium mb-3">
+              {{ team_member_2_title | default: "Wellness Coach" }}
+            </p>
+            <p class="text-charcoal/80 mb-4">
+              {{ team_member_2_description | default: "Life coaching and wellness strategies for personal growth and spiritual development." }}
+            </p>
+            <a href="{{ team_member_2_booking_url | default: '#' }}" 
+               class="inline-flex items-center justify-center w-full bg-clay text-charcoal px-4 py-2 rounded-lg font-semibold hover:bg-clay/90 transition">
+              {{ team_member_2_booking_text | default: "Book with Michael" }}
+            </a>
+          </div>
+
+          <!-- Team Member 3 -->
+          <div class="bg-white rounded-lg shadow-sm border border-charcoal/10 p-6">
+            <div class="aspect-square bg-gradient-to-br from-sand to-clay/20 rounded-lg mb-4 flex items-center justify-center">
+              <svg class="h-16 w-16 text-charcoal/40" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+            <h3 class="font-heading text-xl font-semibold text-charcoal mb-2">
+              {{ team_member_3_name | default: "Dr. Maria Rodriguez" }}
+            </h3>
+            <p class="text-clay font-medium mb-3">
+              {{ team_member_3_title | default: "Bilingual Director, RP (Qualifying)" }}
+            </p>
+            <p class="text-charcoal/80 mb-4">
+              {{ team_member_3_description | default: "Bilingual therapy services and clinical supervision with expertise in cultural sensitivity." }}
+            </p>
+            <a href="{{ team_member_3_booking_url | default: '#' }}" 
+               class="inline-flex items-center justify-center w-full bg-clay text-charcoal px-4 py-2 rounded-lg font-semibold hover:bg-clay/90 transition">
+              {{ team_member_3_booking_text | default: "Book with Dr. Rodriguez" }}
+            </a>
+          </div>
+          
+        </div>
       </div>
-    </div>
-
-    <!-- Grid -->
-    <ul role="list" class="mt-8 grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-stretch" data-visual-editor="team-grid" data-cms-field="team_members">
-      <!-- Team members will be loaded dynamically -->
-      <li class="team-card" data-tags="therapist qualifying" data-visual-editor="team-member">
-        <div class="bg-white rounded-lg shadow-sm ring-1 ring-charcoal/10 overflow-hidden h-full flex flex-col">
-          <div class="aspect-square bg-gradient-to-br from-sand to-clay/20 flex items-center justify-center">
-            <svg class="h-16 w-16 text-charcoal/40" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-            </svg>
-          </div>
-          <div class="p-4 flex-1 flex flex-col">
-            <h3 class="font-heading text-lg font-semibold text-charcoal" data-name data-cms-field="name">Sarah Johnson</h3>
-            <p class="text-sm text-charcoal/70 mt-1" data-cms-field="title">Registered Psychotherapist (Qualifying)</p>
-            <p class="text-sm text-charcoal/80 mt-2 flex-1" data-cms-field="description">Specializing in anxiety, depression, and trauma recovery with a faith-centered approach.</p>
-            <div class="mt-4">
-              <a href="#" class="team-cta inline-flex items-center justify-center w-full rounded-md bg-clay px-3 py-2 text-sm font-semibold text-charcoal hover:bg-clay/90 transition" data-cms-field="booking_url">
-                <span class="cta-label" data-cms-field="booking_text">Book with Sarah</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </li>
-      
-      <li class="team-card" data-tags="coach" data-visual-editor="team-member">
-        <div class="bg-white rounded-lg shadow-sm ring-1 ring-charcoal/10 overflow-hidden h-full flex flex-col">
-          <div class="aspect-square bg-gradient-to-br from-sand to-clay/20 flex items-center justify-center">
-            <svg class="h-16 w-16 text-charcoal/40" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-            </svg>
-          </div>
-          <div class="p-4 flex-1 flex flex-col">
-            <h3 class="font-heading text-lg font-semibold text-charcoal" data-name data-cms-field="name">Michael Chen</h3>
-            <p class="text-sm text-charcoal/70 mt-1" data-cms-field="title">Wellness Coach</p>
-            <p class="text-sm text-charcoal/80 mt-2 flex-1" data-cms-field="description">Life coaching and wellness strategies for personal growth and spiritual development.</p>
-            <div class="mt-4">
-              <a href="#" class="team-cta inline-flex items-center justify-center w-full rounded-md bg-clay px-3 py-2 text-sm font-semibold text-charcoal hover:bg-clay/90 transition" data-cms-field="booking_url">
-                <span class="cta-label" data-cms-field="booking_text">Book with Michael</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </li>
-      
-      <li class="team-card" data-tags="bilingual director qualifying" data-visual-editor="team-member">
-        <div class="bg-white rounded-lg shadow-sm ring-1 ring-charcoal/10 overflow-hidden h-full flex flex-col">
-          <div class="aspect-square bg-gradient-to-br from-sand to-clay/20 flex items-center justify-center">
-            <svg class="h-16 w-16 text-charcoal/40" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-            </svg>
-          </div>
-          <div class="p-4 flex-1 flex flex-col">
-            <h3 class="font-heading text-lg font-semibold text-charcoal" data-name data-cms-field="name">Dr. Maria Rodriguez</h3>
-            <p class="text-sm text-charcoal/70 mt-1" data-cms-field="title">Bilingual Director, RP (Qualifying)</p>
-            <p class="text-sm text-charcoal/80 mt-2 flex-1" data-cms-field="description">Bilingual therapy services and clinical supervision with expertise in cultural sensitivity.</p>
-            <div class="mt-4">
-              <a href="#" class="team-cta inline-flex items-center justify-center w-full rounded-md bg-clay px-3 py-2 text-sm font-semibold text-charcoal hover:bg-clay/90 transition" data-cms-field="booking_url">
-                <span class="cta-label" data-cms-field="booking_text">Book with Dr. Rodriguez</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </li>
-    </ul>
-  </div>
-</section>
+    </section>
 
   </main>
 
-  <footer class="bg-bark text-cream" data-visual-editor="footer-section">
-    <div class="mx-auto max-w-7xl px-4 py-12">
-      <div class="grid gap-8 md:grid-cols-3">
+  <!-- Footer -->
+  <footer class="bg-bark text-cream py-12">
+    <div class="mx-auto max-w-7xl px-4">
+      <div class="grid md:grid-cols-3 gap-8">
+        
+        <!-- Company Info -->
         <div>
-          <h3 class="font-heading text-lg font-semibold mb-4" data-visual-editor="footer-brand" data-cms-field="footer_brand">Soul Care Counselling</h3>
-          <p class="text-cream/80 text-sm" data-visual-editor="footer-description" data-cms-field="footer_description">Providing faith-centered, culturally sensitive therapy across Canada. Your journey to healing and growth starts here.</p>
+          <h3 class="font-heading text-lg font-semibold mb-4">
+            {{ footer_brand_name | default: "Soul Care Counselling" }}
+          </h3>
+          <p class="text-cream/80 text-sm">
+            {{ footer_description | default: "Providing faith-centered, culturally sensitive therapy across Canada. Your journey to healing and growth starts here." }}
+          </p>
         </div>
+
+        <!-- Quick Links -->
         <div>
-          <h4 class="font-heading text-sm font-semibold uppercase tracking-wide mb-4" data-visual-editor="footer-links-title">Quick Links</h4>
+          <h4 class="font-heading text-sm font-semibold uppercase tracking-wide mb-4">Quick Links</h4>
           <ul class="space-y-2 text-sm">
-            <li><a href="./index.html" class="text-cream/80 hover:text-cream transition" data-visual-editor="footer-link-home">Home</a></li>
-            <li><a href="./about.html" class="text-cream/80 hover:text-cream transition" data-visual-editor="footer-link-about">About Us</a></li>
-            <li><a href="./services.html" class="text-cream/80 hover:text-cream transition" data-visual-editor="footer-link-services">Services</a></li>
-            <li><a href="./contact.html" class="text-cream/80 hover:text-cream transition" data-visual-editor="footer-link-contact">Contact</a></li>
+            <li><a href="/" class="text-cream/80 hover:text-cream transition">Home</a></li>
+            <li><a href="/about" class="text-cream/80 hover:text-cream transition">About</a></li>
+            <li><a href="/services" class="text-cream/80 hover:text-cream transition">Services</a></li>
+            <li><a href="/contact" class="text-cream/80 hover:text-cream transition">Contact</a></li>
           </ul>
         </div>
+
+        <!-- Contact Info -->
         <div>
-          <h4 class="font-heading text-sm font-semibold uppercase tracking-wide mb-4" data-visual-editor="footer-resources-title">Resources</h4>
-          <ul class="space-y-2 text-sm">
-            <li><a href="./faq.html" class="text-cream/80 hover:text-cream transition" data-visual-editor="footer-link-faq">FAQs</a></li>
-            <li><a href="./notes.html" class="text-cream/80 hover:text-cream transition" data-visual-editor="footer-link-notes">Notes from Soul Care</a></li>
-            <li><a href="./workshops.html" class="text-cream/80 hover:text-cream transition" data-visual-editor="footer-link-workshops">Wellness Workshops</a></li>
-          </ul>
+          <h4 class="font-heading text-sm font-semibold uppercase tracking-wide mb-4">Contact</h4>
+          <div class="text-sm text-cream/80 space-y-2">
+            <p>{{ contact_email | default: "info@soulcarecounselling.com" }}</p>
+            <p>{{ contact_phone | default: "(555) 123-4567" }}</p>
+            <p>{{ contact_address | default: "Virtual sessions across Canada" }}</p>
+          </div>
         </div>
+        
       </div>
+      
+      <!-- Copyright -->
       <div class="mt-8 pt-8 border-t border-cream/15 text-center text-sm text-cream/70">
-        <p data-visual-editor="footer-copyright" data-cms-field="footer_copyright">&copy; <span id="year">2024</span> Soul Care Counselling. All rights reserved.</p>
+        <p>&copy; {{ current_year | default: "2024" }} {{ footer_brand_name | default: "Soul Care Counselling" }}. All rights reserved.</p>
       </div>
     </div>
   </footer>
 
-  <!-- Admin Access Button (only visible to authenticated users) -->
+  <!-- Admin Access (Hidden - Only for authenticated users) -->
   <div id="admin-access" class="fixed bottom-4 right-4 z-50 hidden">
-    <a href="/admin/" class="inline-flex items-center gap-2 rounded-lg bg-clay px-4 py-2 font-semibold text-charcoal shadow-lg hover:bg-clay/90 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-cream/60" role="button">
+    <a href="/admin/" class="inline-flex items-center gap-2 bg-clay text-charcoal px-4 py-2 rounded-lg font-semibold shadow-lg hover:bg-clay/90 transition">
       <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
         <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
       </svg>
@@ -371,333 +278,43 @@
     </a>
   </div>
 
-  <!-- Include loader + header behavior -->
+  <!-- Scripts -->
   <script>
-  async function includePartials() {
-    const nodes = document.querySelectorAll("[data-include]");
-    const isDev = ['localhost','127.0.0.1'].includes(location.hostname);
-    await Promise.all([...nodes].map(async el => {
-      const url  = el.getAttribute("data-include");
-      const bust = isDev ? `?v=${Date.now()}` : "";
-      const res  = await fetch(url + bust, { cache: isDev ? "no-store" : "default" });
-      el.outerHTML = await res.text();
-    }));
-  }
-
-  function setActiveNav() {
-    const file = location.pathname.split('/').pop() || 'index.html';
-    document.querySelectorAll('a[data-nav]').forEach(a => {
-      if (a.getAttribute('data-nav') === file) {
-        a.setAttribute('aria-current', 'page');
-        a.classList.add('text-cream','font-semibold','underline','underline-offset-8','decoration-cream');
-      }
-    });
-  }
-
-  function wireSimpleDrawer() {
-    const openBtn = document.getElementById('menuOpen');
-    const closeBtn= document.getElementById('menuClose');
-    const panel   = document.getElementById('menuPanel');
-    const backdrop= document.getElementById('menuBackdrop');
-    if (!(openBtn && closeBtn && panel && backdrop)) return;
-
-    const open = () => {
-      panel.classList.remove('hidden');
-      backdrop.classList.remove('hidden');
-      document.body.classList.add('overflow-hidden');
-      openBtn.setAttribute('aria-expanded','true');
-      panel.setAttribute('aria-hidden','false');
-      panel.focus({preventScroll:true});
-    };
-    const close = () => {
-      panel.classList.add('hidden');
-      backdrop.classList.add('hidden');
-      document.body.classList.remove('overflow-hidden');
-      openBtn.setAttribute('aria-expanded','false');
-      panel.setAttribute('aria-hidden','true');
-      openBtn.focus();
-    };
-
-    openBtn.addEventListener('click', open);
-    closeBtn.addEventListener('click', close);
-    backdrop.addEventListener('click', close);
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
-  }
-
-  // Team search + tags functionality
-  function initTeamSearch() {
-    const grid = document.querySelector('#team ul[role="list"]');
-    if (!grid) return;
-
-    const search = document.getElementById('teamSearch');
-    const tagBtns = [...document.querySelectorAll('.team-tag')];
-    let activeFilter = 'all';
-
-    const cards = [...grid.querySelectorAll('.team-card')].map(card => ({
-      el: card,
-      name: (card.querySelector('[data-name]')?.textContent || '').toLowerCase(),
-      text: card.textContent.toLowerCase(),
-      tags: (card.getAttribute('data-tags') || '').toLowerCase().split(/\s+/)
-    }));
-
-    function applyFilters() {
-      const q = (search?.value || '').trim().toLowerCase();
-      cards.forEach(({el, name, text, tags}) => {
-        const matchText = !q || name.includes(q) || text.includes(q);
-        const matchTag  = activeFilter === 'all' || tags.includes(activeFilter);
-        el.classList.toggle('hidden', !(matchText && matchTag));
-      });
-    }
-
-    if (search) search.addEventListener('input', applyFilters);
-
-    tagBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        tagBtns.forEach(b => b.setAttribute('aria-pressed', 'false'));
-        btn.setAttribute('aria-pressed', 'true');
-        activeFilter = btn.dataset.filter || 'all';
-        applyFilters();
-      });
+    // Mobile menu toggle
+    document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
     });
 
-    applyFilters();
-  }
+    // Update current year
+    document.addEventListener('DOMContentLoaded', function() {
+      const yearElements = document.querySelectorAll('[data-year]');
+      const currentYear = new Date().getFullYear();
+      yearElements.forEach(el => el.textContent = currentYear);
+    });
 
-  // Load content from CMS
-  async function loadCMSContent() {
-    try {
-      // Load hero content
-      const heroResponse = await fetch('./content/hero/hero.md');
-      if (heroResponse.ok) {
-        const heroText = await heroResponse.text();
-        const heroData = parseMarkdownFrontmatter(heroText);
-        updateHeroContent(heroData);
-      }
-
-      // Load team content
-      const teamFiles = ['sarah-johnson.md', 'michael-chen.md', 'maria-rodriguez.md'];
-      const teamData = [];
-      
-      for (const file of teamFiles) {
-        const response = await fetch(`./content/team/${file}`);
-        if (response.ok) {
-          const text = await response.text();
-          const data = parseMarkdownFrontmatter(text);
-          teamData.push(data);
-        }
-      }
-      
-      updateTeamContent(teamData);
-
-      // Load settings
-      const settingsFiles = ['general.json', 'navigation.json', 'team_section.json', 'footer.json'];
-      const settings = {};
-      
-      for (const file of settingsFiles) {
-        const response = await fetch(`./content/settings/${file}`);
-        if (response.ok) {
-          const data = await response.json();
-          Object.assign(settings, data);
-        }
-      }
-      
-      updateSettingsContent(settings);
-
-    } catch (error) {
-      console.log('CMS content not available, using default content');
-    }
-  }
-
-  function parseMarkdownFrontmatter(text) {
-    const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
-    const match = text.match(frontmatterRegex);
-    
-    if (match) {
-      const frontmatter = match[1];
-      const content = match[2];
-      const data = {};
-      
-      // Simple YAML parsing for our use case
-      frontmatter.split('\n').forEach(line => {
-        const colonIndex = line.indexOf(':');
-        if (colonIndex > 0) {
-          const key = line.substring(0, colonIndex).trim();
-          let value = line.substring(colonIndex + 1).trim();
-          
-          // Remove quotes
-          if ((value.startsWith('"') && value.endsWith('"')) || 
-              (value.startsWith("'") && value.endsWith("'"))) {
-            value = value.slice(1, -1);
+    // Check if user is authenticated and show admin access
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (user) {
+          const adminAccess = document.getElementById('admin-access');
+          if (adminAccess) {
+            adminAccess.classList.remove('hidden');
           }
-          
-          data[key] = value;
-        }
-      });
-      
-      return data;
-    }
-    
-    return {};
-  }
-
-  function updateHeroContent(data) {
-    if (data.badge) {
-      const badge = document.querySelector('[data-cms-field="badge"]');
-      if (badge) badge.textContent = data.badge;
-    }
-    
-    if (data.title) {
-      const title = document.querySelector('[data-cms-field="title"]');
-      if (title) title.textContent = data.title;
-    }
-    
-    if (data.subtitle) {
-      const subtitle = document.querySelector('[data-cms-field="subtitle"]');
-      if (subtitle) subtitle.textContent = data.subtitle;
-    }
-    
-    if (data.booking_text) {
-      const bookingText = document.querySelector('[data-cms-field="booking_text"]');
-      if (bookingText) bookingText.textContent = data.booking_text;
-    }
-    
-    if (data.booking_url) {
-      const bookingUrl = document.querySelector('[data-cms-field="booking_url"]');
-      if (bookingUrl) bookingUrl.href = data.booking_url;
-    }
-    
-    if (data.services_text) {
-      const servicesText = document.querySelector('[data-cms-field="services_text"]');
-      if (servicesText) servicesText.textContent = data.services_text;
-    }
-    
-    if (data.quote) {
-      const quote = document.querySelector('[data-cms-field="quote"]');
-      if (quote) quote.textContent = data.quote;
-    }
-    
-    if (data.quote_author) {
-      const quoteAuthor = document.querySelector('[data-cms-field="quote_author"]');
-      if (quoteAuthor) quoteAuthor.textContent = data.quote_author;
-    }
-  }
-
-  function updateTeamContent(teamData) {
-    const teamGrid = document.querySelector('[data-cms-field="team_members"]');
-    if (!teamGrid) return;
-    
-    // Clear existing team cards
-    teamGrid.innerHTML = '';
-    
-    teamData.forEach(member => {
-      const teamCard = createTeamCard(member);
-      teamGrid.appendChild(teamCard);
-    });
-  }
-
-  function createTeamCard(member) {
-    const li = document.createElement('li');
-    li.className = 'team-card';
-    li.setAttribute('data-tags', member.tags ? member.tags.join(' ') : '');
-    li.setAttribute('data-visual-editor', 'team-member');
-    
-    li.innerHTML = `
-      <div class="bg-white rounded-lg shadow-sm ring-1 ring-charcoal/10 overflow-hidden h-full flex flex-col">
-        <div class="aspect-square bg-gradient-to-br from-sand to-clay/20 flex items-center justify-center">
-          <svg class="h-16 w-16 text-charcoal/40" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-          </svg>
-        </div>
-        <div class="p-4 flex-1 flex flex-col">
-          <h3 class="font-heading text-lg font-semibold text-charcoal" data-name data-cms-field="name">${member.name || ''}</h3>
-          <p class="text-sm text-charcoal/70 mt-1" data-cms-field="title">${member.title || ''}</p>
-          <p class="text-sm text-charcoal/80 mt-2 flex-1" data-cms-field="description">${member.description || ''}</p>
-          <div class="mt-4">
-            <a href="${member.booking_url || '#'}" class="team-cta inline-flex items-center justify-center w-full rounded-md bg-clay px-3 py-2 text-sm font-semibold text-charcoal hover:bg-clay/90 transition" data-cms-field="booking_url">
-              <span class="cta-label" data-cms-field="booking_text">${member.booking_text || 'Book Now'}</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    `;
-    
-    return li;
-  }
-
-  function updateSettingsContent(settings) {
-    // Update brand name
-    if (settings.brand_name) {
-      const brandElements = document.querySelectorAll('[data-visual-editor="brand-name"]');
-      brandElements.forEach(el => {
-        if (el.textContent.includes('Soul Care Counselling')) {
-          el.textContent = settings.brand_name;
         }
       });
     }
-    
-    // Update team section
-    if (settings.team_badge) {
-      const badge = document.querySelector('[data-cms-field="team_badge"]');
-      if (badge) badge.textContent = settings.team_badge;
-    }
-    
-    if (settings.team_title) {
-      const title = document.querySelector('[data-cms-field="team_title"]');
-      if (title) title.textContent = settings.team_title;
-    }
-    
-    if (settings.team_subtitle) {
-      const subtitle = document.querySelector('[data-cms-field="team_subtitle"]');
-      if (subtitle) subtitle.textContent = settings.team_subtitle;
-    }
-    
-    // Update footer
-    if (settings.footer_brand) {
-      const footerBrand = document.querySelector('[data-cms-field="footer_brand"]');
-      if (footerBrand) footerBrand.textContent = settings.footer_brand;
-    }
-    
-    if (settings.footer_description) {
-      const footerDesc = document.querySelector('[data-cms-field="footer_description"]');
-      if (footerDesc) footerDesc.textContent = settings.footer_description;
-    }
-    
-    if (settings.footer_copyright) {
-      const footerCopyright = document.querySelector('[data-cms-field="footer_copyright"]');
-      if (footerCopyright) footerCopyright.textContent = settings.footer_copyright;
-    }
-  }
 
-  // Check if user is authenticated and show admin access
-  function checkAuthStatus() {
-    if (window.netlifyIdentity && window.netlifyIdentity.currentUser()) {
-      const adminAccess = document.getElementById('admin-access');
-      if (adminAccess) {
-        adminAccess.classList.remove('hidden');
-      }
+    // Initialize Netlify Identity
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
     }
-  }
-
-  // Initialize Netlify Identity
-  if (window.netlifyIdentity) {
-    window.netlifyIdentity.on("init", user => {
-      if (!user) {
-        window.netlifyIdentity.on("login", () => {
-          document.location.href = "/admin/";
-        });
-      }
-    });
-  }
-
-  (async function boot(){
-    await includePartials();        // header now in DOM
-    wireSimpleDrawer();             // hook up open/close
-    setActiveNav();                 // underline current link(s)
-    await loadCMSContent();         // load content from CMS
-    initTeamSearch();               // team search functionality
-    checkAuthStatus();              // check if user is authenticated
-    const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
-  })();
   </script>
 </body>
 </html>

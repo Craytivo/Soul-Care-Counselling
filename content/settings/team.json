@@ -1,0 +1,26 @@
+{
+  "team_badge": "Meet our team",
+  "team_title": "Experienced professionals dedicated to your healing",
+  "team_subtitle": "Our diverse team of therapists, coaches, and wellness professionals brings together years of experience in faith-centered, culturally sensitive care.",
+  "team_member_1": {
+    "team_member_1_name": "Sarah Johnson",
+    "team_member_1_title": "Registered Psychotherapist (Qualifying)",
+    "team_member_1_description": "Specializing in anxiety, depression, and trauma recovery with a faith-centered approach.",
+    "team_member_1_booking_text": "Book with Sarah",
+    "team_member_1_booking_url": "#"
+  },
+  "team_member_2": {
+    "team_member_2_name": "Michael Chen",
+    "team_member_2_title": "Wellness Coach",
+    "team_member_2_description": "Life coaching and wellness strategies for personal growth and spiritual development.",
+    "team_member_2_booking_text": "Book with Michael",
+    "team_member_2_booking_url": "#"
+  },
+  "team_member_3": {
+    "team_member_3_name": "Dr. Maria Rodriguez",
+    "team_member_3_title": "Bilingual Director, RP (Qualifying)",
+    "team_member_3_description": "Bilingual therapy services and clinical supervision with expertise in cultural sensitivity.",
+    "team_member_3_booking_text": "Book with Dr. Rodriguez",
+    "team_member_3_booking_url": "#"
+  }
+}

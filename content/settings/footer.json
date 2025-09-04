@@ -1,36 +1,4 @@
 {
-  "description": "Providing faith-centered, culturally sensitive therapy across Canada. Your journey to healing and growth starts here.",
-  "copyright": "Soul Care Counselling. All rights reserved.",
-  "quick_links": [
-    {
-      "label": "Home",
-      "url": "./index.html"
-    },
-    {
-      "label": "About Us",
-      "url": "./about.html"
-    },
-    {
-      "label": "Services",
-      "url": "./services.html"
-    },
-    {
-      "label": "Contact",
-      "url": "./contact.html"
-    }
-  ],
-  "resources": [
-    {
-      "label": "FAQs",
-      "url": "./faq.html"
-    },
-    {
-      "label": "Notes from Soul Care",
-      "url": "./notes.html"
-    },
-    {
-      "label": "Wellness Workshops",
-      "url": "./workshops.html"
-    }
-  ]
+  "footer_brand_name": "Soul Care Counselling",
+  "footer_description": "Providing faith-centered, culturally sensitive therapy across Canada. Your journey to healing and growth starts here."
 }
