@@ -14,8 +14,3 @@
 [context.production.environment]
   NETLIFY_CMS_BACKEND = "git-gateway"
   NETLIFY_CMS_PREVIEW_PATH = "/"
-
-# Enable Visual Editor
-[context.production]
-  command = ""
-  publish = "."
