@@ -2,8 +2,15 @@ backend:
   name: git-gateway
   branch: main # Branch to update (optional; defaults to master)
 
+# Enable Visual Editor
+publish_mode: editorial_workflow
+
 media_folder: "assets/img/uploads" # Media files will be stored in the repo under assets/img/uploads
 public_folder: "/assets/img/uploads" # The src attribute for uploaded media will begin with /assets/img/uploads
+
+# Visual Editor Configuration
+display_url: https://soul-care-counselling.netlify.app
+site_url: https://soul-care-counselling.netlify.app
 
 collections:
   # Hero Section
@@ -12,18 +19,20 @@ collections:
     folder: "content/hero"
     create: true
     slug: "{{slug}}"
+    preview_path: "/"
     fields:
-      - {label: "Badge Text", name: "badge", widget: "string"}
-      - {label: "Main Title", name: "title", widget: "string"}
-      - {label: "Subtitle", name: "subtitle", widget: "text"}
-      - {label: "Booking Button Text", name: "booking_text", widget: "string"}
-      - {label: "Booking URL", name: "booking_url", widget: "string"}
-      - {label: "Services Button Text", name: "services_text", widget: "string"}
-      - {label: "Quote", name: "quote", widget: "text"}
-      - {label: "Quote Author", name: "quote_author", widget: "string"}
+      - {label: "Badge Text", name: "badge", widget: "string", hint: "Small text above the main title"}
+      - {label: "Main Title", name: "title", widget: "string", hint: "Large heading text"}
+      - {label: "Subtitle", name: "subtitle", widget: "text", hint: "Description text below the title"}
+      - {label: "Booking Button Text", name: "booking_text", widget: "string", hint: "Text for the main call-to-action button"}
+      - {label: "Booking URL", name: "booking_url", widget: "string", hint: "Link for the booking button"}
+      - {label: "Services Button Text", name: "services_text", widget: "string", hint: "Text for the secondary button"}
+      - {label: "Quote", name: "quote", widget: "text", hint: "Inspirational quote text"}
+      - {label: "Quote Author", name: "quote_author", widget: "string", hint: "Who said the quote"}
       - label: "Features"
         name: "features"
         widget: "list"
+        hint: "List of key features/benefits"
         fields:
           - {label: "Feature Text", name: "text", widget: "string"}
 
@@ -33,18 +42,20 @@ collections:
     folder: "content/team"
     create: true
     slug: "{{slug}}"
+    preview_path: "/#team"
     fields:
-      - {label: "Name", name: "name", widget: "string"}
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Description", name: "description", widget: "text"}
-      - {label: "Booking Button Text", name: "booking_text", widget: "string"}
-      - {label: "Booking URL", name: "booking_url", widget: "string"}
+      - {label: "Name", name: "name", widget: "string", hint: "Full name of the team member"}
+      - {label: "Title", name: "title", widget: "string", hint: "Professional title or credentials"}
+      - {label: "Description", name: "description", widget: "text", hint: "Brief bio or specialization"}
+      - {label: "Booking Button Text", name: "booking_text", widget: "string", hint: "Text for booking button (e.g., 'Book with Sarah')"}
+      - {label: "Booking URL", name: "booking_url", widget: "string", hint: "Link to book with this team member"}
       - label: "Tags"
         name: "tags"
         widget: "list"
         default: []
+        hint: "Tags for filtering (therapist, coach, bilingual, etc.)"
         field: {label: "Tag", name: "tag", widget: "string"}
-      - {label: "Photo", name: "photo", widget: "image", required: false}
+      - {label: "Photo", name: "photo", widget: "image", required: false, hint: "Professional headshot"}
 
   # Site Settings
   - name: "settings"
@@ -53,27 +64,31 @@ collections:
       - label: "General Settings"
         name: "general"
         file: "content/settings/general.json"
+        preview_path: "/"
         fields:
-          - {label: "Site Title", name: "site_title", widget: "string"}
-          - {label: "Site Description", name: "site_description", widget: "text"}
-          - {label: "Brand Name", name: "brand_name", widget: "string"}
-          - {label: "Contact Email", name: "contact_email", widget: "string"}
-          - {label: "Contact Phone", name: "contact_phone", widget: "string"}
-          - {label: "Contact Address", name: "contact_address", widget: "text"}
+          - {label: "Site Title", name: "site_title", widget: "string", hint: "Main site title for SEO"}
+          - {label: "Site Description", name: "site_description", widget: "text", hint: "Site description for SEO"}
+          - {label: "Brand Name", name: "brand_name", widget: "string", hint: "Company/brand name"}
+          - {label: "Contact Email", name: "contact_email", widget: "string", hint: "Main contact email"}
+          - {label: "Contact Phone", name: "contact_phone", widget: "string", hint: "Main contact phone"}
+          - {label: "Contact Address", name: "contact_address", widget: "text", hint: "Physical address"}
 
       - label: "Navigation"
         name: "navigation"
         file: "content/settings/navigation.json"
+        preview_path: "/"
         fields:
           - label: "Main Navigation"
             name: "main_nav"
             widget: "list"
+            hint: "Primary navigation menu items"
             fields:
               - {label: "Label", name: "label", widget: "string"}
               - {label: "URL", name: "url", widget: "string"}
           - label: "Footer Navigation"
             name: "footer_nav"
             widget: "list"
+            hint: "Footer navigation menu items"
             fields:
               - {label: "Label", name: "label", widget: "string"}
               - {label: "URL", name: "url", widget: "string"}
@@ -81,26 +96,30 @@ collections:
       - label: "Team Section"
         name: "team_section"
         file: "content/settings/team_section.json"
+        preview_path: "/#team"
         fields:
-          - {label: "Badge", name: "badge", widget: "string"}
-          - {label: "Title", name: "title", widget: "string"}
-          - {label: "Subtitle", name: "subtitle", widget: "text"}
+          - {label: "Badge", name: "badge", widget: "string", hint: "Small text above team section title"}
+          - {label: "Title", name: "title", widget: "string", hint: "Main team section heading"}
+          - {label: "Subtitle", name: "subtitle", widget: "text", hint: "Description of the team section"}
 
       - label: "Footer"
         name: "footer"
         file: "content/settings/footer.json"
+        preview_path: "/"
         fields:
-          - {label: "Company Description", name: "description", widget: "text"}
-          - {label: "Copyright Text", name: "copyright", widget: "string"}
+          - {label: "Company Description", name: "description", widget: "text", hint: "Brief company description for footer"}
+          - {label: "Copyright Text", name: "copyright", widget: "string", hint: "Copyright notice text"}
           - label: "Quick Links"
             name: "quick_links"
             widget: "list"
+            hint: "Quick access links in footer"
             fields:
               - {label: "Label", name: "label", widget: "string"}
               - {label: "URL", name: "url", widget: "string"}
           - label: "Resources"
             name: "resources"
             widget: "list"
+            hint: "Resource links in footer"
             fields:
               - {label: "Label", name: "label", widget: "string"}
               - {label: "URL", name: "url", widget: "string"}
@@ -112,6 +131,7 @@ collections:
       - label: "About Page"
         name: "about"
         file: "content/pages/about.md"
+        preview_path: "/about"
         fields:
           - {label: "Title", name: "title", widget: "string"}
           - {label: "Content", name: "body", widget: "markdown"}
@@ -119,6 +139,7 @@ collections:
       - label: "Services Page"
         name: "services"
         file: "content/pages/services.md"
+        preview_path: "/services"
         fields:
           - {label: "Title", name: "title", widget: "string"}
           - {label: "Content", name: "body", widget: "markdown"}
@@ -126,6 +147,7 @@ collections:
       - label: "Contact Page"
         name: "contact"
         file: "content/pages/contact.md"
+        preview_path: "/contact"
         fields:
           - {label: "Title", name: "title", widget: "string"}
           - {label: "Content", name: "body", widget: "markdown"}

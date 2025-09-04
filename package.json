@@ -1,0 +1,29 @@
+{
+  "name": "soul-care-counselling",
+  "version": "1.0.0",
+  "description": "Faith-centered, culturally sensitive therapy website with Netlify CMS",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'Static site - no build needed'",
+    "stackbit:dev": "stackbit dev",
+    "stackbit:build": "stackbit build"
+  },
+  "keywords": [
+    "therapy",
+    "counselling",
+    "faith-centered",
+    "netlify-cms",
+    "static-site"
+  ],
+  "author": "Soul Care Counselling",
+  "license": "MIT",
+  "devDependencies": {
+    "@stackbit/types": "^0.6.0",
+    "@stackbit/cms-git": "^0.6.0",
+    "serve": "^14.2.0"
+  },
+  "dependencies": {
+    "netlify-identity-widget": "^1.9.2"
+  }
+}
