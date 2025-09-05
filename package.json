@@ -6,12 +6,20 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed-team": "node scripts/seed-team-members.js",
+    "upload-images": "node scripts/upload-team-images.js"
   },
   "dependencies": {
-    "next": "^14.2.5",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "@sanity/image-url": "^1.2.0",
+    "@sanity/vision": "^4.6.1",
+    "dotenv": "^17.2.2",
+    "next": "^15.1.0",
+    "next-sanity": "^10.0.16",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "sanity": "^4.6.1",
+    "styled-components": "^6.1.19"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

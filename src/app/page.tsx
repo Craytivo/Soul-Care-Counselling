@@ -1,11 +1,11 @@
 import Hero from '../components/Hero'
-import Team from '../components/Team'
+import SanityTeam from '../components/SanityTeam'
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <Team />
+      <SanityTeam />
     </>
   )
 }

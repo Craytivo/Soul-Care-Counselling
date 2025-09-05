@@ -13,6 +13,8 @@ interface TeamMember {
   profileLink: string
   tags: string[]
   status?: string
+  specialties: string[]
+  acceptsBookings?: boolean
 }
 
 const teamMembers: TeamMember[] = [
@@ -23,7 +25,9 @@ const teamMembers: TeamMember[] = [
     image: "/assets/img/team/rs=w_365,h_365,cg_true,m.webp",
     description: "Leading Soul Care with holistic, culturally responsive practice rooted in Christian faith.",
     profileLink: "/jessica",
-    tags: ["director", "therapist"]
+    tags: ["trauma-informed", "director"],
+    specialties: ["Trauma-informed individual and group counselling", "Racial identity", "Depression and anxiety support", "Abuse", "Managing life transitions", "Stress management", "Identity development", "Relationship counselling", "Tools to leverage body and self care"],
+    acceptsBookings: true
   },
   {
     name: "Davene Harris",
@@ -32,44 +36,53 @@ const teamMembers: TeamMember[] = [
     image: "/assets/img/team/rs=w_365,h_365,cg_true,m (1).webp",
     description: "Oversees practice operations and administrative excellence with faith-integrated leadership.",
     profileLink: "/davene",
-    tags: ["operations", "administration"]
+    tags: ["operations"],
+    specialties: ["Practice operations & administration", "Team coordination & support", "Client services management", "Process improvement & efficiency", "Faith-integrated organizational leadership"],
+    acceptsBookings: false
   },
   {
     name: "Princeton Grant",
     credentials: "ECE",
     role: "Coach",
     image: "/assets/img/team/rs=w_365,h_365,cg_true.webp",
-    description: "Faith-based counselling with expertise in men's mental health and relationship therapy.",
+    description: "Early childhood development specialist with parent coaching expertise.",
     profileLink: "/princeton",
-    tags: ["coach"]
+    tags: ["family-couples", "coach"],
+    specialties: ["Early childhood development", "Parent coaching", "Family support & education", "Child–parent relationship building"],
+    acceptsBookings: true
   },
   {
     name: "Anita Kangabe",
-    credentials: "MSW, RSW (Bilingual in English and French)",
-    role: "Associate Christian Therapist",
-    status: "Not Accepting Clients",
+    credentials: "MSW, RSW",
+    role: "Associate Christian Therapist · Bilingual (EN/FR)",
     image: "/assets/img/team/rs=w_365,h_365,cg_true,m (6).webp",
-    description: "Culturally responsive therapy with a focus on immigrant and refugee mental health.",
+    description: "Bilingual therapist specializing in anxiety, depression, and career counselling.",
     profileLink: "/anita",
-    tags: ["therapist", "bilingual"]
+    tags: ["anxiety-depression", "bilingual"],
+    specialties: ["Anxiety & Depression", "Stress Management", "Academic & Career Counselling", "Bilingual Services (EN/FR)"],
+    acceptsBookings: true
   },
   {
     name: "Baraka Boafo",
     credentials: "BA, RP (Qualifying)",
-    role: "Therapist",
+    role: "Associate Christian Therapist",
     image: "/assets/img/team/rs=w_365,h_365,cg_true,m (7).webp",
-    description: "Holistic approach to therapy integrating faith, culture, and evidence-based practices.",
+    description: "Faith-integrated therapy with trauma-informed, strengths-based approach.",
     profileLink: "/baraka",
-    tags: ["therapist", "qualifying"]
+    tags: ["trauma-informed", "faith-based"],
+    specialties: ["Life transitions", "Relationship issues", "Anxiety & depression", "Stress at work or school", "Narrative, CBT & family systems", "Trauma-informed, strengths-based lens", "Faith-integrated care"],
+    acceptsBookings: true
   },
   {
     name: "Josh Dale",
     credentials: "MDiv, RP, CCTS-I",
     role: "Associate Christian Therapist",
     image: "/assets/img/team/rs=w_365,h_365,cg_true,m (5).webp",
-    description: "Specialized in anxiety, depression, and life transitions with a faith-based approach.",
+    description: "Specialized in addictions recovery, trauma, and faith-based therapy.",
     profileLink: "/josh",
-    tags: ["therapist"]
+    tags: ["addictions-recovery", "trauma-informed"],
+    specialties: ["Addictions & recovery", "Anxiety & emotional regulation", "Identity & self-esteem", "Faith & spirituality", "Trauma & attachment; adoptee trauma", "Burnout & life transitions", "DBT, CBT, Narrative, Solution-Focused, Parts work"],
+    acceptsBookings: true
   },
   {
     name: "Khadian Gooden",
@@ -77,37 +90,44 @@ const teamMembers: TeamMember[] = [
     role: "Associate Christian Therapist",
     status: "Not Accepting Clients",
     image: "/assets/img/team/rs=w_365,h_365,cg_true,m (4).webp",
-    description: "Trauma-informed therapy with expertise in racial identity and cultural healing.",
+    description: "Trauma-informed therapy with expertise in anxiety, depression, and spirituality.",
     profileLink: "/khadian",
-    tags: ["therapist"]
+    tags: ["anxiety-depression", "trauma-informed"],
+    specialties: ["Anxiety & depression", "Emotional regulation", "Spirituality & life transitions", "Trauma-informed care", "CBT, Narrative, Solution-Focused therapy", "Individual, family & youth counselling"],
+    acceptsBookings: false
   },
   {
     name: "Natalie Willis",
     credentials: "RPN, BA, MDiv",
     role: "Associate Christian Therapist",
     image: "/assets/img/team/rs=w_365,h_365,cg_true,m (2).webp",
-    description: "Compassionate care for individuals and families navigating life's challenges.",
+    description: "Registered Nurse and therapist specializing in trauma-informed, strengths-based care.",
     profileLink: "/natalie",
-    tags: ["therapist"]
+    tags: ["trauma-informed", "anxiety-depression"],
+    specialties: ["Life transitions & burnout", "Anxiety & depression support", "Trauma-informed care", "Identity development", "Cognitive-Behavioural strategies", "Strengths-based approach"],
+    acceptsBookings: true
   },
   {
     name: "Nigel Bucknor",
     credentials: "BA, MA, CCC",
     role: "Associate Christian Therapist",
-    status: "Not Accepting Clients",
     image: "/assets/img/team/rs=w_365,h_365,cg_true,m (3).webp",
-    description: "Faith-based therapy with a focus on men's mental health and spiritual growth.",
+    description: "Specialized in teens, adults, couples, and social justice-informed therapy.",
     profileLink: "/nigel",
-    tags: ["therapist"]
+    tags: ["family-couples", "trauma-informed"],
+    specialties: ["Teens, adults & couples", "Life transitions", "Anxiety & depression", "Emotional regulation", "Trauma-informed care", "Spirituality & meaning", "CBT, Solution-Focused, Narrative therapy", "Identity, masculinity & social justice"],
+    acceptsBookings: true
   },
   {
     name: "Oluseye Ashiru",
     credentials: "BSc, MSc",
     role: "Associate Christian Therapist",
     image: "/assets/img/team/rs=w_365,h_365,cg_true,m (8).webp",
-    description: "Culturally sensitive therapy with expertise in immigrant mental health and trauma.",
+    description: "Christian family life practitioner specializing in parenting, couples, and marriage therapy.",
     profileLink: "/oluseye",
-    tags: ["therapist"]
+    tags: ["family-couples", "faith-based"],
+    specialties: ["Parenting & couples", "Christian family life", "Marriage & identity", "Spiritual growth & purpose", "Holistic, faith-integrated approach", "Evidence-based practices"],
+    acceptsBookings: true
   }
 ]
 
@@ -117,11 +137,15 @@ export default function Team() {
 
   const filteredMembers = useMemo(() => {
     return teamMembers.filter(member => {
+      const searchLower = searchQuery.toLowerCase()
       const matchesSearch = !searchQuery || 
-        member.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        member.credentials.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        member.role.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        member.description.toLowerCase().includes(searchQuery.toLowerCase())
+        member.name.toLowerCase().includes(searchLower) ||
+        member.credentials.toLowerCase().includes(searchLower) ||
+        member.role.toLowerCase().includes(searchLower) ||
+        member.description.toLowerCase().includes(searchLower) ||
+        member.specialties.some(specialty => 
+          specialty.toLowerCase().includes(searchLower)
+        )
       
       const matchesFilter = activeFilter === 'all' || member.tags.includes(activeFilter)
       
@@ -130,12 +154,13 @@ export default function Team() {
   }, [searchQuery, activeFilter])
 
   const filters = [
-    { key: 'therapist', label: 'Therapists' },
-    { key: 'coach', label: 'Coach' },
-    { key: 'bilingual', label: 'Bilingual' },
-    { key: 'director', label: 'Director' },
-    { key: 'qualifying', label: 'RP (Qualifying)' },
-    { key: 'all', label: 'All' }
+    { key: 'all', label: 'All Team Members', count: teamMembers.length },
+    { key: 'trauma-informed', label: 'Trauma-Informed Care', count: teamMembers.filter(m => m.tags.includes('trauma-informed')).length },
+    { key: 'anxiety-depression', label: 'Anxiety & Depression', count: teamMembers.filter(m => m.tags.includes('anxiety-depression')).length },
+    { key: 'family-couples', label: 'Family & Couples', count: teamMembers.filter(m => m.tags.includes('family-couples')).length },
+    { key: 'addictions-recovery', label: 'Addictions & Recovery', count: teamMembers.filter(m => m.tags.includes('addictions-recovery')).length },
+    { key: 'faith-based', label: 'Faith-Based Therapy', count: teamMembers.filter(m => m.tags.includes('faith-based')).length },
+    { key: 'bilingual', label: 'Bilingual Services', count: teamMembers.filter(m => m.tags.includes('bilingual')).length }
   ]
 
   return (
@@ -159,7 +184,7 @@ export default function Team() {
           <input 
             id="teamSearch" 
             type="search" 
-            placeholder="Search by name, role, credential…"
+            placeholder="Search by name, specialty, credential, or approach…"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full sm:w-80 rounded-md border border-charcoal/20 bg-white px-3 py-2 text-sm outline-none ring-0 focus:border-clay"
@@ -178,6 +203,11 @@ export default function Team() {
                 aria-pressed={activeFilter === filter.key}
               >
                 {filter.label}
+                {filter.count > 0 && (
+                  <span className="ml-1 px-1.5 py-0.5 rounded-full bg-charcoal/10 text-charcoal/70">
+                    {filter.count}
+                  </span>
+                )}
               </button>
             ))}
           </div>
