@@ -1,5 +1,5 @@
 import { client } from './sanity'
-import type { TeamMember, Workshop, Service, BlogPost, SiteSettings } from './sanity'
+import type { TeamMember, Workshop, Service, ServicePage, BlogPost, SiteSettings } from './sanity'
 
 // Team Members
 export async function getTeamMembers(): Promise<TeamMember[]> {
@@ -307,6 +307,49 @@ export async function getBlogPostsByTag(tag: string): Promise<BlogPost[]> {
 }
 
 // Site Settings
+// Service Pages
+export async function getServicePages(): Promise<ServicePage[]> {
+  return await client.fetch(`
+    *[_type == "servicePage" && isActive == true] | order(title asc) {
+      _id,
+      _type,
+      title,
+      slug,
+      metaDescription,
+      badge,
+      mainTitle,
+      heroDescription,
+      quote,
+      primaryCta,
+      secondaryCta,
+      sections,
+      isActive
+    }
+  `)
+}
+
+export async function getServicePage(slug: string): Promise<ServicePage | null> {
+  const page = await client.fetch(`
+    *[_type == "servicePage" && slug.current == $slug && isActive == true][0] {
+      _id,
+      _type,
+      title,
+      slug,
+      metaDescription,
+      badge,
+      mainTitle,
+      heroDescription,
+      quote,
+      primaryCta,
+      secondaryCta,
+      sections,
+      isActive
+    }
+  `, { slug })
+
+  return page || null
+}
+
 export async function getSiteSettings(): Promise<SiteSettings | null> {
   const settings = await client.fetch(`
     *[_type == "siteSettings"][0] {

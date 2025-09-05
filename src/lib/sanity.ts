@@ -141,6 +141,54 @@ export interface BlogPost {
   }
 }
 
+export interface ServicePage {
+  _id: string
+  _type: 'servicePage'
+  title: string
+  slug: {
+    current: string
+  }
+  metaDescription: string
+  badge: string
+  mainTitle: string
+  heroDescription: string
+  quote?: {
+    text: string
+    attribution: string
+  }
+  primaryCta: {
+    text: string
+    url: string
+    external: boolean
+  }
+  secondaryCta: {
+    text: string
+    url: string
+    external: boolean
+  }
+  sections: Array<{
+    _type: 'textSection' | 'detailsSection' | 'listSection' | 'ctaSection'
+    title: string
+    content?: any[]
+    items?: Array<{
+      label: string
+      value: string
+    }> | string[]
+    description?: string
+    primaryButton?: {
+      text: string
+      url: string
+      external: boolean
+    }
+    secondaryButton?: {
+      text: string
+      url: string
+      external: boolean
+    }
+  }>
+  isActive: boolean
+}
+
 export interface SiteSettings {
   _id: string
   _type: 'siteSettings'
