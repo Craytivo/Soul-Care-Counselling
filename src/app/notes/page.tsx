@@ -7,81 +7,22 @@ export const metadata: Metadata = {
   description: 'Insights, reflections, and guidance from our team of Christian counselors. Explore faith-centered perspectives on mental health, healing, and personal growth.',
 }
 
-// Sample blog posts - you can replace these with real content
-const blogPosts = [
-  {
-    id: 'healing-trauma-faith',
-    title: 'Healing Trauma Through Faith: A Journey of Restoration',
-    excerpt: 'Trauma can leave deep wounds, but faith provides a foundation for healing. Discover how integrating spiritual practices with evidence-based therapy can lead to profound transformation.',
-    author: 'Jessica Robinson-Grant',
-    authorRole: 'Clinical Director',
-    date: 'December 15, 2024',
-    readTime: '5 min read',
-    category: 'Trauma & Healing',
-    image: '/assets/img/content/rs=w_600,h_600,cg_true.webp',
-    featured: true
-  },
-  {
-    id: 'mindfulness-christian-perspective',
-    title: 'Mindfulness from a Christian Perspective',
-    excerpt: 'How can Christians practice mindfulness while staying true to their faith? Explore the biblical foundations of present-moment awareness and contemplative prayer.',
-    author: 'Davene Harris',
-    authorRole: 'Registered Psychotherapist',
-    date: 'December 10, 2024',
-    readTime: '4 min read',
-    category: 'Spiritual Care',
-    image: '/assets/img/content/rs=w_600,h_600,cg_true.webp',
-    featured: false
-  },
-  {
-    id: 'building-healthy-boundaries',
-    title: 'Building Healthy Boundaries in Relationships',
-    excerpt: 'Learn how to establish and maintain healthy boundaries that honor both yourself and others. Practical strategies for protecting your emotional and spiritual well-being.',
-    author: 'Princeton Grant',
-    authorRole: 'Registered Psychotherapist',
-    date: 'December 5, 2024',
-    readTime: '6 min read',
-    category: 'Relationships',
-    image: '/assets/img/content/rs=w_600,h_600,cg_true.webp',
-    featured: false
-  },
-  {
-    id: 'anxiety-hope-scripture',
-    title: 'Finding Hope in Scripture: Managing Anxiety with God\'s Word',
-    excerpt: 'When anxiety feels overwhelming, Scripture offers comfort and strength. Discover biblical passages and prayer practices that can help calm anxious thoughts.',
-    author: 'Anita Johnson',
-    authorRole: 'Registered Psychotherapist',
-    date: 'November 28, 2024',
-    readTime: '5 min read',
-    category: 'Anxiety & Depression',
-    image: '/assets/img/content/rs=w_600,h_600,cg_true.webp',
-    featured: false
-  },
-  {
-    id: 'self-care-sabbath-rest',
-    title: 'Self-Care as Sabbath Rest: Honoring God Through Rest',
-    excerpt: 'Self-care isn\'t selfish—it\'s a form of worship. Learn how to practice Sabbath rest and self-care in ways that honor God and restore your soul.',
-    author: 'Baraka Mwangi',
-    authorRole: 'Registered Psychotherapist',
-    date: 'November 20, 2024',
-    readTime: '4 min read',
-    category: 'Self-Care',
-    image: '/assets/img/content/rs=w_600,h_600,cg_true.webp',
-    featured: false
-  },
-  {
-    id: 'grief-loss-christian-counseling',
-    title: 'Walking Through Grief: A Christian Approach to Loss',
-    excerpt: 'Grief is a natural response to loss, but it can feel overwhelming. Discover how Christian counseling can help you process grief while holding onto hope.',
-    author: 'Josh Thompson',
-    authorRole: 'Registered Psychotherapist',
-    date: 'November 15, 2024',
-    readTime: '7 min read',
-    category: 'Grief & Loss',
-    image: '/assets/img/content/rs=w_600,h_600,cg_true.webp',
-    featured: false
-  }
-]
+// Blog post type definition
+interface BlogPost {
+  id: string
+  title: string
+  excerpt: string
+  author: string
+  authorRole: string
+  date: string
+  readTime: string
+  category: string
+  image: string
+  featured: boolean
+}
+
+// Blog posts - add your content here
+const blogPosts: BlogPost[] = []
 
 const categories = [
   'All Posts',
@@ -129,102 +70,134 @@ export default function NotesPage() {
       </section>
 
       {/* Featured Post */}
-      <section className="mt-12">
-        <h2 className="font-heading text-2xl font-semibold mb-6">Featured Post</h2>
-        {(() => {
-          const featuredPost = blogPosts.find(post => post.featured)
-          if (!featuredPost) return null
-          
-          return (
-            <article className="rounded-2xl bg-white ring-1 ring-charcoal/10 overflow-hidden">
-              <div className="md:grid md:grid-cols-2 md:gap-8">
-                <div className="relative h-64 md:h-auto">
-                  <Image
-                    src={featuredPost.image}
-                    alt={featuredPost.title}
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                </div>
-                <div className="p-6 md:p-8">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="px-3 py-1 bg-sand text-charcoal text-xs font-medium rounded-full">
-                      {featuredPost.category}
-                    </span>
-                    <span className="text-charcoal/60 text-sm">{featuredPost.readTime}</span>
+      {blogPosts.length > 0 && (
+        <section className="mt-12">
+          <h2 className="font-heading text-2xl font-semibold mb-6">Featured Post</h2>
+          {(() => {
+            const featuredPost = blogPosts.find(post => post.featured)
+            if (!featuredPost) return null
+            
+            return (
+              <article className="rounded-2xl bg-white ring-1 ring-charcoal/10 overflow-hidden">
+                <div className="md:grid md:grid-cols-2 md:gap-8">
+                  <div className="relative h-64 md:h-auto">
+                    <Image
+                      src={featuredPost.image}
+                      alt={featuredPost.title}
+                      fill
+                      className="object-cover"
+                      priority
+                    />
                   </div>
-                  <h3 className="font-heading text-xl md:text-2xl font-semibold mb-3">
-                    <Link href={`/notes/${featuredPost.id}`} className="hover:text-clay transition-colors">
-                      {featuredPost.title}
-                    </Link>
-                  </h3>
-                  <p className="text-charcoal/85 mb-4 leading-relaxed">{featuredPost.excerpt}</p>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-sand flex items-center justify-center">
-                        <span className="text-charcoal font-semibold text-sm">
-                          {featuredPost.author.split(' ').map(n => n[0]).join('')}
-                        </span>
-                      </div>
-                      <div>
-                        <p className="font-medium text-sm">{featuredPost.author}</p>
-                        <p className="text-charcoal/60 text-xs">{featuredPost.authorRole}</p>
-                      </div>
+                  <div className="p-6 md:p-8">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="px-3 py-1 bg-sand text-charcoal text-xs font-medium rounded-full">
+                        {featuredPost.category}
+                      </span>
+                      <span className="text-charcoal/60 text-sm">{featuredPost.readTime}</span>
                     </div>
-                    <span className="text-charcoal/60 text-sm">{featuredPost.date}</span>
+                    <h3 className="font-heading text-xl md:text-2xl font-semibold mb-3">
+                      <Link href={`/notes/${featuredPost.id}`} className="hover:text-clay transition-colors">
+                        {featuredPost.title}
+                      </Link>
+                    </h3>
+                    <p className="text-charcoal/85 mb-4 leading-relaxed">{featuredPost.excerpt}</p>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-sand flex items-center justify-center">
+                                                  <span className="text-charcoal font-semibold text-sm">
+                          {featuredPost.author.split(' ').map((n: string) => n[0]).join('')}
+                        </span>
+                        </div>
+                        <div>
+                          <p className="font-medium text-sm">{featuredPost.author}</p>
+                          <p className="text-charcoal/60 text-xs">{featuredPost.authorRole}</p>
+                        </div>
+                      </div>
+                      <span className="text-charcoal/60 text-sm">{featuredPost.date}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </article>
-          )
-        })()}
-      </section>
+              </article>
+            )
+          })()}
+        </section>
+      )}
 
       {/* Blog Posts Grid */}
       <section className="mt-16">
         <h2 className="font-heading text-2xl font-semibold mb-6">Latest Posts</h2>
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {blogPosts.filter(post => !post.featured).map((post) => (
-            <article key={post.id} className="rounded-2xl bg-white ring-1 ring-charcoal/10 overflow-hidden hover:ring-clay/30 transition-all duration-200">
-              <div className="relative h-48">
-                <Image
-                  src={post.image}
-                  alt={post.title}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="p-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="px-3 py-1 bg-sand text-charcoal text-xs font-medium rounded-full">
-                    {post.category}
-                  </span>
-                  <span className="text-charcoal/60 text-sm">{post.readTime}</span>
+        {blogPosts.length > 0 ? (
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {blogPosts.filter(post => !post.featured).map((post) => (
+              <article key={post.id} className="rounded-2xl bg-white ring-1 ring-charcoal/10 overflow-hidden hover:ring-clay/30 transition-all duration-200">
+                <div className="relative h-48">
+                  <Image
+                    src={post.image}
+                    alt={post.title}
+                    fill
+                    className="object-cover"
+                  />
                 </div>
-                <h3 className="font-heading text-lg font-semibold mb-3">
-                  <Link href={`/notes/${post.id}`} className="hover:text-clay transition-colors">
-                    {post.title}
-                  </Link>
-                </h3>
-                <p className="text-charcoal/85 mb-4 text-sm leading-relaxed line-clamp-3">{post.excerpt}</p>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-sand flex items-center justify-center">
-                      <span className="text-charcoal font-semibold text-xs">
-                        {post.author.split(' ').map(n => n[0]).join('')}
-                      </span>
-                    </div>
-                    <div>
-                      <p className="font-medium text-xs">{post.author}</p>
-                    </div>
+                <div className="p-6">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="px-3 py-1 bg-sand text-charcoal text-xs font-medium rounded-full">
+                      {post.category}
+                    </span>
+                    <span className="text-charcoal/60 text-sm">{post.readTime}</span>
                   </div>
-                  <span className="text-charcoal/60 text-xs">{post.date}</span>
+                  <h3 className="font-heading text-lg font-semibold mb-3">
+                    <Link href={`/notes/${post.id}`} className="hover:text-clay transition-colors">
+                      {post.title}
+                    </Link>
+                  </h3>
+                  <p className="text-charcoal/85 mb-4 text-sm leading-relaxed line-clamp-3">{post.excerpt}</p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-sand flex items-center justify-center">
+                        <span className="text-charcoal font-semibold text-xs">
+                          {post.author.split(' ').map((n: string) => n[0]).join('')}
+                        </span>
+                      </div>
+                      <div>
+                        <p className="font-medium text-xs">{post.author}</p>
+                      </div>
+                    </div>
+                    <span className="text-charcoal/60 text-xs">{post.date}</span>
+                  </div>
                 </div>
-              </div>
-            </article>
-          ))}
-        </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-sand flex items-center justify-center">
+              <svg className="w-8 h-8 text-charcoal/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <h3 className="font-heading text-lg font-semibold text-charcoal mb-2">No posts yet</h3>
+            <p className="text-charcoal/70 mb-6 max-w-md mx-auto">
+              We&apos;re preparing thoughtful content to share with you. Check back soon for insights and guidance from our team.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <a 
+                href="https://thesoulcarecounsellor.janeapp.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-md bg-clay px-4 py-2 font-semibold text-charcoal hover:bg-clay/90 ring-1 ring-charcoal/10"
+              >
+                Book a Free Consultation
+              </a>
+              <Link 
+                href="/about"
+                className="inline-flex items-center justify-center rounded-md bg-white px-4 py-2 font-semibold text-charcoal hover:bg-sand ring-1 ring-charcoal/10"
+              >
+                Learn About Our Team
+              </Link>
+            </div>
+          </div>
+        )}
       </section>
 
       {/* Newsletter Signup */}
