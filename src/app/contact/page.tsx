@@ -1,12 +1,6 @@
 'use client'
 
-import type { Metadata } from 'next'
 import { useState } from 'react'
-
-export const metadata: Metadata = {
-  title: 'Soul Care — Contact',
-  description: 'Contact Soul Care Christian Counselling. Book a free consultation, send a message, or reach us by email.',
-}
 
 export default function ContactPage() {
   const [formStatus, setFormStatus] = useState('')
