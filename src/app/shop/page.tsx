@@ -17,7 +17,7 @@ export default function ShopPage() {
           </span>
           <h1 className="mt-3 font-heading text-3xl md:text-4xl font-bold">Soul Care Shop</h1>
           <p className="mt-3 max-w-3xl text-cream/85">
-            We're curating a collection of wellness products and resources to support your healing journey. 
+            We&apos;re curating a collection of wellness products and resources to support your healing journey. 
             Stay tuned for carefully selected items that align with our faith-centered approach to mental health.
           </p>
         </div>
@@ -33,7 +33,7 @@ export default function ShopPage() {
           </div>
           <h2 className="font-heading text-2xl md:text-3xl font-semibold mb-4">Coming Soon</h2>
           <p className="text-charcoal/85 text-lg max-w-2xl mx-auto">
-            We're working hard to bring you a curated collection of wellness products and resources that align with our faith-centered approach to mental health. Stay tuned for something special!
+            We&apos;re working hard to bring you a curated collection of wellness products and resources that align with our faith-centered approach to mental health. Stay tuned for something special!
           </p>
         </div>
       </section>

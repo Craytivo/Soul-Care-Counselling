@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 
 interface YouTubeVideoProps {
   videoId: string
@@ -42,9 +43,11 @@ export default function YouTubeVideo({ videoId, title, className = '' }: YouTube
   return (
     <div className={`relative w-full cursor-pointer group ${className}`} onClick={() => setIsPlaying(true)}>
       <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-        <img
+        <Image
           src={thumbnailUrl}
           alt={`${title} - YouTube Video`}
+          width={400}
+          height={225}
           className="absolute top-0 left-0 w-full h-full object-cover rounded-lg"
         />
         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-200 rounded-lg" />

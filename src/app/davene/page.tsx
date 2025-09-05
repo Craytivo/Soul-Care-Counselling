@@ -37,7 +37,7 @@ const daveneData = {
     {
       label: "@HeyBelovedHey",
       url: "https://instagram.com/HeyBelovedHey",
-      type: "instagram"
+      type: "instagram" as const
     }
   ],
   acceptsBookings: false
