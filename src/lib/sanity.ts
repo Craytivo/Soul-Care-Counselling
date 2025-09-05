@@ -103,15 +103,41 @@ export interface BlogPost {
   _type: 'blogPost'
   title: string
   excerpt: string
-  content: any[]
-  author: string
-  authorRole?: string
-  authorImage?: SanityImage
-  publishedAt: string
-  featuredImage?: SanityImage
-  tags?: string[]
   slug: {
     current: string
+  }
+  content: any[]
+  featuredImage?: SanityImage & {
+    alt?: string
+    caption?: string
+  }
+  author: {
+    _id: string
+    _type: 'reference'
+    _ref: string
+    name?: string
+    credentials?: string
+    image?: SanityImage
+  }
+  publishedAt: string
+  isPublished: boolean
+  category: string
+  tags?: string[]
+  readingTime?: number
+  isFeatured: boolean
+  seoTitle?: string
+  seoDescription?: string
+  relatedPosts?: Array<{
+    _id: string
+    _type: 'reference'
+    _ref: string
+    title?: string
+    slug?: { current: string }
+  }>
+  callToAction?: {
+    text: string
+    link: string
+    type: 'consultation' | 'learn-more' | 'contact' | 'custom'
   }
 }
 

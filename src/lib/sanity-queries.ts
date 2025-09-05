@@ -135,42 +135,175 @@ export async function getService(slug: string): Promise<Service | null> {
 // Blog Posts
 export async function getBlogPosts(): Promise<BlogPost[]> {
   return await client.fetch(`
-    *[_type == "blogPost"] | order(publishedAt desc) {
+    *[_type == "blogPost" && isPublished == true] | order(publishedAt desc) {
       _id,
       _type,
       title,
       excerpt,
+      slug,
       content,
-      author,
-      authorRole,
-      authorImage,
+      featuredImage {
+        ...,
+        alt,
+        caption
+      },
+      author-> {
+        _id,
+        _type,
+        _ref,
+        name,
+        credentials,
+        image
+      },
       publishedAt,
-      featuredImage,
+      isPublished,
+      category,
       tags,
-      slug
+      readingTime,
+      isFeatured,
+      seoTitle,
+      seoDescription,
+      relatedPosts[]-> {
+        _id,
+        _type,
+        _ref,
+        title,
+        slug
+      },
+      callToAction
     }
   `)
 }
 
 export async function getBlogPost(slug: string): Promise<BlogPost | null> {
   const post = await client.fetch(`
-    *[_type == "blogPost" && slug.current == $slug][0] {
+    *[_type == "blogPost" && slug.current == $slug && isPublished == true][0] {
       _id,
       _type,
       title,
       excerpt,
+      slug,
       content,
-      author,
-      authorRole,
-      authorImage,
+      featuredImage {
+        ...,
+        alt,
+        caption
+      },
+      author-> {
+        _id,
+        _type,
+        _ref,
+        name,
+        credentials,
+        image
+      },
       publishedAt,
-      featuredImage,
+      isPublished,
+      category,
       tags,
-      slug
+      readingTime,
+      isFeatured,
+      seoTitle,
+      seoDescription,
+      relatedPosts[]-> {
+        _id,
+        _type,
+        _ref,
+        title,
+        slug
+      },
+      callToAction
     }
   `, { slug })
   
   return post || null
+}
+
+export async function getFeaturedBlogPosts(): Promise<BlogPost[]> {
+  return await client.fetch(`
+    *[_type == "blogPost" && isPublished == true && isFeatured == true] | order(publishedAt desc) [0...3] {
+      _id,
+      _type,
+      title,
+      excerpt,
+      slug,
+      featuredImage {
+        ...,
+        alt,
+        caption
+      },
+      author-> {
+        _id,
+        _type,
+        _ref,
+        name,
+        credentials,
+        image
+      },
+      publishedAt,
+      category,
+      tags,
+      readingTime
+    }
+  `)
+}
+
+export async function getBlogPostsByCategory(category: string): Promise<BlogPost[]> {
+  return await client.fetch(`
+    *[_type == "blogPost" && isPublished == true && category == $category] | order(publishedAt desc) {
+      _id,
+      _type,
+      title,
+      excerpt,
+      slug,
+      featuredImage {
+        ...,
+        alt,
+        caption
+      },
+      author-> {
+        _id,
+        _type,
+        _ref,
+        name,
+        credentials,
+        image
+      },
+      publishedAt,
+      category,
+      tags,
+      readingTime
+    }
+  `, { category })
+}
+
+export async function getBlogPostsByTag(tag: string): Promise<BlogPost[]> {
+  return await client.fetch(`
+    *[_type == "blogPost" && isPublished == true && $tag in tags] | order(publishedAt desc) {
+      _id,
+      _type,
+      title,
+      excerpt,
+      slug,
+      featuredImage {
+        ...,
+        alt,
+        caption
+      },
+      author-> {
+        _id,
+        _type,
+        _ref,
+        name,
+        credentials,
+        image
+      },
+      publishedAt,
+      category,
+      tags,
+      readingTime
+    }
+  `, { tag })
 }
 
 // Site Settings
