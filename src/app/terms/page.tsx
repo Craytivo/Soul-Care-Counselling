@@ -211,8 +211,8 @@ export default function Terms() {
           </p>
           <div className="bg-sand p-6 rounded-lg">
             <p className="text-charcoal/85 mb-2"><strong>Soul Care Counselling</strong></p>
-            <p className="text-charcoal/85 mb-2">Email: <a href="mailto:info@soulcarecounselling.com" className="text-clay hover:underline">info@soulcarecounselling.com</a></p>
-            <p className="text-charcoal/85 mb-2">Phone: <a href="tel:+1-XXX-XXX-XXXX" className="text-clay hover:underline">1-XXX-XXX-XXXX</a></p>
+            <p className="text-charcoal/85 mb-2">Email: <a href="mailto:iamshespeakstruth@gmail.com" className="text-clay hover:underline">iamshespeakstruth@gmail.com</a></p>
+            <p className="text-charcoal/85 mb-2">Phone: <a href="tel:+1-647-544-7736" className="text-clay hover:underline">647-544-7736</a></p>
             <p className="text-charcoal/85">Address: [Your Business Address]</p>
           </div>
         </section>

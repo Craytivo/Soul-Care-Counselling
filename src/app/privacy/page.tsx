@@ -27,7 +27,7 @@ export default function Privacy() {
         <section className="mb-8">
           <h2 className="font-heading text-2xl font-semibold text-charcoal mb-4">Introduction</h2>
           <p className="text-charcoal/85 mb-4">
-            Soul Care Counselling ("we," "our," or "us") is committed to protecting your privacy and maintaining the confidentiality of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our counselling services.
+            Soul Care Counselling (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) is committed to protecting your privacy and maintaining the confidentiality of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our counselling services.
           </p>
           <p className="text-charcoal/85 mb-4">
             As a faith-centered counselling practice, we understand the sensitive nature of mental health information and are bound by professional ethical standards and applicable privacy laws, including the Personal Information Protection and Electronic Documents Act (PIPEDA) and provincial health information protection laws.
@@ -145,7 +145,7 @@ export default function Privacy() {
         </section>
 
         <section className="mb-8">
-          <h2 className="font-heading text-2xl font-semibold text-charcoal mb-4">Children's Privacy</h2>
+          <h2 className="font-heading text-2xl font-semibold text-charcoal mb-4">Children&apos;s Privacy</h2>
           <p className="text-charcoal/85 mb-4">
             Our services are not directed to children under 13 years of age. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and believe your child has provided us with personal information, please contact us immediately.
           </p>
@@ -154,7 +154,7 @@ export default function Privacy() {
         <section className="mb-8">
           <h2 className="font-heading text-2xl font-semibold text-charcoal mb-4">Changes to This Privacy Policy</h2>
           <p className="text-charcoal/85 mb-4">
-            We may update this Privacy Policy from time to time. We will notify you of any material changes by posting the new Privacy Policy on this page and updating the "Last updated" date. We encourage you to review this Privacy Policy periodically for any changes.
+            We may update this Privacy Policy from time to time. We will notify you of any material changes by posting the new Privacy Policy on this page and updating the &quot;Last updated&quot; date. We encourage you to review this Privacy Policy periodically for any changes.
           </p>
         </section>
 
@@ -166,8 +166,8 @@ export default function Privacy() {
           <div className="bg-sand p-6 rounded-lg">
             <p className="text-charcoal/85 mb-2"><strong>Soul Care Counselling</strong></p>
             <p className="text-charcoal/85 mb-2">Privacy Officer</p>
-            <p className="text-charcoal/85 mb-2">Email: <a href="mailto:privacy@soulcarecounselling.com" className="text-clay hover:underline">privacy@soulcarecounselling.com</a></p>
-            <p className="text-charcoal/85 mb-2">Phone: <a href="tel:+1-XXX-XXX-XXXX" className="text-clay hover:underline">1-XXX-XXX-XXXX</a></p>
+            <p className="text-charcoal/85 mb-2">Email: <a href="mailto:iamshespeakstruth@gmail.com" className="text-clay hover:underline">iamshespeakstruth@gmail.com</a></p>
+            <p className="text-charcoal/85 mb-2">Phone: <a href="tel:+1-647-544-7736" className="text-clay hover:underline">647-544-7736</a></p>
             <p className="text-charcoal/85">Address: [Your Business Address]</p>
           </div>
         </section>

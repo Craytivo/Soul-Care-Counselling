@@ -12,6 +12,20 @@ export default function AboutPage() {
     <>
       {/* Page hero */}
       <section className="relative overflow-hidden rounded-2xl bg-bark text-cream ring-1 ring-cream/15">
+        {/* Background image */}
+        <div className="absolute inset-0">
+          <Image
+            src="/assets/img/content/rs=w_1240,h_620,cg_true,m.webp"
+            alt="Soul Care Counselling - Faith-centered therapy"
+            fill
+            className="object-cover opacity-20"
+            priority
+          />
+        </div>
+        
+        {/* Overlay gradient */}
+        <div className="absolute inset-0 bg-gradient-to-r from-bark/90 via-bark/70 to-bark/50"></div>
+        
         {/* Decorative gradient blur */}
         <div className="absolute -right-12 -top-12 h-56 w-56 rounded-full bg-gradient-to-br from-clay/40 to-cream/10 blur-2xl" aria-hidden="true"></div>
 

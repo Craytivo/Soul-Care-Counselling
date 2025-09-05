@@ -18,7 +18,7 @@ export default function ContactPage() {
       const body = encodeURIComponent(
         `Name: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone || '-'}\nSubject: ${data.subject}\n\n${data.message}`
       )
-      window.location.href = `mailto:info@thesoulcarecounsellor.com?subject=${encodeURIComponent('[Website] ' + data.subject)}&body=${body}`
+      window.location.href = `mailto:iamshespeakstruth@gmail.com?subject=${encodeURIComponent('[Website] ' + data.subject)}&body=${body}`
 
       // Optimistic success UI
       setFormStatus('Opening your email app…')
@@ -46,7 +46,7 @@ export default function ContactPage() {
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <a 
-              href="mailto:info@thesoulcarecounsellor.com" 
+              href="mailto:iamshespeakstruth@gmail.com" 
               className="inline-flex items-center justify-center rounded-md bg-clay px-5 py-2.5 font-semibold text-charcoal hover:bg-clay/90 ring-1 ring-cream/20"
             >
               Email Us
@@ -161,25 +161,37 @@ export default function ContactPage() {
         <aside className="md:col-span-5 mt-10 md:mt-[3.25rem] space-y-6">
           <div className="rounded-2xl bg-sand p-5 ring-1 ring-charcoal/10">
             <h3 className="font-heading font-semibold">Quick contact</h3>
-            <ul className="mt-3 space-y-2 text-sm">
-              <li>
+            <div className="mt-3 space-y-3 text-sm">
+              <div>
+                <p className="font-medium text-charcoal mb-1">Email us</p>
                 <a 
-                  href="mailto:info@thesoulcarecounsellor.com" 
+                  href="mailto:iamshespeakstruth@gmail.com" 
                   className="underline underline-offset-4 decoration-charcoal/30 hover:decoration-charcoal"
                 >
-                  info@thesoulcarecounsellor.com
+                  iamshespeakstruth@gmail.com
                 </a>
-              </li>
-              <li>
+              </div>
+              <div>
+                <p className="font-medium text-charcoal mb-1">Call us</p>
+                <a 
+                  href="tel:+1-647-544-7736" 
+                  className="underline underline-offset-4 decoration-charcoal/30 hover:decoration-charcoal"
+                >
+                  647-544-7736
+                </a>
+              </div>
+              <div>
+                <p className="font-medium text-charcoal mb-1">Book online</p>
                 <a 
                   href="https://thesoulcarecounsellor.janeapp.com" 
                   target="_blank" 
+                  rel="noopener noreferrer"
                   className="underline underline-offset-4 decoration-charcoal/30 hover:decoration-charcoal"
                 >
-                  Book a Free Consultation
+                  Free 15-min consultation
                 </a>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
 
           <div className="rounded-2xl bg-white p-5 ring-1 ring-charcoal/10">
