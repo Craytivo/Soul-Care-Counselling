@@ -200,10 +200,10 @@ export default function AboutPage() {
               />
               <div>
                 <h4 className="font-heading font-semibold">Davene Harris</h4>
-                <p className="text-sm text-charcoal/80">MA — Associate Christian Therapist</p>
+                <p className="text-sm text-charcoal/80">MA — Operations Manager</p>
               </div>
             </div>
-            <p className="mt-3 text-sm text-charcoal/85">Warm, practical, and collaborative care with a focus on whole-person healing.</p>
+            <p className="mt-3 text-sm text-charcoal/85">Oversees practice operations and administrative excellence with faith-integrated leadership.</p>
             <div className="mt-4">
               <Link href="/davene" className="text-sm font-semibold underline underline-offset-4 decoration-charcoal/30 hover:decoration-charcoal">
                 View Profile

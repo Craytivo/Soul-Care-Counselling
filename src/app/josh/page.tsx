@@ -10,7 +10,7 @@ const joshData = {
   name: "Josh Dale",
   credentials: "MDiv, RP, CCTS-I",
   role: "Associate Christian Therapist",
-  image: "/assets/img/team/rs=w_365,h_365,cg_true,m (4).webp",
+  image: "/assets/img/team/rs=w_365,h_365,cg_true,m (5).webp",
   bio: [
     "Reaching out for help regarding our mental health isn't easy. Often times we wrestle with stigmas, stereotypes, low self-esteem, and/or beliefs that therapy is a sign of weakness. I've made it my goal to create a safe, open, informative and transformative space for people to work towards mental, physical, and emotional wellness, and grow more into the person they want and were created to be.",
     "Often times we feel stuck or burnt by situations and experiences in life, and it becomes difficult to reach out. My desire is that you would allow me the opportunity to come alongside of you and help you move from overwhelmed to overcoming. I am here so you don't have to do this alone.",

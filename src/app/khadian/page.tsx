@@ -10,7 +10,7 @@ const khadianData = {
   name: "Khadian Gooden",
   credentials: "BA, MDiv, RP, CCC",
   role: "Associate Christian Therapist",
-  image: "/assets/img/team/rs=w_365,h_365,cg_true,m (5).webp",
+  image: "/assets/img/team/rs=w_365,h_365,cg_true,m (4).webp",
   bio: [
     "Life is filled with events and experiences, often unexpected that impact us more so than we imagined. These factors and others like it, may prompt one to seek counselling. Whatever your reasons are, know that you do not have to embark on this journey alone.",
     "Hi my name is K. Racquel Gooden. I am a graduate with a Masters of Divinity in Clinical Counselling from Tyndale University. Also, a Bachelor's degree in Psychology from York University. I have spent the past few years working primarily with individual clients and occasionally with families and youth.",

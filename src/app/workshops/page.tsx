@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import YouTubeVideo from '@/components/YouTubeVideo'
 
 export const metadata: Metadata = {
   title: 'Wellness Workshops — Soul Care Counselling',
@@ -15,7 +15,7 @@ const workshops = [
     host: 'Josh Dale',
     hostRole: 'Associate Therapist',
     type: 'upcoming',
-    registrationLink: '#', // Add actual registration link when available
+    registrationLink: 'https://jessicarobinsongrant.podia.com/dfbe0ba7-b32a-4c29-a2d0-fff186bfd7e6',
     youtubeLink: null
   },
   {
@@ -26,7 +26,7 @@ const workshops = [
     hostRole: 'Associate Therapists',
     type: 'recording',
     registrationLink: null,
-    youtubeLink: 'https://youtube.com/watch?v=example1' // Add actual YouTube link
+    youtubeLink: 'https://www.youtube.com/watch?v=xmG6x2EYpy4&t=2s' // Add actual YouTube link
   },
   {
     id: 'healthy-attachment-healthy-bodies',
@@ -36,7 +36,7 @@ const workshops = [
     hostRole: 'Therapist',
     type: 'recording',
     registrationLink: null,
-    youtubeLink: 'https://youtube.com/watch?v=example2' // Add actual YouTube link
+    youtubeLink: 'https://www.youtube.com/watch?v=fhFE6v-B4fk' // Add actual YouTube link
   },
   {
     id: 'art-therapy-path-to-healing',
@@ -46,7 +46,7 @@ const workshops = [
     hostRole: 'Associate Therapist',
     type: 'recording',
     registrationLink: null,
-    youtubeLink: 'https://youtube.com/watch?v=example3' // Add actual YouTube link
+    youtubeLink: 'youtube.com/watch?v=p1j6lp8uz9c&embeds_referring_euri=https%3A%2F%2Fthesoulcarecounsellor.com%2F&source_ve_path=Mjg2NjY' // Add actual YouTube link
   },
   {
     id: 'navigating-life-transitions',
@@ -56,7 +56,7 @@ const workshops = [
     hostRole: 'Associate Therapist',
     type: 'recording',
     registrationLink: null,
-    youtubeLink: 'https://youtube.com/watch?v=example4' // Add actual YouTube link
+    youtubeLink: 'https://www.youtube.com/watch?v=rV-vJvyyFDY' // Add actual YouTube link
   },
   {
     id: 'cultivating-black-joy',
@@ -66,7 +66,7 @@ const workshops = [
     hostRole: 'Clinical Director & Associate Therapist',
     type: 'recording',
     registrationLink: null,
-    youtubeLink: 'https://youtube.com/watch?v=example5' // Add actual YouTube link
+    youtubeLink: 'https://www.youtube.com/watch?v=W3rU7hq37oM' // Add actual YouTube link
   }
 ]
 
@@ -122,7 +122,7 @@ export default function WorkshopsPage() {
                       </div>
                     </div>
                     <a 
-                      href={workshop.registrationLink}
+                      href={workshop.registrationLink || '#'}
                       className="inline-flex items-center justify-center rounded-md bg-clay px-4 py-2 font-semibold text-charcoal hover:bg-clay/90 ring-1 ring-charcoal/10"
                     >
                       Sign Up Free
@@ -138,19 +138,34 @@ export default function WorkshopsPage() {
       {/* Workshop Recordings */}
       <section className="mt-16">
         <h2 className="font-heading text-2xl font-semibold mb-6">Workshop Recordings</h2>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-1">
           {recordedWorkshops.map((workshop) => (
             <article key={workshop.id} className="rounded-2xl bg-white ring-1 ring-charcoal/10 overflow-hidden hover:ring-clay/30 transition-all duration-200">
-              <div className="p-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="px-3 py-1 bg-sand text-charcoal text-xs font-medium rounded-full">
-                    Recording
-                  </span>
-                  <span className="text-charcoal/60 text-sm">Free Access</span>
+              <div className="grid gap-6 md:grid-cols-2">
+                {/* Video Preview */}
+                <div className="p-6">
+                  {workshop.youtubeLink && (
+                    <YouTubeVideo 
+                      videoId={workshop.youtubeLink}
+                      title={workshop.title}
+                      className="w-full"
+                    />
+                  )}
                 </div>
-                <h3 className="font-heading text-lg font-semibold mb-3">{workshop.title}</h3>
-                <p className="text-charcoal/85 mb-4 text-sm leading-relaxed line-clamp-4">{workshop.description}</p>
-                <div className="flex items-center justify-between">
+                
+                {/* Workshop Details */}
+                <div className="p-6 flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="px-3 py-1 bg-sand text-charcoal text-xs font-medium rounded-full">
+                        Recording
+                      </span>
+                      <span className="text-charcoal/60 text-sm">Free Access</span>
+                    </div>
+                    <h3 className="font-heading text-lg font-semibold mb-3">{workshop.title}</h3>
+                    <p className="text-charcoal/85 mb-4 text-sm leading-relaxed">{workshop.description}</p>
+                  </div>
+                  
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-full bg-sand flex items-center justify-center">
                       <span className="text-charcoal font-semibold text-xs">
@@ -158,42 +173,14 @@ export default function WorkshopsPage() {
                       </span>
                     </div>
                     <div>
-                      <p className="font-medium text-xs">{workshop.host}</p>
+                      <p className="font-medium text-sm">{workshop.host}</p>
                       <p className="text-charcoal/60 text-xs">{workshop.hostRole}</p>
                     </div>
                   </div>
-                  <a 
-                    href={workshop.youtubeLink || '#'}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center rounded-md bg-bark px-3 py-2 font-semibold text-cream hover:bg-bark/90 ring-1 ring-cream/20"
-                  >
-                    Watch Now
-                  </a>
                 </div>
               </div>
             </article>
           ))}
-        </div>
-      </section>
-
-      {/* Newsletter Signup */}
-      <section className="mt-16 rounded-2xl bg-sand p-6 md:p-8 ring-1 ring-charcoal/10">
-        <div className="max-w-2xl mx-auto text-center">
-          <h3 className="font-heading text-xl md:text-2xl font-semibold mb-3">Stay Updated</h3>
-          <p className="text-charcoal/80 mb-6">
-            Get notified about upcoming workshops and new recordings. Join our community for monthly insights and practical tools for your wellness journey.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-4 py-2 rounded-md border border-charcoal/20 focus:outline-none focus:ring-2 focus:ring-clay focus:border-transparent"
-            />
-            <button className="px-6 py-2 bg-clay text-charcoal font-semibold rounded-md hover:bg-clay/90 transition-colors">
-              Subscribe
-            </button>
-          </div>
         </div>
       </section>
 

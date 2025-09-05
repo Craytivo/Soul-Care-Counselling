@@ -35,8 +35,16 @@ export default function Footer() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand / summary */}
           <div>
-            <Link href="/" className="flex items-center gap-2">
-              <span className="inline-block h-9 w-9 rounded-md bg-cream/10 ring-1 ring-cream/20"></span>
+            <Link href="/" className="flex items-center gap-3">
+              <div className="relative w-10 h-10 flex items-center justify-center">
+                <Image
+                  src="/assets/logo/logo-s-c-intertwined.png"
+                  alt="Soul Care Counselling Logo"
+                  width={40}
+                  height={40}
+                  className="w-full h-full object-contain"
+                />
+              </div>
               <span className="text-base font-semibold tracking-wide">Soul Care Counselling</span>
             </Link>
             <p className="mt-3 text-sm text-cream/80">

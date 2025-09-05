@@ -14,6 +14,7 @@ interface TeamMemberData {
     url: string
     type: 'instagram' | 'website' | 'other'
   }[]
+  acceptsBookings?: boolean
 }
 
 interface TeamMemberPageProps {
@@ -38,14 +39,16 @@ export default function TeamMemberPage({ member }: TeamMemberPageProps) {
             </h1>
             <p className="mt-2 text-cream/85">{member.role}</p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <a 
-                href="https://thesoulcarecounsellor.janeapp.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-md bg-clay px-4 py-2 font-semibold text-charcoal hover:bg-clay/90 ring-1 ring-charcoal/10"
-              >
-                Book a Free Consultation
-              </a>
+              {member.acceptsBookings !== false && (
+                <a 
+                  href="https://thesoulcarecounsellor.janeapp.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-md bg-clay px-4 py-2 font-semibold text-charcoal hover:bg-clay/90 ring-1 ring-charcoal/10"
+                >
+                  Book a Free Consultation
+                </a>
+              )}
               {member.socialLinks?.map((link, index) => (
                 <a
                   key={index}
@@ -105,18 +108,20 @@ export default function TeamMemberPage({ member }: TeamMemberPageProps) {
             </ul>
           </div>
 
-          <div className="rounded-2xl bg-sand p-5 ring-1 ring-charcoal/10">
-            <h3 className="font-heading font-semibold">Book with {member.name.split(' ')[0]}</h3>
-            <p className="mt-2 text-sm text-charcoal/85">Free 15-minute consultation to explore fit and next steps.</p>
-            <a 
-              href="https://thesoulcarecounsellor.janeapp.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="mt-3 inline-flex items-center justify-center rounded-md bg-bark px-4 py-2 font-semibold text-cream hover:bg-bark/90 ring-1 ring-charcoal/10"
-            >
-              Book a Free Consultation
-            </a>
-          </div>
+          {member.acceptsBookings !== false && (
+            <div className="rounded-2xl bg-sand p-5 ring-1 ring-charcoal/10">
+              <h3 className="font-heading font-semibold">Book with {member.name.split(' ')[0]}</h3>
+              <p className="mt-2 text-sm text-charcoal/85">Free 15-minute consultation to explore fit and next steps.</p>
+              <a 
+                href="https://thesoulcarecounsellor.janeapp.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="mt-3 inline-flex items-center justify-center rounded-md bg-bark px-4 py-2 font-semibold text-cream hover:bg-bark/90 ring-1 ring-charcoal/10"
+              >
+                Book a Free Consultation
+              </a>
+            </div>
+          )}
         </aside>
       </section>
 

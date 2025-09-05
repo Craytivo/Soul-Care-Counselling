@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -14,9 +15,27 @@ export default function Header() {
       <header className="sticky top-0 z-50 bg-bark/90 text-cream supports-[backdrop-filter]:bg-bark/70 backdrop-blur">
         <div className="mx-auto max-w-7xl px-4 py-3 grid grid-cols-[auto_1fr_auto] items-center gap-4">
           {/* LEFT: Brand */}
-          <Link href="/" className="flex items-center gap-2">
-            <span className="inline-block h-9 w-9 rounded-md bg-cream/10 ring-1 ring-cream/20"></span>
-            <span className="text-sm sm:text-base font-semibold tracking-wide">Soul Care Counselling</span>
+          <Link href="/" className="flex items-center gap-3">
+            {/* Logo Image */}
+            <div className="relative w-12 h-12 flex items-center justify-center">
+              <Image
+                src="/assets/logo/logo-s-c-intertwined.png"
+                alt="Soul Care Counselling Logo"
+                width={48}
+                height={48}
+                className="w-full h-full object-contain"
+              />
+            </div>
+            
+            {/* Logo Text */}
+            <div className="flex flex-col">
+              <span className="text-sm sm:text-base font-heading font-semibold tracking-wide text-cream">
+                Soul Care
+              </span>
+              <span className="text-[10px] sm:text-xs text-cream/80 tracking-[0.15em] font-medium">
+                COUNSELLING
+              </span>
+            </div>
           </Link>
 
           {/* CENTER: Desktop nav */}
@@ -112,6 +131,9 @@ export default function Header() {
           </Link>
           <Link href="/workshops" className="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" onClick={closeMenu}>
             Wellness Workshops
+          </Link>
+          <Link href="/shop" className="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" onClick={closeMenu}>
+            Shop
           </Link>
           <Link href="/contact" className="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" onClick={closeMenu}>
             Contact

@@ -30,9 +30,9 @@ const teamMembers: TeamMember[] = [
     credentials: "MA",
     role: "Operations Manager",
     image: "/assets/img/team/rs=w_365,h_365,cg_true,m (1).webp",
-    description: "Compassionate therapy with a focus on trauma-informed care and cultural sensitivity.",
+    description: "Oversees practice operations and administrative excellence with faith-integrated leadership.",
     profileLink: "/davene",
-    tags: ["therapist"]
+    tags: ["operations", "administration"]
   },
   {
     name: "Princeton Grant",
@@ -66,7 +66,7 @@ const teamMembers: TeamMember[] = [
     name: "Josh Dale",
     credentials: "MDiv, RP, CCTS-I",
     role: "Associate Christian Therapist",
-    image: "/assets/img/team/rs=w_365,h_365,cg_true,m (4).webp",
+    image: "/assets/img/team/rs=w_365,h_365,cg_true,m (5).webp",
     description: "Specialized in anxiety, depression, and life transitions with a faith-based approach.",
     profileLink: "/josh",
     tags: ["therapist"]
@@ -76,7 +76,7 @@ const teamMembers: TeamMember[] = [
     credentials: "BA, MDiv, RP, CCC",
     role: "Associate Christian Therapist",
     status: "Not Accepting Clients",
-    image: "/assets/img/team/rs=w_365,h_365,cg_true,m (5).webp",
+    image: "/assets/img/team/rs=w_365,h_365,cg_true,m (4).webp",
     description: "Trauma-informed therapy with expertise in racial identity and cultural healing.",
     profileLink: "/khadian",
     tags: ["therapist"]
