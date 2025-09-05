@@ -111,20 +111,6 @@ export const blogPost = defineType({
             },
           ],
         },
-        {
-          type: 'code',
-          title: 'Code Block',
-          options: {
-            language: 'javascript',
-            languageAlternatives: [
-              { title: 'JavaScript', value: 'javascript' },
-              { title: 'TypeScript', value: 'typescript' },
-              { title: 'HTML', value: 'html' },
-              { title: 'CSS', value: 'css' },
-              { title: 'JSON', value: 'json' },
-            ],
-          },
-        },
       ],
       validation: (Rule) => Rule.required(),
     }),
