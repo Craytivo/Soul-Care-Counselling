@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import SanityServices from '@/components/SanityServices'
 
 export const metadata: Metadata = {
   title: 'Services | Soul Care Counselling',
@@ -20,56 +20,8 @@ export default function ServicesPage() {
         </p>
       </section>
 
-      {/* Service Grid */}
-      <section className="mt-12 grid gap-6 md:grid-cols-2">
-        <article className="rounded-2xl bg-white p-6 ring-1 ring-charcoal/10">
-          <h3 className="font-heading text-xl font-semibold">Individual Therapy</h3>
-          <p className="mt-3 text-charcoal/85">
-            One-on-one support tailored to your unique needs, integrating faith and evidence-based approaches for lasting healing.
-          </p>
-          <div className="mt-4">
-            <Link href="/individual" className="text-sm font-semibold underline underline-offset-4 decoration-charcoal/30 hover:decoration-charcoal">
-              Learn More
-            </Link>
-          </div>
-        </article>
-
-        <article className="rounded-2xl bg-white p-6 ring-1 ring-charcoal/10">
-          <h3 className="font-heading text-xl font-semibold">Affordable Therapy</h3>
-          <p className="mt-3 text-charcoal/85">
-            Accessible mental health care with sliding scale options and flexible payment plans to ensure support is within reach.
-          </p>
-          <div className="mt-4">
-            <Link href="/affordable" className="text-sm font-semibold underline underline-offset-4 decoration-charcoal/30 hover:decoration-charcoal">
-              Learn More
-            </Link>
-          </div>
-        </article>
-
-        <article className="rounded-2xl bg-white p-6 ring-1 ring-charcoal/10">
-          <h3 className="font-heading text-xl font-semibold">Single Session Therapy</h3>
-          <p className="mt-3 text-charcoal/85">
-            Focused, solution-oriented support in a single session for immediate relief and practical next steps.
-          </p>
-          <div className="mt-4">
-            <Link href="/single-session" className="text-sm font-semibold underline underline-offset-4 decoration-charcoal/30 hover:decoration-charcoal">
-              Learn More
-            </Link>
-          </div>
-        </article>
-
-        <article className="rounded-2xl bg-white p-6 ring-1 ring-charcoal/10">
-          <h3 className="font-heading text-xl font-semibold">Group Therapy</h3>
-          <p className="mt-3 text-charcoal/85">
-            Connect with others on similar journeys in a supportive, faith-centered group setting for shared healing.
-          </p>
-          <div className="mt-4">
-            <Link href="/group-therapy" className="text-sm font-semibold underline underline-offset-4 decoration-charcoal/30 hover:decoration-charcoal">
-              Learn More
-            </Link>
-          </div>
-        </article>
-      </section>
+      {/* Services from Sanity */}
+      <SanityServices />
 
       {/* CTA Section */}
       <section className="mt-16 md:mt-20 rounded-2xl bg-sand p-6 md:p-8 ring-1 ring-charcoal/10">

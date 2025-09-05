@@ -84,9 +84,17 @@ export interface Service {
   _type: 'service'
   title: string
   description: string
+  slug: {
+    current: string
+  }
   icon?: string
   features?: string[]
   pricing?: string
+  isActive: boolean
+  order: number
+  learnMoreLink?: string
+  bookingLink?: string
+  image?: SanityImage
   content?: any[]
 }
 

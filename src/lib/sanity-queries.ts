@@ -90,17 +90,46 @@ export async function getWorkshop(id: string): Promise<Workshop | null> {
 // Services
 export async function getServices(): Promise<Service[]> {
   return await client.fetch(`
-    *[_type == "service"] | order(_createdAt asc) {
+    *[_type == "service" && isActive == true] | order(order asc, title asc) {
       _id,
       _type,
       title,
       description,
+      slug,
       icon,
       features,
       pricing,
+      isActive,
+      order,
+      learnMoreLink,
+      bookingLink,
+      image,
       content
     }
   `)
+}
+
+export async function getService(slug: string): Promise<Service | null> {
+  const service = await client.fetch(`
+    *[_type == "service" && slug.current == $slug][0] {
+      _id,
+      _type,
+      title,
+      description,
+      slug,
+      icon,
+      features,
+      pricing,
+      isActive,
+      order,
+      learnMoreLink,
+      bookingLink,
+      image,
+      content
+    }
+  `, { slug })
+  
+  return service || null
 }
 
 // Blog Posts
