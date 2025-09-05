@@ -27,6 +27,12 @@ export const workshop = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'instructorRole',
+      title: 'Instructor Role',
+      type: 'string',
+      description: 'Role or title of the instructor (e.g., "Associate Therapist", "Clinical Director")',
+    }),
+    defineField({
       name: 'date',
       title: 'Date',
       type: 'date',
@@ -98,12 +104,31 @@ export const workshop = defineType({
       ],
       description: 'Detailed workshop content',
     }),
+    defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      options: {
+        source: 'title',
+        maxLength: 96,
+      },
+      description: 'URL-friendly identifier for the workshop',
+      validation: (Rule) => Rule.required(),
+    }),
   ],
   preview: {
     select: {
       title: 'title',
       subtitle: 'instructor',
+      instructorRole: 'instructorRole',
       media: 'thumbnail',
+    },
+    prepare(selection) {
+      const { title, subtitle, instructorRole } = selection
+      return {
+        title: title,
+        subtitle: instructorRole ? `${subtitle} - ${instructorRole}` : subtitle,
+      }
     },
   },
 })
