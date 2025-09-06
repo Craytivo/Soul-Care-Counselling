@@ -189,6 +189,88 @@ export interface ServicePage {
   isActive: boolean
 }
 
+export interface CoreValuesPage {
+  _id: string
+  _type: 'coreValuesPage'
+  title: string
+  metaDescription: string
+  hero: {
+    badge: string
+    title: string
+    description: string
+    image: SanityImage & {
+      alt?: string
+    }
+  }
+  values: Array<{
+    title: string
+    description: string
+    order: number
+  }>
+  cta: {
+    title: string
+    description: string
+    buttonText: string
+    buttonLink: string
+    external: boolean
+  }
+  isActive: boolean
+}
+
+export interface AboutPage {
+  _id: string
+  _type: 'aboutPage'
+  title: string
+  metaDescription: string
+  hero: {
+    badge: string
+    title: string
+    description: string
+    backgroundImage?: SanityImage & {
+      alt?: string
+    }
+    featuredImage?: SanityImage & {
+      alt?: string
+    }
+  }
+  welcome: {
+    title: string
+    content: any[] // Portable Text content
+  }
+  pillars: {
+    title: string
+    pillarList: Array<{
+      title: string
+      description: string
+      order: number
+    }>
+  }
+  director: {
+    badge: string
+    name: string
+    credentials?: string
+    description: string
+    quote?: string
+    image?: SanityImage & {
+      alt?: string
+    }
+    bookingLink?: string
+    bookingText?: string
+    psychologyTodayImage?: SanityImage & {
+      alt?: string
+    }
+    psychologyTodayLink?: string
+  }
+  cta: {
+    title: string
+    description: string
+    buttonText: string
+    buttonLink: string
+    external: boolean
+  }
+  isActive: boolean
+}
+
 export interface SiteSettings {
   _id: string
   _type: 'siteSettings'

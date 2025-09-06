@@ -1,5 +1,5 @@
 import { client } from './sanity'
-import type { TeamMember, Workshop, Service, ServicePage, BlogPost, SiteSettings } from './sanity'
+import type { TeamMember, Workshop, Service, ServicePage, CoreValuesPage, AboutPage, BlogPost, SiteSettings } from './sanity'
 
 // Team Members
 export async function getTeamMembers(): Promise<TeamMember[]> {
@@ -303,7 +303,43 @@ export async function getBlogPostsByTag(tag: string): Promise<BlogPost[]> {
       tags,
       readingTime
     }
-  `, { tag })
+  `, { tag: tag } as any)
+}
+
+// Core Values Page
+export async function getCoreValuesPage(): Promise<CoreValuesPage | null> {
+  const page = await client.fetch(`
+    *[_type == "coreValuesPage" && isActive == true][0] {
+      _id,
+      _type,
+      title,
+      metaDescription,
+      hero {
+        badge,
+        title,
+        description,
+        image {
+          ...,
+          alt
+        }
+      },
+      values | order(order asc) {
+        title,
+        description,
+        order
+      },
+      cta {
+        title,
+        description,
+        buttonText,
+        buttonLink,
+        external
+      },
+      isActive
+    }
+  `)
+
+  return page || null
 }
 
 // Site Settings
@@ -369,5 +405,70 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
   `)
   
   return settings || null
+}
+
+// About Page
+export async function getAboutPage(): Promise<AboutPage | null> {
+  const page = await client.fetch(`
+    *[_type == "aboutPage" && isActive == true][0] {
+      _id,
+      _type,
+      title,
+      metaDescription,
+      hero {
+        badge,
+        title,
+        description,
+        backgroundImage {
+          ...,
+          alt
+        },
+        featuredImage {
+          ...,
+          alt
+        }
+      },
+      welcome {
+        title,
+        content
+      },
+      pillars {
+        title,
+        pillarList | order(order asc) {
+          title,
+          description,
+          order
+        }
+      },
+      director {
+        badge,
+        name,
+        credentials,
+        description,
+        quote,
+        image {
+          ...,
+          alt
+        },
+        bookingLink,
+        bookingText,
+        psychologyTodayImage {
+          ...,
+          alt
+        },
+        psychologyTodayLink
+      },
+      cta {
+        title,
+        description,
+        buttonText,
+        buttonLink,
+        external
+      },
+      isActive
+    }
+  `)
+
+  return page || null
 }
 
