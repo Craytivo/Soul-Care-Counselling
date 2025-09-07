@@ -1,5 +1,6 @@
 import { type SchemaTypeDefinition } from 'sanity'
 import { aboutPage } from './aboutPage'
+import { areasPage } from './areasPage'
 import { blogPost } from './blogPost'
 import { coreValuesPage } from './coreValuesPage'
 import { service } from './service'
@@ -17,6 +18,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     servicePage,
     coreValuesPage,
     aboutPage,
+    areasPage,
     blogPost,
     siteSettings,
   ],

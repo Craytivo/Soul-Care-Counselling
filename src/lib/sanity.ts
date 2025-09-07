@@ -289,3 +289,28 @@ export interface SiteSettings {
   }>
 }
 
+export interface AreasPage {
+  _id: string
+  _type: 'areasPage'
+  hero: {
+    badge?: string
+    title: string
+    description: string
+  }
+  areas: Array<{
+    title: string
+    slug: {
+      current: string
+    }
+    content: any[] // Portable Text
+    order: number
+  }>
+  cta?: {
+    title: string
+    description: string
+    buttonText: string
+    buttonLink: string
+    external: boolean
+  }
+}
+

@@ -1,5 +1,5 @@
 import { client } from './sanity'
-import type { TeamMember, Workshop, Service, ServicePage, CoreValuesPage, AboutPage, BlogPost, SiteSettings } from './sanity'
+import type { TeamMember, Workshop, Service, ServicePage, CoreValuesPage, AboutPage, AreasPage, BlogPost, SiteSettings } from './sanity'
 
 // Team Members
 export async function getTeamMembers(): Promise<TeamMember[]> {
@@ -22,7 +22,7 @@ export async function getTeamMembers(): Promise<TeamMember[]> {
 }
 
 export async function getTeamMember(slug: string): Promise<TeamMember | null> {
-  const members = await client.fetch(`
+  return await client.fetch(`
     *[_type == "teamMember" && slug.current == $slug][0] {
       _id,
       _type,
@@ -38,8 +38,6 @@ export async function getTeamMember(slug: string): Promise<TeamMember | null> {
       slug
     }
   `, { slug })
-  
-  return members || null
 }
 
 // Workshops
@@ -50,47 +48,26 @@ export async function getWorkshops(): Promise<Workshop[]> {
       _type,
       title,
       description,
-      instructor,
       date,
       time,
       duration,
+      location,
+      instructor,
+      instructorRole,
+      maxParticipants,
       price,
-      registrationLink,
-      videoUrl,
       isRecorded,
-      thumbnail,
-      content
+      videoUrl,
+      thumbnailUrl,
+      slug
     }
   `)
-}
-
-export async function getWorkshop(id: string): Promise<Workshop | null> {
-  const workshop = await client.fetch(`
-    *[_type == "workshop" && _id == $id][0] {
-      _id,
-      _type,
-      title,
-      description,
-      instructor,
-      date,
-      time,
-      duration,
-      price,
-      registrationLink,
-      videoUrl,
-      isRecorded,
-      thumbnail,
-      content
-    }
-  `, { id })
-  
-  return workshop || null
 }
 
 // Services
 export async function getServices(): Promise<Service[]> {
   return await client.fetch(`
-    *[_type == "service" && isActive == true] | order(order asc, title asc) {
+    *[_type == "service" && isActive == true] | order(order asc) {
       _id,
       _type,
       title,
@@ -110,8 +87,8 @@ export async function getServices(): Promise<Service[]> {
 }
 
 export async function getService(slug: string): Promise<Service | null> {
-  const service = await client.fetch(`
-    *[_type == "service" && slug.current == $slug][0] {
+  return await client.fetch(`
+    *[_type == "service" && slug.current == $slug && isActive == true][0] {
       _id,
       _type,
       title,
@@ -128,8 +105,6 @@ export async function getService(slug: string): Promise<Service | null> {
       content
     }
   `, { slug })
-  
-  return service || null
 }
 
 // Blog Posts
@@ -141,7 +116,6 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
       title,
       excerpt,
       slug,
-      content,
       featuredImage {
         ...,
         alt,
@@ -156,27 +130,15 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
         image
       },
       publishedAt,
-      isPublished,
       category,
       tags,
-      readingTime,
-      isFeatured,
-      seoTitle,
-      seoDescription,
-      relatedPosts[]-> {
-        _id,
-        _type,
-        _ref,
-        title,
-        slug
-      },
-      callToAction
+      readingTime
     }
   `)
 }
 
 export async function getBlogPost(slug: string): Promise<BlogPost | null> {
-  const post = await client.fetch(`
+  return await client.fetch(`
     *[_type == "blogPost" && slug.current == $slug && isPublished == true][0] {
       _id,
       _type,
@@ -212,11 +174,13 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
         title,
         slug
       },
-      callToAction
+      callToAction {
+        text,
+        link,
+        type
+      }
     }
   `, { slug })
-  
-  return post || null
 }
 
 export async function getFeaturedBlogPosts(): Promise<BlogPost[]> {
@@ -323,7 +287,7 @@ export async function getCoreValuesPage(): Promise<CoreValuesPage | null> {
           alt
         }
       },
-      values | order(order asc) {
+      values[] | order(order asc) {
         title,
         description,
         order
@@ -342,7 +306,93 @@ export async function getCoreValuesPage(): Promise<CoreValuesPage | null> {
   return page || null
 }
 
-// Site Settings
+// About Page
+export async function getAboutPage(): Promise<AboutPage | null> {
+  return await client.fetch(`
+    *[_type == "aboutPage"][0] {
+      _id,
+      _type,
+      hero {
+        badge,
+        title,
+        description,
+        backgroundImage {
+          ...,
+          alt
+        },
+        featuredImage {
+          ...,
+          alt
+        }
+      },
+      welcome {
+        title,
+        content
+      },
+      pillars {
+        title,
+        pillarList[] {
+          title,
+          description
+        }
+      },
+      director {
+        badge,
+        name,
+        credentials,
+        description,
+        quote,
+        image {
+          ...,
+          alt
+        },
+        bookingLink,
+        bookingText,
+        psychologyTodayImage {
+          ...,
+          alt
+        },
+        psychologyTodayLink
+      },
+      cta {
+        title,
+        description,
+        buttonText,
+        buttonLink,
+        external
+      }
+    }
+  `)
+}
+
+// Areas Page
+export async function getAreasPage(): Promise<AreasPage | null> {
+  return await client.fetch(`
+    *[_type == "areasPage"][0] {
+      _id,
+      _type,
+      hero {
+        badge,
+        title,
+        description
+      },
+      areas[] | order(order asc) {
+        title,
+        slug,
+        content,
+        order
+      },
+      cta {
+        title,
+        description,
+        buttonText,
+        buttonLink,
+        external
+      }
+    }
+  `)
+}
+
 // Service Pages
 export async function getServicePages(): Promise<ServicePage[]> {
   return await client.fetch(`
@@ -386,6 +436,7 @@ export async function getServicePage(slug: string): Promise<ServicePage | null> 
   return page || null
 }
 
+// Site Settings
 export async function getSiteSettings(): Promise<SiteSettings | null> {
   const settings = await client.fetch(`
     *[_type == "siteSettings"][0] {
@@ -403,72 +454,6 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
       socialLinks
     }
   `)
-  
+
   return settings || null
 }
-
-// About Page
-export async function getAboutPage(): Promise<AboutPage | null> {
-  const page = await client.fetch(`
-    *[_type == "aboutPage" && isActive == true][0] {
-      _id,
-      _type,
-      title,
-      metaDescription,
-      hero {
-        badge,
-        title,
-        description,
-        backgroundImage {
-          ...,
-          alt
-        },
-        featuredImage {
-          ...,
-          alt
-        }
-      },
-      welcome {
-        title,
-        content
-      },
-      pillars {
-        title,
-        pillarList | order(order asc) {
-          title,
-          description,
-          order
-        }
-      },
-      director {
-        badge,
-        name,
-        credentials,
-        description,
-        quote,
-        image {
-          ...,
-          alt
-        },
-        bookingLink,
-        bookingText,
-        psychologyTodayImage {
-          ...,
-          alt
-        },
-        psychologyTodayLink
-      },
-      cta {
-        title,
-        description,
-        buttonText,
-        buttonLink,
-        external
-      },
-      isActive
-    }
-  `)
-
-  return page || null
-}
-
