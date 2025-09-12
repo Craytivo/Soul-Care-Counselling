@@ -48,17 +48,17 @@ const SanityAboutPage = () => {
 
   const portableTextComponents = {
     block: {
-      h3: ({ children }: { children: React.ReactNode }) => <h3 className="text-xl font-semibold mb-2">{children}</h3>,
-      h4: ({ children }: { children: React.ReactNode }) => <h4 className="text-lg font-semibold mb-2">{children}</h4>,
-      normal: ({ children }: { children: React.ReactNode }) => <p className="mb-4">{children}</p>,
+      h3: (props: any) => <h3 className="text-xl font-semibold mb-2">{props.children}</h3>,
+      h4: (props: any) => <h4 className="text-lg font-semibold mb-2">{props.children}</h4>,
+      normal: (props: any) => <p className="mb-4">{props.children}</p>,
     },
     list: {
-      bullet: ({ children }: { children: React.ReactNode }) => <ul className="list-disc pl-5 mb-4">{children}</ul>,
-      number: ({ children }: { children: React.ReactNode }) => <ol className="list-decimal pl-5 mb-4">{children}</ol>,
+      bullet: (props: any) => <ul className="list-disc pl-5 mb-4">{props.children}</ul>,
+      number: (props: any) => <ol className="list-decimal pl-5 mb-4">{props.children}</ol>,
     },
     listItem: {
-      bullet: ({ children }: { children: React.ReactNode }) => <li className="mb-2">{children}</li>,
-      number: ({ children }: { children: React.ReactNode }) => <li className="mb-2">{children}</li>,
+      bullet: (props: any) => <li className="mb-2">{props.children}</li>,
+      number: (props: any) => <li className="mb-2">{props.children}</li>,
     },
   }
 

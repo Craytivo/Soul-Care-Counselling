@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { getServices } from '@/lib/sanity-queries'
-import { Service } from '@/lib/sanity'
+import { Service, urlFor } from '@/lib/sanity'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -64,7 +64,7 @@ export default function SanityServices() {
           {service.image && (
             <div className="mb-4">
               <Image
-                src={service.image.asset.url}
+                src={urlFor(service.image).width(400).height(200).url()}
                 alt={service.title}
                 width={400}
                 height={200}
