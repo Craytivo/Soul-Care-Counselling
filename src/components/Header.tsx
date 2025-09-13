@@ -19,7 +19,7 @@ export default function Header() {
             {/* Logo Image Only */}
             <div className="relative w-12 h-12 flex items-center justify-center">
               <Image
-                src="/assets/logo/SoulCareCC&C-Logo.png"
+                src="/assets/logo/soulcare-logo.png"
                 alt="Soul Care Counselling Logo"
                 width={48}
                 height={48}

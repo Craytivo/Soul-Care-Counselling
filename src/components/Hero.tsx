@@ -71,7 +71,7 @@ export default function Hero() {
         <div className="flex flex-col items-center md:items-end text-center md:text-right gap-8">
           <div>
             <Image
-              src="/assets/logo/SoulCareCC&C-Logo.png"
+              src="/assets/logo/soulcare-logo.png"
               alt="Soul Care Counselling Logo"
               width={200}
               height={200}
