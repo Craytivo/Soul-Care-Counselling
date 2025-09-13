@@ -3,14 +3,11 @@ import Image from 'next/image'
 
 export default function Footer() {
   return (
-    <footer className="mt-24 bg-bark text-cream">
+  <footer className="mt-24 bg-charcoal text-cream">
       {/* Pre-CTA band */}
       <div className="border-b border-cream/15">
         <div className="mx-auto max-w-7xl px-4 py-6 md:py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <div>
-            <h2 className="font-heading text-lg md:text-xl font-semibold">Ready to take the next step?</h2>
-            <p className="text-cream/80 text-sm mt-1">Faith-centered, culturally responsive therapy. Virtual care across Canada.</p>
-          </div>
+          {/* No text, logo only for branding consistency */}
           <div className="flex flex-wrap gap-3">
             <a 
               href="https://thesoulcarecounsellor.janeapp.com" 
@@ -37,16 +34,27 @@ export default function Footer() {
           <div>
             <Link href="/" className="flex items-center gap-3">
               <div className="relative w-10 h-10 flex items-center justify-center">
-                <Image
-                  src="/assets/logo/logo-s-c-intertwined.png"
-                  alt="Soul Care Counselling Logo"
-                  width={40}
-                  height={40}
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <span className="text-base font-semibold tracking-wide">Soul Care Counselling</span>
+                  <Image
+                    src="/assets/logo/soulcare-logo.png"
+                    alt="Soul Care Counselling Logo"
+                    width={40}
+                    height={40}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
             </Link>
+            <div className="mt-3">
+              <a
+                href="https://www.instagram.com/thesoulcaretherapists/?hl=en"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="inline-flex items-center gap-2 text-cream/80 hover:text-cream text-base font-medium"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="inline align-text-bottom"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"></line></svg>
+                <span>Instagram</span>
+              </a>
+            </div>
             <p className="mt-3 text-sm text-cream/80">
               Warm, practical counselling grounded in evidence-based care and Christian faith.
             </p>
@@ -98,7 +106,7 @@ export default function Footer() {
             <ul className="mt-4 space-y-2 text-sm">
               <li><Link href="/faq" className="text-cream/80 hover:text-cream">FAQs</Link></li>
               <li><Link href="/notes" className="text-cream/80 hover:text-cream">Notes from Soul Care</Link></li>
-              <li><Link href="/workshops" className="text-cream/80 hover:text-cream">Wellness Workshops</Link></li>
+              <li><Link href="/workshops" className="text-cream/80 hover:text-cream">Wellness Webinars</Link></li>
               <li>
                 <a 
                   href="https://thesoulcarecounsellor.janeapp.com" 
@@ -133,7 +141,7 @@ export default function Footer() {
           <p className="text-sm text-cream/70">
             &copy; {new Date().getFullYear()} Soul Care Counselling. All rights reserved.
           </p>
-          <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm">
+          <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm items-center">
             <Link href="/privacy" className="text-cream/70 hover:text-cream">Privacy</Link>
             <Link href="/terms" className="text-cream/70 hover:text-cream">Terms</Link>
             <a href="#" className="text-cream/70 hover:text-cream">Back to top</a>
