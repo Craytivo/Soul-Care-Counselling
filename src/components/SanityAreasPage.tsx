@@ -1,44 +1,9 @@
-'use client'
 
-import { useEffect, useState } from 'react'
 import { getAreasPage } from '@/lib/sanity-queries'
-import { AreasPage } from '@/lib/sanity'
 import { PortableText } from '@portabletext/react'
 
-const SanityAreasPage = () => {
-  const [pageData, setPageData] = useState<AreasPage | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    const fetchPageData = async () => {
-      try {
-        setLoading(true)
-        const data = await getAreasPage()
-        if (data) {
-          setPageData(data)
-        } else {
-          setError('Areas page not found.')
-        }
-      } catch (err) {
-        console.error('Error fetching areas page:', err)
-        setError('Failed to load areas page content.')
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchPageData()
-  }, [])
-
-  if (loading) {
-    return <div className="container mx-auto py-12 text-center">Loading areas page...</div>
-  }
-
-  if (error) {
-    return <div className="container mx-auto py-12 text-center text-red-500">{error}</div>
-  }
-
+export default async function SanityAreasPage() {
+  const pageData = await getAreasPage()
   if (!pageData) {
     return <div className="container mx-auto py-12 text-center">No content available for this page.</div>
   }
@@ -116,4 +81,4 @@ const SanityAreasPage = () => {
   )
 }
 
-export default SanityAreasPage
+

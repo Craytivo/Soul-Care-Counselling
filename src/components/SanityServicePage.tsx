@@ -1,8 +1,5 @@
-'use client'
 
-import { useEffect, useState } from 'react'
 import { getServicePage } from '@/lib/sanity-queries'
-import { ServicePage } from '@/lib/sanity'
 import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
 
@@ -10,42 +7,8 @@ interface SanityServicePageProps {
   slug: string
 }
 
-export default function SanityServicePage({ slug }: SanityServicePageProps) {
-  const [page, setPage] = useState<ServicePage | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    async function fetchPage() {
-      try {
-        const fetchedPage = await getServicePage(slug)
-        setPage(fetchedPage)
-      } catch (err) {
-        console.error('Error fetching service page:', err)
-        setError('Failed to load service page. Please try again later.')
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchPage()
-  }, [slug])
-
-  if (loading) {
-    return (
-      <div className="text-center py-12">
-        <p className="text-charcoal/60">Loading service page...</p>
-      </div>
-    )
-  }
-
-  if (error) {
-    return (
-      <div className="text-center py-12">
-        <p className="text-red-600">{error}</p>
-      </div>
-    )
-  }
-
+export default async function SanityServicePage({ slug }: SanityServicePageProps) {
+  const page = await getServicePage(slug)
   if (!page) {
     return (
       <div className="text-center py-12">

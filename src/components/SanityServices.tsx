@@ -1,52 +1,12 @@
-'use client'
 
-import { useEffect, useState } from 'react'
 import { getServices } from '@/lib/sanity-queries'
-import { Service, urlFor } from '@/lib/sanity'
+import { urlFor } from '@/lib/sanity'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export default function SanityServices() {
-  const [services, setServices] = useState<Service[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    async function fetchServices() {
-      try {
-        const fetchedServices = await getServices()
-        setServices(fetchedServices)
-      } catch (err) {
-        console.error('Error fetching services:', err)
-        setError('Failed to load services. Please try again later.')
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchServices()
-  }, [])
-
-  if (loading) {
-    return (
-      <section className="mt-12">
-        <div className="text-center py-12">
-          <p className="text-charcoal/60">Loading services...</p>
-        </div>
-      </section>
-    )
-  }
-
-  if (error) {
-    return (
-      <section className="mt-12">
-        <div className="text-center py-12">
-          <p className="text-red-600">{error}</p>
-        </div>
-      </section>
-    )
-  }
-
-  if (services.length === 0) {
+export default async function SanityServices() {
+  const services = await getServices()
+  if (!services || services.length === 0) {
     return (
       <section className="mt-12">
         <div className="text-center py-12">

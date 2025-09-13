@@ -1,47 +1,13 @@
-'use client'
 
-import { useEffect, useState } from 'react'
 import { getAboutPage } from '@/lib/sanity-queries'
-import { AboutPage, urlFor } from '@/lib/sanity'
+import { urlFor } from '@/lib/sanity'
 import { PortableText } from '@portabletext/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import SanityTeam from './SanityTeam'
 
-const SanityAboutPage = () => {
-  const [pageData, setPageData] = useState<AboutPage | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    const fetchPageData = async () => {
-      try {
-        setLoading(true)
-        const data = await getAboutPage()
-        if (data) {
-          setPageData(data)
-        } else {
-          setError('About page not found.')
-        }
-      } catch (err) {
-        console.error('Error fetching about page:', err)
-        setError('Failed to load about page content.')
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchPageData()
-  }, [])
-
-  if (loading) {
-    return <div className="container mx-auto py-12 text-center">Loading about page...</div>
-  }
-
-  if (error) {
-    return <div className="container mx-auto py-12 text-center text-red-500">{error}</div>
-  }
-
+export default async function SanityAboutPage() {
+  const pageData = await getAboutPage()
   if (!pageData) {
     return <div className="container mx-auto py-12 text-center">No content available for this page.</div>
   }
@@ -251,4 +217,4 @@ const SanityAboutPage = () => {
   )
 }
 
-export default SanityAboutPage
+
