@@ -1,53 +1,18 @@
-'use client'
 
-import { useEffect, useState } from 'react'
-import { getCoreValuesPage } from '@/lib/sanity-queries'
-import { CoreValuesPage, urlFor } from '@/lib/sanity'
-import Image from 'next/image'
-import Link from 'next/link'
+import { getCoreValuesPage } from '@/lib/sanity-queries';
+import { urlFor } from '@/lib/sanity';
+import Image from 'next/image';
+import Link from 'next/link';
 
-export default function SanityCoreValuesPage() {
-  const [page, setPage] = useState<CoreValuesPage | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    async function fetchPage() {
-      try {
-        const fetchedPage = await getCoreValuesPage()
-        setPage(fetchedPage)
-      } catch (err) {
-        console.error('Error fetching core values page:', err)
-        setError('Failed to load core values page. Please try again later.')
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchPage()
-  }, [])
-
-  if (loading) {
-    return (
-      <div className="text-center py-12">
-        <p className="text-charcoal/60">Loading core values page...</p>
-      </div>
-    )
-  }
-
-  if (error) {
-    return (
-      <div className="text-center py-12">
-        <p className="text-red-600">{error}</p>
-      </div>
-    )
-  }
+export default async function SanityCoreValuesPage() {
+  const page = await getCoreValuesPage();
 
   if (!page) {
     return (
       <div className="text-center py-12">
         <p className="text-charcoal/60">Core values page not found.</p>
       </div>
-    )
+    );
   }
 
   const renderCtaButton = () => {
@@ -61,18 +26,18 @@ export default function SanityCoreValuesPage() {
         >
           {page.cta.buttonText}
         </a>
-      )
+      );
     } else {
       return (
-        <Link 
+        <Link
           href={page.cta.buttonLink}
           className="inline-flex items-center justify-center rounded-md bg-clay px-5 py-2.5 font-semibold text-charcoal hover:bg-clay/90 ring-1 ring-charcoal/10"
         >
           {page.cta.buttonText}
         </Link>
-      )
+      );
     }
-  }
+  };
 
   return (
     <>
@@ -110,7 +75,7 @@ export default function SanityCoreValuesPage() {
 
       {/* Values */}
       <section className="mt-14 md:mt-16 space-y-10">
-        {page.values.map((value, index) => (
+        {page.values.map((value: any, index: number) => (
           <article key={index}>
             <h2 className="font-heading text-xl md:text-2xl font-semibold">{value.title}</h2>
             <p className="mt-3 text-charcoal/85 whitespace-pre-line">
@@ -133,5 +98,5 @@ export default function SanityCoreValuesPage() {
         </div>
       </section>
     </>
-  )
+  );
 }

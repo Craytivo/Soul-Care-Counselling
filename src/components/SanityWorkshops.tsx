@@ -1,44 +1,11 @@
-'use client'
 
-import { useState, useEffect } from 'react'
-import YouTubeVideo from './YouTubeVideo'
-import { getWorkshops } from '@/lib/sanity-queries'
-import type { Workshop } from '@/lib/sanity'
+import YouTubeVideo from './YouTubeVideo';
+import { getWorkshops } from '@/lib/sanity-queries';
 
-export default function SanityWorkshops() {
-  const [workshops, setWorkshops] = useState<Workshop[]>([])
-  const [loading, setLoading] = useState(true)
+export default async function SanityWorkshops() {
+  const workshops = await getWorkshops();
 
-  useEffect(() => {
-    async function fetchWorkshops() {
-      try {
-        const fetchedWorkshops = await getWorkshops()
-        console.log('Fetched workshops:', fetchedWorkshops)
-        setWorkshops(fetchedWorkshops || [])
-      } catch (error) {
-        console.error('Error fetching workshops:', error)
-        setWorkshops([])
-      } finally {
-        setLoading(false)
-      }
-    }
-    
-    fetchWorkshops()
-  }, [])
-
-  if (loading) {
-    return (
-      <section className="mt-16">
-        <div className="mx-auto max-w-7xl">
-          <div className="text-center py-12">
-            <p className="text-charcoal/60">Loading workshops...</p>
-          </div>
-        </div>
-      </section>
-    )
-  }
-
-  if (workshops.length === 0) {
+  if (!workshops || workshops.length === 0) {
     return (
       <section className="mt-16">
         <div className="mx-auto max-w-7xl">
@@ -47,11 +14,11 @@ export default function SanityWorkshops() {
           </div>
         </div>
       </section>
-    )
+    );
   }
 
-  const upcomingWorkshops = workshops.filter(workshop => !workshop.isRecorded)
-  const recordedWorkshops = workshops.filter(workshop => workshop.isRecorded)
+  const upcomingWorkshops = workshops.filter((workshop: any) => !workshop.isRecorded);
+  const recordedWorkshops = workshops.filter((workshop: any) => workshop.isRecorded);
 
   return (
     <>
@@ -60,7 +27,7 @@ export default function SanityWorkshops() {
         <section className="mt-12">
           <h2 className="font-heading text-2xl font-semibold mb-6">Upcoming Workshops</h2>
           <div className="grid gap-6 md:grid-cols-2">
-            {upcomingWorkshops.map((workshop) => (
+            {upcomingWorkshops.map((workshop: any) => (
               <article key={workshop._id} className="rounded-2xl bg-white ring-1 ring-charcoal/10 overflow-hidden">
                 <div className="p-6">
                   <div className="flex items-center gap-2 mb-3">
@@ -83,7 +50,7 @@ export default function SanityWorkshops() {
                         <p className="text-charcoal/60 text-xs">{workshop.instructorRole}</p>
                       </div>
                     </div>
-                    <a 
+                    <a
                       href={workshop.registrationLink || '#'}
                       className="inline-flex items-center justify-center rounded-md bg-clay px-4 py-2 font-semibold text-charcoal hover:bg-clay/90 ring-1 ring-charcoal/10"
                     >
@@ -101,20 +68,20 @@ export default function SanityWorkshops() {
       <section className="mt-16">
         <h2 className="font-heading text-2xl font-semibold mb-6">Workshop Recordings</h2>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-1">
-          {recordedWorkshops.map((workshop) => (
+          {recordedWorkshops.map((workshop: any) => (
             <article key={workshop._id} className="rounded-2xl bg-white ring-1 ring-charcoal/10 overflow-hidden hover:ring-clay/30 transition-all duration-200">
               <div className="grid gap-6 md:grid-cols-2">
                 {/* Video Preview */}
                 <div className="p-6">
                   {workshop.videoUrl && (
-                    <YouTubeVideo 
+                    <YouTubeVideo
                       videoId={workshop.videoUrl}
                       title={workshop.title}
                       className="w-full"
                     />
                   )}
                 </div>
-                
+
                 {/* Workshop Details */}
                 <div className="p-6 flex flex-col justify-between">
                   <div>
@@ -127,7 +94,7 @@ export default function SanityWorkshops() {
                     <h3 className="font-heading text-lg font-semibold mb-3">{workshop.title}</h3>
                     <p className="text-charcoal/85 mb-4 text-sm leading-relaxed">{workshop.description}</p>
                   </div>
-                  
+
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-full bg-sand flex items-center justify-center">
                       <span className="text-charcoal font-semibold text-xs">
@@ -146,5 +113,5 @@ export default function SanityWorkshops() {
         </div>
       </section>
     </>
-  )
+  );
 }

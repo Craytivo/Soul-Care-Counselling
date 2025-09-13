@@ -1,128 +1,136 @@
-'use client'
 
-import { useState, useMemo, useEffect } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { getTeamMembers } from '@/lib/sanity-queries'
-import { urlFor } from '@/lib/sanity'
-import type { TeamMember } from '@/lib/sanity'
+import Image from 'next/image';
+import Link from 'next/link';
+import { getTeamMembers } from '@/lib/sanity-queries';
+import { urlFor } from '@/lib/sanity';
+import type { TeamMember } from '@/lib/sanity';
 
-export default function SanityTeam() {
-  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([])
-  const [loading, setLoading] = useState(true)
-  const [searchQuery, setSearchQuery] = useState('')
-  const [activeFilter, setActiveFilter] = useState('all')
+interface Filter {
+  key: string;
+  label: string;
+  count: number;
+}
 
-  useEffect(() => {
-    async function fetchTeamMembers() {
-      try {
-        const members = await getTeamMembers()
-        console.log('Fetched team members:', members)
-        setTeamMembers(members || [])
-      } catch (error) {
-        console.error('Error fetching team members:', error)
-        setTeamMembers([])
-      } finally {
-        setLoading(false)
-      }
+function filterMembers(
+  teamMembers: TeamMember[],
+  searchQuery: string,
+  activeFilter: string
+): TeamMember[] {
+  const searchLower = searchQuery.toLowerCase();
+  return teamMembers.filter((member) => {
+    const matchesSearch =
+      !searchQuery ||
+      member.name.toLowerCase().includes(searchLower) ||
+      (member.credentials && member.credentials.toLowerCase().includes(searchLower)) ||
+      member.role.toLowerCase().includes(searchLower) ||
+      (member.bio && member.bio.toLowerCase().includes(searchLower)) ||
+      (member.specialties && member.specialties.some((specialty) => specialty.toLowerCase().includes(searchLower)));
+
+    if (activeFilter === 'all') {
+      return matchesSearch;
     }
-    
-    fetchTeamMembers()
-  }, [])
 
-  const filteredMembers = useMemo(() => {
-    return teamMembers.filter(member => {
-      const searchLower = searchQuery.toLowerCase()
-      const matchesSearch = !searchQuery || 
-        member.name.toLowerCase().includes(searchLower) ||
-        (member.credentials && member.credentials.toLowerCase().includes(searchLower)) ||
-        member.role.toLowerCase().includes(searchLower) ||
-        (member.bio && member.bio.toLowerCase().includes(searchLower)) ||
-        (member.specialties && member.specialties.some(specialty => 
-          specialty.toLowerCase().includes(searchLower)
-        ))
-      
-      if (activeFilter === 'all') {
-        return matchesSearch
-      }
-      
-      if (!member.specialties || member.specialties.length === 0) {
-        return false
-      }
-      
-      const specialtyText = member.specialties.join(' ').toLowerCase()
-      
-      switch (activeFilter) {
+    if (!member.specialties || member.specialties.length === 0) {
+      return false;
+    }
+
+    const specialtyText = member.specialties.join(' ').toLowerCase();
+
+    switch (activeFilter) {
+      case 'trauma-informed':
+        return matchesSearch && (specialtyText.includes('trauma') || specialtyText.includes('trauma-informed'));
+      case 'anxiety-depression':
+        return matchesSearch && (specialtyText.includes('anxiety') || specialtyText.includes('depression'));
+      case 'family-couples':
+        return (
+          matchesSearch &&
+          (specialtyText.includes('family') ||
+            specialtyText.includes('couples') ||
+            specialtyText.includes('parenting') ||
+            specialtyText.includes('marriage'))
+        );
+      case 'addictions-recovery':
+        return matchesSearch && (specialtyText.includes('addiction') || specialtyText.includes('recovery'));
+      case 'faith-based':
+        return (
+          matchesSearch &&
+          (specialtyText.includes('faith') ||
+            specialtyText.includes('spiritual') ||
+            specialtyText.includes('christian'))
+        );
+      case 'bilingual':
+        return (
+          matchesSearch &&
+          (specialtyText.includes('bilingual') ||
+            specialtyText.includes('french') ||
+            specialtyText.includes('english'))
+        );
+      default:
+        return matchesSearch;
+    }
+  });
+}
+
+function getFilters(teamMembers: TeamMember[]): Filter[] {
+  const getCount = (filterKey: string) => {
+    if (filterKey === 'all') return teamMembers.length;
+    return teamMembers.filter((member) => {
+      if (!member.specialties || member.specialties.length === 0) return false;
+      const specialtyText = member.specialties.join(' ').toLowerCase();
+      switch (filterKey) {
         case 'trauma-informed':
-          return matchesSearch && (specialtyText.includes('trauma') || specialtyText.includes('trauma-informed'))
+          return specialtyText.includes('trauma') || specialtyText.includes('trauma-informed');
         case 'anxiety-depression':
-          return matchesSearch && (specialtyText.includes('anxiety') || specialtyText.includes('depression'))
+          return specialtyText.includes('anxiety') || specialtyText.includes('depression');
         case 'family-couples':
-          return matchesSearch && (specialtyText.includes('family') || specialtyText.includes('couples') || specialtyText.includes('parenting') || specialtyText.includes('marriage'))
+          return (
+            specialtyText.includes('family') ||
+            specialtyText.includes('couples') ||
+            specialtyText.includes('parenting') ||
+            specialtyText.includes('marriage')
+          );
         case 'addictions-recovery':
-          return matchesSearch && (specialtyText.includes('addiction') || specialtyText.includes('recovery'))
+          return specialtyText.includes('addiction') || specialtyText.includes('recovery');
         case 'faith-based':
-          return matchesSearch && (specialtyText.includes('faith') || specialtyText.includes('spiritual') || specialtyText.includes('christian'))
+          return (
+            specialtyText.includes('faith') ||
+            specialtyText.includes('spiritual') ||
+            specialtyText.includes('christian')
+          );
         case 'bilingual':
-          return matchesSearch && (specialtyText.includes('bilingual') || specialtyText.includes('french') || specialtyText.includes('english'))
+          return (
+            specialtyText.includes('bilingual') ||
+            specialtyText.includes('french') ||
+            specialtyText.includes('english')
+          );
         default:
-          return matchesSearch
+          return false;
       }
-    })
-  }, [teamMembers, searchQuery, activeFilter])
+    }).length;
+  };
+  return [
+    { key: 'all', label: 'All Team Members', count: getCount('all') },
+    { key: 'trauma-informed', label: 'Trauma-Informed Care', count: getCount('trauma-informed') },
+    { key: 'anxiety-depression', label: 'Anxiety & Depression', count: getCount('anxiety-depression') },
+    { key: 'family-couples', label: 'Family & Couples', count: getCount('family-couples') },
+    { key: 'addictions-recovery', label: 'Addictions & Recovery', count: getCount('addictions-recovery') },
+    { key: 'faith-based', label: 'Faith-Based Therapy', count: getCount('faith-based') },
+    { key: 'bilingual', label: 'Bilingual Services', count: getCount('bilingual') },
+  ];
+}
 
-  const filters = useMemo(() => {
-    const getCount = (filterKey: string) => {
-      if (filterKey === 'all') return teamMembers.length
-      
-      return teamMembers.filter(member => {
-        if (!member.specialties || member.specialties.length === 0) return false
-        
-        const specialtyText = member.specialties.join(' ').toLowerCase()
-        
-        switch (filterKey) {
-          case 'trauma-informed':
-            return specialtyText.includes('trauma') || specialtyText.includes('trauma-informed')
-          case 'anxiety-depression':
-            return specialtyText.includes('anxiety') || specialtyText.includes('depression')
-          case 'family-couples':
-            return specialtyText.includes('family') || specialtyText.includes('couples') || specialtyText.includes('parenting') || specialtyText.includes('marriage')
-          case 'addictions-recovery':
-            return specialtyText.includes('addiction') || specialtyText.includes('recovery')
-          case 'faith-based':
-            return specialtyText.includes('faith') || specialtyText.includes('spiritual') || specialtyText.includes('christian')
-          case 'bilingual':
-            return specialtyText.includes('bilingual') || specialtyText.includes('french') || specialtyText.includes('english')
-          default:
-            return false
-        }
-      }).length
-    }
+export default async function SanityTeam({
+  searchQuery = '',
+  activeFilter = 'all',
+}: {
+  searchQuery?: string;
+  activeFilter?: string;
+} = {}) {
+  const teamMembers = await getTeamMembers();
+  const filters = getFilters(teamMembers);
+  const filteredMembers = filterMembers(teamMembers, searchQuery, activeFilter);
 
-    return [
-      { key: 'all', label: 'All Team Members', count: getCount('all') },
-      { key: 'trauma-informed', label: 'Trauma-Informed Care', count: getCount('trauma-informed') },
-      { key: 'anxiety-depression', label: 'Anxiety & Depression', count: getCount('anxiety-depression') },
-      { key: 'family-couples', label: 'Family & Couples', count: getCount('family-couples') },
-      { key: 'addictions-recovery', label: 'Addictions & Recovery', count: getCount('addictions-recovery') },
-      { key: 'faith-based', label: 'Faith-Based Therapy', count: getCount('faith-based') },
-      { key: 'bilingual', label: 'Bilingual Services', count: getCount('bilingual') }
-    ]
-  }, [teamMembers])
-
-  if (loading) {
-    return (
-      <section id="team" className="mt-16 md:mt-24">
-        <div className="mx-auto max-w-7xl">
-          <div className="text-center py-12">
-            <p className="text-charcoal/60">Loading team members...</p>
-          </div>
-        </div>
-      </section>
-    )
-  }
-
-  if (teamMembers.length === 0) {
+  if (!teamMembers || teamMembers.length === 0) {
     return (
       <section id="team" className="mt-16 md:mt-24">
         <div className="mx-auto max-w-7xl">
@@ -131,9 +139,10 @@ export default function SanityTeam() {
           </div>
         </div>
       </section>
-    )
+    );
   }
 
+  // Note: If you want to keep search/filter interactive, move this logic to a client wrapper.
   return (
     <section id="team" className="mt-16 md:mt-24">
       <div className="mx-auto max-w-7xl">
@@ -149,29 +158,30 @@ export default function SanityTeam() {
           </p>
         </header>
 
-        {/* Toolbar */}
+        {/* Toolbar (static, non-interactive in server component) */}
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <label htmlFor="teamSearch" className="sr-only">Search team</label>
-          <input 
-            id="teamSearch" 
-            type="search" 
+          <input
+            id="teamSearch"
+            type="search"
             placeholder="Search by name, specialty, credential, or approach…"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            readOnly
             className="w-full sm:w-80 rounded-md border border-charcoal/20 bg-white px-3 py-2 text-sm outline-none ring-0 focus:border-clay"
-            autoComplete="off" 
+            autoComplete="off"
           />
           <div className="flex flex-wrap gap-2" aria-label="Filter tags">
-            {filters.map(filter => (
-              <button 
+            {filters.map((filter) => (
+              <button
                 key={filter.key}
-                onClick={() => setActiveFilter(filter.key)}
                 className={`px-3 py-1 rounded-full text-xs font-semibold ring-1 ring-charcoal/15 transition-colors ${
-                  activeFilter === filter.key 
-                    ? 'bg-clay text-charcoal' 
+                  activeFilter === filter.key
+                    ? 'bg-clay text-charcoal'
                     : 'bg-white hover:bg-sand'
                 }`}
                 aria-pressed={activeFilter === filter.key}
+                type="button"
+                disabled
               >
                 {filter.label}
                 {filter.count > 0 && (
@@ -191,13 +201,13 @@ export default function SanityTeam() {
               <article className="h-full rounded-2xl bg-white ring-1 ring-charcoal/10 shadow-sm hover:shadow-md transition-shadow">
                 <div className="p-4">
                   <div className="flex items-center gap-3">
-                    <Image 
-                      src={urlFor(member.image).width(48).height(48).url()} 
-                      alt={member.name} 
-                      className="h-12 w-12 rounded-full object-cover" 
+                    <Image
+                      src={urlFor(member.image).width(48).height(48).url()}
+                      alt={member.name}
+                      className="h-12 w-12 rounded-full object-cover"
                       width={48}
                       height={48}
-                      loading="lazy" 
+                      loading="lazy"
                     />
                     <div className="min-w-0 flex-1">
                       <h3 className="font-semibold text-charcoal">{member.name}</h3>
@@ -211,13 +221,13 @@ export default function SanityTeam() {
                     </div>
                   </div>
                   <p className="mt-3 text-sm text-charcoal/80 line-clamp-3">{member.bio}</p>
-                  
+
                   {/* Specialties */}
                   {member.specialties && member.specialties.length > 0 && (
                     <div className="mt-3">
                       <div className="flex flex-wrap gap-1">
                         {member.specialties.slice(0, 3).map((specialty, index) => (
-                          <span 
+                          <span
                             key={index}
                             className="inline-block px-2 py-1 text-xs bg-sand/50 text-charcoal/70 rounded-full"
                           >
@@ -232,16 +242,16 @@ export default function SanityTeam() {
                       </div>
                     </div>
                   )}
-                  
+
                   <div className="mt-4 team-cta" style={{ minHeight: '3.5rem' }}>
-                    <Link 
+                    <Link
                       href={`/${member.slug.current}`}
                       className="cta-label text-sm font-medium text-clay hover:text-bark block"
                       style={{
                         display: '-webkit-box',
                         WebkitBoxOrient: 'vertical',
                         WebkitLineClamp: 2,
-                        overflow: 'hidden'
+                        overflow: 'hidden',
                       }}
                     >
                       View Profile
@@ -254,6 +264,6 @@ export default function SanityTeam() {
         </ul>
       </div>
     </section>
-  )
+  );
 }
 
