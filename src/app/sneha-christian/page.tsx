@@ -28,7 +28,15 @@ export default async function SnehaPage() {
     role: member.role,
     image: member.image ? urlFor(member.image).width(400).height(400).url() : '/assets/img/team/placeholder.webp',
     bio: member.bio ? [member.bio] : ['Professional bio coming soon.'],
-    specialties: member.specialties || [],
+    specialties: [
+      'Affordable Therapy',
+      'Anxiety',
+      'Depression',
+      'Trauma',
+      'Stress Management',
+      'Youth',
+      'Women’s Mental Health',
+    ],
     areasOfFocus: member.areasOfFocus || [],
     socialLinks: member.socialLinks || [],
     acceptsBookings: member.acceptsBookings

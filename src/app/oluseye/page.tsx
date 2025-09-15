@@ -22,12 +22,17 @@ const oluseyeData = {
     "If you're ready to embark on a journey of healing, growth, and transformation, I invite you to reach out to me. Together, we can create a life that is not only fulfilling but also deeply rooted in faith, love, and purpose."
   ],
   specialties: [
-    "Parenting & couples",
-    "Christian family life",
-    "Marriage & identity",
-    "Spiritual growth & purpose",
-    "Holistic, faith-integrated approach",
-    "Evidence-based practices"
+    "Anxiety",
+    "Depression",
+    "Trauma",
+    "Stress Management",
+    "Youth",
+    "Couples",
+    "Women’s Mental Health",
+    "Religious Trauma",
+    "Spiritual Abuse",
+    "Workplace Stress",
+    "Family",
   ],
   areasOfFocus: [
     "Parenting & couples",

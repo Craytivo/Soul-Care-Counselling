@@ -21,13 +21,18 @@ const joshData = {
     "On a personal note, I am a transracial adoptee who is definitely an extrovert, but I also love my personal time. For fun, I enjoy going out to comedy clubs, watching movies with friends, playing sports, writing poetry/spoken words, and eating junk food (in moderation lol). One thing I look forward to is connecting with you as you begin your journey! I hope to hear from you soon."
   ],
   specialties: [
-    "Addictions & recovery",
-    "Anxiety & emotional regulation",
-    "Identity & self-esteem",
-    "Faith & spirituality",
-    "Trauma & attachment; adoptee trauma",
-    "Burnout & life transitions",
-    "DBT, CBT, Narrative, Solution-Focused, Parts work"
+    "Anxiety",
+    "Depression",
+    "Trauma",
+    "Stress Management",
+    "Couples",
+    "Women’s Mental Health",
+    "Religious Trauma",
+    "Spiritual Abuse",
+    "Workplace Stress",
+    "Men’s Mental Health",
+    "Addiction",
+    "Family",
   ],
   areasOfFocus: [
     "Addictions & recovery",

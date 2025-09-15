@@ -32,7 +32,19 @@ export default async function JessicaPage() {
     bio: member.bio
       ? member.bio.split(/\n+/).map(p => p.trim()).filter(Boolean)
       : ['Professional bio coming soon.'],
-    specialties: member.specialties || [],
+    specialties: [
+      'Anxiety',
+      'Depression',
+      'Trauma',
+      'Stress Management',
+      'Youth',
+      'Couples',
+      'Women’s Mental Health',
+      'Religious Trauma',
+      'Spiritual Abuse',
+      'Workplace Stress',
+      'Family',
+    ],
     areasOfFocus: member.areasOfFocus || [],
     socialLinks: member.socialLinks || [],
     acceptsBookings: member.acceptsBookings

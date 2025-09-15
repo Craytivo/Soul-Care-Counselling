@@ -19,13 +19,16 @@ const barakaData = {
     "Let's connect; I look forward to meeting and walking alongside you!"
   ],
   specialties: [
-    "Life transitions",
-    "Relationship issues",
-    "Anxiety & depression",
-    "Stress at work or school",
-    "Narrative, CBT & family systems",
-    "Trauma-informed, strengths-based lens",
-    "Faith-integrated care"
+    "Anxiety",
+    "Depression",
+    "Trauma",
+    "Stress Management",
+    "Youth",
+    "Women’s Mental Health",
+    "Religious Trauma",
+    "Spiritual Abuse",
+    "Workplace Stress",
+    "Addiction",
   ],
   areasOfFocus: [
     "Life transitions",

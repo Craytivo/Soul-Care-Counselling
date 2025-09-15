@@ -18,14 +18,19 @@ const nigelData = {
     "About me personally, I am a husband and father. I enjoy reading, watching movies and documentaries; huge soccer fan (Manchester United). I'm a huge introvert who loves silence and people (weirdo combo, I know). I desire and find joy in journeying with individuals and supporting their growth."
   ],
   specialties: [
-    "Teens, adults & couples",
-    "Life transitions",
-    "Anxiety & depression",
-    "Emotional regulation",
-    "Trauma-informed care",
-    "Spirituality & meaning",
-    "CBT, Solution-Focused, Narrative therapy",
-    "Identity, masculinity & social justice"
+    "Anxiety",
+    "Depression",
+    "Trauma",
+    "Stress Management",
+    "Youth",
+    "Couples",
+    "Women’s Mental Health",
+    "Religious Trauma",
+    "Spiritual Abuse",
+    "Workplace Stress",
+    "Men’s Mental Health",
+    "Addiction",
+    "Family",
   ],
   areasOfFocus: [
     "Teens, adults & couples",

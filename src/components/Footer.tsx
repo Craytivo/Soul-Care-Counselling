@@ -41,7 +41,7 @@ export default function Footer() {
                   xmlns="http://www.w3.org/2000/svg"
                   aria-hidden="true"
                 >
-                  <circle cx="50" cy="50" r="50" fill="#fff" />
+                  <circle cx="50" cy="50" r="50" fill="#111" />
                 </svg>
                 <span className="relative z-10 w-10 h-10 flex items-center justify-center">
                   <Image

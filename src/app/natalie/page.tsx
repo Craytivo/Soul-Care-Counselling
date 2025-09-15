@@ -18,12 +18,16 @@ const natalieData = {
     "My hope is that in our time together, true and lasting growth will occur, and as we partner, seeds will be planted and you will feel empowered to reclaim your life back, piece at a time."
   ],
   specialties: [
-    "Life transitions & burnout",
-    "Anxiety & depression support",
-    "Trauma-informed care",
-    "Identity development",
-    "Cognitive-Behavioural strategies",
-    "Strengths-based approach"
+    "Anxiety",
+    "Depression",
+    "Trauma",
+    "Stress Management",
+    "Youth",
+    "Women’s Mental Health",
+    "Religious Trauma",
+    "Spiritual Abuse",
+    "Workplace Stress",
+    "Addiction",
   ],
   areasOfFocus: [
     "Life transitions & burnout",

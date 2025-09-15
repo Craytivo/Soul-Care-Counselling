@@ -20,10 +20,18 @@ const anitaData = {
     "As a Soul Care Therapist, my personal soul-care routine consists of daily journaling, regular meditation, time spent with family and friends and painting as a creative outlet. I'm glad you've found your way here, and hope to be a part of your journey."
   ],
   specialties: [
-    "Anxiety & Depression",
+    "Anxiety",
+    "Depression",
+    "Trauma",
     "Stress Management",
-    "Academic & Career Counselling",
-    "Bilingual Services (EN/FR)"
+    "Youth",
+    "Couples",
+    "Women’s Mental Health",
+    "Religious Trauma",
+    "Spiritual Abuse",
+    "Workplace Stress",
+    "Bilingual",
+    "Art Therapy",
   ],
   areasOfFocus: [
     "Anxiety & Depression",
