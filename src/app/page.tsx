@@ -1,11 +1,8 @@
 import Hero from '../components/Hero'
-import SanityTeam from '../components/SanityTeam'
+import { getTeamMembers } from '../lib/sanity-queries'
+import HomeClient from './HomeClient'
 
-export default function Home() {
-  return (
-    <>
-      <Hero />
-      <SanityTeam />
-    </>
-  )
+export default async function Home() {
+  const teamMembers = await getTeamMembers();
+  return <HomeClient teamMembers={teamMembers} />;
 }

@@ -11,7 +11,7 @@ interface Filter {
   count: number;
 }
 
-function filterMembers(
+export function filterMembers(
   teamMembers: TeamMember[],
   searchQuery: string,
   activeFilter: string
@@ -24,7 +24,8 @@ function filterMembers(
       (member.credentials && member.credentials.toLowerCase().includes(searchLower)) ||
       member.role.toLowerCase().includes(searchLower) ||
       (member.bio && member.bio.toLowerCase().includes(searchLower)) ||
-      (member.specialties && member.specialties.some((specialty) => specialty.toLowerCase().includes(searchLower)));
+      (member.specialties && member.specialties.some((specialty) => specialty.toLowerCase().includes(searchLower))) ||
+      (member.areasOfFocus && member.areasOfFocus.some((area) => area.toLowerCase().includes(searchLower)));
 
     if (activeFilter === 'all') {
       return matchesSearch;
@@ -71,7 +72,7 @@ function filterMembers(
   });
 }
 
-function getFilters(teamMembers: TeamMember[]): Filter[] {
+export function getFilters(teamMembers: TeamMember[]): Filter[] {
   const getCount = (filterKey: string) => {
     if (filterKey === 'all') return teamMembers.length;
     return teamMembers.filter((member) => {
