@@ -7,6 +7,7 @@ import { urlFor } from "@/lib/sanity";
 import type { TeamMember } from "@/lib/sanity";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMember[] }) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -71,8 +72,15 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
 
         {/* Grid */}
         <ul role="list" className="mt-8 grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-stretch">
-          {filteredMembers.map((member) => (
-            <li key={member._id} className="team-card">
+          {filteredMembers.map((member, idx) => (
+            <motion.li
+              key={member._id}
+              className="team-card"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, delay: idx * 0.08, ease: 'easeOut' }}
+            >
               <article className="h-full rounded-2xl bg-white ring-1 ring-charcoal/10 shadow-sm hover:shadow-md transition-shadow">
                 <div className="p-4">
                   <div className="flex items-center gap-3">
@@ -134,7 +142,7 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
                   </div>
                 </div>
               </article>
-            </li>
+            </motion.li>
           ))}
         </ul>
       </div>
