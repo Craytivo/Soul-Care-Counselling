@@ -16,16 +16,28 @@ export default function Header() {
         <div className="mx-auto max-w-7xl px-4 py-3 grid grid-cols-[auto_1fr_auto] items-center gap-4">
           {/* LEFT: Brand */}
           <Link href="/" className="flex items-center gap-3">
-            {/* Logo Image Only */}
-            <div className="relative w-12 h-12 flex items-center justify-center">
-              <Image
-                src="/assets/logo/soulcare-logo.png"
-                alt="Soul Care Counselling Logo"
-                width={48}
-                height={48}
-                className="w-full h-full object-contain"
-              />
-            </div>
+            {/* Logo on black circle */}
+            <span className="relative w-20 h-20 flex items-center justify-center">
+              <svg
+                className="absolute inset-0 w-full h-full z-0"
+                viewBox="0 0 100 100"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <circle cx="50" cy="50" r="50" fill="#fff" />
+              </svg>
+              <span className="relative z-10 w-14 h-14 flex items-center justify-center">
+                <Image
+                  src="/assets/logo/soulcare-logo.png"
+                  alt="Soul Care Counselling Logo"
+                  width={56}
+                  height={56}
+                  className="w-full h-full object-contain"
+                  priority
+                />
+              </span>
+            </span>
           </Link>
 
           {/* CENTER: Desktop nav */}
@@ -50,14 +62,27 @@ export default function Header() {
           {/* RIGHT: Hamburger */}
           <button
             onClick={toggleMenu}
-            className="justify-self-end shrink-0 inline-flex items-center justify-center h-10 w-10 rounded-md ring-1 ring-bark/20 hover:bg-bark/10"
-            aria-controls="menuPanel" 
-            aria-expanded={isMenuOpen} 
-            aria-label="Open menu"
+            className={`justify-self-end shrink-0 inline-flex items-center justify-center h-10 w-10 rounded-md ring-1 ring-bark/20 hover:bg-bark/10 transition-transform duration-200 ${isMenuOpen ? 'scale-110 bg-bark/10' : ''}`}
+            aria-controls="menuPanel"
+            aria-expanded={isMenuOpen}
+            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           >
-            <svg className="h-5 w-5 text-bark" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-              <path d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
+            <span className="sr-only">{isMenuOpen ? 'Close menu' : 'Open menu'}</span>
+            <span className={`relative w-6 h-6 block ${isMenuOpen ? 'opacity-70' : ''}`}>
+              {/* Hamburger to X animation */}
+              <span
+                className={`absolute left-0 top-1 w-6 h-0.5 bg-bark rounded transition-all duration-300 ${isMenuOpen ? 'rotate-45 top-3 bg-bark' : ''}`}
+                style={{ transitionProperty: 'transform, top, background' }}
+              ></span>
+              <span
+                className={`absolute left-0 top-3 w-6 h-0.5 bg-bark rounded transition-all duration-300 ${isMenuOpen ? 'opacity-0' : ''}`}
+                style={{ transitionProperty: 'opacity' }}
+              ></span>
+              <span
+                className={`absolute left-0 top-5 w-6 h-0.5 bg-bark rounded transition-all duration-300 ${isMenuOpen ? '-rotate-45 top-3 bg-bark' : ''}`}
+                style={{ transitionProperty: 'transform, top, background' }}
+              ></span>
+            </span>
           </button>
         </div>
       </header>
@@ -65,22 +90,23 @@ export default function Header() {
       {/* Backdrop */}
       {isMenuOpen && (
         <div 
-          className="fixed inset-0 bg-charcoal/50 z-[59]" 
+          className="fixed inset-0 bg-charcoal/50 z-[59] animate-fade-in" 
           onClick={closeMenu}
+          aria-hidden="true"
         />
       )}
 
       {/* Mobile Menu Panel */}
       <aside
         id="menuPanel"
-        className={`fixed right-0 top-0 z-[60] h-screen w-[86%] max-w-sm bg-bark text-cream shadow-xl border-l border-cream/15 overflow-y-auto transition-transform duration-300 ${
+  className={`fixed right-0 top-0 z-[60] h-screen w-[86%] max-w-sm bg-bark/95 text-cream shadow-xl border-l border-cream/15 overflow-y-auto transition-transform duration-300 ${
           isMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         aria-hidden={!isMenuOpen}
         tabIndex={-1}
       >
         {/* Sticky header inside panel */}
-        <div className="sticky top-0 bg-bark/95 backdrop-blur px-4 py-3 border-b border-cream/15 flex items-center justify-between">
+  <div className="sticky top-0 bg-bark/95 backdrop-blur px-4 py-3 border-b border-cream/15 flex items-center justify-between">
           <span className="text-sm font-semibold tracking-wide uppercase">Menu</span>
           <button 
             onClick={closeMenu}

@@ -24,9 +24,10 @@ interface TeamMemberPageProps {
 export default function TeamMemberPage({ member }: TeamMemberPageProps) {
   return (
     <>
-      {/* Page hero */}
-      <section className="relative overflow-hidden rounded-2xl bg-bark text-cream ring-1 ring-cream/15">
-        <div className="absolute -right-12 -top-12 h-56 w-56 rounded-full bg-gradient-to-br from-clay/40 to-cream/10 blur-2xl" aria-hidden="true"></div>
+      {/* Page hero with member image background */}
+      <section className="relative overflow-hidden rounded-2xl text-cream ring-1 ring-cream/15 min-h-[340px] md:min-h-[420px] flex items-center" style={{background: `url('${member.image}') top/cover no-repeat`}}>
+  {/* Even darker overlay for maximum readability */}
+  <div className="absolute inset-0 bg-black/90" aria-hidden="true"></div>
 
         <div className="relative z-10 grid md:grid-cols-12 gap-8 items-center px-6 py-10 md:px-10 md:py-14">
           {/* LEFT: Text */}
