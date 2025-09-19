@@ -160,6 +160,8 @@ export default function Hero() {
               View Services
             </Link>
           </div>
+          {/* Add extra space below CTA buttons on mobile to prevent overlap with team section */}
+          <div className="block md:hidden w-full h-8 mt-2"></div>
         </div>
       </div>
     </section>
