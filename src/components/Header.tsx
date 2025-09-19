@@ -65,14 +65,20 @@ export default function Header() {
 
           {/* RIGHT: Hamburger */}
           <button
+            type="button"
             onClick={toggleMenu}
             className={`justify-self-end shrink-0 inline-flex items-center justify-center h-10 w-10 rounded-md ring-1 ring-bark/20 hover:bg-bark/10 transition-transform duration-200 ${isMenuOpen ? 'scale-110 bg-bark/10' : ''}`}
             aria-controls="menuPanel"
             aria-expanded={isMenuOpen}
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                toggleMenu();
+              }
+            }}
           >
             <span className="sr-only">{isMenuOpen ? 'Close menu' : 'Open menu'}</span>
-            <span className={`relative w-6 h-6 block ${isMenuOpen ? 'opacity-70' : ''}`}>
+            <span className={`relative w-6 h-6 block ${isMenuOpen ? 'opacity-70' : ''}`}> 
               {/* Hamburger to X animation */}
               <span
                 className={`absolute left-0 top-1 w-6 h-0.5 bg-bark rounded transition-all duration-300 ${isMenuOpen ? 'rotate-45 top-3 bg-bark' : ''}`}
@@ -113,9 +119,15 @@ export default function Header() {
   <div className="sticky top-0 bg-bark/95 backdrop-blur px-4 py-3 border-b border-cream/15 flex items-center justify-between">
           <span className="text-sm font-semibold tracking-wide uppercase">Menu</span>
           <button 
+            type="button"
             onClick={closeMenu}
             className="inline-flex items-center justify-center rounded-md p-2 ring-1 ring-cream/20 hover:bg-cream/10" 
-            aria-label="Close menu"
+            aria-label="Close menu panel"
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                closeMenu();
+              }
+            }}
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-cream" aria-hidden="true">
               <path d="M18 6 6 18M6 6l12 12"/>

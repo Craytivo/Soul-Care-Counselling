@@ -91,6 +91,7 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
             onChange={e => setSearchQuery(e.target.value)}
             className="w-full sm:w-80 rounded-md border border-charcoal/20 bg-white px-3 py-2 text-sm outline-none ring-0 focus:border-clay"
             autoComplete="off"
+            aria-label="Search team members by name, specialty, credential, or approach"
           />
           {/* Dropdown for filters on mobile */}
           <div className="w-full block md:hidden mt-3">
@@ -99,6 +100,7 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
               onChange={e => setActiveFilter(e.target.value)}
               className="w-full rounded-md border border-charcoal/20 bg-white px-3 py-2 text-sm font-semibold text-charcoal focus:border-clay focus:ring-2 focus:ring-clay/40"
               aria-label="Filter team by specialty"
+              id="teamFilter"
             >
               {filters.map(filter => (
                 <option key={filter.key} value={filter.key}>
@@ -112,18 +114,24 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
             {filters.map((filter) => (
               <button
                 key={filter.key}
-                className={`px-3 py-1 rounded-full text-xs font-semibold ring-1 ring-charcoal/15 transition-colors ${
+                type="button"
+                aria-label={`Filter by ${filter.label}`}
+                className={`px-3 py-1 rounded-full text-xs font-semibold ring-1 ring-charcoal/15 transition-colors focus:outline-none focus:ring-2 focus:ring-bark/40 focus:ring-offset-2 ${
                   activeFilter === filter.key
                     ? 'bg-clay text-charcoal'
                     : 'bg-white hover:bg-sand'
                 }`}
                 aria-pressed={activeFilter === filter.key}
-                type="button"
                 onClick={() => setActiveFilter(filter.key)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    setActiveFilter(filter.key);
+                  }
+                }}
               >
-                {filter.label}
+                <span className="text-bark font-bold">{filter.label}</span>
                 {filter.count > 0 && (
-                  <span className="ml-1 px-1.5 py-0.5 rounded-full bg-charcoal/10 text-charcoal/70">
+                  <span className="ml-1 px-1.5 py-0.5 rounded-full bg-charcoal/20 text-bark font-semibold">
                     {filter.count}
                   </span>
                 )}

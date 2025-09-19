@@ -223,6 +223,7 @@ export default function Team() {
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full sm:w-80 rounded-md border border-charcoal/20 bg-white px-3 py-2 text-sm outline-none ring-0 focus:border-clay"
             autoComplete="off" 
+            aria-label="Search team members by name, specialty, credential, or approach"
           />
           {/* Dropdown for filters on mobile */}
           <div className="w-full block md:hidden mt-3">
@@ -231,6 +232,7 @@ export default function Team() {
               onChange={e => setActiveFilter(e.target.value)}
               className="w-full rounded-md border border-charcoal/20 bg-white px-3 py-2 text-sm font-semibold text-bark focus:border-clay focus:ring-2 focus:ring-clay/40"
               aria-label="Filter team by specialty"
+              id="teamFilter"
             >
               {filters.map(filter => (
                 <option key={filter.key} value={filter.key}>
@@ -244,8 +246,15 @@ export default function Team() {
             {filters.map(filter => (
               <button
                 key={filter.key}
+                type="button"
+                aria-label={`Filter by ${filter.label}`}
                 onClick={() => setActiveFilter(filter.key)}
-                className={`px-4 py-2 rounded-full text-xs font-semibold shadow-sm border transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-clay/60 focus:ring-offset-2
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    setActiveFilter(filter.key);
+                  }
+                }}
+                className={`px-4 py-2 rounded-full text-xs font-semibold shadow-sm border transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-bark/40 focus:ring-offset-2
                   ${activeFilter === filter.key
                     ? 'bg-gradient-to-r from-clay to-bark text-white border-bark scale-105 ring-2 ring-bark/30'
                     : 'bg-white text-charcoal border-charcoal/10 hover:bg-sand/60 hover:scale-105'}
@@ -253,9 +262,9 @@ export default function Team() {
                 aria-pressed={activeFilter === filter.key}
                 style={{ minWidth: 120 }}
               >
-                <span className="font-bold tracking-wide">{filter.label}</span>
+                <span className="font-bold tracking-wide text-bark">{filter.label}</span>
                 {filter.count > 0 && (
-                  <span className="ml-2 px-2 py-0.5 rounded-full bg-bark/10 text-bark/80 font-semibold text-[11px]">
+                  <span className="ml-2 px-2 py-0.5 rounded-full bg-bark/20 text-bark font-semibold text-[11px]">
                     {filter.count}
                   </span>
                 )}
