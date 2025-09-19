@@ -1,3 +1,4 @@
+
 'use client'
 
 import { useState } from 'react'
@@ -25,7 +26,7 @@ export default function Header() {
                 xmlns="http://www.w3.org/2000/svg"
                 aria-hidden="true"
               >
-                <circle cx="50" cy="50" r="50" fill="#111" />
+                <circle cx="50" cy="50" r="50" fill="#fff" />
               </svg>
               <span className="relative z-10 w-14 h-14 flex items-center justify-center">
                 <Image
@@ -56,6 +57,9 @@ export default function Header() {
               </Link>
               <Link href="/areas" className="uppercase tracking-[.2em] text-xs text-bark/90 hover:text-bark whitespace-nowrap">
                 Areas of Focus
+              </Link>
+              <Link href="/intern-application" className="uppercase tracking-[.2em] text-xs text-bark/90 hover:text-bark whitespace-nowrap">
+                Apply to be an Intern
               </Link>
             </nav>
 
@@ -135,6 +139,9 @@ export default function Header() {
           </Link>
           <Link href="/areas" className="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" onClick={closeMenu}>
             Areas of Focus
+          </Link>
+          <Link href="/intern-application" className="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" onClick={closeMenu}>
+            Apply to be an Intern
           </Link>
 
           <hr className="my-3 border-cream/15" />

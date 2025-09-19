@@ -13,11 +13,57 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("all");
 
-  const filters = useMemo(() => getFilters(teamMembers), [teamMembers]);
-  const filteredMembers = useMemo(
-    () => filterMembers(teamMembers, searchQuery, activeFilter),
-    [teamMembers, searchQuery, activeFilter]
-  );
+  // Use the provided specialty list for tabs, preserving order and capitalization
+  const specialtyTabs = [
+    "Anxiety",
+    "Depression",
+    "Trauma",
+    "Stress management",
+    "Youth",
+    "Women’s mental health",
+    "Men’s mental health",
+    "Couples",
+    "Family",
+    "Addiction",
+    "Religious trauma",
+    "Spiritual abuse",
+    "Workplace stress",
+    "Bilingual",
+    "Art therapy",
+    "Affordable therapy",
+    "Parent coaching",
+    "Family coaching",
+    "Parent workshops"
+  ];
+
+  const filters = useMemo(() => [
+    { key: "all", label: "All Team Members", count: teamMembers.length },
+    ...specialtyTabs.map(s => {
+      const normalized = s.trim().toLowerCase();
+      const count = teamMembers.filter(m => m.specialties?.some(x => x.trim().toLowerCase() === normalized)).length;
+      return {
+        key: s,
+        label: s,
+        count
+      };
+    })
+  ], [teamMembers]);
+
+  const filteredMembers = useMemo(() => {
+    const searchLower = searchQuery.toLowerCase();
+    return teamMembers.filter(member => {
+      // Search by name or specialty
+      const matchesSearch =
+        !searchQuery ||
+        member.name.toLowerCase().includes(searchLower) ||
+        (member.specialties && member.specialties.some(s => s.toLowerCase().includes(searchLower)));
+
+      if (activeFilter === "all") return matchesSearch;
+      // Filter by specialty (case-insensitive, trimmed)
+      const normalizedFilter = activeFilter.trim().toLowerCase();
+      return matchesSearch && member.specialties?.some(x => x.trim().toLowerCase() === normalizedFilter);
+    });
+  }, [teamMembers, searchQuery, activeFilter]);
 
   return (
     <section id="team" className="mt-16 md:mt-24">
@@ -34,7 +80,7 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
           </p>
         </header>
 
-        {/* Toolbar */}
+        {/* Toolbar: dropdown on mobile, tabs on desktop */}
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <label htmlFor="teamSearch" className="sr-only">Search team</label>
           <input
@@ -46,7 +92,23 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
             className="w-full sm:w-80 rounded-md border border-charcoal/20 bg-white px-3 py-2 text-sm outline-none ring-0 focus:border-clay"
             autoComplete="off"
           />
-          <div className="flex flex-wrap gap-2" aria-label="Filter tags">
+          {/* Dropdown for filters on mobile */}
+          <div className="w-full block md:hidden mt-3">
+            <select
+              value={activeFilter}
+              onChange={e => setActiveFilter(e.target.value)}
+              className="w-full rounded-md border border-charcoal/20 bg-white px-3 py-2 text-sm font-semibold text-charcoal focus:border-clay focus:ring-2 focus:ring-clay/40"
+              aria-label="Filter team by specialty"
+            >
+              {filters.map(filter => (
+                <option key={filter.key} value={filter.key}>
+                  {filter.label} {filter.count > 0 ? `(${filter.count})` : ''}
+                </option>
+              ))}
+            </select>
+          </div>
+          {/* Tabs for filters on desktop */}
+          <div className="hidden md:flex flex-wrap gap-2" aria-label="Filter tags">
             {filters.map((filter) => (
               <button
                 key={filter.key}

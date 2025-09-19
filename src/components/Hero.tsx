@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[70vh] flex items-center py-12 md:py-24 lg:py-32 bg-transparent">
+    <section className="relative min-h-[70vh] flex flex-col py-12 md:py-24 lg:py-32 bg-transparent">
       {/* Blob 1: Top Left */}
       <svg
         className="absolute top-[-10vw] left-[-8vw] w-[60vw] h-[60vw] z-0 pointer-events-none select-none opacity-60"
@@ -66,22 +66,21 @@ export default function Hero() {
           opacity="0.6"
         />
       </svg>
-      <div className="relative z-10 w-full px-4 sm:px-8 grid grid-cols-1 md:grid-cols-2 gap-y-12 md:gap-y-0 md:gap-x-20 lg:gap-x-32 items-center">
-        {/* Left: Logo, accent, features, quote */}
-        <div className="flex flex-col items-center md:items-end text-center md:text-right gap-8">
-          <div>
-            <Image
-              src="/assets/logo/soulcare-logo.png"
-              alt="Soul Care Counselling Logo"
-              width={200}
-              height={200}
-              className="drop-shadow-2xl rounded-full border-4 border-gold/60 bg-white mb-6"
-              priority
-            />
-          </div>
-          <ul className="flex flex-col gap-2 items-start md:items-end text-bark/90 text-base font-normal max-w-xs mx-auto md:mx-0">
-            <li className="flex items-start gap-2">
-              <span className="flex items-start justify-center min-w-[2rem] pt-1">
+
+      {/* Hero section: two columns, image right, content left, all fits in viewport */}
+  <div className="relative z-10 w-full px-4 sm:px-8 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 min-h-[520px] max-h-[700px] pt-8 md:pt-0" style={{height: 'calc(100vh - 120px)'}}>
+        {/* Left: Content (1/3 width) */}
+        <div className="flex flex-col justify-center items-start text-left gap-8 w-full md:w-1/3 max-w-lg">
+          <h1 className="font-heading text-4xl md:text-5xl font-extrabold text-bark leading-tight tracking-tight">
+            Faith-centered therapy,<br className="hidden md:inline" />
+            <span className="text-gold"> culturally sensitive care</span>
+          </h1>
+          <p className="mt-4 text-lg md:text-xl text-bark/80 max-w-md font-normal leading-relaxed tracking-normal">
+            Experience compassionate, expert-led counselling designed for your story. Our diverse team offers virtual support across Canada, blending evidence-based methods with genuine care for lasting change.
+          </p>
+          <ul className="flex flex-col gap-3 text-bark/90 text-base md:text-lg font-medium max-w-md">
+            <li className="flex items-center gap-3">
+              <span className="flex items-center justify-center min-w-[2rem]">
                 {/* Lock icon for security */}
                 <svg className="h-6 w-6 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
                   <rect x="5" y="11" width="14" height="8" rx="2" stroke="currentColor" strokeWidth="1.5"/>
@@ -89,20 +88,20 @@ export default function Hero() {
                   <circle cx="12" cy="15" r="1.5" fill="currentColor" />
                 </svg>
               </span>
-              <span className="leading-tight">Secure telehealth platform</span>
+              <span className="leading-tight">Private & secure telehealth</span>
             </li>
-            <li className="flex items-start gap-2">
-              <span className="flex items-start justify-center min-w-[2rem] pt-1">
+            <li className="flex items-center gap-3">
+              <span className="flex items-center justify-center min-w-[2rem]">
                 {/* Map pin icon for virtual care */}
                 <svg className="h-6 w-6 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 21s7-6.5 7-11.5A7 7 0 005 9.5C5 14.5 12 21 12 21z" />
                   <circle cx="12" cy="9.5" r="2.5" fill="currentColor" />
                 </svg>
               </span>
-              <span className="leading-tight">Virtual care across Canada</span>
+              <span className="leading-tight">Virtual care, Canada-wide</span>
             </li>
-            <li className="flex items-start gap-2">
-              <span className="flex items-start justify-center min-w-[2rem] pt-1">
+            <li className="flex items-center gap-3">
+              <span className="flex items-center justify-center min-w-[2rem]">
                 {/* Globe/people icon for culturally responsive */}
                 <svg className="h-6 w-6 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
                   <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" fill="none" />
@@ -111,47 +110,52 @@ export default function Hero() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 16c1.5-2 7.5-2 9 0" />
                 </svg>
               </span>
-              <span className="leading-tight">Culturally responsive</span>
+              <span className="leading-tight">Culturally responsive team</span>
             </li>
-            <li className="flex items-start gap-2">
-              <span className="flex items-start justify-center min-w-[2rem] pt-1">
+            <li className="flex items-center gap-3">
+              <span className="flex items-center justify-center min-w-[2rem]">
                 {/* Graduation cap icon for evidence-based */}
                 <svg className="h-6 w-6 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l9-4 9 4-9 4-9-4zm0 0v6a9 9 0 0018 0V8" />
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 12v6" />
                 </svg>
               </span>
-              <span className="leading-tight">Evidence-based</span>
+              <span className="leading-tight">Evidence-based, practical care</span>
             </li>
           </ul>
-          <blockquote className="relative mt-6 pl-4 border-l-4 border-gold text-bark/90 max-w-xs mx-auto md:mx-0">
-            <p className="font-heading text-base md:text-lg italic leading-snug">
+        </div>
+        {/* Right: Hero image (2/3 width) with quote and CTA below, image hidden on mobile */}
+        <div className="flex flex-col items-center w-full md:w-2/3">
+          <div className="hidden md:block w-full">
+            <Image
+              src="/assets/img/hero/Soul Care Team Background.png"
+              alt="Soul Care Team hero visual"
+              width={900}
+              height={450}
+              className="rounded-3xl shadow-2xl border-2 border-gold/40 object-cover w-full max-w-3xl"
+              priority
+            />
+          </div>
+          <blockquote className="relative mt-8 pl-4 border-l-4 border-gold text-bark/90 max-w-xl text-center">
+            <p className="font-heading text-lg md:text-xl italic leading-snug tracking-tight">
               &ldquo;It is the will of the Father that you are well&rdquo;
             </p>
-            <div className="mt-2 text-sm text-bark/70 font-medium">Jessica Robinson-Grant</div>
+            <div className="mt-2 text-base text-bark/70 font-medium">Jessica Robinson-Grant</div>
           </blockquote>
-        </div>
-        {/* Right: Content */}
-        <div className="flex flex-col items-center md:items-start text-center md:text-left gap-8">
-          <h1 className="font-heading text-3xl md:text-4xl font-semibold text-bark leading-tight">
-            Faith-centered therapy,<br className="hidden md:inline" />
-            <span className="text-gold"> culturally sensitive care</span>
-          </h1>
-          <p className="mt-4 text-base md:text-lg text-bark/80 max-w-xl font-normal">
-            Virtual counselling across Canada with a warm, practical approach rooted in evidence-based care.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-4">
+          <div className="mt-8 flex flex-wrap gap-4 justify-center">
             <a 
               href="https://thesoulcarecounsellor.janeapp.com" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-full bg-gold px-6 py-2.5 font-semibold text-bark shadow ring-2 ring-gold/30 transition hover:bg-gold/90 hover:scale-105 focus-visible:outline-2 focus-visible:outline-gold/60 text-base"
+              className="inline-flex items-center justify-center rounded-full bg-gold px-8 py-3 font-semibold text-bark shadow-lg ring-2 ring-gold/40 transition-all duration-200 hover:bg-gold/90 hover:scale-105 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/60 text-lg"
+              style={{ minWidth: '200px', minHeight: '48px' }}
             >
               Book a Free Consultation
             </a>
             <Link 
               href="/services"
-              className="inline-flex items-center justify-center rounded-full bg-white/80 px-6 py-2.5 font-semibold text-bark shadow ring-2 ring-gold/20 transition hover:bg-gold/10 hover:scale-105 focus-visible:outline-2 focus-visible:outline-gold/60 text-base"
+              className="inline-flex items-center justify-center rounded-full bg-white/90 px-8 py-3 font-semibold text-bark shadow-lg ring-2 ring-gold/30 transition-all duration-200 hover:bg-gold/10 hover:scale-105 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/60 text-lg"
+              style={{ minWidth: '200px', minHeight: '48px' }}
             >
               View Services
             </Link>

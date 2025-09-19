@@ -1,15 +1,16 @@
 import type { Metadata } from 'next'
 import { getTeamMember } from '@/lib/sanity-queries'
 import { urlFor } from '@/lib/sanity'
+
 import TeamMemberPage from '../../components/TeamMemberPage'
 
 export const metadata: Metadata = {
-  title: 'Sneha Christian — Soul Care Counselling',
-  description: 'Meet Sneha Christian, a dedicated therapist at Soul Care Counselling.',
+  title: 'Christiana — Soul Care Counselling',
+  description: 'Meet Christiana, a dedicated therapist at Soul Care Counselling.',
 }
 
-export default async function SnehaPage() {
-  const member = await getTeamMember('sneha-christian')
+export default async function ChristianaPage() {
+  const member = await getTeamMember('christiana')
   
   if (!member) {
     return (
@@ -40,5 +41,6 @@ export default async function SnehaPage() {
     socialLinks: member.socialLinks || [],
     acceptsBookings: member.acceptsBookings
   }
+
   return <TeamMemberPage member={memberData} />
 }

@@ -1,15 +1,15 @@
-
 import { getAboutPage } from '@/lib/sanity-queries'
 import { urlFor } from '@/lib/sanity'
 import { PortableText } from '@portabletext/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import SanityTeam from './SanityTeam'
-
+import AboutTeamClient from './AboutTeamClient'
+import { getTeamMembers } from '@/lib/sanity-queries'
 export default async function SanityAboutPage() {
-  const pageData = await getAboutPage()
+  const pageData = await getAboutPage();
+  const teamMembers = await getTeamMembers();
   if (!pageData) {
-    return <div className="container mx-auto py-12 text-center">No content available for this page.</div>
+    return <div className="container mx-auto py-12 text-center">No content available for this page.</div>;
   }
 
   const portableTextComponents = {
@@ -26,7 +26,7 @@ export default async function SanityAboutPage() {
       bullet: (props: any) => <li className="mb-2">{props.children}</li>,
       number: (props: any) => <li className="mb-2">{props.children}</li>,
     },
-  }
+  };
 
   return (
     <article className="container mx-auto py-12 px-4">
@@ -44,13 +44,10 @@ export default async function SanityAboutPage() {
             />
           </div>
         )}
-        
         {/* Overlay gradient */}
         <div className="absolute inset-0 bg-gradient-to-r from-bark/90 via-bark/70 to-bark/50"></div>
-        
         {/* Decorative gradient blur */}
         <div className="absolute -right-12 -top-12 h-56 w-56 rounded-full bg-gradient-to-br from-clay/40 to-cream/10 blur-2xl" aria-hidden="true"></div>
-
         <div className="relative z-10 grid md:grid-cols-2 gap-10 items-center px-6 py-10 md:px-10 md:py-14">
           {/* LEFT: Text */}
           <div>
@@ -66,7 +63,6 @@ export default async function SanityAboutPage() {
               {pageData.hero.description}
             </p>
           </div>
-
           {/* RIGHT: Featured Image */}
           {pageData.hero.featuredImage && (
             <div className="relative flex justify-center overflow-hidden rounded-xl shadow-lg">
@@ -83,11 +79,9 @@ export default async function SanityAboutPage() {
           )}
         </div>
       </section>
-
       {/* Welcome + Pillars Section */}
       <section className="mt-14 md:mt-16">
         <div className="grid gap-12 md:grid-cols-2 items-start">
-          
           {/* LEFT: Welcome */}
           <div>
             <header className="max-w-3xl">
@@ -97,7 +91,6 @@ export default async function SanityAboutPage() {
               <PortableText value={pageData.welcome.content} components={portableTextComponents} />
             </div>
           </div>
-
           {/* RIGHT: Pillars */}
           <div>
             <h3 className="font-heading text-xl md:text-2xl font-semibold">{pageData.pillars.title}</h3>
@@ -119,7 +112,6 @@ export default async function SanityAboutPage() {
           </div>
         </div>
       </section>
-
       {/* Director Section */}
       <section className="mt-16 md:mt-20">
         <div className="grid items-center gap-8 md:grid-cols-12">
@@ -188,10 +180,10 @@ export default async function SanityAboutPage() {
           </div>
         </div>
       </section>
-
-      {/* Meet the team - Now powered by Sanity CMS */}
-      <SanityTeam />
-
+      {/* Meet the team - Now matches homepage */}
+      <section className="mt-16 md:mt-20">
+        <AboutTeamClient teamMembers={teamMembers} />
+      </section>
       {/* Final CTA */}
       {pageData.cta && (
         <section className="mt-16 md:mt-20 rounded-2xl bg-sand p-6 md:p-8 ring-1 ring-charcoal/10">
@@ -200,21 +192,21 @@ export default async function SanityAboutPage() {
               <h3 className="font-heading text-xl md:text-2xl font-semibold">{pageData.cta.title}</h3>
               <p className="mt-2 text-charcoal/80">{pageData.cta.description}</p>
             </div>
-            <div className="md:justify-self-end">
-              <a 
-                href={pageData.cta.buttonLink}
-                target={pageData.cta.external ? '_blank' : '_self'}
-                rel={pageData.cta.external ? 'noopener noreferrer' : ''}
-                className="inline-flex items-center justify-center rounded-md bg-clay px-5 py-2.5 font-semibold text-charcoal hover:bg-clay/90 ring-1 ring-charcoal/10"
-              >
-                {pageData.cta.buttonText}
-              </a>
-            </div>
+            {pageData.cta.buttonText && pageData.cta.buttonLink && (
+              <div className="md:col-span-1 flex md:justify-end">
+                <a
+                  href={pageData.cta.buttonLink}
+                  className="inline-block rounded-md bg-clay px-5 py-3 font-semibold text-white shadow hover:bg-bark transition-colors"
+                >
+                  {pageData.cta.buttonText}
+                </a>
+              </div>
+            )}
           </div>
         </section>
       )}
     </article>
-  )
+  );
 }
 
 

@@ -23,6 +23,10 @@ export default function FAQPage() {
       {/* FAQ List */}
       <section className="mt-14 md:mt-16 space-y-4">
         <details className="rounded-xl bg-white p-6 ring-1 ring-charcoal/10">
+          <summary className="font-heading font-semibold cursor-pointer">Where are you located?</summary>
+          <p className="mt-3 text-charcoal/85">We provide virtual therapy all over Canada. We do not provide in-person at this time.</p>
+        </details>
+        <details className="rounded-xl bg-white p-6 ring-1 ring-charcoal/10">
           <summary className="font-heading font-semibold cursor-pointer">How long are sessions?</summary>
           <p className="mt-3 text-charcoal/85">Individual therapy sessions are typically 50 minutes, while group sessions may be 60-90 minutes depending on the program.</p>
         </details>
@@ -48,13 +52,13 @@ export default function FAQPage() {
         </details>
 
         <details className="rounded-xl bg-white p-6 ring-1 ring-charcoal/10">
-          <summary className="font-heading font-semibold cursor-pointer">Do you work with faith-based clients?</summary>
-          <p className="mt-3 text-charcoal/85">Yes, we integrate Christian faith into our practice while respecting each client&apos;s spiritual journey and preferences.</p>
+          <summary className="font-heading font-semibold cursor-pointer">Do you only work with faith-based clients?</summary>
+          <p className="mt-3 text-charcoal/85">While we prioritize this for faith-based clients, we work with clients from all walks of life.</p>
         </details>
 
         <details className="rounded-xl bg-white p-6 ring-1 ring-charcoal/10">
-          <summary className="font-heading font-semibold cursor-pointer">Where are you located?</summary>
-          <p className="mt-3 text-charcoal/85">We provide virtual care across Canada. Some clinicians may offer in-person options in specific locations.</p>
+          <summary className="font-heading font-semibold cursor-pointer">We provide virtual therapy all over Canada. We do not provide in-person at this time.</summary>
+          <p className="mt-3 text-charcoal/85">We provide virtual therapy all over Canada. We do not provide in-person at this time.</p>
         </details>
 
         <details className="rounded-xl bg-white p-6 ring-1 ring-charcoal/10">

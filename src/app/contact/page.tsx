@@ -80,93 +80,7 @@ export default function ContactPage() {
       {/* Contact content */}
       <section className="mt-14 md:mt-16 grid gap-10 md:grid-cols-12 md:items-start">
         {/* LEFT: Forms */}
-        <div className="md:col-span-7 space-y-12">
-          {/* Intern Form */}
-          <div>
-            <h2 className="font-heading text-xl md:text-2xl font-semibold">Prospective Interns</h2>
-            <form onSubmit={handleInternSubmit} className="mt-4 rounded-2xl bg-white p-6 ring-1 ring-charcoal/10 space-y-4">
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <label htmlFor="intern-name" className="block text-sm font-semibold">Full name</label>
-                  <input
-                    id="intern-name"
-                    name="name"
-                    type="text"
-                    required
-                    className="mt-1 w-full rounded-md border border-charcoal/20 bg-white px-3 py-2 outline-none ring-0 focus:border-clay"
-                    placeholder="First and last name"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="intern-email" className="block text-sm font-semibold">Email</label>
-                  <input
-                    id="intern-email"
-                    name="email"
-                    type="email"
-                    required
-                    className="mt-1 w-full rounded-md border border-charcoal/20 bg-white px-3 py-2 outline-none ring-0 focus:border-clay"
-                    placeholder="you@example.com"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="intern-phone" className="block text-sm font-semibold">Phone (optional)</label>
-                  <input
-                    id="intern-phone"
-                    name="phone"
-                    type="tel"
-                    className="mt-1 w-full rounded-md border border-charcoal/20 bg-white px-3 py-2 outline-none ring-0 focus:border-clay"
-                    placeholder="(555) 555-5555"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="intern-school" className="block text-sm font-semibold">School/Program</label>
-                  <input
-                    id="intern-school"
-                    name="school"
-                    type="text"
-                    required
-                    className="mt-1 w-full rounded-md border border-charcoal/20 bg-white px-3 py-2 outline-none ring-0 focus:border-clay"
-                    placeholder="e.g. York University, MSW"
-                  />
-                </div>
-              </div>
-              <div>
-                <label htmlFor="intern-message" className="block text-sm font-semibold">Message</label>
-                <textarea
-                  id="intern-message"
-                  name="message"
-                  rows={6}
-                  required
-                  className="mt-1 w-full rounded-md border border-charcoal/20 bg-white px-3 py-2 outline-none ring-0 focus:border-clay"
-                  placeholder="Tell us about your interest in interning with Soul Care."
-                ></textarea>
-              </div>
-              <div className="flex items-start gap-2">
-                <input
-                  id="intern-consent"
-                  name="consent"
-                  type="checkbox"
-                  required
-                  className="mt-1 h-4 w-4 rounded border-charcoal/30"
-                />
-                <label htmlFor="intern-consent" className="text-sm text-charcoal/85">
-                  I consent to be contacted about my internship inquiry. I understand this form is not for emergencies.
-                </label>
-              </div>
-              <div className="flex items-center gap-3 pt-2">
-                <button
-                  type="submit"
-                  className="inline-flex items-center justify-center rounded-md bg-bark px-5 py-2.5 font-semibold text-cream hover:bg-bark/90 ring-1 ring-charcoal/10"
-                >
-                  Send application
-                </button>
-                <p className="text-sm text-charcoal/80" role="status" aria-live="polite">
-                  {internFormStatus}
-                </p>
-              </div>
-            </form>
-          </div>
-
+        <div className="md:col-span-7">
           {/* General Contact Form */}
           <div>
             <h2 className="font-heading text-xl md:text-2xl font-semibold">Send a message</h2>
@@ -273,12 +187,12 @@ export default function ContactPage() {
               </div>
               <div>
                 <p className="font-medium text-charcoal mb-1">Call us</p>
-                <a 
-                  href="tel:+1-647-544-7736" 
-                  className="underline underline-offset-4 decoration-charcoal/30 hover:decoration-charcoal"
-                >
-                  647-544-7736
-                </a>
+                  <a 
+                    href="tel:+1-647-394-0525" 
+                    className="underline underline-offset-4 decoration-charcoal/30 hover:decoration-charcoal"
+                  >
+                    647-394-0525
+                  </a>
               </div>
               <div>
                 <p className="font-medium text-charcoal mb-1">Book online</p>

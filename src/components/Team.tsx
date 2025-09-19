@@ -24,7 +24,7 @@ const teamMembers: TeamMember[] = [
     role: "Clinical Director & Practice Owner",
     image: "/assets/img/team/rs=w_365,h_365,cg_true,m.webp",
     description: "Leading Soul Care with holistic, culturally responsive practice rooted in Christian faith.",
-    profileLink: "/jessica",
+      profileLink: "/jessica-robinson-grant",
     tags: ["trauma-informed", "director"],
     specialties: ["Trauma-informed individual and group counselling", "Racial identity", "Depression and anxiety support", "Abuse", "Managing life transitions", "Stress management", "Identity development", "Relationship counselling", "Tools to leverage body and self care"],
     acceptsBookings: true
@@ -35,7 +35,7 @@ const teamMembers: TeamMember[] = [
     role: "Operations Manager",
     image: "/assets/img/team/rs=w_365,h_365,cg_true,m (1).webp",
     description: "Oversees practice operations and administrative excellence with faith-integrated leadership.",
-    profileLink: "/davene",
+      profileLink: "/davene-miller",
     tags: ["operations"],
     specialties: ["Practice operations & administration", "Team coordination & support", "Client services management", "Process improvement & efficiency", "Faith-integrated organizational leadership"],
     acceptsBookings: false
@@ -46,7 +46,7 @@ const teamMembers: TeamMember[] = [
     role: "Coach",
     image: "/assets/img/team/rs=w_365,h_365,cg_true.webp",
     description: "Early childhood development specialist with parent coaching expertise.",
-    profileLink: "/princeton",
+      profileLink: "/princeton-owusu",
     tags: ["family-couples", "coach"],
     specialties: ["Early childhood development", "Parent coaching", "Family support & education", "Child–parent relationship building"],
     acceptsBookings: true
@@ -57,7 +57,7 @@ const teamMembers: TeamMember[] = [
     role: "Associate Christian Therapist · Bilingual (EN/FR)",
     image: "/assets/img/team/rs=w_365,h_365,cg_true,m (6).webp",
     description: "Bilingual therapist specializing in anxiety, depression, and career counselling.",
-    profileLink: "/anita",
+      profileLink: "/anita-owusu",
     tags: ["anxiety-depression", "bilingual"],
     specialties: ["Anxiety & Depression", "Stress Management", "Academic & Career Counselling", "Bilingual Services (EN/FR)"],
     acceptsBookings: true
@@ -68,7 +68,7 @@ const teamMembers: TeamMember[] = [
     role: "Associate Christian Therapist",
     image: "/assets/img/team/rs=w_365,h_365,cg_true,m (7).webp",
     description: "Faith-integrated therapy with trauma-informed, strengths-based approach.",
-    profileLink: "/baraka",
+      profileLink: "/baraka-mwangi",
     tags: ["trauma-informed", "faith-based"],
     specialties: ["Life transitions", "Relationship issues", "Anxiety & depression", "Stress at work or school", "Narrative, CBT & family systems", "Trauma-informed, strengths-based lens", "Faith-integrated care"],
     acceptsBookings: true
@@ -79,8 +79,8 @@ const teamMembers: TeamMember[] = [
     role: "Associate Christian Therapist",
     image: "/assets/img/team/rs=w_365,h_365,cg_true,m (5).webp",
     description: "Specialized in addictions recovery, trauma, and faith-based therapy.",
-    profileLink: "/josh",
-    tags: ["addictions-recovery", "trauma-informed"],
+    profileLink: "/josh-dale",
+  tags: ["addictions-recovery", "trauma-informed", "mens-mental-health", "womens-mental-health"],
     specialties: ["Addictions & recovery", "Anxiety & emotional regulation", "Identity & self-esteem", "Faith & spirituality", "Trauma & attachment; adoptee trauma", "Burnout & life transitions", "DBT, CBT, Narrative, Solution-Focused, Parts work"],
     acceptsBookings: true
   },
@@ -91,7 +91,7 @@ const teamMembers: TeamMember[] = [
     status: "Not Accepting Clients",
     image: "/assets/img/team/rs=w_365,h_365,cg_true,m (4).webp",
     description: "Trauma-informed therapy with expertise in anxiety, depression, and spirituality.",
-    profileLink: "/khadian",
+      profileLink: "/khadian-williams",
     tags: ["anxiety-depression", "trauma-informed"],
     specialties: ["Anxiety & depression", "Emotional regulation", "Spirituality & life transitions", "Trauma-informed care", "CBT, Narrative, Solution-Focused therapy", "Individual, family & youth counselling"],
     acceptsBookings: false
@@ -102,7 +102,7 @@ const teamMembers: TeamMember[] = [
     role: "Associate Christian Therapist",
     image: "/assets/img/team/rs=w_365,h_365,cg_true,m (2).webp",
     description: "Registered Nurse and therapist specializing in trauma-informed, strengths-based care.",
-    profileLink: "/natalie",
+      profileLink: "/natalie-mcdonald",
     tags: ["trauma-informed", "anxiety-depression"],
     specialties: ["Life transitions & burnout", "Anxiety & depression support", "Trauma-informed care", "Identity development", "Cognitive-Behavioural strategies", "Strengths-based approach"],
     acceptsBookings: true
@@ -113,7 +113,7 @@ const teamMembers: TeamMember[] = [
     role: "Associate Christian Therapist",
     image: "/assets/img/team/rs=w_365,h_365,cg_true,m (3).webp",
     description: "Specialized in teens, adults, couples, and social justice-informed therapy.",
-    profileLink: "/nigel",
+      profileLink: "/nigel-miller",
     tags: ["family-couples", "trauma-informed"],
     specialties: ["Teens, adults & couples", "Life transitions", "Anxiety & depression", "Emotional regulation", "Trauma-informed care", "Spirituality & meaning", "CBT, Solution-Focused, Narrative therapy", "Identity, masculinity & social justice"],
     acceptsBookings: true
@@ -124,7 +124,7 @@ const teamMembers: TeamMember[] = [
     role: "Associate Christian Therapist",
     image: "/assets/img/team/rs=w_365,h_365,cg_true,m (8).webp",
     description: "Christian family life practitioner specializing in parenting, couples, and marriage therapy.",
-    profileLink: "/oluseye",
+      profileLink: "/oluseye-olumide",
     tags: ["family-couples", "faith-based"],
     specialties: ["Parenting & couples", "Christian family life", "Marriage & identity", "Spiritual growth & purpose", "Holistic, faith-integrated approach", "Evidence-based practices"],
     acceptsBookings: true
@@ -153,33 +153,67 @@ export default function Team() {
     })
   }, [searchQuery, activeFilter])
 
+  // Collect all specialties from team members
+  // Normalize specialty names for robust matching
+  function normalizeSpecialty(str: string) {
+    return str.trim().toLowerCase().replace(/[’']/g, "'").replace(/\s+/g, ' ');
+  }
+  const specialtyCounts: Record<string, number> = {}
+  teamMembers.forEach(member => {
+    member.specialties.forEach(spec => {
+      const normalized = normalizeSpecialty(spec)
+      specialtyCounts[normalized] = (specialtyCounts[normalized] || 0) + 1
+    })
+  })
+
+  // Dynamically generate filter tabs from all unique specialties
+  const specialtySet = new Set<string>()
+  teamMembers.forEach(member => {
+    member.specialties.forEach(spec => {
+      specialtySet.add(spec.trim())
+    })
+  })
+
+  // Sort specialties alphabetically, but keep 'All Team Members' first
+  const specialtyList = Array.from(specialtySet).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }))
+
   const filters = [
-    { key: 'all', label: 'All Team Members', count: teamMembers.length },
-    { key: 'trauma-informed', label: 'Trauma-Informed Care', count: teamMembers.filter(m => m.tags.includes('trauma-informed')).length },
-    { key: 'anxiety-depression', label: 'Anxiety & Depression', count: teamMembers.filter(m => m.tags.includes('anxiety-depression')).length },
-    { key: 'family-couples', label: 'Family & Couples', count: teamMembers.filter(m => m.tags.includes('family-couples')).length },
-    { key: 'addictions-recovery', label: 'Addictions & Recovery', count: teamMembers.filter(m => m.tags.includes('addictions-recovery')).length },
-    { key: 'faith-based', label: 'Faith-Based Therapy', count: teamMembers.filter(m => m.tags.includes('faith-based')).length },
-    { key: 'bilingual', label: 'Bilingual Services', count: teamMembers.filter(m => m.tags.includes('bilingual')).length }
+    {
+      key: 'All Team Members',
+      label: 'All Team Members',
+      count: teamMembers.length
+    },
+    ...specialtyList.map(spec => {
+      // Count members with this specialty
+      const count = teamMembers.filter(member => member.specialties.map(s => s.trim()).includes(spec)).length
+      return {
+        key: spec,
+        label: spec.replace(/\b\w/g, c => c.toUpperCase()),
+        count
+      }
+    })
   ]
 
   return (
-    <section id="team" className="mt-16 md:mt-24">
+    <section id="team" className="mt-16 md:mt-24 relative overflow-hidden">
+      {/* Premium background gradient */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-sand/60 via-white to-clay/30 pointer-events-none" />
       <div className="mx-auto max-w-7xl">
-        <header className="max-w-2xl">
-          <span className="inline-flex items-center gap-2 rounded-full bg-sand/70 px-3 py-1 ring-1 ring-charcoal/10 uppercase tracking-[.22em] text-[11px] text-charcoal/80">
+        <header className="max-w-2xl mx-auto text-center mb-10">
+          <span className="inline-flex items-center gap-2 rounded-full bg-bark/80 px-4 py-2 ring-2 ring-clay/30 uppercase tracking-[.22em] text-[13px] text-white shadow-lg font-semibold">
             Our Team
           </span>
-          <h2 className="mt-3 font-heading text-2xl md:text-3xl font-bold text-charcoal">
-            Warm, culturally responsive clinicians
+          <h2 className="mt-5 font-heading text-4xl md:text-5xl font-extrabold text-bark drop-shadow-lg">
+            Warm, Culturally Responsive Clinicians
           </h2>
-          <p className="mt-3 text-charcoal/80">
-            Faith-informed and evidence-based care. Meet the people who will support your healing.
+          <p className="mt-5 text-lg text-charcoal/90 font-medium">
+            Faith-informed and evidence-based care.<br />
+            <span className="text-clay/80">Meet the people who will support your healing.</span>
           </p>
         </header>
 
-        {/* Toolbar */}
-        <div className="mt-6 flex flex-wrap items-center gap-3">
+        {/* Toolbar: dropdown on mobile, tabs on desktop */}
+        <div className="mt-6 flex flex-wrap items-center gap-3 sticky top-0 z-10 bg-white/90 backdrop-blur-md py-3 shadow-sm rounded-xl">
           <label htmlFor="teamSearch" className="sr-only">Search team</label>
           <input 
             id="teamSearch" 
@@ -190,21 +224,38 @@ export default function Team() {
             className="w-full sm:w-80 rounded-md border border-charcoal/20 bg-white px-3 py-2 text-sm outline-none ring-0 focus:border-clay"
             autoComplete="off" 
           />
-          <div className="flex flex-wrap gap-2" aria-label="Filter tags">
+          {/* Dropdown for filters on mobile */}
+          <div className="w-full block md:hidden mt-3">
+            <select
+              value={activeFilter}
+              onChange={e => setActiveFilter(e.target.value)}
+              className="w-full rounded-md border border-charcoal/20 bg-white px-3 py-2 text-sm font-semibold text-bark focus:border-clay focus:ring-2 focus:ring-clay/40"
+              aria-label="Filter team by specialty"
+            >
+              {filters.map(filter => (
+                <option key={filter.key} value={filter.key}>
+                  {filter.label} {filter.count > 0 ? `(${filter.count})` : ''}
+                </option>
+              ))}
+            </select>
+          </div>
+          {/* Tabs for filters on desktop */}
+          <div className="hidden md:flex flex-wrap gap-2" aria-label="Filter tags">
             {filters.map(filter => (
-              <button 
+              <button
                 key={filter.key}
                 onClick={() => setActiveFilter(filter.key)}
-                className={`px-3 py-1 rounded-full text-xs font-semibold ring-1 ring-charcoal/15 transition-colors ${
-                  activeFilter === filter.key 
-                    ? 'bg-clay text-charcoal' 
-                    : 'bg-white hover:bg-sand'
-                }`}
+                className={`px-4 py-2 rounded-full text-xs font-semibold shadow-sm border transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-clay/60 focus:ring-offset-2
+                  ${activeFilter === filter.key
+                    ? 'bg-gradient-to-r from-clay to-bark text-white border-bark scale-105 ring-2 ring-bark/30'
+                    : 'bg-white text-charcoal border-charcoal/10 hover:bg-sand/60 hover:scale-105'}
+                `}
                 aria-pressed={activeFilter === filter.key}
+                style={{ minWidth: 120 }}
               >
-                {filter.label}
+                <span className="font-bold tracking-wide">{filter.label}</span>
                 {filter.count > 0 && (
-                  <span className="ml-1 px-1.5 py-0.5 rounded-full bg-charcoal/10 text-charcoal/70">
+                  <span className="ml-2 px-2 py-0.5 rounded-full bg-bark/10 text-bark/80 font-semibold text-[11px]">
                     {filter.count}
                   </span>
                 )}
@@ -214,44 +265,44 @@ export default function Team() {
         </div>
 
         {/* Grid */}
-        <ul role="list" className="mt-8 grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-stretch">
+        <ul role="list" className="mt-8 grid gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-stretch">
           {filteredMembers.map((member) => (
             <li key={member.name} className="team-card">
-              <article className="h-full rounded-2xl bg-white ring-1 ring-charcoal/10 shadow-sm hover:shadow-md transition-shadow">
-                <div className="p-4">
-                  <div className="flex items-center gap-3">
+              <article className="h-full rounded-3xl bg-white/95 ring-2 ring-clay/10 shadow-xl hover:shadow-2xl transition-all duration-200 hover:-translate-y-1 hover:scale-[1.03] flex flex-col justify-between">
+                <div className="p-6 pb-2">
+                  <div className="flex items-center gap-4 mb-3">
                     <Image 
                       src={member.image} 
                       alt={member.name} 
-                      className="h-12 w-12 rounded-full object-cover" 
-                      width={48}
-                      height={48}
+                      className="h-16 w-16 rounded-full object-cover ring-2 ring-clay/30 shadow-md" 
+                      width={64}
+                      height={64}
                       loading="lazy" 
                     />
                     <div className="min-w-0 flex-1">
-                      <h3 className="font-semibold text-charcoal">{member.name}</h3>
-                      <p className="text-sm text-charcoal/70">{member.credentials}</p>
-                      <p className="text-xs text-charcoal/60">{member.role}</p>
+                      <h3 className="font-bold text-bark text-lg leading-tight drop-shadow-sm">{member.name}</h3>
+                      <p className="text-sm text-clay/80 font-semibold">{member.credentials}</p>
+                      <p className="text-xs text-charcoal/70 font-medium">{member.role}</p>
                       {member.status && (
-                        <p className="text-xs text-charcoal/50">{member.status}</p>
+                        <p className="text-xs text-bark/60 font-semibold mt-1">{member.status}</p>
                       )}
                     </div>
                   </div>
-                  <p className="mt-3 text-sm text-charcoal/80">{member.description}</p>
-                  <div className="mt-4 team-cta" style={{ minHeight: '3.5rem' }}>
-                    <Link 
-                      href={member.profileLink} 
-                      className="cta-label text-sm font-medium text-clay hover:text-bark block"
-                      style={{
-                        display: '-webkit-box',
-                        WebkitBoxOrient: 'vertical',
-                        WebkitLineClamp: 2,
-                        overflow: 'hidden'
-                      }}
-                    >
-                      View Profile
-                    </Link>
-                  </div>
+                  <p className="mt-2 text-[15px] text-charcoal/90 font-medium leading-relaxed">{member.description}</p>
+                </div>
+                <div className="mt-4 team-cta px-6 pb-6" style={{ minHeight: '3.5rem' }}>
+                  <Link 
+                    href={member.profileLink} 
+                    className="cta-label text-base font-bold text-white bg-clay hover:bg-bark px-5 py-2 rounded-full shadow-md transition-colors duration-150 block text-center"
+                    style={{
+                      display: '-webkit-box',
+                      WebkitBoxOrient: 'vertical',
+                      WebkitLineClamp: 2,
+                      overflow: 'hidden'
+                    }}
+                  >
+                    View Profile
+                  </Link>
                 </div>
               </article>
             </li>

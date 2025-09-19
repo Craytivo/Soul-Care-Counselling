@@ -16,6 +16,7 @@ export default function ServicesPage() {
         </span>
         <h1 className="mt-3 font-heading text-3xl md:text-4xl font-bold">Faith-Centered Care, Designed for You</h1>
         <p className="mt-3 text-charcoal/80">
+          Individual therapy starts at <span className="font-bold text-bark">$170.00</span> per session.<br />
           Explore the right level of support for your season—individual, affordable, single-session, and group therapy.
         </p>
       </section>

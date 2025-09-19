@@ -17,9 +17,9 @@ const princetonData = {
     "Princeton's dedication to the well-being and development of children, coupled with his compassionate approach, makes him a trusted ally for families seeking guidance in nurturing happy, healthy, and thriving young minds."
   ],
   specialties: [
-    "Parent Coaching",
-    "Family Coaching",
-    "Parent Workshops",
+    "Parent coaching",
+    "Family coaching",
+    "Parent workshops",
   ],
   areasOfFocus: [
     "Early childhood development",

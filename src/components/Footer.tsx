@@ -41,7 +41,7 @@ export default function Footer() {
                   xmlns="http://www.w3.org/2000/svg"
                   aria-hidden="true"
                 >
-                  <circle cx="50" cy="50" r="50" fill="#111" />
+                  <circle cx="50" cy="50" r="50" fill="#fff" />
                 </svg>
                 <span className="relative z-10 w-10 h-10 flex items-center justify-center">
                   <Image
@@ -108,6 +108,7 @@ export default function Footer() {
               <li><Link href="/core-values" className="text-bark/80 hover:text-bark">Core Values</Link></li>
               <li><Link href="/services" className="text-bark/80 hover:text-bark">Services</Link></li>
               <li><Link href="/areas" className="text-bark/80 hover:text-bark">Areas of Focus</Link></li>
+              <li><Link href="/intern-application" className="text-bark/80 hover:text-bark">Apply to be an Intern</Link></li>
             </ul>
           </nav>
 

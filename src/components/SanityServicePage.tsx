@@ -51,16 +51,36 @@ export default async function SanityServicePage({ slug }: SanityServicePageProps
         )
 
       case 'detailsSection':
+        // Remove cost for group therapy, force $20 for single session, $80 for affordable therapy
+        const isSingleSession = page.slug?.current === 'single-session';
+        const isAffordable = page.slug?.current === 'affordable';
         return (
           <section key={index} className="mx-auto max-w-5xl mt-12">
             <h2 className="font-heading text-2xl md:text-3xl font-bold text-charcoal">{section.title}</h2>
             <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {section.items.map((item: any, itemIndex: number) => (
-                <div key={itemIndex} className="rounded-lg bg-white p-5 ring-1 ring-charcoal/10 shadow-sm">
-                  <dt className="font-semibold">{item.label}</dt>
-                  <dd className="mt-1 text-charcoal/90">{item.value}</dd>
-                </div>
-              ))}
+              {section.items
+                .filter((item: any) => {
+                  const label = item.label.toLowerCase();
+                  if (label.includes('cost') || label.includes('price') || label.includes('fee')) {
+                    return isSingleSession || isAffordable;
+                  }
+                  return true;
+                })
+                .map((item: any, itemIndex: number) => {
+                  let value = item.value;
+                  if (isSingleSession && (item.label.toLowerCase().includes('cost') || item.label.toLowerCase().includes('price') || item.label.toLowerCase().includes('fee'))) {
+                    value = '$20.00 per session';
+                  }
+                  if (isAffordable && (item.label.toLowerCase().includes('cost') || item.label.toLowerCase().includes('price') || item.label.toLowerCase().includes('fee'))) {
+                    value = '$80.00 for 7 sessions';
+                  }
+                  return (
+                    <div key={itemIndex} className="rounded-lg bg-white p-5 ring-1 ring-charcoal/10 shadow-sm">
+                      <dt className="font-semibold">{item.label}</dt>
+                      <dd className="mt-1 text-charcoal/90">{value}</dd>
+                    </div>
+                  );
+                })}
             </div>
           </section>
         )

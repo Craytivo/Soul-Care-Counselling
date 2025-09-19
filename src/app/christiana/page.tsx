@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
-import { getTeamMember } from '@/lib/sanity-queries'
-import { urlFor } from '@/lib/sanity'
+import { getTeamMember } from '../../lib/sanity-queries'
+import { urlFor } from '../../lib/sanity'
 
 import TeamMemberPage from '../../components/TeamMemberPage'
 
@@ -29,13 +29,13 @@ export default async function ChristianaPage() {
     image: member.image ? urlFor(member.image).width(400).height(400).url() : '/assets/img/team/placeholder.webp',
     bio: member.bio ? [member.bio] : ['Professional bio coming soon.'],
     specialties: [
-      'Affordable Therapy',
+      'Affordable therapy',
       'Anxiety',
       'Depression',
       'Trauma',
-      'Stress Management',
+      'Stress management',
       'Youth',
-      'Women’s Mental Health',
+      'Women’s mental health',
     ],
     areasOfFocus: member.areasOfFocus || [],
     socialLinks: member.socialLinks || [],

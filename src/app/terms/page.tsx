@@ -212,7 +212,7 @@ export default function Terms() {
           <div className="bg-sand p-6 rounded-lg">
             <p className="text-charcoal/85 mb-2"><strong>Soul Care Counselling</strong></p>
             <p className="text-charcoal/85 mb-2">Email: <a href="mailto:info@thesoulcarecounsellor.com" className="text-clay hover:underline">info@thesoulcarecounsellor.com</a></p>
-            <p className="text-charcoal/85 mb-2">Phone: <a href="tel:+1-647-544-7736" className="text-clay hover:underline">647-544-7736</a></p>
+            <p className="text-charcoal/85 mb-2">Phone: <a href="tel:+1-647-394-0525" className="text-clay hover:underline">647-394-0525</a></p>
             <p className="text-charcoal/85">Address: [Your Business Address]</p>
           </div>
         </section>

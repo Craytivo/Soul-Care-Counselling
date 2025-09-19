@@ -33,10 +33,7 @@ export default async function SanityServices() {
             </div>
           )}
 
-          {/* Service Icon */}
-          {service.icon && (
-            <div className="text-2xl mb-3">{service.icon}</div>
-          )}
+          {/* Service Icon removed as requested */}
 
           {/* Service Title */}
           <h3 className="font-heading text-xl font-semibold">{service.title}</h3>
@@ -56,11 +53,21 @@ export default async function SanityServices() {
             </ul>
           )}
 
-          {/* Pricing */}
-          {service.pricing && (
+          {/* Pricing: Hide for group therapy, force $20 for single session, $80 for affordable therapy */}
+          {service.title.toLowerCase().includes('single session') ? (
             <div className="mt-3 text-sm font-medium text-clay">
-              {service.pricing}
+              $20.00 per session
             </div>
+          ) : service.title.toLowerCase().includes('affordable') ? (
+            <div className="mt-3 text-sm font-medium text-clay">
+              $80.00 for 7 sessions
+            </div>
+          ) : (
+            service.pricing && service.title.toLowerCase() !== 'group therapy' && (
+              <div className="mt-3 text-sm font-medium text-clay">
+                {service.pricing}
+              </div>
+            )
           )}
 
           {/* Action Buttons */}

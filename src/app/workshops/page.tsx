@@ -15,14 +15,11 @@ export default function WorkshopsPage() {
         <div className="absolute -right-12 -top-12 h-56 w-56 rounded-full bg-gradient-to-br from-clay/40 to-cream/10 blur-2xl" aria-hidden="true"></div>
         <div className="relative z-10 px-6 py-10 md:px-10 md:py-14">
           <span className="inline-flex items-center gap-2 rounded-full bg-cream/10 px-3 py-1 ring-1 ring-cream/30 uppercase tracking-[.22em] text-[11px]">
-            Wellness Webinars
+            Wellness Webinar Recordings
           </span>
-          <h1 className="mt-3 font-heading text-3xl md:text-4xl font-bold">Free Monthly Webinars</h1>
+          <h1 className="mt-3 font-heading text-3xl md:text-4xl font-bold">Wellness Webinar Recordings</h1>
           <p className="mt-3 max-w-3xl text-cream/85">
-            Missed our free monthly webinars, or want to register for an upcoming one? You&apos;ve come to the right place.
-          </p>
-          <p className="mt-4 max-w-3xl text-cream/85">
-            Below, you&apos;ll find recordings of all previous virtual webinars and registration information for future ones, each packed with valuable insights and practical tips from our dedicated therapists.
+            Missed our free monthly webinars? Below, you&apos;ll find recordings of all previous virtual webinars, each packed with valuable insights and practical tips from our dedicated therapists.
           </p>
         </div>
       </section>
