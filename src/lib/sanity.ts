@@ -5,7 +5,7 @@ import imageUrlBuilder from '@sanity/image-url'
 export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
-  useCdn: true, // Set to false if you want to always fetch fresh data
+  useCdn: false, // Set to false for immediate content updates
   apiVersion: '2025-09-05',
 })
 
@@ -347,6 +347,31 @@ export interface HomePage {
         external: boolean
       }
     }
+  }
+  isActive: boolean
+}
+
+export interface ServicesPage {
+  _id: string
+  _type: 'servicesPage'
+  title: string
+  metaDescription?: string
+  hero: {
+    badge: string
+    heading: string
+    description: string
+    priceHighlight?: {
+      text: string
+      price: string
+      suffix: string
+    }
+  }
+  cta: {
+    title: string
+    description: string
+    buttonText: string
+    buttonUrl: string
+    external: boolean
   }
   isActive: boolean
 }

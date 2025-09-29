@@ -1,5 +1,5 @@
 import { client } from './sanity'
-import type { TeamMember, Workshop, Service, ServicePage, CoreValuesPage, AboutPage, AreasPage, BlogPost, SiteSettings, HomePage } from './sanity'
+import type { TeamMember, Workshop, Service, ServicePage, CoreValuesPage, AboutPage, AreasPage, BlogPost, SiteSettings, HomePage, ServicesPage } from './sanity'
 
 // Team Members
 export async function getTeamMembers(): Promise<TeamMember[]> {
@@ -495,6 +495,36 @@ export async function getHomePage(): Promise<HomePage | null> {
             external
           }
         }
+      },
+      isActive
+    }
+  `)
+}
+
+// Services Page
+export async function getServicesPage(): Promise<ServicesPage | null> {
+  return await client.fetch(`
+    *[_type == "servicesPage" && isActive == true][0] {
+      _id,
+      _type,
+      title,
+      metaDescription,
+      hero {
+        badge,
+        heading,
+        description,
+        priceHighlight {
+          text,
+          price,
+          suffix
+        }
+      },
+      cta {
+        title,
+        description,
+        buttonText,
+        buttonUrl,
+        external
       },
       isActive
     }

@@ -4,7 +4,7 @@ import { urlFor } from '@/lib/sanity'
 import type { HomePage } from '@/lib/sanity'
 
 interface HeroProps {
-  homePageData?: HomePage | null
+  homePageData: HomePage | null
 }
 
 const iconComponents = {
@@ -38,44 +38,23 @@ const iconComponents = {
 }
 
 export default function Hero({ homePageData }: HeroProps) {
-  // Fallback data for when Sanity data is not available
-  const fallbackData = {
-    mainHeading: "Faith-centered therapy,",
-    highlightText: "culturally sensitive care",
-    description: "Experience compassionate, expert-led counselling designed for your story. Our diverse team offers virtual support across Canada, blending evidence-based methods with genuine care for lasting change.",
-    heroImage: {
-      src: "/assets/img/hero/Soul Care Team Background.png",
-      alt: "Soul Care Team hero visual"
-    },
-    features: [
-      { text: "Private & secure telehealth", icon: "lock" as const, order: 1 },
-      { text: "Virtual care, Canada-wide", icon: "mapPin" as const, order: 2 },
-      { text: "Culturally responsive team", icon: "globe" as const, order: 3 },
-      { text: "Evidence-based, practical care", icon: "graduationCap" as const, order: 4 },
-    ],
-    quote: {
-      text: "It is the will of the Father that you are well",
-      author: "Jessica Robinson-Grant"
-    },
-    ctaButtons: {
-      primaryButton: {
-        text: "Book a Free Consultation",
-        url: "https://thesoulcarecounsellor.janeapp.com",
-        external: true
-      },
-      secondaryButton: {
-        text: "View Services",
-        url: "/services",
-        external: false
-      }
-    }
+  // Return early if no homepage data is available
+  if (!homePageData || !homePageData.hero) {
+    return (
+      <section className="relative min-h-[70vh] flex items-center justify-center py-12 md:py-24 lg:py-32 bg-transparent">
+        <div className="text-center text-bark/60">
+          <p className="text-lg">Please create homepage content in Sanity Studio</p>
+          <p className="text-sm mt-2">Visit <a href="/studio" className="text-gold underline">Sanity Studio</a> to add homepage content</p>
+        </div>
+      </section>
+    )
   }
 
-  const heroData = homePageData?.hero || fallbackData
-  const imageSrc = homePageData?.hero.heroImage 
-    ? urlFor(homePageData.hero.heroImage).width(900).height(450).url()
-    : fallbackData.heroImage.src
-  const imageAlt = homePageData?.hero.heroImage?.alt || fallbackData.heroImage.alt
+  const heroData = homePageData.hero
+  const imageSrc = heroData.heroImage 
+    ? urlFor(heroData.heroImage).width(900).height(450).url()
+    : null
+  const imageAlt = heroData.heroImage?.alt || 'Hero image'
   return (
     <section className="relative min-h-[70vh] flex flex-col py-12 md:py-24 lg:py-32 bg-transparent">
       {/* Blob 1: Top Left */}
@@ -163,16 +142,18 @@ export default function Hero({ homePageData }: HeroProps) {
         </div>
         {/* Right: Hero image (2/3 width) with quote and CTA below, image hidden on mobile */}
         <div className="flex flex-col items-center w-full md:w-2/3">
-          <div className="hidden md:block w-full">
-            <Image
-              src={imageSrc}
-              alt={imageAlt}
-              width={900}
-              height={450}
-              className="rounded-3xl shadow-2xl border-2 border-gold/40 object-cover w-full max-w-3xl"
-              priority
-            />
-          </div>
+          {imageSrc && (
+            <div className="hidden md:block w-full">
+              <Image
+                src={imageSrc}
+                alt={imageAlt}
+                width={900}
+                height={450}
+                className="rounded-3xl shadow-2xl border-2 border-gold/40 object-cover w-full max-w-3xl"
+                priority
+              />
+            </div>
+          )}
           <blockquote className="relative mt-8 pl-4 border-l-4 border-gold text-bark/90 max-w-xl text-center">
             <p className="font-heading text-lg md:text-xl italic leading-snug tracking-tight">
               &ldquo;{heroData.quote.text}&rdquo;

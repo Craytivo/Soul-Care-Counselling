@@ -6,6 +6,7 @@ import { coreValuesPage } from './coreValuesPage'
 import { homePage } from './homePage'
 import { service } from './service'
 import { servicePage } from './servicePage'
+import { servicesPage } from './servicesPage'
 import { siteSettings } from './siteSettings'
 import { teamMember } from './teamMember'
 import { workshop } from './workshop'
@@ -17,6 +18,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     workshop,
     service,
     servicePage,
+    servicesPage,
     coreValuesPage,
     aboutPage,
     areasPage,

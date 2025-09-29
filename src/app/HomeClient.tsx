@@ -5,7 +5,7 @@ import type { TeamMember, HomePage } from "@/lib/sanity";
 
 interface HomeClientProps {
   teamMembers: TeamMember[];
-  homePageData?: HomePage | null;
+  homePageData: HomePage | null;
 }
 
 export default function HomeClient({ teamMembers, homePageData }: HomeClientProps) {
