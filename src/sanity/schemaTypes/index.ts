@@ -4,9 +4,8 @@ import { areasPage } from './areasPage'
 import { blogPost } from './blogPost'
 import { coreValuesPage } from './coreValuesPage'
 import { homePage } from './homePage'
-import { service } from './service'
 import { servicePage } from './servicePage'
-import { servicesPage } from './servicesPage'
+import { services } from './services'
 import { siteSettings } from './siteSettings'
 import { teamMember } from './teamMember'
 import { workshop } from './workshop'
@@ -16,9 +15,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     // Document types
     teamMember,
     workshop,
-    service,
+    services,
     servicePage,
-    servicesPage,
     coreValuesPage,
     aboutPage,
     areasPage,

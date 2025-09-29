@@ -5,8 +5,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export default async function SanityServices() {
-  const services = await getServices()
-  if (!services || services.length === 0) {
+  const servicesData = await getServices()
+  
+  if (!servicesData || !servicesData.servicesList || servicesData.servicesList.length === 0) {
     return (
       <section className="mt-12">
         <div className="text-center py-12">
@@ -36,10 +37,13 @@ export default async function SanityServices() {
     }
   }
 
+  // Filter active services
+  const activeServices = servicesData.servicesList.filter(service => service.isActive)
+
   return (
     <section className="mt-12 grid gap-6 md:grid-cols-2">
-      {services.map((service) => (
-        <article key={service._id} className="rounded-2xl bg-white p-6 ring-1 ring-charcoal/10 hover:ring-clay/30 transition-all duration-200">
+      {activeServices.map((service, index) => (
+        <article key={index} className="rounded-2xl bg-white p-6 ring-1 ring-charcoal/10 hover:ring-clay/30 transition-all duration-200">
           {/* Service Image */}
           {service.image && (
             <div className="mb-4">

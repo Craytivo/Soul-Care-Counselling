@@ -1,5 +1,5 @@
 import { client } from './sanity'
-import type { TeamMember, Workshop, Service, ServicePage, CoreValuesPage, AboutPage, AreasPage, BlogPost, SiteSettings, HomePage, ServicesPage } from './sanity'
+import type { TeamMember, Workshop, Service, ServicePage, CoreValuesPage, AboutPage, AreasPage, BlogPost, SiteSettings, HomePage, Services } from './sanity'
 
 // Team Members
 export async function getTeamMembers(): Promise<TeamMember[]> {
@@ -64,85 +64,107 @@ export async function getWorkshops(): Promise<Workshop[]> {
   `)
 }
 
-// Services
-export async function getServices(): Promise<Service[]> {
+// Services - Unified query
+export async function getServices(): Promise<Services | null> {
   return await client.fetch(`
-    *[_type == "service" && isActive == true] | order(order asc) {
+    *[_type == "services" && isActive == true][0] {
       _id,
       _type,
       title,
-      description,
-      slug,
-      image {
-        ...,
-        alt
-      },
-      features,
-      pricing {
-        displayType,
-        customText,
-        amount,
-        currency,
-        suffix,
-        packageSessions
-      },
-      buttons {
-        learnMore {
-          show,
+      metaDescription,
+      hero {
+        badge,
+        heading,
+        description,
+        priceHighlight {
           text,
-          url,
-          external
-        },
-        bookNow {
-          show,
-          text,
-          url
+          price,
+          suffix
         }
       },
-      order,
+      servicesList[] {
+        title,
+        slug,
+        description,
+        image {
+          ...,
+          alt
+        },
+        features,
+        pricing {
+          displayType,
+          customText,
+          amount,
+          currency,
+          suffix,
+          packageSessions
+        },
+        buttons {
+          learnMore {
+            show,
+            text,
+            url,
+            external
+          },
+          bookNow {
+            show,
+            text,
+            url
+          }
+        },
+        isActive
+      },
+      cta {
+        title,
+        description,
+        buttonText,
+        buttonUrl,
+        external
+      },
       isActive
     }
   `)
 }
 
 export async function getService(slug: string): Promise<Service | null> {
-  return await client.fetch(`
-    *[_type == "service" && slug.current == $slug && isActive == true][0] {
-      _id,
-      _type,
-      title,
-      description,
-      slug,
-      image {
-        ...,
-        alt
-      },
-      features,
-      pricing {
-        displayType,
-        customText,
-        amount,
-        currency,
-        suffix,
-        packageSessions
-      },
-      buttons {
-        learnMore {
-          show,
-          text,
-          url,
-          external
+  const servicesData = await client.fetch(`
+    *[_type == "services" && isActive == true][0] {
+      servicesList[slug.current == $slug && isActive == true][0] {
+        title,
+        slug,
+        description,
+        image {
+          ...,
+          alt
         },
-        bookNow {
-          show,
-          text,
-          url
-        }
-      },
-      order,
-      isActive
+        features,
+        pricing {
+          displayType,
+          customText,
+          amount,
+          currency,
+          suffix,
+          packageSessions
+        },
+        buttons {
+          learnMore {
+            show,
+            text,
+            url,
+            external
+          },
+          bookNow {
+            show,
+            text,
+            url
+          }
+        },
+        isActive
+      }
     }
   `, { slug })
+
+  return servicesData?.servicesList || null
 }
 
 // Blog Posts
@@ -539,32 +561,7 @@ export async function getHomePage(): Promise<HomePage | null> {
   `)
 }
 
-// Services Page
-export async function getServicesPage(): Promise<ServicesPage | null> {
-  return await client.fetch(`
-    *[_type == "servicesPage" && isActive == true][0] {
-      _id,
-      _type,
-      title,
-      metaDescription,
-      hero {
-        badge,
-        heading,
-        description,
-        priceHighlight {
-          text,
-          price,
-          suffix
-        }
-      },
-      cta {
-        title,
-        description,
-        buttonText,
-        buttonUrl,
-        external
-      },
-      isActive
-    }
-  `)
+// Services Page (now integrated with Services)
+export async function getServicesPage(): Promise<Services | null> {
+  return await getServices()
 }

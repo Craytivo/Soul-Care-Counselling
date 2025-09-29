@@ -80,8 +80,7 @@ export interface Workshop {
 }
 
 export interface Service {
-  _id: string
-  _type: 'service'
+  _id?: string
   title: string
   description: string
   slug: {
@@ -112,7 +111,32 @@ export interface Service {
       url?: string
     }
   }
-  order: number
+  isActive: boolean
+}
+
+export interface Services {
+  _id: string
+  _type: 'services'
+  title: string
+  metaDescription?: string
+  hero: {
+    badge: string
+    heading: string
+    description: string
+    priceHighlight?: {
+      text: string
+      price: string
+      suffix: string
+    }
+  }
+  servicesList: Service[]
+  cta: {
+    title: string
+    description: string
+    buttonText: string
+    buttonUrl: string
+    external: boolean
+  }
   isActive: boolean
 }
 
