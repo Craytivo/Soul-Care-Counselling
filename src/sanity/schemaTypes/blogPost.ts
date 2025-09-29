@@ -84,7 +84,7 @@ export const blogPost = defineType({
                     type: 'reference',
                     to: [
                       { type: 'blogPost' },
-                      { type: 'service' },
+                      { type: 'services' },
                       { type: 'workshop' },
                       { type: 'teamMember' },
                     ],
