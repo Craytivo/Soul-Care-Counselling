@@ -314,3 +314,40 @@ export interface AreasPage {
   }
 }
 
+export interface HomePage {
+  _id: string
+  _type: 'homePage'
+  title: string
+  metaDescription?: string
+  hero: {
+    mainHeading: string
+    highlightText: string
+    description: string
+    heroImage?: SanityImage & {
+      alt?: string
+    }
+    features: Array<{
+      text: string
+      icon: 'lock' | 'mapPin' | 'globe' | 'graduationCap'
+      order: number
+    }>
+    quote: {
+      text: string
+      author: string
+    }
+    ctaButtons: {
+      primaryButton: {
+        text: string
+        url: string
+        external: boolean
+      }
+      secondaryButton: {
+        text: string
+        url: string
+        external: boolean
+      }
+    }
+  }
+  isActive: boolean
+}
+

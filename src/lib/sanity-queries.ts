@@ -1,5 +1,5 @@
 import { client } from './sanity'
-import type { TeamMember, Workshop, Service, ServicePage, CoreValuesPage, AboutPage, AreasPage, BlogPost, SiteSettings } from './sanity'
+import type { TeamMember, Workshop, Service, ServicePage, CoreValuesPage, AboutPage, AreasPage, BlogPost, SiteSettings, HomePage } from './sanity'
 
 // Team Members
 export async function getTeamMembers(): Promise<TeamMember[]> {
@@ -456,4 +456,47 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
   `)
 
   return settings || null
+}
+
+// Homepage
+export async function getHomePage(): Promise<HomePage | null> {
+  return await client.fetch(`
+    *[_type == "homePage" && isActive == true][0] {
+      _id,
+      _type,
+      title,
+      metaDescription,
+      hero {
+        mainHeading,
+        highlightText,
+        description,
+        heroImage {
+          ...,
+          alt
+        },
+        features[] | order(order asc) {
+          text,
+          icon,
+          order
+        },
+        quote {
+          text,
+          author
+        },
+        ctaButtons {
+          primaryButton {
+            text,
+            url,
+            external
+          },
+          secondaryButton {
+            text,
+            url,
+            external
+          }
+        }
+      },
+      isActive
+    }
+  `)
 }

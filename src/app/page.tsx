@@ -1,8 +1,12 @@
 import Hero from '../components/Hero'
-import { getTeamMembers } from '../lib/sanity-queries'
+import { getTeamMembers, getHomePage } from '../lib/sanity-queries'
 import HomeClient from './HomeClient'
 
 export default async function Home() {
-  const teamMembers = await getTeamMembers();
-  return <HomeClient teamMembers={teamMembers} />;
+  const [teamMembers, homePageData] = await Promise.all([
+    getTeamMembers(),
+    getHomePage()
+  ]);
+  
+  return <HomeClient teamMembers={teamMembers} homePageData={homePageData} />;
 }

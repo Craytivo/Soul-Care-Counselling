@@ -9,9 +9,14 @@ import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 
 // Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
-import {apiVersion, dataset, projectId} from './src/sanity/env'
+// import {apiVersion, dataset, projectId} from './src/sanity/env'
 import {schema} from './src/sanity/schemaTypes'
 import {structure} from './src/sanity/structure'
+
+// Define the values directly for standalone Sanity Studio
+const projectId = 'm1jhdvym'
+const dataset = 'production'
+const apiVersion = '2025-09-05'
 
 export default defineConfig({
   basePath: '/studio',

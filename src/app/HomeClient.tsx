@@ -1,12 +1,17 @@
 "use client";
 import Hero from "../components/Hero";
 import SanityTeamClient from "../components/SanityTeamClient";
-import type { TeamMember } from "@/lib/sanity";
+import type { TeamMember, HomePage } from "@/lib/sanity";
 
-export default function HomeClient({ teamMembers }: { teamMembers: TeamMember[] }) {
+interface HomeClientProps {
+  teamMembers: TeamMember[];
+  homePageData?: HomePage | null;
+}
+
+export default function HomeClient({ teamMembers, homePageData }: HomeClientProps) {
   return (
     <>
-      <Hero />
+      <Hero homePageData={homePageData} />
       <SanityTeamClient teamMembers={teamMembers} />
     </>
   );
