@@ -16,6 +16,26 @@ export default async function SanityServices() {
     )
   }
 
+  const formatPricing = (service: any) => {
+    if (!service.pricing || service.pricing.displayType === 'hidden') {
+      return null
+    }
+
+    switch (service.pricing.displayType) {
+      case 'custom':
+        return service.pricing.customText
+
+      case 'perSession':
+        return `${service.pricing.currency || '$'}${service.pricing.amount} ${service.pricing.suffix || 'per session'}`
+
+      case 'package':
+        return `${service.pricing.currency || '$'}${service.pricing.amount} ${service.pricing.suffix || 'for ' + service.pricing.packageSessions + ' sessions'}`
+
+      default:
+        return null
+    }
+  }
+
   return (
     <section className="mt-12 grid gap-6 md:grid-cols-2">
       {services.map((service) => (
@@ -25,15 +45,13 @@ export default async function SanityServices() {
             <div className="mb-4">
               <Image
                 src={urlFor(service.image).width(400).height(200).url()}
-                alt={service.title}
+                alt={service.image.alt || service.title}
                 width={400}
                 height={200}
                 className="w-full h-48 object-cover rounded-lg"
               />
             </div>
           )}
-
-          {/* Service Icon removed as requested */}
 
           {/* Service Title */}
           <h3 className="font-heading text-xl font-semibold">{service.title}</h3>
@@ -53,41 +71,44 @@ export default async function SanityServices() {
             </ul>
           )}
 
-          {/* Pricing: Hide for group therapy, force $20 for single session, $80 for affordable therapy */}
-          {service.title.toLowerCase().includes('single session') ? (
+          {/* Pricing */}
+          {formatPricing(service) && (
             <div className="mt-3 text-sm font-medium text-clay">
-              $20.00 per session
+              {formatPricing(service)}
             </div>
-          ) : service.title.toLowerCase().includes('affordable') ? (
-            <div className="mt-3 text-sm font-medium text-clay">
-              $80.00 for 7 sessions
-            </div>
-          ) : (
-            service.pricing && service.title.toLowerCase() !== 'group therapy' && (
-              <div className="mt-3 text-sm font-medium text-clay">
-                {service.pricing}
-              </div>
-            )
           )}
 
           {/* Action Buttons */}
           <div className="mt-4 flex gap-3">
-            {service.learnMoreLink && (
-              <Link 
-                href={service.learnMoreLink} 
-                className="text-sm font-semibold underline underline-offset-4 decoration-charcoal/30 hover:decoration-charcoal transition-colors"
-              >
-                Learn More
-              </Link>
+            {service.buttons?.learnMore?.show && service.buttons.learnMore.url && (
+              <>
+                {service.buttons.learnMore.external ? (
+                  <a
+                    href={service.buttons.learnMore.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-semibold underline underline-offset-4 decoration-charcoal/30 hover:decoration-charcoal transition-colors"
+                  >
+                    {service.buttons.learnMore.text || 'Learn More'}
+                  </a>
+                ) : (
+                  <Link 
+                    href={service.buttons.learnMore.url}
+                    className="text-sm font-semibold underline underline-offset-4 decoration-charcoal/30 hover:decoration-charcoal transition-colors"
+                  >
+                    {service.buttons.learnMore.text || 'Learn More'}
+                  </Link>
+                )}
+              </>
             )}
-            {service.bookingLink && (
+            {service.buttons?.bookNow?.show && service.buttons.bookNow.url && (
               <a
-                href={service.bookingLink}
+                href={service.buttons.bookNow.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm font-semibold text-clay hover:text-clay/80 transition-colors"
               >
-                Book Now
+                {service.buttons.bookNow.text || 'Book Now'}
               </a>
             )}
           </div>

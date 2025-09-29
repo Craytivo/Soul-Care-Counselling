@@ -87,15 +87,33 @@ export interface Service {
   slug: {
     current: string
   }
-  icon?: string
+  image?: SanityImage & {
+    alt?: string
+  }
   features?: string[]
-  pricing?: string
-  isActive: boolean
+  pricing?: {
+    displayType: 'custom' | 'perSession' | 'package' | 'hidden'
+    customText?: string
+    amount?: number
+    currency?: string
+    suffix?: string
+    packageSessions?: number
+  }
+  buttons?: {
+    learnMore?: {
+      show: boolean
+      text?: string
+      url?: string
+      external?: boolean
+    }
+    bookNow?: {
+      show: boolean
+      text?: string
+      url?: string
+    }
+  }
   order: number
-  learnMoreLink?: string
-  bookingLink?: string
-  image?: SanityImage
-  content?: any[]
+  isActive: boolean
 }
 
 export interface BlogPost {

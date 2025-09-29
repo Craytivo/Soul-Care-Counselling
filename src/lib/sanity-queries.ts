@@ -73,15 +73,34 @@ export async function getServices(): Promise<Service[]> {
       title,
       description,
       slug,
-      icon,
+      image {
+        ...,
+        alt
+      },
       features,
-      pricing,
-      isActive,
+      pricing {
+        displayType,
+        customText,
+        amount,
+        currency,
+        suffix,
+        packageSessions
+      },
+      buttons {
+        learnMore {
+          show,
+          text,
+          url,
+          external
+        },
+        bookNow {
+          show,
+          text,
+          url
+        }
+      },
       order,
-      learnMoreLink,
-      bookingLink,
-      image,
-      content
+      isActive
     }
   `)
 }
@@ -94,15 +113,34 @@ export async function getService(slug: string): Promise<Service | null> {
       title,
       description,
       slug,
-      icon,
+      image {
+        ...,
+        alt
+      },
       features,
-      pricing,
-      isActive,
+      pricing {
+        displayType,
+        customText,
+        amount,
+        currency,
+        suffix,
+        packageSessions
+      },
+      buttons {
+        learnMore {
+          show,
+          text,
+          url,
+          external
+        },
+        bookNow {
+          show,
+          text,
+          url
+        }
+      },
       order,
-      learnMoreLink,
-      bookingLink,
-      image,
-      content
+      isActive
     }
   `, { slug })
 }
