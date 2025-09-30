@@ -127,7 +127,7 @@ export const internApplicationPage = defineType({
                 prepare({ title, subtitle, required }) {
                   return {
                     title: title || 'Unnamed field',
-                    subtitle: `${subtitle?.toUpperCase()}${required ? ' (Required)' : ' (Optional)'}`,
+                    subtitle: `${subtitle?.toUpperCase()} (Required)`,
                   }
                 },
               },

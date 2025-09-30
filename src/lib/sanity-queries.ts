@@ -1,5 +1,5 @@
 import { client } from './sanity'
-import type { TeamMember, Workshop, Service, ServicePage, CoreValuesPage, AboutPage, AreasPage, BlogPost, SiteSettings, HomePage, Services, InternApplicationPage, FAQPage, ContactPage } from './sanity'
+import type { TeamMember, Workshop, Service, ServicePage, CoreValuesPage, AboutPage, AreasPage, BlogPost, SiteSettings, HomePage, Services, InternApplicationPage, FAQPage, ContactPage, Resource } from './sanity'
 
 // Team Members
 export async function getTeamMembers(): Promise<TeamMember[]> {
@@ -190,14 +190,6 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
         alt,
         caption
       },
-      author-> {
-        _id,
-        _type,
-        _ref,
-        name,
-        credentials,
-        image
-      },
       publishedAt,
       category,
       tags,
@@ -219,14 +211,6 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
         ...,
         alt,
         caption
-      },
-      author-> {
-        _id,
-        _type,
-        _ref,
-        name,
-        credentials,
-        image
       },
       publishedAt,
       isPublished,
@@ -265,14 +249,6 @@ export async function getFeaturedBlogPosts(): Promise<BlogPost[]> {
         alt,
         caption
       },
-      author-> {
-        _id,
-        _type,
-        _ref,
-        name,
-        credentials,
-        image
-      },
       publishedAt,
       category,
       tags,
@@ -294,14 +270,6 @@ export async function getBlogPostsByCategory(category: string): Promise<BlogPost
         alt,
         caption
       },
-      author-> {
-        _id,
-        _type,
-        _ref,
-        name,
-        credentials,
-        image
-      },
       publishedAt,
       category,
       tags,
@@ -322,14 +290,6 @@ export async function getBlogPostsByTag(tag: string): Promise<BlogPost[]> {
         ...,
         alt,
         caption
-      },
-      author-> {
-        _id,
-        _type,
-        _ref,
-        name,
-        credentials,
-        image
       },
       publishedAt,
       category,
@@ -539,7 +499,7 @@ export async function getHomePage(): Promise<HomePage | null> {
         mainHeading,
         highlightText,
         description,
-        heroImage {
+        backgroundImage {
           ...,
           alt
         },
@@ -704,4 +664,121 @@ export async function getContactPage(): Promise<ContactPage | null> {
       }
     }
   `)
+}
+
+// Resources
+export async function getResources(): Promise<Resource[]> {
+  return await client.fetch(`
+    *[_type == "resource" && isPublished == true] | order(publishedAt desc) {
+      _id,
+      _type,
+      title,
+      description,
+      slug,
+      previewImage {
+        ...,
+        alt
+      },
+      pdfFile {
+        asset-> {
+          _id,
+          url,
+          originalFilename,
+          size
+        }
+      },
+      category,
+      tags,
+      isPublished,
+      isFeatured,
+      publishedAt,
+      fileSize
+    }
+  `)
+}
+
+export async function getResource(slug: string): Promise<Resource | null> {
+  return await client.fetch(`
+    *[_type == "resource" && slug.current == $slug && isPublished == true][0] {
+      _id,
+      _type,
+      title,
+      description,
+      slug,
+      previewImage {
+        ...,
+        alt
+      },
+      pdfFile {
+        asset-> {
+          _id,
+          url,
+          originalFilename,
+          size
+        }
+      },
+      category,
+      tags,
+      isPublished,
+      isFeatured,
+      publishedAt,
+      fileSize
+    }
+  `, { slug })
+}
+
+export async function getFeaturedResources(): Promise<Resource[]> {
+  return await client.fetch(`
+    *[_type == "resource" && isPublished == true && isFeatured == true] | order(publishedAt desc) [0...3] {
+      _id,
+      _type,
+      title,
+      description,
+      slug,
+      previewImage {
+        ...,
+        alt
+      },
+      pdfFile {
+        asset-> {
+          _id,
+          url,
+          originalFilename,
+          size
+        }
+      },
+      category,
+      tags,
+      publishedAt,
+      fileSize
+    }
+  `)
+}
+
+export async function getResourcesByCategory(category: string): Promise<Resource[]> {
+  return await client.fetch(`
+    *[_type == "resource" && isPublished == true && category == $category] | order(publishedAt desc) {
+      _id,
+      _type,
+      title,
+      description,
+      slug,
+      previewImage {
+        ...,
+        alt
+      },
+      pdfFile {
+        asset-> {
+          _id,
+          url,
+          originalFilename,
+          size
+        }
+      },
+      category,
+      tags,
+      publishedAt,
+      fileSize
+    }
+  `, { category })
 }

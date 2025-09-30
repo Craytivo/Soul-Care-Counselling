@@ -3,7 +3,7 @@ import SanityWorkshops from '@/components/SanityWorkshops'
 
 export const metadata: Metadata = {
   title: 'Wellness Webinars — Soul Care Counselling',
-  description: 'Missed our free monthly webinars, or want to register for an upcoming one? Find recordings of previous virtual webinars and registration information for future ones.',
+  description: 'Find recordings of our free monthly wellness webinars, packed with valuable insights and practical tips from our dedicated therapists.',
 }
 
 export default function WorkshopsPage() {

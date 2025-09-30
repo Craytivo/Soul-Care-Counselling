@@ -7,6 +7,7 @@ import { coreValuesPage } from './coreValuesPage'
 import { faqPage } from './faqPage'
 import { homePage } from './homePage'
 import { internApplicationPage } from './internApplicationPage'
+import { resource } from './resource'
 import { servicePage } from './servicePage'
 import { services } from './services'
 import { siteSettings } from './siteSettings'
@@ -28,6 +29,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     faqPage,
     contactPage,
     blogPost,
+    resource,
     siteSettings,
   ],
 }

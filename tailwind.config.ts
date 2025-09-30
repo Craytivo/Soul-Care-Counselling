@@ -16,6 +16,7 @@ const config: Config = {
         cream: '#F8F5EC',
         sand: '#E6DDC6',
         clay: '#C49A6C',
+        gold: '#C49A6C', // Using clay color for gold consistency
         bark: '#6E4B3A',
         charcoal: '#23201B'
       },

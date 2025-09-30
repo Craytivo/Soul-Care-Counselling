@@ -90,7 +90,7 @@ export default defineType({
               name: 'phoneLabel',
               title: 'Phone Label',
               type: 'string',
-              initialValue: 'Phone (optional)',
+              initialValue: 'Phone',
             }),
             defineField({
               name: 'phonePlaceholder',

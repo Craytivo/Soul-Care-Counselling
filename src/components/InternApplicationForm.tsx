@@ -13,32 +13,30 @@ export default function InternApplicationForm({ pageData }: InternApplicationFor
     e.preventDefault()
     setFormStatus('Sending…')
     const formData = new FormData(e.currentTarget)
-    const data = Object.fromEntries(formData.entries())
     
     try {
-      // Build email body from form questions
-      let emailBody = 'Intern Application Submission\n\n'
-      
-      // Add all form fields
-      pageData.formFields.formQuestions.forEach(question => {
-        if (question.fieldType !== 'file') { // Skip file fields in email body
-          const value = data[question._key] || (question.fieldType === 'checkbox' ? 'No' : '-')
-          emailBody += `${question.label}:\n${value}\n\n`
+      const response = await fetch('https://formspree.io/f/xqayqokw', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
         }
       })
-
-      const subject = `Intern Application - ${data.fullName || 'New Application'}`
-      const encodedBody = encodeURIComponent(emailBody)
-      const encodedSubject = encodeURIComponent(subject)
       
-      window.location.href = `mailto:info@soulcarecounselling.com?subject=${encodedSubject}&body=${encodedBody}`
-      setFormStatus('Opening your email app…')
-      setTimeout(() => { 
-        setFormStatus('Thanks! If your mail app did not open, please email us directly.') 
-      }, 1500)
+      if (response.ok) {
+        setFormStatus('Thank you! Your internship application has been submitted successfully. We\'ll review it and get back to you soon.')
+        e.currentTarget.reset()
+      } else {
+        const errorData = await response.json()
+        if (errorData.errors) {
+          setFormStatus('Please check your form for errors and try again.')
+        } else {
+          setFormStatus('There was an issue submitting your application. Please try again.')
+        }
+      }
     } catch (err) {
       console.error(err)
-      setFormStatus('Something went wrong—please email us directly.')
+      setFormStatus('Something went wrong—please try again or email us directly.')
     }
   }
 
@@ -53,7 +51,7 @@ export default function InternApplicationForm({ pageData }: InternApplicationFor
             id={`intern-${question._key}`}
             name={question._key}
             rows={4}
-            required={question.required}
+            required
             className={baseClasses}
             placeholder={question.placeholder}
           />
@@ -65,7 +63,7 @@ export default function InternApplicationForm({ pageData }: InternApplicationFor
             name={question._key}
             type="file"
             accept=".pdf,.doc,.docx"
-            required={question.required}
+            required
             className={baseClasses}
           />
         )
@@ -76,7 +74,7 @@ export default function InternApplicationForm({ pageData }: InternApplicationFor
               id={`intern-${question._key}`}
               name={question._key}
               type="checkbox"
-              required={question.required}
+              required
               className="mt-1 h-4 w-4 rounded border-charcoal/30"
             />
             <label htmlFor={`intern-${question._key}`} className="text-sm text-charcoal/85">
@@ -89,7 +87,7 @@ export default function InternApplicationForm({ pageData }: InternApplicationFor
           <select
             id={`intern-${question._key}`}
             name={question._key}
-            required={question.required}
+            required
             className={baseClasses}
           >
             <option value="">Choose an option</option>
@@ -106,7 +104,7 @@ export default function InternApplicationForm({ pageData }: InternApplicationFor
             id={`intern-${question._key}`}
             name={question._key}
             type={question.fieldType}
-            required={question.required}
+            required
             className={baseClasses}
             placeholder={question.placeholder}
           />
@@ -117,9 +115,16 @@ export default function InternApplicationForm({ pageData }: InternApplicationFor
   return (
     <form 
       onSubmit={handleInternSubmit} 
+      action="https://formspree.io/f/xqayqokw"
+      method="POST"
       className="mt-4 rounded-2xl bg-white p-6 ring-1 ring-charcoal/10 space-y-6" 
       encType="multipart/form-data"
     >
+      {/* Hidden fields for Formspree */}
+      <input type="hidden" name="_subject" value="New Intern Application Submission" />
+      <input type="hidden" name="_next" value={typeof window !== 'undefined' ? window.location.href : ''} />
+      {/* Honeypot for spam protection */}
+      <input type="text" name="_gotcha" style={{ display: 'none' }} />
       {/* Dynamic form fields from Sanity */}
       <div className="space-y-4">
         {pageData.formFields.formQuestions.map((question, index) => (
@@ -127,7 +132,6 @@ export default function InternApplicationForm({ pageData }: InternApplicationFor
             {question.fieldType !== 'checkbox' && (
               <label htmlFor={`intern-${question._key}`} className="block text-sm font-semibold">
                 {question.label}
-                {!question.required && ' (optional)'}
               </label>
             )}
             {renderFormField(question)}

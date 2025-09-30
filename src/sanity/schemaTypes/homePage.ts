@@ -43,8 +43,9 @@ export const homePage = defineType({
           validation: (Rule) => Rule.required(),
         }),
         defineField({
-          name: 'heroImage',
-          title: 'Hero Image',
+          name: 'backgroundImage',
+          title: 'Background Image',
+          description: 'Fullscreen background image for the hero section',
           type: 'image',
           options: {
             hotspot: true,
@@ -57,6 +58,7 @@ export const homePage = defineType({
               validation: (Rule) => Rule.required(),
             }),
           ],
+          validation: (Rule) => Rule.required(),
         }),
         defineField({
           name: 'features',

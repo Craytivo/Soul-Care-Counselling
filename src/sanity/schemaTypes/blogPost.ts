@@ -137,14 +137,6 @@ export const blogPost = defineType({
       ],
     }),
     defineField({
-      name: 'author',
-      title: 'Author',
-      type: 'reference',
-      to: [{ type: 'teamMember' }],
-      description: 'Select a team member as the author',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
       name: 'publishedAt',
       title: 'Published At',
       type: 'datetime',
@@ -268,18 +260,17 @@ export const blogPost = defineType({
   preview: {
     select: {
       title: 'title',
-      author: 'author.name',
       publishedAt: 'publishedAt',
       media: 'featuredImage',
       isPublished: 'isPublished',
     },
     prepare(selection) {
-      const { title, author, publishedAt, isPublished } = selection
+      const { title, publishedAt, isPublished } = selection
       const date = publishedAt ? new Date(publishedAt).toLocaleDateString() : 'Not published'
       const status = isPublished ? '✅' : '⏳'
       return {
         title: `${status} ${title}`,
-        subtitle: `by ${author} • ${date}`,
+        subtitle: date,
       }
     },
   },

@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       description: post.excerpt,
       type: 'article',
       publishedTime: post.publishedAt,
-      authors: [post.author.name || 'Soul Care Team'],
+      authors: ['Soul Care Counselling'],
       images: post.featuredImage 
         ? [{ url: urlFor(post.featuredImage).width(1200).height(630).url() }]
         : undefined,
@@ -218,19 +218,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
           <div className="flex items-center justify-between py-4 border-t border-charcoal/10">
             <div className="flex items-center gap-4">
-              {post.author.image && (
-                <div className="relative w-12 h-12 rounded-full overflow-hidden">
-                  <Image
-                    src={urlFor(post.author.image).width(96).height(96).url()}
-                    alt={post.author.name || 'Author'}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              )}
+              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-clay text-cream font-bold">
+                SC
+              </div>
               <div>
-                <p className="font-semibold text-charcoal">{post.author.name}</p>
-                <p className="text-sm text-charcoal/60">{post.author.credentials}</p>
+                <p className="font-semibold text-charcoal">Soul Care Counselling</p>
+                <p className="text-sm text-charcoal/60">Professional Counselling Services</p>
               </div>
             </div>
             <time className="text-sm text-charcoal/60">{publishedDate}</time>

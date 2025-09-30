@@ -13,12 +13,12 @@ export default function Header() {
 
   return (
     <>
-  <header className="sticky top-0 z-50 bg-white/70 backdrop-blur text-bark shadow-md">
-        <div className="mx-auto max-w-7xl px-4 py-3 grid grid-cols-[auto_1fr_auto] items-center gap-4">
+  <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md text-bark shadow-lg border-b border-gold/20">
+        <div className="mx-auto max-w-7xl px-4 py-4 grid grid-cols-[auto_1fr_auto] items-center gap-4">
           {/* LEFT: Brand */}
           <Link href="/" className="flex items-center gap-3">
             {/* Logo on black circle */}
-            <span className="relative w-20 h-20 flex items-center justify-center">
+            <span className="relative w-16 h-16 flex items-center justify-center">
               <svg
                 className="absolute inset-0 w-full h-full z-0"
                 viewBox="0 0 100 100"
@@ -26,14 +26,14 @@ export default function Header() {
                 xmlns="http://www.w3.org/2000/svg"
                 aria-hidden="true"
               >
-                <circle cx="50" cy="50" r="50" fill="#fff" />
+                <circle cx="50" cy="50" r="50" fill="#fff" stroke="#F5D07B" strokeWidth="2" />
               </svg>
-              <span className="relative z-10 w-14 h-14 flex items-center justify-center">
+              <span className="relative z-10 w-12 h-12 flex items-center justify-center">
                 <Image
-                  src="/assets/logo/soulcare-logo.png"
+                  src="/assets/logo/logo-s-c-intertwined.png"
                   alt="Soul Care Counselling Logo"
-                  width={56}
-                  height={56}
+                  width={48}
+                  height={48}
                   className="w-full h-full object-contain"
                   priority
                 />
@@ -42,24 +42,27 @@ export default function Header() {
           </Link>
 
           {/* CENTER: Desktop nav */}
-          <nav className="hidden lg:flex items-center justify-center gap-6" aria-label="Primary">
-              <Link href="/" className="uppercase tracking-[.2em] text-xs text-bark/90 hover:text-bark whitespace-nowrap">
+          <nav className="hidden lg:flex items-center justify-center gap-8" aria-label="Primary">
+              <Link href="/" className="uppercase tracking-[.15em] text-sm font-medium text-bark/80 hover:text-gold transition-colors duration-200 whitespace-nowrap">
                 Home
               </Link>
-              <Link href="/about" className="uppercase tracking-[.2em] text-xs text-bark/90 hover:text-bark whitespace-nowrap">
+              <Link href="/about" className="uppercase tracking-[.15em] text-sm font-medium text-bark/80 hover:text-gold transition-colors duration-200 whitespace-nowrap">
                 About Us
               </Link>
-              <Link href="/core-values" className="uppercase tracking-[.2em] text-xs text-bark/90 hover:text-bark whitespace-nowrap">
+              <Link href="/core-values" className="uppercase tracking-[.15em] text-sm font-medium text-bark/80 hover:text-gold transition-colors duration-200 whitespace-nowrap">
                 Core Values
               </Link>
-              <Link href="/services" className="uppercase tracking-[.2em] text-xs text-bark/90 hover:text-bark whitespace-nowrap">
+              <Link href="/services" className="uppercase tracking-[.15em] text-sm font-medium text-bark/80 hover:text-gold transition-colors duration-200 whitespace-nowrap">
                 Services
               </Link>
-              <Link href="/areas" className="uppercase tracking-[.2em] text-xs text-bark/90 hover:text-bark whitespace-nowrap">
+              <Link href="/areas" className="uppercase tracking-[.15em] text-sm font-medium text-bark/80 hover:text-gold transition-colors duration-200 whitespace-nowrap">
                 Areas of Focus
               </Link>
-              <Link href="/intern-application" className="uppercase tracking-[.2em] text-xs text-bark/90 hover:text-bark whitespace-nowrap">
+              <Link href="/intern-application" className="uppercase tracking-[.15em] text-sm font-medium text-bark/80 hover:text-gold transition-colors duration-200 whitespace-nowrap">
                 Apply to be an Intern
+              </Link>
+              <Link href="/resources" className="uppercase tracking-[.15em] text-sm font-medium text-bark/80 hover:text-gold transition-colors duration-200 whitespace-nowrap">
+                Resources
               </Link>
             </nav>
 
@@ -67,7 +70,7 @@ export default function Header() {
           <button
             type="button"
             onClick={toggleMenu}
-            className={`justify-self-end shrink-0 inline-flex items-center justify-center h-10 w-10 rounded-md ring-1 ring-bark/20 hover:bg-bark/10 transition-transform duration-200 ${isMenuOpen ? 'scale-110 bg-bark/10' : ''}`}
+            className={`justify-self-end shrink-0 inline-flex items-center justify-center h-12 w-12 rounded-xl ring-1 ring-bark/20 hover:bg-gold/10 hover:ring-gold/40 transition-all duration-200 ${isMenuOpen ? 'scale-110 bg-gold/10 ring-gold/40' : ''}`}
             aria-controls="menuPanel"
             aria-expanded={isMenuOpen}
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
@@ -167,6 +170,9 @@ export default function Header() {
           <Link href="/workshops" className="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" onClick={closeMenu}>
             Wellness Webinars
           </Link>
+          <Link href="/resources" className="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" onClick={closeMenu}>
+            Resources
+          </Link>
           <Link href="/shop" className="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" onClick={closeMenu}>
             Shop
           </Link>
@@ -178,7 +184,7 @@ export default function Header() {
             href="https://thesoulcarecounsellor.janeapp.com"
             target="_blank" 
             rel="noopener noreferrer"
-            className="mt-4 inline-flex items-center justify-center rounded-md bg-clay px-4 py-2 font-semibold tracking-wide text-charcoal hover:bg-clay/90"
+            className="mt-6 inline-flex items-center justify-center rounded-xl bg-gold px-6 py-3 font-bold tracking-wide text-bark hover:bg-gold/90 shadow-lg transition-all duration-200 hover:scale-105"
           >
             Book a Free Consultation
           </a>

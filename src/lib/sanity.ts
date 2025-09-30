@@ -153,14 +153,6 @@ export interface BlogPost {
     alt?: string
     caption?: string
   }
-  author: {
-    _id: string
-    _type: 'reference'
-    _ref: string
-    name?: string
-    credentials?: string
-    image?: SanityImage
-  }
   publishedAt: string
   isPublished: boolean
   category: string
@@ -365,8 +357,8 @@ export interface HomePage {
     mainHeading: string
     highlightText: string
     description: string
-    heroImage?: SanityImage & {
-      alt?: string
+    backgroundImage: SanityImage & {
+      alt: string
     }
     features: Array<{
       text: string
@@ -532,5 +524,32 @@ export interface ContactPage {
     metaTitle: string
     metaDescription: string
   }
+}
+
+export interface Resource {
+  _id: string
+  _type: 'resource'
+  title: string
+  description: string
+  slug: {
+    current: string
+  }
+  previewImage: SanityImage & {
+    alt: string
+  }
+  pdfFile: {
+    asset: {
+      _id: string
+      url: string
+      originalFilename: string
+      size: number
+    }
+  }
+  category: string
+  tags?: string[]
+  isPublished: boolean
+  isFeatured: boolean
+  publishedAt?: string
+  fileSize?: number
 }
 

@@ -1,13 +1,11 @@
-import type { Metadata } from 'next'
+'use client'
+
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { getBlogPosts, getFeaturedBlogPosts } from '@/lib/sanity-queries'
 import { urlFor } from '@/lib/sanity'
-
-export const metadata: Metadata = {
-  title: 'Notes from Soul Care — Soul Care Counselling',
-  description: 'Insights, reflections, and guidance from our team of Christian counselors. Explore faith-centered perspectives on mental health, healing, and personal growth.',
-}
+import type { BlogPost } from '@/lib/sanity'
 
 const categories = [
   'All Posts',
@@ -29,16 +27,61 @@ const categoryMap: Record<string, string> = {
   'mental-health': 'Grief & Loss', // Using this as fallback for now
 }
 
-// Disable caching for this page to ensure fresh data from Sanity
-export const revalidate = 0
+// Reverse map for filtering
+const reverseCategoryMap: Record<string, string> = {
+  'Trauma & Healing': 'trauma-healing',
+  'Spiritual Care': 'faith-spirituality',
+  'Relationships': 'relationships',
+  'Anxiety & Depression': 'anxiety-depression',
+  'Self-Care': 'self-care',
+  'Grief & Loss': 'mental-health',
+}
 
-export default async function NotesPage() {
-  const [allPosts, featuredPosts] = await Promise.all([
-    getBlogPosts(),
-    getFeaturedBlogPosts()
-  ])
+export default function NotesPage() {
+  const [allPosts, setAllPosts] = useState<BlogPost[]>([])
+  const [featuredPosts, setFeaturedPosts] = useState<BlogPost[]>([])
+  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>([])
+  const [selectedCategory, setSelectedCategory] = useState('All Posts')
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const [posts, featured] = await Promise.all([
+          getBlogPosts(),
+          getFeaturedBlogPosts()
+        ])
+        setAllPosts(posts)
+        setFeaturedPosts(featured)
+        setFilteredPosts(posts)
+      } catch (error) {
+        console.error('Error fetching posts:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchPosts()
+  }, [])
+
+  useEffect(() => {
+    if (selectedCategory === 'All Posts') {
+      setFilteredPosts(allPosts)
+    } else {
+      const sanityCategory = reverseCategoryMap[selectedCategory]
+      const filtered = allPosts.filter(post => post.category === sanityCategory)
+      setFilteredPosts(filtered)
+    }
+  }, [selectedCategory, allPosts])
 
   const featuredPost = featuredPosts[0] // Get the first featured post
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-clay"></div>
+      </div>
+    )
+  }
 
   return (
     <>
@@ -62,8 +105,9 @@ export default async function NotesPage() {
           {categories.map((category) => (
             <button
               key={category}
+              onClick={() => setSelectedCategory(category)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                category === 'All Posts'
+                category === selectedCategory
                   ? 'bg-clay text-charcoal ring-1 ring-charcoal/20'
                   : 'bg-white text-charcoal/80 hover:bg-sand ring-1 ring-charcoal/10 hover:ring-charcoal/20'
               }`}
@@ -106,14 +150,14 @@ export default async function NotesPage() {
                 <p className="text-charcoal/85 mb-4 leading-relaxed">{featuredPost.excerpt}</p>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-sand flex items-center justify-center">
-                      <span className="text-charcoal font-semibold text-sm">
-                        {featuredPost.author.name?.split(' ').map((n: string) => n[0]).join('') || 'SC'}
+                    <div className="w-10 h-10 rounded-full bg-clay flex items-center justify-center">
+                      <span className="text-cream font-semibold text-sm">
+                        SC
                       </span>
                     </div>
                     <div>
-                      <p className="font-medium text-sm">{featuredPost.author.name}</p>
-                      <p className="text-charcoal/60 text-xs">{featuredPost.author.credentials}</p>
+                      <p className="font-medium text-sm">Soul Care Counselling</p>
+                      <p className="text-charcoal/60 text-xs">Professional Counselling</p>
                     </div>
                   </div>
                   <span className="text-charcoal/60 text-sm">
@@ -133,9 +177,9 @@ export default async function NotesPage() {
       {/* Blog Posts Grid */}
       <section className="mt-16">
         <h2 className="font-heading text-2xl font-semibold mb-6">Latest Posts</h2>
-        {allPosts.length > 0 ? (
+        {filteredPosts.length > 0 ? (
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {allPosts.filter(post => !post.isFeatured).map((post) => (
+            {filteredPosts.filter(post => !post.isFeatured).map((post) => (
               <article key={post._id} className="rounded-2xl bg-white ring-1 ring-charcoal/10 overflow-hidden hover:ring-clay/30 transition-all duration-200">
                 {post.featuredImage && (
                   <div className="relative h-48">
@@ -162,13 +206,13 @@ export default async function NotesPage() {
                   <p className="text-charcoal/85 mb-4 text-sm leading-relaxed line-clamp-3">{post.excerpt}</p>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-sand flex items-center justify-center">
-                        <span className="text-charcoal font-semibold text-xs">
-                          {post.author.name?.split(' ').map((n: string) => n[0]).join('') || 'SC'}
+                      <div className="w-8 h-8 rounded-full bg-clay flex items-center justify-center">
+                        <span className="text-cream font-semibold text-xs">
+                          SC
                         </span>
                       </div>
                       <div>
-                        <p className="font-medium text-xs">{post.author.name}</p>
+                        <p className="font-medium text-xs">Soul Care Counselling</p>
                       </div>
                     </div>
                     <span className="text-charcoal/60 text-xs">

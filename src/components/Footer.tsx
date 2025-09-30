@@ -45,7 +45,7 @@ export default function Footer() {
                 </svg>
                 <span className="relative z-10 w-10 h-10 flex items-center justify-center">
                   <Image
-                    src="/assets/logo/soulcare-logo.png"
+                    src="/assets/logo/logo-s-c-intertwined.png"
                     alt="Soul Care Counselling Logo"
                     width={40}
                     height={40}
