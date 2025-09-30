@@ -473,3 +473,64 @@ export interface FAQPage {
   isActive: boolean
 }
 
+export interface ContactPage {
+  _id: string
+  _type: 'contactPage'
+  title: string
+  hero: {
+    badge: string
+    heading: string
+    description: string
+    emailButtonText: string
+    consultationButtonText: string
+  }
+  contactForm: {
+    heading: string
+    fields: {
+      fullNameLabel: string
+      fullNamePlaceholder: string
+      emailLabel: string
+      emailPlaceholder: string
+      phoneLabel: string
+      phonePlaceholder: string
+      subjectLabel: string
+      subjectPlaceholder: string
+      messageLabel: string
+      messagePlaceholder: string
+    }
+    consentText: string
+    submitButtonText: string
+    crisisNotice: string
+  }
+  contactInfo: {
+    quickContact: {
+      heading: string
+      emailLabel: string
+      emailAddress: string
+      phoneLabel: string
+      phoneNumber: string
+      bookingLabel: string
+      bookingText: string
+      bookingUrl: string
+    }
+    hours: {
+      heading: string
+      schedule: Array<{
+        days: string
+        hours: string
+      }>
+      note: string
+    }
+  }
+  finalCta: {
+    heading: string
+    description: string
+    buttonText: string
+    buttonUrl: string
+  }
+  seo: {
+    metaTitle: string
+    metaDescription: string
+  }
+}
+

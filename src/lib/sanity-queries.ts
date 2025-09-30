@@ -1,5 +1,5 @@
 import { client } from './sanity'
-import type { TeamMember, Workshop, Service, ServicePage, CoreValuesPage, AboutPage, AreasPage, BlogPost, SiteSettings, HomePage, Services, InternApplicationPage, FAQPage } from './sanity'
+import type { TeamMember, Workshop, Service, ServicePage, CoreValuesPage, AboutPage, AreasPage, BlogPost, SiteSettings, HomePage, Services, InternApplicationPage, FAQPage, ContactPage } from './sanity'
 
 // Team Members
 export async function getTeamMembers(): Promise<TeamMember[]> {
@@ -636,6 +636,72 @@ export async function getFAQPage(): Promise<FAQPage | null> {
         order
       },
       isActive
+    }
+  `)
+}
+
+// Contact Page
+export async function getContactPage(): Promise<ContactPage | null> {
+  return await client.fetch(`
+    *[_type == "contactPage"][0] {
+      _id,
+      _type,
+      title,
+      hero {
+        badge,
+        heading,
+        description,
+        emailButtonText,
+        consultationButtonText
+      },
+      contactForm {
+        heading,
+        fields {
+          fullNameLabel,
+          fullNamePlaceholder,
+          emailLabel,
+          emailPlaceholder,
+          phoneLabel,
+          phonePlaceholder,
+          subjectLabel,
+          subjectPlaceholder,
+          messageLabel,
+          messagePlaceholder
+        },
+        consentText,
+        submitButtonText,
+        crisisNotice
+      },
+      contactInfo {
+        quickContact {
+          heading,
+          emailLabel,
+          emailAddress,
+          phoneLabel,
+          phoneNumber,
+          bookingLabel,
+          bookingText,
+          bookingUrl
+        },
+        hours {
+          heading,
+          schedule[] {
+            days,
+            hours
+          },
+          note
+        }
+      },
+      finalCta {
+        heading,
+        description,
+        buttonText,
+        buttonUrl
+      },
+      seo {
+        metaTitle,
+        metaDescription
+      }
     }
   `)
 }

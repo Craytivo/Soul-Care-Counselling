@@ -1,40 +1,45 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { getBlogPosts, getFeaturedBlogPosts } from '@/lib/sanity-queries'
+import { urlFor } from '@/lib/sanity'
 
 export const metadata: Metadata = {
   title: 'Notes from Soul Care — Soul Care Counselling',
   description: 'Insights, reflections, and guidance from our team of Christian counselors. Explore faith-centered perspectives on mental health, healing, and personal growth.',
 }
 
-// Blog post type definition
-interface BlogPost {
-  id: string
-  title: string
-  excerpt: string
-  author: string
-  authorRole: string
-  date: string
-  readTime: string
-  category: string
-  image: string
-  featured: boolean
-}
-
-// Blog posts - add your content here
-const blogPosts: BlogPost[] = []
-
 const categories = [
   'All Posts',
   'Trauma & Healing',
-  'Spiritual Care',
+  'Spiritual Care', 
   'Relationships',
   'Anxiety & Depression',
   'Self-Care',
   'Grief & Loss'
 ]
 
-export default function NotesPage() {
+// Map Sanity categories to display categories
+const categoryMap: Record<string, string> = {
+  'trauma-healing': 'Trauma & Healing',
+  'faith-spirituality': 'Spiritual Care',
+  'relationships': 'Relationships', 
+  'anxiety-depression': 'Anxiety & Depression',
+  'self-care': 'Self-Care',
+  'mental-health': 'Grief & Loss', // Using this as fallback for now
+}
+
+// Disable caching for this page to ensure fresh data from Sanity
+export const revalidate = 0
+
+export default async function NotesPage() {
+  const [allPosts, featuredPosts] = await Promise.all([
+    getBlogPosts(),
+    getFeaturedBlogPosts()
+  ])
+
+  const featuredPost = featuredPosts[0] // Get the first featured post
+
   return (
     <>
       {/* Hero Section */}
@@ -70,84 +75,87 @@ export default function NotesPage() {
       </section>
 
       {/* Featured Post */}
-      {blogPosts.length > 0 && (
+      {featuredPost && (
         <section className="mt-12">
           <h2 className="font-heading text-2xl font-semibold mb-6">Featured Post</h2>
-          {(() => {
-            const featuredPost = blogPosts.find(post => post.featured)
-            if (!featuredPost) return null
-            
-            return (
-              <article className="rounded-2xl bg-white ring-1 ring-charcoal/10 overflow-hidden">
-                <div className="md:grid md:grid-cols-2 md:gap-8">
-                  <div className="relative h-64 md:h-auto">
-                    <Image
-                      src={featuredPost.image}
-                      alt={featuredPost.title}
-                      fill
-                      className="object-cover"
-                      priority
-                    />
-                  </div>
-                  <div className="p-6 md:p-8">
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="px-3 py-1 bg-sand text-charcoal text-xs font-medium rounded-full">
-                        {featuredPost.category}
-                      </span>
-                      <span className="text-charcoal/60 text-sm">{featuredPost.readTime}</span>
-                    </div>
-                    <h3 className="font-heading text-xl md:text-2xl font-semibold mb-3">
-                      <Link href={`/notes/${featuredPost.id}`} className="hover:text-clay transition-colors">
-                        {featuredPost.title}
-                      </Link>
-                    </h3>
-                    <p className="text-charcoal/85 mb-4 leading-relaxed">{featuredPost.excerpt}</p>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-sand flex items-center justify-center">
-                                                  <span className="text-charcoal font-semibold text-sm">
-                          {featuredPost.author.split(' ').map((n: string) => n[0]).join('')}
-                        </span>
-                        </div>
-                        <div>
-                          <p className="font-medium text-sm">{featuredPost.author}</p>
-                          <p className="text-charcoal/60 text-xs">{featuredPost.authorRole}</p>
-                        </div>
-                      </div>
-                      <span className="text-charcoal/60 text-sm">{featuredPost.date}</span>
-                    </div>
-                  </div>
+          <article className="rounded-2xl bg-white ring-1 ring-charcoal/10 overflow-hidden">
+            <div className="md:grid md:grid-cols-2 md:gap-8">
+              {featuredPost.featuredImage && (
+                <div className="relative h-64 md:h-auto">
+                  <Image
+                    src={urlFor(featuredPost.featuredImage).width(600).height(400).url()}
+                    alt={featuredPost.featuredImage.alt || featuredPost.title}
+                    fill
+                    className="object-cover"
+                    priority
+                  />
                 </div>
-              </article>
-            )
-          })()}
+              )}
+              <div className={`p-6 md:p-8 ${!featuredPost.featuredImage ? 'md:col-span-2' : ''}`}>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="px-3 py-1 bg-sand text-charcoal text-xs font-medium rounded-full">
+                    {categoryMap[featuredPost.category] || featuredPost.category}
+                  </span>
+                  <span className="text-charcoal/60 text-sm">{featuredPost.readingTime} min read</span>
+                </div>
+                <h3 className="font-heading text-xl md:text-2xl font-semibold mb-3">
+                  <Link href={`/notes/${featuredPost.slug.current}`} className="hover:text-clay transition-colors">
+                    {featuredPost.title}
+                  </Link>
+                </h3>
+                <p className="text-charcoal/85 mb-4 leading-relaxed">{featuredPost.excerpt}</p>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-sand flex items-center justify-center">
+                      <span className="text-charcoal font-semibold text-sm">
+                        {featuredPost.author.name?.split(' ').map((n: string) => n[0]).join('') || 'SC'}
+                      </span>
+                    </div>
+                    <div>
+                      <p className="font-medium text-sm">{featuredPost.author.name}</p>
+                      <p className="text-charcoal/60 text-xs">{featuredPost.author.credentials}</p>
+                    </div>
+                  </div>
+                  <span className="text-charcoal/60 text-sm">
+                    {new Date(featuredPost.publishedAt).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric'
+                    })}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </article>
         </section>
       )}
 
       {/* Blog Posts Grid */}
       <section className="mt-16">
         <h2 className="font-heading text-2xl font-semibold mb-6">Latest Posts</h2>
-        {blogPosts.length > 0 ? (
+        {allPosts.length > 0 ? (
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {blogPosts.filter(post => !post.featured).map((post) => (
-              <article key={post.id} className="rounded-2xl bg-white ring-1 ring-charcoal/10 overflow-hidden hover:ring-clay/30 transition-all duration-200">
-                <div className="relative h-48">
-                  <Image
-                    src={post.image}
-                    alt={post.title}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
+            {allPosts.filter(post => !post.isFeatured).map((post) => (
+              <article key={post._id} className="rounded-2xl bg-white ring-1 ring-charcoal/10 overflow-hidden hover:ring-clay/30 transition-all duration-200">
+                {post.featuredImage && (
+                  <div className="relative h-48">
+                    <Image
+                      src={urlFor(post.featuredImage).width(400).height(300).url()}
+                      alt={post.featuredImage.alt || post.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                )}
                 <div className="p-6">
                   <div className="flex items-center gap-2 mb-3">
                     <span className="px-3 py-1 bg-sand text-charcoal text-xs font-medium rounded-full">
-                      {post.category}
+                      {categoryMap[post.category] || post.category}
                     </span>
-                    <span className="text-charcoal/60 text-sm">{post.readTime}</span>
+                    <span className="text-charcoal/60 text-sm">{post.readingTime} min read</span>
                   </div>
                   <h3 className="font-heading text-lg font-semibold mb-3">
-                    <Link href={`/notes/${post.id}`} className="hover:text-clay transition-colors">
+                    <Link href={`/notes/${post.slug.current}`} className="hover:text-clay transition-colors">
                       {post.title}
                     </Link>
                   </h3>
@@ -156,14 +164,19 @@ export default function NotesPage() {
                     <div className="flex items-center gap-2">
                       <div className="w-8 h-8 rounded-full bg-sand flex items-center justify-center">
                         <span className="text-charcoal font-semibold text-xs">
-                          {post.author.split(' ').map((n: string) => n[0]).join('')}
+                          {post.author.name?.split(' ').map((n: string) => n[0]).join('') || 'SC'}
                         </span>
                       </div>
                       <div>
-                        <p className="font-medium text-xs">{post.author}</p>
+                        <p className="font-medium text-xs">{post.author.name}</p>
                       </div>
                     </div>
-                    <span className="text-charcoal/60 text-xs">{post.date}</span>
+                    <span className="text-charcoal/60 text-xs">
+                      {new Date(post.publishedAt).toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric'
+                      })}
+                    </span>
                   </div>
                 </div>
               </article>

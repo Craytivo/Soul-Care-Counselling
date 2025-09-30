@@ -2,6 +2,7 @@ import { type SchemaTypeDefinition } from 'sanity'
 import { aboutPage } from './aboutPage'
 import { areasPage } from './areasPage'
 import { blogPost } from './blogPost'
+import contactPage from './contactPage'
 import { coreValuesPage } from './coreValuesPage'
 import { faqPage } from './faqPage'
 import { homePage } from './homePage'
@@ -25,6 +26,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     homePage,
     internApplicationPage,
     faqPage,
+    contactPage,
     blogPost,
     siteSettings,
   ],

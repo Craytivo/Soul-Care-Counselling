@@ -1,11 +1,24 @@
 'use client'
 
-import { useState } from 'react'
-
+import { useState, useEffect } from 'react'
+import { getContactPage } from '@/lib/sanity-queries'
+import type { ContactPage } from '@/lib/sanity'
 
 export default function ContactPage() {
   const [formStatus, setFormStatus] = useState('')
-  const [internFormStatus, setInternFormStatus] = useState('')
+  const [pageData, setPageData] = useState<ContactPage | null>(null)
+
+  useEffect(() => {
+    async function loadPageData() {
+      try {
+        const data = await getContactPage()
+        setPageData(data)
+      } catch (error) {
+        console.error('Error loading contact page data:', error)
+      }
+    }
+    loadPageData()
+  }, [])
 
   // General contact form handler
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -13,11 +26,14 @@ export default function ContactPage() {
     setFormStatus('Sending…')
     const formData = new FormData(e.currentTarget)
     const data = Object.fromEntries(formData.entries())
+    
+    const emailAddress = pageData?.contactInfo.quickContact.emailAddress || 'info@thesoulcarecounsellor.com'
+    
     try {
       const body = encodeURIComponent(
         `Name: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone || '-'}\nSubject: ${data.subject}\n\n${data.message}`
       )
-  window.location.href = `mailto:info@thesoulcarecounsellor.com?subject=${encodeURIComponent('[Website] ' + data.subject)}&body=${body}`
+      window.location.href = `mailto:${emailAddress}?subject=${encodeURIComponent('[Website] ' + data.subject)}&body=${body}`
       setFormStatus('Opening your email app…')
       setTimeout(() => { setFormStatus('Thanks! If your mail app did not open, please email us directly.') }, 1500)
     } catch (err) {
@@ -26,23 +42,16 @@ export default function ContactPage() {
     }
   }
 
-  // Intern form handler
-  const handleInternSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setInternFormStatus('Sending…')
-    const formData = new FormData(e.currentTarget)
-    const data = Object.fromEntries(formData.entries())
-    try {
-      const body = encodeURIComponent(
-        `Prospective Intern Application\n\nName: ${data.name}\nEmail: ${data.email}\nSchool/Program: ${data.school}\nPhone: ${data.phone || '-'}\nMessage: ${data.message}`
-      )
-  window.location.href = `mailto:info@thesoulcarecounsellor.com?subject=${encodeURIComponent('[Internship Application] ' + (data.name || ''))}&body=${body}`
-      setInternFormStatus('Opening your email app…')
-      setTimeout(() => { setInternFormStatus('Thanks! If your mail app did not open, please email us directly.') }, 1500)
-    } catch (err) {
-      console.error(err)
-      setInternFormStatus('Something went wrong—please email us directly.')
-    }
+  // Loading state
+  if (!pageData) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-clay mx-auto"></div>
+          <p className="mt-2 text-charcoal/60">Loading contact page...</p>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -52,26 +61,26 @@ export default function ContactPage() {
         <div className="absolute -right-12 -top-12 h-56 w-56 rounded-full bg-gradient-to-br from-clay/40 to-cream/10 blur-2xl" aria-hidden="true"></div>
         <div className="relative z-10 px-6 py-10 md:px-10 md:py-14">
           <span className="inline-flex items-center gap-2 rounded-full bg-cream/10 px-3 py-1 ring-1 ring-cream/30 uppercase tracking-[.22em] text-[11px]">
-            Contact
+            {pageData.hero.badge}
           </span>
-          <h1 className="mt-3 font-heading text-3xl md:text-4xl font-bold">We&apos;d love to hear from you</h1>
+          <h1 className="mt-3 font-heading text-3xl md:text-4xl font-bold">{pageData.hero.heading}</h1>
           <p className="mt-3 max-w-3xl text-cream/85">
-            Reach out with questions, request a free consultation, or send us a message. We typically respond within 1–2 business days.
+            {pageData.hero.description}
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <a 
-              href="mailto:info@thesoulcarecounsellor.com" 
+              href={`mailto:${pageData.contactInfo.quickContact.emailAddress}`}
               className="inline-flex items-center justify-center rounded-md bg-clay px-5 py-2.5 font-semibold text-charcoal hover:bg-clay/90 ring-1 ring-cream/20"
             >
-              Email Us
+              {pageData.hero.emailButtonText}
             </a>
             <a 
-              href="https://thesoulcarecounsellor.janeapp.com" 
+              href={pageData.contactInfo.quickContact.bookingUrl}
               target="_blank" 
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center rounded-md bg-cream/10 px-5 py-2.5 font-semibold text-cream hover:bg-cream/15 ring-1 ring-cream/20"
             >
-              Book a Free Consultation
+              {pageData.hero.consultationButtonText}
             </a>
           </div>
         </div>
@@ -83,62 +92,62 @@ export default function ContactPage() {
         <div className="md:col-span-7">
           {/* General Contact Form */}
           <div>
-            <h2 className="font-heading text-xl md:text-2xl font-semibold">Send a message</h2>
+            <h2 className="font-heading text-xl md:text-2xl font-semibold">{pageData.contactForm.heading}</h2>
             <form onSubmit={handleSubmit} className="mt-4 rounded-2xl bg-white p-6 ring-1 ring-charcoal/10 space-y-4">
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-semibold">Full name</label>
+                  <label htmlFor="name" className="block text-sm font-semibold">{pageData.contactForm.fields.fullNameLabel}</label>
                   <input
                     id="name"
                     name="name"
                     type="text"
                     required
                     className="mt-1 w-full rounded-md border border-charcoal/20 bg-white px-3 py-2 outline-none ring-0 focus:border-clay"
-                    placeholder="First and last name"
+                    placeholder={pageData.contactForm.fields.fullNamePlaceholder}
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-semibold">Email</label>
+                  <label htmlFor="email" className="block text-sm font-semibold">{pageData.contactForm.fields.emailLabel}</label>
                   <input
                     id="email"
                     name="email"
                     type="email"
                     required
                     className="mt-1 w-full rounded-md border border-charcoal/20 bg-white px-3 py-2 outline-none ring-0 focus:border-clay"
-                    placeholder="you@example.com"
+                    placeholder={pageData.contactForm.fields.emailPlaceholder}
                   />
                 </div>
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-semibold">Phone (optional)</label>
+                  <label htmlFor="phone" className="block text-sm font-semibold">{pageData.contactForm.fields.phoneLabel}</label>
                   <input
                     id="phone"
                     name="phone"
                     type="tel"
                     className="mt-1 w-full rounded-md border border-charcoal/20 bg-white px-3 py-2 outline-none ring-0 focus:border-clay"
-                    placeholder="(555) 555-5555"
+                    placeholder={pageData.contactForm.fields.phonePlaceholder}
                   />
                 </div>
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-semibold">Subject</label>
+                  <label htmlFor="subject" className="block text-sm font-semibold">{pageData.contactForm.fields.subjectLabel}</label>
                   <input
                     id="subject"
                     name="subject"
                     type="text"
                     required
                     className="mt-1 w-full rounded-md border border-charcoal/20 bg-white px-3 py-2 outline-none ring-0 focus:border-clay"
-                    placeholder="How can we help?"
+                    placeholder={pageData.contactForm.fields.subjectPlaceholder}
                   />
                 </div>
               </div>
               <div>
-                <label htmlFor="message" className="block text-sm font-semibold">Message</label>
+                <label htmlFor="message" className="block text-sm font-semibold">{pageData.contactForm.fields.messageLabel}</label>
                 <textarea
                   id="message"
                   name="message"
                   rows={6}
                   required
                   className="mt-1 w-full rounded-md border border-charcoal/20 bg-white px-3 py-2 outline-none ring-0 focus:border-clay"
-                  placeholder="Share any context you'd like us to know."
+                  placeholder={pageData.contactForm.fields.messagePlaceholder}
                 ></textarea>
               </div>
               <div className="flex items-start gap-2">
@@ -150,7 +159,7 @@ export default function ContactPage() {
                   className="mt-1 h-4 w-4 rounded border-charcoal/30"
                 />
                 <label htmlFor="consent" className="text-sm text-charcoal/85">
-                  I consent to be contacted about my inquiry. I understand this form is not for emergencies.
+                  {pageData.contactForm.consentText}
                 </label>
               </div>
               <div className="flex items-center gap-3 pt-2">
@@ -158,7 +167,7 @@ export default function ContactPage() {
                   type="submit"
                   className="inline-flex items-center justify-center rounded-md bg-bark px-5 py-2.5 font-semibold text-cream hover:bg-bark/90 ring-1 ring-charcoal/10"
                 >
-                  Send message
+                  {pageData.contactForm.submitButtonText}
                 </button>
                 <p className="text-sm text-charcoal/80" role="status" aria-live="polite">
                   {formStatus}
@@ -166,7 +175,7 @@ export default function ContactPage() {
               </div>
             </form>
             <p className="mt-3 text-xs text-charcoal/70">
-              If you are in crisis, call 911 or go to your nearest emergency department.
+              {pageData.contactForm.crisisNotice}
             </p>
           </div>
         </div>
@@ -174,51 +183,51 @@ export default function ContactPage() {
         {/* RIGHT: Details aligned with form box */}
         <aside className="md:col-span-5 mt-10 md:mt-[3.25rem] space-y-6">
           <div className="rounded-2xl bg-sand p-5 ring-1 ring-charcoal/10">
-            <h3 className="font-heading font-semibold">Quick contact</h3>
+            <h3 className="font-heading font-semibold">{pageData.contactInfo.quickContact.heading}</h3>
             <div className="mt-3 space-y-3 text-sm">
               <div>
-                <p className="font-medium text-charcoal mb-1">Email us</p>
+                <p className="font-medium text-charcoal mb-1">{pageData.contactInfo.quickContact.emailLabel}</p>
                 <a 
-                  href="mailto:info@thesoulcarecounsellor.com" 
+                  href={`mailto:${pageData.contactInfo.quickContact.emailAddress}`}
                   className="underline underline-offset-4 decoration-charcoal/30 hover:decoration-charcoal"
                 >
-                  info@thesoulcarecounsellor.com
+                  {pageData.contactInfo.quickContact.emailAddress}
                 </a>
               </div>
               <div>
-                <p className="font-medium text-charcoal mb-1">Call us</p>
+                <p className="font-medium text-charcoal mb-1">{pageData.contactInfo.quickContact.phoneLabel}</p>
                   <a 
-                    href="tel:+1-647-394-0525" 
+                    href={`tel:+1-${pageData.contactInfo.quickContact.phoneNumber.replace(/\D/g, '')}`}
                     className="underline underline-offset-4 decoration-charcoal/30 hover:decoration-charcoal"
                   >
-                    647-394-0525
+                    {pageData.contactInfo.quickContact.phoneNumber}
                   </a>
               </div>
               <div>
-                <p className="font-medium text-charcoal mb-1">Book online</p>
+                <p className="font-medium text-charcoal mb-1">{pageData.contactInfo.quickContact.bookingLabel}</p>
                 <a 
-                  href="https://thesoulcarecounsellor.janeapp.com" 
+                  href={pageData.contactInfo.quickContact.bookingUrl}
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="underline underline-offset-4 decoration-charcoal/30 hover:decoration-charcoal"
                 >
-                  Free 15-min consultation
+                  {pageData.contactInfo.quickContact.bookingText}
                 </a>
               </div>
             </div>
           </div>
 
           <div className="rounded-2xl bg-white p-5 ring-1 ring-charcoal/10">
-            <h3 className="font-heading font-semibold">Hours</h3>
+            <h3 className="font-heading font-semibold">{pageData.contactInfo.hours.heading}</h3>
             <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-              <dt>Mon–Fri</dt>
-              <dd className="text-charcoal/80">9:00am – 9:00pm EST</dd>
-              <dt>Sat</dt>
-              <dd className="text-charcoal/80">By appointment</dd>
-              <dt>Sun</dt>
-              <dd className="text-charcoal/80">Closed</dd>
+              {pageData.contactInfo.hours.schedule.map((item, index) => (
+                <>
+                  <dt key={`${index}-day`}>{item.days}</dt>
+                  <dd key={`${index}-hours`} className="text-charcoal/80">{item.hours}</dd>
+                </>
+              ))}
             </dl>
-            <p className="mt-3 text-xs text-charcoal/70">Virtual care across Ontario; in-person options vary by clinician.</p>
+            <p className="mt-3 text-xs text-charcoal/70">{pageData.contactInfo.hours.note}</p>
           </div>
         </aside>
       </section>
@@ -227,17 +236,17 @@ export default function ContactPage() {
       <section className="mt-16 md:mt-20 rounded-2xl bg-sand p-6 md:p-8 ring-1 ring-charcoal/10">
         <div className="grid gap-6 md:grid-cols-3 md:items-center">
           <div className="md:col-span-2">
-            <h3 className="font-heading text-xl md:text-2xl font-semibold">Prefer to talk it through?</h3>
-            <p className="mt-2 text-charcoal/80">Book a free 15-minute consult to see if we&apos;re a fit.</p>
+            <h3 className="font-heading text-xl md:text-2xl font-semibold">{pageData.finalCta.heading}</h3>
+            <p className="mt-2 text-charcoal/80">{pageData.finalCta.description}</p>
           </div>
           <div className="md:justify-self-end">
             <a 
-              href="https://thesoulcarecounsellor.janeapp.com" 
+              href={pageData.finalCta.buttonUrl}
               target="_blank" 
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center rounded-md bg-clay px-5 py-2.5 font-semibold text-charcoal hover:bg-clay/90 ring-1 ring-charcoal/10"
             >
-              Book a Free Consultation
+              {pageData.finalCta.buttonText}
             </a>
           </div>
         </div>
