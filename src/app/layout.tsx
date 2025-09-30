@@ -20,6 +20,16 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: 'Soul Care Counselling — Home',
   description: 'Faith-centered, culturally sensitive therapy. Virtual across Canada.',
+  icons: {
+    icon: [
+      { url: '/favicon.ico?v=2', sizes: '32x32', type: 'image/x-icon' },
+      { url: '/icon.png?v=2', sizes: '32x32', type: 'image/png' },
+    ],
+    shortcut: '/favicon.ico?v=2',
+    apple: [
+      { url: '/apple-icon.png?v=2', sizes: '180x180', type: 'image/png' },
+    ],
+  },
 }
 
 export default function RootLayout({
