@@ -3,7 +3,9 @@ import { aboutPage } from './aboutPage'
 import { areasPage } from './areasPage'
 import { blogPost } from './blogPost'
 import { coreValuesPage } from './coreValuesPage'
+import { faqPage } from './faqPage'
 import { homePage } from './homePage'
+import { internApplicationPage } from './internApplicationPage'
 import { servicePage } from './servicePage'
 import { services } from './services'
 import { siteSettings } from './siteSettings'
@@ -21,6 +23,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     aboutPage,
     areasPage,
     homePage,
+    internApplicationPage,
+    faqPage,
     blogPost,
     siteSettings,
   ],

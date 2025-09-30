@@ -8,8 +8,18 @@ export const metadata: Metadata = {
   description: 'Faith-centered, culturally sensitive therapy. Virtual across Canada. Explore individual therapy, affordable therapy, single-session options, and group therapy.',
 }
 
+// Disable caching for this page to ensure fresh data from Sanity
+export const revalidate = 0
+
 export default async function ServicesPage() {
   const servicesPageData = await getServicesPage()
+
+  // Debug logging
+  console.log('Services page data:', servicesPageData ? 'Found' : 'Not found')
+  if (servicesPageData) {
+    console.log('Services count:', servicesPageData.servicesList?.length || 0)
+    console.log('Hero data:', servicesPageData.hero)
+  }
 
   // Return fallback if no data
   if (!servicesPageData) {

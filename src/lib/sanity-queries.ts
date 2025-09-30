@@ -1,5 +1,5 @@
 import { client } from './sanity'
-import type { TeamMember, Workshop, Service, ServicePage, CoreValuesPage, AboutPage, AreasPage, BlogPost, SiteSettings, HomePage, Services } from './sanity'
+import type { TeamMember, Workshop, Service, ServicePage, CoreValuesPage, AboutPage, AreasPage, BlogPost, SiteSettings, HomePage, Services, InternApplicationPage, FAQPage } from './sanity'
 
 // Team Members
 export async function getTeamMembers(): Promise<TeamMember[]> {
@@ -66,10 +66,11 @@ export async function getWorkshops(): Promise<Workshop[]> {
 
 // Services - Unified query
 export async function getServices(): Promise<Services | null> {
-  return await client.fetch(`
-    *[_type == "services" && isActive == true][0] {
+  const query = `
+    *[_type == "services" && isActive == true] | order(_updatedAt desc) [0] {
       _id,
       _type,
+      _updatedAt,
       title,
       metaDescription,
       hero {
@@ -123,7 +124,15 @@ export async function getServices(): Promise<Services | null> {
       },
       isActive
     }
-  `)
+  `
+  
+  const result = await client.fetch(query)
+  console.log('Sanity query result:', result ? 'Found data' : 'No data')
+  if (result) {
+    console.log('Last updated:', result._updatedAt)
+    console.log('Services list length:', result.servicesList?.length || 0)
+  }
+  return result
 }
 
 export async function getService(slug: string): Promise<Service | null> {
@@ -564,4 +573,69 @@ export async function getHomePage(): Promise<HomePage | null> {
 // Services Page (now integrated with Services)
 export async function getServicesPage(): Promise<Services | null> {
   return await getServices()
+}
+
+// Intern Application Page
+export async function getInternApplicationPage(): Promise<InternApplicationPage | null> {
+  return await client.fetch(`
+    *[_type == "internApplicationPage"][0] {
+      _id,
+      _type,
+      title,
+      metaDescription,
+      hero {
+        badge,
+        heading,
+        description
+      },
+      formFields {
+        fileUploadNote,
+        formQuestions[] {
+          _key,
+          fieldType,
+          label,
+          placeholder,
+          required,
+          options[] {
+            value,
+            label
+          }
+        }
+      },
+      sidebar {
+        aboutSection {
+          title,
+          benefits
+        },
+        questionsSection {
+          title,
+          description,
+          contactEmail
+        }
+      }
+    }
+  `)
+}
+
+// FAQ Page
+export async function getFAQPage(): Promise<FAQPage | null> {
+  return await client.fetch(`
+    *[_type == "faqPage" && isActive == true][0] {
+      _id,
+      _type,
+      title,
+      metaDescription,
+      hero {
+        badge,
+        heading,
+        description
+      },
+      faqs[] | order(order asc) {
+        question,
+        answer,
+        order
+      },
+      isActive
+    }
+  `)
 }

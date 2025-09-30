@@ -418,3 +418,58 @@ export interface ServicesPage {
   isActive: boolean
 }
 
+export interface InternApplicationPage {
+  _id: string
+  _type: 'internApplicationPage'
+  title: string
+  metaDescription?: string
+  hero: {
+    badge: string
+    heading: string
+    description: string[]
+  }
+  formFields: {
+    fileUploadNote: string
+    formQuestions: Array<{
+      _key: string
+      fieldType: 'text' | 'textarea' | 'email' | 'tel' | 'file' | 'checkbox' | 'select'
+      label: string
+      placeholder?: string
+      required: boolean
+      options?: Array<{
+        value: string
+        label: string
+      }>
+    }>
+  }
+  sidebar: {
+    aboutSection: {
+      title: string
+      benefits: string[]
+    }
+    questionsSection: {
+      title: string
+      description: string
+      contactEmail: string
+    }
+  }
+}
+
+export interface FAQPage {
+  _id: string
+  _type: 'faqPage'
+  title: string
+  metaDescription?: string
+  hero: {
+    badge: string
+    heading: string
+    description: string
+  }
+  faqs: Array<{
+    question: string
+    answer: string
+    order: number
+  }>
+  isActive: boolean
+}
+
