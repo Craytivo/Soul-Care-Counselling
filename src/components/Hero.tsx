@@ -139,7 +139,7 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
                     </div>
                   </div>
                   {/* Mobile quote (reintroduced) */}
-                  <blockquote className="mt-5 md:hidden mx-auto max-w-md text-white/85">
+                  <blockquote className="hidden mt-5 md:hidden mx-auto max-w-md text-white/85">
                     <p className="font-heading text-sm sm:text-base leading-snug italic">“{heroData.quote.text}”</p>
                     <footer className="mt-1 text-[11px] text-sand/70">— {heroData.quote.author}</footer>
                   </blockquote>
@@ -199,7 +199,7 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
 
       {/* ORIGINAL (centerLow / left) Layouts */}
       {layout !== 'split' && (
-        <div className="absolute inset-0 md:inset-x-0 md:bottom-0 md:top-auto h-full md:h-[50%] min-h-[340px] z-10 flex items-center md:items-stretch py-6 md:py-0">
+        <div className="absolute inset-x-0 bottom-0 md:inset-x-0 md:bottom-0 md:top-auto h-auto md:h-[50%] min-h-[340px] z-10 flex items-end md:items-stretch py-6 md:py-0">
           <div className={[
             'w-full px-5 sm:px-8 md:px-12 lg:px-16 xl:px-24 flex',
             layout === 'centerLow' ? 'justify-center' : 'items-end'
@@ -210,7 +210,7 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
                 : 'max-w-xl md:max-w-lg lg:max-w-xl'
             ].join(' ')}>
               <div className="relative p-4 sm:p-5 md:p-6 lg:p-7 rounded-2xl backdrop-blur-md bg-charcoal/45 ring-1 ring-white/10 space-y-3 h-full">
-                <header className="space-y-2 text-center">
+                <header className="space-y-2 text-left sm:text-center">
                   <h1 className="font-heading text-3xl sm:text-[2.3rem] md:text-[2.5rem] font-bold leading-[1.08] tracking-tight text-white/95">
                     <span className="block">{heroData.mainHeading}</span>
                     <span className="bg-gradient-to-r from-clay via-cream to-clay bg-clip-text text-transparent">{heroData.highlightText}</span>
@@ -219,7 +219,12 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
                     {heroData.description}
                   </p>
                 </header>
-                <div className="mt-5 mb-2 flex flex-col sm:flex-row gap-6 md:gap-10 lg:gap-12 justify-start md:justify-center md:mx-auto w-full max-w-2xl">
+                {/* Mobile quote - positioned below header */}
+                <blockquote className="block sm:hidden mt-4 border-l-2 border-clay/60 pl-3 text-left">
+                  <p className="font-heading text-sm italic text-white/85 line-clamp-2">"{heroData.quote.text}"</p>
+                  <footer className="mt-1 text-[11px] text-sand/80">— {heroData.quote.author}</footer>
+                </blockquote>
+                <div className="hidden sm:flex mt-5 mb-2 flex-col sm:flex-row gap-6 md:gap-10 lg:gap-12 justify-start md:justify-center md:mx-auto w-full max-w-2xl">
                   <div className="flex flex-col gap-3 min-w-[200px] items-start">
                     {heroData.features.slice(0,2).map((feature: any, index: number) => (
                       <div key={index} className="flex items-start gap-5">
@@ -241,7 +246,7 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
                     ))}
                   </div>
                 </div>
-                <blockquote className="border-l-2 border-clay/60 pl-3 text-left">
+                <blockquote className="hidden sm:block border-l-2 border-clay/60 pl-3 text-left">
                   <p className="font-heading text-sm sm:text-base md:text-[17px] italic text-white/85 line-clamp-2">“{heroData.quote.text}”</p>
                   <footer className="mt-1 text-[11px] sm:text-xs md:text-[13px] text-sand/80">— {heroData.quote.author}</footer>
                 </blockquote>
