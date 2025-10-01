@@ -193,7 +193,8 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
       publishedAt,
       category,
       tags,
-      readingTime
+      readingTime,
+      isFeatured
     }
   `)
 }
@@ -252,7 +253,8 @@ export async function getFeaturedBlogPosts(): Promise<BlogPost[]> {
       publishedAt,
       category,
       tags,
-      readingTime
+      readingTime,
+      isFeatured
     }
   `)
 }
