@@ -678,7 +678,7 @@ export async function getResources(): Promise<Resource[]> {
       description,
       slug,
       previewImage {
-        ...,
+        asset->,
         alt
       },
       pdfFile {
@@ -738,7 +738,7 @@ export async function getFeaturedResources(): Promise<Resource[]> {
       description,
       slug,
       previewImage {
-        ...,
+        asset->,
         alt
       },
       pdfFile {

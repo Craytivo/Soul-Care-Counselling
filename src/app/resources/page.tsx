@@ -69,7 +69,7 @@ export default function ResourcesPage() {
 
   const ResourceCard = ({ resource, featured = false }: { resource: any, featured?: boolean }) => (
     <article className={`rounded-2xl bg-white ring-1 ring-charcoal/10 overflow-hidden hover:ring-clay/30 transition-all duration-200 ${featured ? '' : ''}`}>
-      {resource.previewImage && (
+      {resource.previewImage?.asset && (
         <div className={`relative ${featured ? 'h-64 md:h-auto' : 'h-48'}`}>
           <Image
             src={urlFor(resource.previewImage).width(featured ? 600 : 400).height(featured ? 400 : 300).url()}
@@ -78,6 +78,21 @@ export default function ResourcesPage() {
             className="object-cover"
             priority={featured}
           />
+        </div>
+      )}
+      {!resource.previewImage?.asset && resource.pdfFile?.asset?.url && (
+        <div className={`relative ${featured ? 'h-64 md:h-auto' : 'h-48'} bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center`}>
+          <div className="text-center">
+            <svg className="w-16 h-16 mx-auto text-red-600 mb-2" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+            </svg>
+            <span className="text-sm font-semibold text-gray-700">PDF Document</span>
+            {resource.pdfFile?.asset?.size && (
+              <div className="text-xs text-gray-500 mt-1">
+                {formatFileSize(resource.pdfFile.asset.size)}
+              </div>
+            )}
+          </div>
         </div>
       )}
       
@@ -119,6 +134,8 @@ export default function ResourcesPage() {
           {resource.pdfFile?.asset?.url && (
             <a
               href={resource.pdfFile.asset.url}
+              target="_blank"
+              rel="noopener noreferrer"
               download={resource.pdfFile.asset.originalFilename}
               className="inline-flex items-center px-4 py-2 text-sm font-semibold text-charcoal bg-clay hover:bg-clay/90 rounded-md transition-colors ring-1 ring-charcoal/10"
             >
@@ -209,7 +226,7 @@ export default function ResourcesPage() {
                 {featuredResources.map((resource) => (
                   <div key={resource._id} className="rounded-2xl bg-white ring-1 ring-charcoal/10 overflow-hidden">
                     <div className="md:grid md:grid-cols-2 md:gap-8">
-                      {resource.previewImage && (
+                      {resource.previewImage?.asset && (
                         <div className="relative h-64 md:h-auto">
                           <Image
                             src={urlFor(resource.previewImage).width(600).height(400).url()}
@@ -220,7 +237,22 @@ export default function ResourcesPage() {
                           />
                         </div>
                       )}
-                      <div className={`p-6 md:p-8 ${!resource.previewImage ? 'md:col-span-2' : ''}`}>
+                      {!resource.previewImage?.asset && resource.pdfFile?.asset?.url && (
+                        <div className="relative h-64 md:h-auto bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                          <div className="text-center">
+                            <svg className="w-20 h-20 mx-auto text-red-600 mb-3" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+                            </svg>
+                            <span className="text-lg font-semibold text-gray-700">PDF Document</span>
+                            {resource.pdfFile?.asset?.size && (
+                              <div className="text-sm text-gray-500 mt-2">
+                                {formatFileSize(resource.pdfFile.asset.size)}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                      <div className={`p-6 md:p-8 ${!resource.previewImage?.asset ? 'md:col-span-2' : ''}`}>
                         <div className="flex items-center gap-2 mb-3">
                           {resource.category && (
                             <span className="px-3 py-1 bg-sand text-charcoal text-xs font-medium rounded-full">
@@ -252,6 +284,8 @@ export default function ResourcesPage() {
                           {resource.pdfFile?.asset?.url && (
                             <a
                               href={resource.pdfFile.asset.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
                               download={resource.pdfFile.asset.originalFilename}
                               className="inline-flex items-center px-4 py-2 font-semibold text-charcoal bg-clay hover:bg-clay/90 rounded-md transition-colors ring-1 ring-charcoal/10"
                             >
