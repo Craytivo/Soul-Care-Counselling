@@ -26,13 +26,13 @@ const joshData = {
     "Trauma",
     "Stress management",
     "Couples",
-    "Men’s mental health",
-    "Women’s mental health",
+    "Men's mental health",
+    "Women's mental health",
     "Religious trauma",
     "Spiritual abuse",
     "Workplace stress",
     "Addiction",
-    "Family",
+    "Family"
   ],
   areasOfFocus: [
     "Addictions & recovery",

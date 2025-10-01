@@ -19,7 +19,7 @@ const princetonData = {
   specialties: [
     "Parent coaching",
     "Family coaching",
-    "Parent workshops",
+    "Parent workshops"
   ],
   areasOfFocus: [
     "Early childhood development",

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 }
 
 export default async function ChristianaPage() {
-  const member = await getTeamMember('christiana')
+  const member = await getTeamMember('christiana-takyi')
   
   if (!member) {
     return (
@@ -29,14 +29,14 @@ export default async function ChristianaPage() {
     image: member.image ? urlFor(member.image).width(400).height(400).url() : '/assets/img/team/placeholder.webp',
     bio: member.bio ? [member.bio] : ['Professional bio coming soon.'],
     specialties: [
-      'Affordable therapy',
-      'Anxiety',
-      'Depression',
-      'Trauma',
-      'Stress management',
-      'Youth',
-      'Women’s mental health',
-    ],
+    "Affordable therapy",
+    "Anxiety",
+    "Depression",
+    "Trauma",
+    "Stress management",
+    "Youth",
+    "Women's mental health"
+  ],
     areasOfFocus: member.areasOfFocus || [],
     socialLinks: member.socialLinks || [],
     acceptsBookings: member.acceptsBookings

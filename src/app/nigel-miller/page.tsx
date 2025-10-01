@@ -24,13 +24,13 @@ const nigelData = {
     "Stress management",
     "Youth",
     "Couples",
-    "Women’s mental health",
-    "Men’s mental health",
+    "Women's mental health",
+    "Men's mental health",
     "Religious trauma",
     "Spiritual abuse",
     "Workplace stress",
     "Addiction",
-    "Family",
+    "Family"
   ],
   areasOfFocus: [
     "Teens, adults & couples",

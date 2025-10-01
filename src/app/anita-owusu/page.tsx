@@ -26,13 +26,12 @@ const anitaData = {
     "Stress management",
     "Youth",
     "Couples",
-    "Women’s mental health",
+    "Women's mental health",
     "Religious trauma",
     "Spiritual abuse",
     "Workplace stress",
     "Bilingual",
-    "Art therapy",
-    "Addiction",
+    "Art therapy"
   ],
   areasOfFocus: [
     "Anxiety & Depression",

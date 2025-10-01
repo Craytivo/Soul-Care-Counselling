@@ -20,11 +20,8 @@ const daveneData = {
     "Above all she is a Christian for over 30 years, whose main desire is that through various avenues she will continue to impact and influence individuals to the fullness that comes from a life surrendered to Christ. Davene endeavours to be the change she wants to see in the world, as she empowers individuals to be the best versions of themselves, one person at a time."
   ],
   specialties: [
-    "Practice operations & administration",
-    "Team coordination & support",
-    "Client services management",
-    "Process improvement & efficiency",
-    "Faith-integrated organizational leadership"
+    "Family coaching",
+    "Parent coaching"
   ],
   areasOfFocus: [
     "Operations Management",

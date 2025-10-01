@@ -23,11 +23,12 @@ const natalieData = {
     "Trauma",
     "Stress management",
     "Youth",
-    "Women’s mental health",
+    "Couples",
+    "Women's mental health",
     "Religious trauma",
     "Spiritual abuse",
     "Workplace stress",
-    "Addiction",
+    "Family"
   ],
   areasOfFocus: [
     "Life transitions & burnout",

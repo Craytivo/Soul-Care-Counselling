@@ -19,12 +19,10 @@ const khadianData = {
     "As part of my self-care routine, I enjoy reading, writing/journaling, watching documentaries, long nature walks, as well as spending quality time with my loved ones. I look forward to connecting with you and supporting you on your journey."
   ],
   specialties: [
-    "Anxiety & depression",
-    "Emotional regulation",
-    "Spirituality & life transitions",
-    "Trauma-informed care",
-    "CBT, Narrative, Solution-Focused therapy",
-    "Individual, family & youth counselling"
+    "Anxiety",
+    "Depression",
+    "Trauma",
+    "Stress management"
   ],
   areasOfFocus: [
     "Anxiety & depression",

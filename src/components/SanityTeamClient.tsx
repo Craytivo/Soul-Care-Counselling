@@ -14,14 +14,16 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
   const [activeFilter, setActiveFilter] = useState("all");
 
   // Use the provided specialty list for tabs, preserving order and capitalization
+  // NOTE: Use canonical, ASCII apostrophes here. We'll normalize both the tab labels and
+  // the incoming Sanity data (replacing curly quotes, lowercasing, trimming) before comparing.
   const specialtyTabs = [
     "Anxiety",
     "Depression",
     "Trauma",
     "Stress management",
     "Youth",
-    "Women’s mental health",
-    "Men’s mental health",
+    "Women's mental health",
+    "Men's mental health",
     "Couples",
     "Family",
     "Addiction",
@@ -36,32 +38,43 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
     "Parent workshops"
   ];
 
+  // Normalization helper to make comparisons resilient to curly apostrophes & case differences
+  const normalize = (val: string) => val
+    .replace(/[’‘‛`´]/g, "'") // unify any apostrophe-like character
+    .replace(/\s+/g, ' ')      // collapse extra whitespace
+    .trim()
+    .toLowerCase();
+
   const filters = useMemo(() => [
     { key: "all", label: "All Team Members", count: teamMembers.length },
     ...specialtyTabs.map(s => {
-      const normalized = s.trim().toLowerCase();
-      const count = teamMembers.filter(m => m.specialties?.some(x => x.trim().toLowerCase() === normalized)).length;
-      return {
-        key: s,
-        label: s,
-        count
-      };
+      const normalizedTab = normalize(s);
+      const count = teamMembers.filter(m => m.specialties?.some(x => normalize(x) === normalizedTab)).length;
+      return { key: s, label: s, count };
     })
   ], [teamMembers]);
 
   const filteredMembers = useMemo(() => {
     const searchLower = searchQuery.toLowerCase();
     return teamMembers.filter(member => {
-      // Search by name or specialty
-      const matchesSearch =
-        !searchQuery ||
-        member.name.toLowerCase().includes(searchLower) ||
-        (member.specialties && member.specialties.some(s => s.toLowerCase().includes(searchLower)));
+      // Enhanced search by name (first name, last name, full name)
+      const fullName = member.name.toLowerCase();
+      const nameParts = member.name.toLowerCase().split(' ');
+      const matchesName = !searchQuery ||
+        fullName.includes(searchLower) ||
+        nameParts.some(part => part.includes(searchLower)) ||
+        nameParts.some(part => part.startsWith(searchLower));
+
+      // Search by specialty
+      const matchesSpecialty = !searchQuery ||
+        (member.specialties && member.specialties.some(s => normalize(s).includes(searchLower)));
+
+      const matchesSearch = matchesName || matchesSpecialty;
 
       if (activeFilter === "all") return matchesSearch;
       // Filter by specialty (case-insensitive, trimmed)
-      const normalizedFilter = activeFilter.trim().toLowerCase();
-      return matchesSearch && member.specialties?.some(x => x.trim().toLowerCase() === normalizedFilter);
+      const normalizedFilter = normalize(activeFilter);
+      return matchesSearch && member.specialties?.some(x => normalize(x) === normalizedFilter);
     });
   }, [teamMembers, searchQuery, activeFilter]);
 

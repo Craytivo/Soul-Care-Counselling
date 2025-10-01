@@ -18,105 +18,80 @@ export function filterMembers(
 ): TeamMember[] {
   const searchLower = searchQuery.toLowerCase();
   return teamMembers.filter((member) => {
-    const matchesSearch =
-      !searchQuery ||
-      member.name.toLowerCase().includes(searchLower) ||
+    // Enhanced search by name (first name, last name, full name)
+    const fullName = member.name.toLowerCase();
+    const nameParts = member.name.toLowerCase().split(' ');
+    const matchesName = !searchQuery ||
+      fullName.includes(searchLower) ||
+      nameParts.some(part => part.includes(searchLower)) ||
+      nameParts.some(part => part.startsWith(searchLower));
+
+    // Search by other fields
+    const matchesOtherFields = !searchQuery ||
       (member.credentials && member.credentials.toLowerCase().includes(searchLower)) ||
       member.role.toLowerCase().includes(searchLower) ||
       (member.bio && member.bio.toLowerCase().includes(searchLower)) ||
       (member.specialties && member.specialties.some((specialty) => specialty.toLowerCase().includes(searchLower))) ||
       (member.areasOfFocus && member.areasOfFocus.some((area) => area.toLowerCase().includes(searchLower)));
 
+    const matchesSearch = matchesName || matchesOtherFields;
+
     if (activeFilter === 'all') {
       return matchesSearch;
     }
 
+    // Direct specialty matching for the filter tabs
     if (!member.specialties || member.specialties.length === 0) {
       return false;
     }
 
-    const specialtyText = member.specialties.join(' ').toLowerCase();
-
-    switch (activeFilter) {
-      case 'trauma-informed':
-        return matchesSearch && (specialtyText.includes('trauma') || specialtyText.includes('trauma-informed'));
-      case 'anxiety-depression':
-        return matchesSearch && (specialtyText.includes('anxiety') || specialtyText.includes('depression'));
-      case 'family-couples':
-        return (
-          matchesSearch &&
-          (specialtyText.includes('family') ||
-            specialtyText.includes('couples') ||
-            specialtyText.includes('parenting') ||
-            specialtyText.includes('marriage'))
-        );
-      case 'addictions-recovery':
-        return matchesSearch && (specialtyText.includes('addiction') || specialtyText.includes('recovery'));
-      case 'faith-based':
-        return (
-          matchesSearch &&
-          (specialtyText.includes('faith') ||
-            specialtyText.includes('spiritual') ||
-            specialtyText.includes('christian'))
-        );
-      case 'bilingual':
-        return (
-          matchesSearch &&
-          (specialtyText.includes('bilingual') ||
-            specialtyText.includes('french') ||
-            specialtyText.includes('english'))
-        );
-      default:
-        return matchesSearch;
-    }
+    const normalizedFilter = activeFilter.trim().toLowerCase();
+    const hasSpecialty = member.specialties.some(x => x.trim().toLowerCase() === normalizedFilter);
+    
+    return matchesSearch && hasSpecialty;
   });
 }
 
 export function getFilters(teamMembers: TeamMember[]): Filter[] {
+  // Standard specialties that match the filter tabs exactly
+  const specialtyTabs = [
+    "Anxiety",
+    "Depression",
+    "Trauma",
+    "Stress management",
+    "Youth",
+    "Women's mental health",
+    "Men's mental health",
+    "Couples",
+    "Family",
+    "Addiction",
+    "Religious trauma",
+    "Spiritual abuse",
+    "Workplace stress",
+    "Bilingual",
+    "Art therapy",
+    "Affordable therapy",
+    "Parent coaching",
+    "Family coaching",
+    "Parent workshops"
+  ];
+
   const getCount = (filterKey: string) => {
     if (filterKey === 'all') return teamMembers.length;
+    
+    const normalized = filterKey.trim().toLowerCase();
     return teamMembers.filter((member) => {
-      if (!member.specialties || member.specialties.length === 0) return false;
-      const specialtyText = member.specialties.join(' ').toLowerCase();
-      switch (filterKey) {
-        case 'trauma-informed':
-          return specialtyText.includes('trauma') || specialtyText.includes('trauma-informed');
-        case 'anxiety-depression':
-          return specialtyText.includes('anxiety') || specialtyText.includes('depression');
-        case 'family-couples':
-          return (
-            specialtyText.includes('family') ||
-            specialtyText.includes('couples') ||
-            specialtyText.includes('parenting') ||
-            specialtyText.includes('marriage')
-          );
-        case 'addictions-recovery':
-          return specialtyText.includes('addiction') || specialtyText.includes('recovery');
-        case 'faith-based':
-          return (
-            specialtyText.includes('faith') ||
-            specialtyText.includes('spiritual') ||
-            specialtyText.includes('christian')
-          );
-        case 'bilingual':
-          return (
-            specialtyText.includes('bilingual') ||
-            specialtyText.includes('french') ||
-            specialtyText.includes('english')
-          );
-        default:
-          return false;
-      }
+      return member.specialties?.some(x => x.trim().toLowerCase() === normalized);
     }).length;
   };
+
   return [
     { key: 'all', label: 'All Team Members', count: getCount('all') },
-    { key: 'trauma-informed', label: 'Trauma-Informed Care', count: getCount('trauma-informed') },
-    { key: 'anxiety-depression', label: 'Anxiety & Depression', count: getCount('anxiety-depression') },
-    { key: 'family-couples', label: 'Family & Couples', count: getCount('family-couples') },
-    { key: 'addictions-recovery', label: 'Addictions & Recovery', count: getCount('addictions-recovery') },
-    { key: 'faith-based', label: 'Faith-Based Therapy', count: getCount('faith-based') },
-    { key: 'bilingual', label: 'Bilingual Services', count: getCount('bilingual') },
+    ...specialtyTabs.map(specialty => ({
+      key: specialty,
+      label: specialty,
+      count: getCount(specialty)
+    }))
   ];
 }
 

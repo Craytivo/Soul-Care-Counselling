@@ -28,11 +28,11 @@ const oluseyeData = {
     "Stress management",
     "Youth",
     "Couples",
-    "Women’s mental health",
+    "Women's mental health",
     "Religious trauma",
     "Spiritual abuse",
     "Workplace stress",
-    "Family",
+    "Family"
   ],
   areasOfFocus: [
     "Parenting & couples",

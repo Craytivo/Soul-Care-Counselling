@@ -18,7 +18,7 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: 'Soul Care Counselling — Home',
+  title: 'Soul Care Christian Counselling — Home',
   description: 'Faith-centered, culturally sensitive therapy. Virtual across Canada.',
   icons: {
     icon: [

@@ -24,11 +24,11 @@ const barakaData = {
     "Trauma",
     "Stress management",
     "Youth",
-    "Women’s mental health",
+    "Women's mental health",
     "Religious trauma",
     "Spiritual abuse",
     "Workplace stress",
-    "Addiction",
+    "Addiction"
   ],
   areasOfFocus: [
     "Life transitions",
