@@ -8,8 +8,8 @@ export const metadata: Metadata = {
   description: 'Faith-centered, culturally sensitive therapy. Virtual across Canada. Explore individual therapy, affordable therapy, single-session options, and group therapy.',
 }
 
-// Disable caching for this page to ensure fresh data from Sanity
-export const revalidate = 0
+
+export const dynamic = 'force-dynamic'
 
 export default async function ServicesPage() {
   const servicesPageData = await getServicesPage()
