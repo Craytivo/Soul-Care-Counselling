@@ -20,37 +20,7 @@ export default function ContactPage() {
     loadPageData()
   }, [])
 
-  // General contact form handler
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setFormStatus('Sending…')
-    const formData = new FormData(e.currentTarget)
-    
-    try {
-      const response = await fetch('https://formspree.io/f/manpozyl', {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Accept': 'application/json'
-        }
-      })
-      
-      if (response.ok) {
-        setFormStatus('Thank you! Your message has been sent successfully. We\'ll get back to you soon.')
-        e.currentTarget.reset()
-      } else {
-        const errorData = await response.json()
-        if (errorData.errors) {
-          setFormStatus('Please check your form for errors and try again.')
-        } else {
-          setFormStatus('There was an issue sending your message. Please try again.')
-        }
-      }
-    } catch (err) {
-      console.error(err)
-      setFormStatus('Something went wrong—please try again or email us directly.')
-    }
-  }
+  // Netlify Forms handles submission automatically
 
   // Loading state
   if (!pageData) {
@@ -103,12 +73,9 @@ export default function ContactPage() {
           {/* General Contact Form */}
           <div>
             <h2 className="font-heading text-xl md:text-2xl font-semibold">{pageData.contactForm.heading}</h2>
-            <form onSubmit={handleSubmit} action="https://formspree.io/f/manpozyl" method="POST" className="mt-4 rounded-2xl bg-white p-6 ring-1 ring-charcoal/10 space-y-4">
-              {/* Hidden fields for Formspree */}
-              <input type="hidden" name="_subject" value="New Contact Form Submission" />
-              <input type="hidden" name="_next" value={typeof window !== 'undefined' ? window.location.href : ''} />
-              {/* Honeypot for spam protection */}
-              <input type="text" name="_gotcha" style={{ display: 'none' }} />
+            <form name="contact" method="POST" data-netlify="true" data-netlify-honeypot="_gotcha" className="mt-4 rounded-2xl bg-white p-6 ring-1 ring-charcoal/10 space-y-4">
+              <input type="hidden" name="form-name" value="contact" />
+              <input type="hidden" name="_gotcha" />
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label htmlFor="name" className="block text-sm font-semibold">{pageData.contactForm.fields.fullNameLabel}</label>

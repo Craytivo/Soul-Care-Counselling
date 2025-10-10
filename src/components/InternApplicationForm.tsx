@@ -9,36 +9,7 @@ interface InternApplicationFormProps {
 export default function InternApplicationForm({ pageData }: InternApplicationFormProps) {
   const [formStatus, setFormStatus] = useState('')
 
-  const handleInternSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setFormStatus('Sending…')
-    const formData = new FormData(e.currentTarget)
-    
-    try {
-      const response = await fetch('https://formspree.io/f/xqayqokw', {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Accept': 'application/json'
-        }
-      })
-      
-      if (response.ok) {
-        setFormStatus('Thank you! Your internship application has been submitted successfully. We\'ll review it and get back to you soon.')
-        e.currentTarget.reset()
-      } else {
-        const errorData = await response.json()
-        if (errorData.errors) {
-          setFormStatus('Please check your form for errors and try again.')
-        } else {
-          setFormStatus('There was an issue submitting your application. Please try again.')
-        }
-      }
-    } catch (err) {
-      console.error(err)
-      setFormStatus('Something went wrong—please try again or email us directly.')
-    }
-  }
+  // Netlify Forms handles submission automatically
 
   // Render form field based on type
   const renderFormField = (question: InternApplicationPage['formFields']['formQuestions'][0]) => {
@@ -114,17 +85,15 @@ export default function InternApplicationForm({ pageData }: InternApplicationFor
 
   return (
     <form 
-      onSubmit={handleInternSubmit} 
-      action="https://formspree.io/f/xqayqokw"
+      name="intern-application"
       method="POST"
-      className="mt-4 rounded-2xl bg-white p-6 ring-1 ring-charcoal/10 space-y-6" 
+      data-netlify="true"
+      data-netlify-honeypot="_gotcha"
       encType="multipart/form-data"
+      className="mt-4 rounded-2xl bg-white p-6 ring-1 ring-charcoal/10 space-y-6"
     >
-      {/* Hidden fields for Formspree */}
-      <input type="hidden" name="_subject" value="New Intern Application Submission" />
-      <input type="hidden" name="_next" value={typeof window !== 'undefined' ? window.location.href : ''} />
-      {/* Honeypot for spam protection */}
-      <input type="text" name="_gotcha" style={{ display: 'none' }} />
+      <input type="hidden" name="form-name" value="intern-application" />
+      <input type="hidden" name="_gotcha" />
       {/* Dynamic form fields from Sanity */}
       <div className="space-y-4">
         {pageData.formFields.formQuestions.map((question, index) => (
