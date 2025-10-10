@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+
+export const dynamic = 'force-dynamic'
 import { getTeamMember } from '@/lib/sanity-queries'
 import { urlFor } from '@/lib/sanity'
 
