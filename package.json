@@ -14,6 +14,8 @@
     "@portabletext/react": "^4.0.3",
     "@sanity/image-url": "^1.2.0",
     "@sanity/vision": "^4.6.1",
+    "@sendgrid/mail": "^8.1.6",
+    "busboy": "^1.6.0",
     "dotenv": "^17.2.2",
     "next": "^15.5.3",
     "next-sanity": "^11.1.0",
