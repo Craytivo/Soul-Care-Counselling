@@ -83,17 +83,34 @@ export default function InternApplicationForm({ pageData }: InternApplicationFor
     }
   }
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setFormStatus('Sending...');
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    try {
+      const res = await fetch('/.netlify/functions/sendEmail', {
+        method: 'POST',
+        body: formData,
+      });
+      if (res.ok) {
+        setFormStatus('Application sent successfully!');
+        form.reset();
+      } else {
+        setFormStatus('Error sending application.');
+      }
+    } catch (err) {
+      setFormStatus('Error sending application.');
+    }
+  };
+
   return (
     <form 
       name="intern-application"
-      method="POST"
-      data-netlify="true"
-      data-netlify-honeypot="_gotcha"
       encType="multipart/form-data"
       className="mt-4 rounded-2xl bg-white p-6 ring-1 ring-charcoal/10 space-y-6"
+      onSubmit={handleSubmit}
     >
-      <input type="hidden" name="form-name" value="intern-application" />
-      <input type="hidden" name="_gotcha" />
       {/* Dynamic form fields from Sanity */}
       <div className="space-y-4">
         {pageData.formFields.formQuestions.map((question, index) => (
