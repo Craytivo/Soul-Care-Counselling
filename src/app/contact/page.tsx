@@ -1,4 +1,3 @@
-'use client'
 
 import { useState, useEffect } from 'react'
 import { getContactPage } from '@/lib/sanity-queries'
