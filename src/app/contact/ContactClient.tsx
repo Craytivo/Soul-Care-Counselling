@@ -57,9 +57,7 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
           {/* General Contact Form */}
           <div>
             <h2 className="font-heading text-xl md:text-2xl font-semibold">{pageData.contactForm.heading}</h2>
-            <form name="contact" method="POST" data-netlify="true" data-netlify-honeypot="_gotcha" className="mt-4 rounded-2xl bg-white p-6 ring-1 ring-charcoal/10 space-y-4">
-              <input type="hidden" name="form-name" value="contact" />
-              <input type="hidden" name="_gotcha" />
+            <form name="contact" method="POST" className="mt-4 rounded-2xl bg-white p-6 ring-1 ring-charcoal/10 space-y-4">
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label htmlFor="name" className="block text-sm font-semibold">{pageData.contactForm.fields.fullNameLabel}</label>
