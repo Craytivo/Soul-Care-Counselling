@@ -20,7 +20,7 @@ exports.handler = async function(event) {
 
   // Parse form data (using busboy)
   const Busboy = require('busboy');
-  const busboy = new Busboy({ headers: event.headers });
+  const busboy = Busboy({ headers: event.headers });
   let fields = {};
   let fileBuffer = null;
   let fileName = '';
