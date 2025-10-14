@@ -70,7 +70,7 @@ const categoryMap: Record<string, string> = {
 // Custom components for PortableText
 const portableTextComponents = {
   types: {
-    image: ({ value }: any) => (
+    image: ({ value }: { value: { alt?: string; caption?: string } }) => (
       <div className="my-8">
         <Image
           src={urlFor(value).width(800).url()}
@@ -88,67 +88,72 @@ const portableTextComponents = {
     ),
   },
   marks: {
-    link: ({ children, value }: any) => (
-      <a
-        href={value.href}
-        target={value.blank ? '_blank' : '_self'}
-        rel={value.blank ? 'noopener noreferrer' : undefined}
-        className="text-clay underline hover:text-clay/80 transition-colors"
-      >
-        {children}
-      </a>
-    ),
-    internalLink: ({ children, value }: any) => {
-      // Handle internal links to other blog posts, services, etc.
-      const href = value.reference?._type === 'blogPost' 
-        ? `/notes/${value.reference.slug?.current}`
-        : value.reference?._type === 'teamMember'
-        ? `/${value.reference.slug?.current}`
-        : '#'
-      
+    link: ({children, value}: {children: React.ReactNode; value?: {href: string; blank?: boolean}}) => {
+      // value is optional per PortableTextMarkComponentProps
+      const href = value?.href ?? '#';
+      const blank = value?.blank ?? false;
+      return (
+        <a
+          href={href}
+          target={blank ? '_blank' : '_self'}
+          rel={blank ? 'noopener noreferrer' : undefined}
+          className="text-clay underline hover:text-clay/80 transition-colors"
+        >
+          {children}
+        </a>
+      );
+    },
+    internalLink: ({children, value}: {children: React.ReactNode; value?: {reference?: {_type?: string; slug?: {current?: string}}}}) => {
+      // value is optional per PortableTextMarkComponentProps
+      const ref = value?.reference;
+      const href = ref?._type === 'blogPost'
+        ? `/notes/${ref.slug?.current}`
+        : ref?._type === 'teamMember'
+        ? `/${ref.slug?.current}`
+        : '#';
       return (
         <Link href={href} className="text-clay underline hover:text-clay/80 transition-colors">
           {children}
         </Link>
-      )
+      );
     },
   },
   block: {
-    h2: ({ children }: any) => (
+    h2: (props: { children?: React.ReactNode }) => (
       <h2 className="font-heading text-2xl font-semibold mt-8 mb-4 text-charcoal">
-        {children}
+        {props.children}
       </h2>
     ),
-    h3: ({ children }: any) => (
+    h3: (props: { children?: React.ReactNode }) => (
       <h3 className="font-heading text-xl font-semibold mt-6 mb-3 text-charcoal">
-        {children}
+        {props.children}
       </h3>
     ),
-    h4: ({ children }: any) => (
+    h4: (props: { children?: React.ReactNode }) => (
       <h4 className="font-heading text-lg font-semibold mt-4 mb-2 text-charcoal">
-        {children}
+        {props.children}
       </h4>
     ),
-    blockquote: ({ children }: any) => (
+    blockquote: (props: { children?: React.ReactNode }) => (
       <blockquote className="border-l-4 border-clay pl-6 py-2 my-6 bg-sand/30 rounded-r-lg italic text-charcoal/90">
-        {children}
+        {props.children}
       </blockquote>
     ),
-    normal: ({ children }: any) => (
+    normal: (props: { children?: React.ReactNode }) => (
       <p className="mb-4 leading-relaxed text-charcoal/90">
-        {children}
+        {props.children}
       </p>
     ),
   },
   list: {
-    bullet: ({ children }: any) => (
+    bullet: (props: { children?: React.ReactNode }) => (
       <ul className="list-disc list-inside mb-4 space-y-2 text-charcoal/90">
-        {children}
+        {props.children}
       </ul>
     ),
-    number: ({ children }: any) => (
+    number: (props: { children?: React.ReactNode }) => (
       <ol className="list-decimal list-inside mb-4 space-y-2 text-charcoal/90">
-        {children}
+        {props.children}
       </ol>
     ),
   },
@@ -252,7 +257,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         {/* Article Content */}
         <div className="prose prose-lg max-w-none">
-          <PortableText value={post.content} components={portableTextComponents} />
+          <PortableText value={post.content as import('@portabletext/types').TypedObject[]} components={portableTextComponents} />
         </div>
 
         {/* Call to Action */}

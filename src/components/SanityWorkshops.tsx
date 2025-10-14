@@ -1,6 +1,7 @@
 
 import YouTubeVideo from './YouTubeVideo';
 import { getWorkshops } from '@/lib/sanity-queries';
+import type { Workshop } from '@/lib/sanity';
 
 export default async function SanityWorkshops() {
   const workshops = await getWorkshops();
@@ -18,7 +19,7 @@ export default async function SanityWorkshops() {
   }
 
   // Only show recorded workshops
-  const recordedWorkshops = workshops.filter((workshop: any) => workshop.isRecorded);
+  const recordedWorkshops = workshops.filter((workshop: Workshop) => workshop.isRecorded);
 
   return (
     <>
@@ -26,7 +27,7 @@ export default async function SanityWorkshops() {
       <section className="mt-16">
         <h2 className="font-heading text-2xl font-semibold mb-6">Workshop Recordings</h2>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-1">
-          {recordedWorkshops.map((workshop: any) => (
+          {recordedWorkshops.map((workshop: Workshop) => (
             <article key={workshop._id} className="rounded-2xl bg-white ring-1 ring-charcoal/10 overflow-hidden hover:ring-clay/30 transition-all duration-200">
               <div className="grid gap-6 md:grid-cols-2">
                 {/* Video Preview */}

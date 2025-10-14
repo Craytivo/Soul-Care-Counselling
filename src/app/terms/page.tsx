@@ -29,7 +29,7 @@ export default function Terms() {
         <section className="mb-8">
           <h2 className="font-heading text-2xl font-semibold text-charcoal mb-4">Agreement to Terms</h2>
           <p className="text-charcoal/85 mb-4">
-            These Terms of Use ("Terms") govern your use of the Soul Care Counselling website and services. By accessing or using our website, you agree to be bound by these Terms. If you do not agree to these Terms, please do not use our services.
+            These Terms of Use (&quot;Terms&quot;) govern your use of the Soul Care Counselling website and services. By accessing or using our website, you agree to be bound by these Terms. If you do not agree to these Terms, please do not use our services.
           </p>
           <p className="text-charcoal/85 mb-4">
             We reserve the right to modify these Terms at any time. Your continued use of our services after any such changes constitutes your acceptance of the new Terms.

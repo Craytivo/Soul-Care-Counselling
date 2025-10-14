@@ -298,7 +298,7 @@ export async function getBlogPostsByTag(tag: string): Promise<BlogPost[]> {
       tags,
       readingTime
     }
-  `, { tag: tag } as any)
+  `, { tag: tag } as Record<string, unknown>)
 }
 
 // Core Values Page

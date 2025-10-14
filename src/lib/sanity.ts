@@ -1,5 +1,6 @@
 import { createClient } from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
+import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 
 // Create Sanity client
 export const client = createClient({
@@ -13,7 +14,7 @@ export const client = createClient({
 // Image URL builder
 const builder = imageUrlBuilder(client)
 
-export function urlFor(source: any) {
+export function urlFor(source: SanityImageSource) {
   return builder.image(source)
 }
 
@@ -74,7 +75,7 @@ export interface Workshop {
   videoUrl?: string
   isRecorded: boolean
   thumbnail?: SanityImage
-  content?: any[]
+  content?: unknown[]
   slug: {
     current: string
   }
@@ -149,7 +150,7 @@ export interface BlogPost {
   slug: {
     current: string
   }
-  content: any[]
+  content: unknown[]
   featuredImage?: SanityImage & {
     alt?: string
     caption?: string
@@ -204,7 +205,7 @@ export interface ServicePage {
   sections: Array<{
     _type: 'textSection' | 'detailsSection' | 'listSection' | 'ctaSection'
     title: string
-    content?: any[]
+    content?: unknown[]
     items?: Array<{
       label: string
       value: string
@@ -270,7 +271,7 @@ export interface AboutPage {
   }
   welcome: {
     title: string
-    content: any[] // Portable Text content
+    content: unknown[] // Portable Text content
   }
   pillars: {
     title: string
@@ -337,7 +338,7 @@ export interface AreasPage {
     slug: {
       current: string
     }
-    content: any[] // Portable Text
+  content: unknown[] // Portable Text
     order: number
   }>
   cta?: {

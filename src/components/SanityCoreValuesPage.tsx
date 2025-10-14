@@ -75,7 +75,7 @@ export default async function SanityCoreValuesPage() {
 
       {/* Values */}
       <section className="mt-14 md:mt-16 space-y-10">
-        {page.values.map((value: any, index: number) => (
+  {page.values.map((value: { title: string; description: string; order: number }, index: number) => (
           <article key={index}>
             <h2 className="font-heading text-xl md:text-2xl font-semibold">{value.title}</h2>
             <p className="mt-3 text-charcoal/85 whitespace-pre-line">

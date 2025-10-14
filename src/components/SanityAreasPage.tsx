@@ -10,17 +10,17 @@ export default async function SanityAreasPage() {
 
   const portableTextComponents = {
     block: {
-      h3: (props: any) => <h3 className="text-xl font-semibold mb-2">{props.children}</h3>,
-      h4: (props: any) => <h4 className="text-lg font-semibold mb-2">{props.children}</h4>,
-      normal: (props: any) => <p className="mb-4">{props.children}</p>,
+      h3: (props: { children?: React.ReactNode }) => <h3 className="text-xl font-semibold mb-2">{props.children}</h3>,
+      h4: (props: { children?: React.ReactNode }) => <h4 className="text-lg font-semibold mb-2">{props.children}</h4>,
+      normal: (props: { children?: React.ReactNode }) => <p className="mb-4">{props.children}</p>,
     },
     list: {
-      bullet: (props: any) => <ul className="list-disc pl-6 mb-4">{props.children}</ul>,
-      number: (props: any) => <ol className="list-decimal pl-6 mb-4">{props.children}</ol>,
+      bullet: (props: { children?: React.ReactNode }) => <ul className="list-disc pl-6 mb-4">{props.children}</ul>,
+      number: (props: { children?: React.ReactNode }) => <ol className="list-decimal pl-6 mb-4">{props.children}</ol>,
     },
     listItem: {
-      bullet: (props: any) => <li className="mb-2">{props.children}</li>,
-      number: (props: any) => <li className="mb-2">{props.children}</li>,
+      bullet: (props: { children?: React.ReactNode }) => <li className="mb-2">{props.children}</li>,
+      number: (props: { children?: React.ReactNode }) => <li className="mb-2">{props.children}</li>,
     },
   }
 
@@ -50,7 +50,7 @@ export default async function SanityAreasPage() {
           <article key={area.slug.current} id={area.slug.current} className="rounded-2xl bg-white p-6 ring-1 ring-charcoal/10">
             <h2 className="font-heading text-xl md:text-2xl font-semibold">{area.title}</h2>
             <div className="mt-3 space-y-4 text-charcoal/85">
-              <PortableText value={area.content} components={portableTextComponents} />
+              <PortableText value={area.content as import('@portabletext/types').TypedObject[]} components={portableTextComponents} />
             </div>
           </article>
         ))}

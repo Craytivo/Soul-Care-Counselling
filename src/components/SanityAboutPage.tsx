@@ -14,17 +14,17 @@ export default async function SanityAboutPage() {
 
   const portableTextComponents = {
     block: {
-      h3: (props: any) => <h3 className="text-xl font-semibold mb-2">{props.children}</h3>,
-      h4: (props: any) => <h4 className="text-lg font-semibold mb-2">{props.children}</h4>,
-      normal: (props: any) => <p className="mb-4">{props.children}</p>,
+      h3: (props: { children?: React.ReactNode }) => <h3 className="text-xl font-semibold mb-2">{props.children}</h3>,
+      h4: (props: { children?: React.ReactNode }) => <h4 className="text-lg font-semibold mb-2">{props.children}</h4>,
+      normal: (props: { children?: React.ReactNode }) => <p className="mb-4">{props.children}</p>,
     },
     list: {
-      bullet: (props: any) => <ul className="list-disc pl-5 mb-4">{props.children}</ul>,
-      number: (props: any) => <ol className="list-decimal pl-5 mb-4">{props.children}</ol>,
+      bullet: (props: { children?: React.ReactNode }) => <ul className="list-disc pl-5 mb-4">{props.children}</ul>,
+      number: (props: { children?: React.ReactNode }) => <ol className="list-decimal pl-5 mb-4">{props.children}</ol>,
     },
     listItem: {
-      bullet: (props: any) => <li className="mb-2">{props.children}</li>,
-      number: (props: any) => <li className="mb-2">{props.children}</li>,
+      bullet: (props: { children?: React.ReactNode }) => <li className="mb-2">{props.children}</li>,
+      number: (props: { children?: React.ReactNode }) => <li className="mb-2">{props.children}</li>,
     },
   };
 
@@ -88,7 +88,7 @@ export default async function SanityAboutPage() {
               <h2 className="font-heading text-2xl md:text-3xl font-bold">{pageData.welcome.title}</h2>
             </header>
             <div className="mt-4 space-y-4 text-charcoal/85">
-              <PortableText value={pageData.welcome.content} components={portableTextComponents} />
+              <PortableText value={pageData.welcome.content as import('@portabletext/types').TypedObject[]} components={portableTextComponents} />
             </div>
           </div>
           {/* RIGHT: Pillars */}

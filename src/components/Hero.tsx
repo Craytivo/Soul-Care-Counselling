@@ -48,7 +48,7 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
       <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-sand to-cream">
         <div className="text-center text-bark/60">
           <p className="text-lg">Please create homepage content in Sanity Studio</p>
-          <p className="text-sm mt-2">Visit <a href="/studio" className="text-gold underline">Sanity Studio</a> to add homepage content</p>
+          <p className="text-sm mt-2">Visit <Link href="/studio" className="text-gold underline">Sanity Studio</Link> to add homepage content</p>
         </div>
       </section>
     )
@@ -61,7 +61,8 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
   const backgroundImageAlt = heroData.backgroundImage?.alt || 'Hero background'
 
   // Sanity hotspot support for better focal visibility
-  const hotspot = (heroData.backgroundImage as any)?.hotspot
+  // Replace 'any' with a more specific type if available, otherwise use 'unknown'
+  const hotspot = (heroData.backgroundImage as { hotspot?: { x: number; y: number } })?.hotspot
   const objectPosition = hotspot
     ? `${(hotspot.x * 100).toFixed(2)}% ${(hotspot.y * 100).toFixed(2)}%`
     : '50% 50%'
@@ -118,7 +119,7 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
                   {/* Features two columns (left aligned) */}
                   <div className="mt-6 mb-2 flex flex-col sm:flex-row gap-6 md:gap-10 lg:gap-12 justify-start md:justify-center md:mx-auto w-full max-w-2xl">
                     <div className="flex flex-col gap-3 min-w-[200px] items-start">
-                      {heroData.features.slice(0,2).map((feature: any, index: number) => (
+                      {heroData.features.slice(0,2).map((feature: { icon: string; text: string }, index: number) => (
                         <div key={index} className="flex items-start gap-5">
                           <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-clay/90 text-cream ring-1 ring-white/25 flex-shrink-0">
                             {iconComponents[feature.icon as keyof typeof iconComponents]}
@@ -128,7 +129,7 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
                       ))}
                     </div>
                     <div className="flex flex-col gap-3 min-w-[200px] items-start">
-                      {heroData.features.slice(2,4).map((feature: any, index: number) => (
+                      {heroData.features.slice(2,4).map((feature: { icon: string; text: string }, index: number) => (
                         <div key={index} className="flex items-start gap-5">
                           <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-clay/90 text-cream ring-1 ring-white/25 flex-shrink-0">
                             {iconComponents[feature.icon as keyof typeof iconComponents]}
@@ -221,12 +222,12 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
                 </header>
                 {/* Mobile quote - positioned below header */}
                 <blockquote className="block sm:hidden mt-4 border-l-2 border-clay/60 pl-3 text-left">
-                  <p className="font-heading text-sm italic text-white/85 line-clamp-2">"{heroData.quote.text}"</p>
+                  <p className="font-heading text-sm italic text-white/85 line-clamp-2">&ldquo;{heroData.quote.text}&rdquo;</p>
                   <footer className="mt-1 text-[11px] text-sand/80">— {heroData.quote.author}</footer>
                 </blockquote>
                 <div className="hidden sm:flex mt-5 mb-2 flex-col sm:flex-row gap-6 md:gap-10 lg:gap-12 justify-start md:justify-center md:mx-auto w-full max-w-2xl">
                   <div className="flex flex-col gap-3 min-w-[200px] items-start">
-                    {heroData.features.slice(0,2).map((feature: any, index: number) => (
+                    {heroData.features.slice(0,2).map((feature: { icon: string; text: string }, index: number) => (
                       <div key={index} className="flex items-start gap-5">
                         <span className="flex h-8 w-8 items-center justify-center rounded-md bg-clay/85 text-cream ring-1 ring-white/20 flex-shrink-0">
                           {iconComponents[feature.icon as keyof typeof iconComponents]}
@@ -236,7 +237,7 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
                     ))}
                   </div>
                   <div className="flex flex-col gap-3 min-w-[200px] items-start">
-                    {heroData.features.slice(2,4).map((feature: any, index: number) => (
+                    {heroData.features.slice(2,4).map((feature: { icon: string; text: string }, index: number) => (
                       <div key={index} className="flex items-start gap-5">
                         <span className="flex h-8 w-8 items-center justify-center rounded-md bg-clay/85 text-cream ring-1 ring-white/20 flex-shrink-0">
                           {iconComponents[feature.icon as keyof typeof iconComponents]}
@@ -247,7 +248,7 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
                   </div>
                 </div>
                 <blockquote className="hidden sm:block border-l-2 border-clay/60 pl-3 text-left">
-                  <p className="font-heading text-sm sm:text-base md:text-[17px] italic text-white/85 line-clamp-2">“{heroData.quote.text}”</p>
+                  <p className="font-heading text-sm sm:text-base md:text-[17px] italic text-white/85 line-clamp-2">&ldquo;{heroData.quote.text}&rdquo;</p>
                   <footer className="mt-1 text-[11px] sm:text-xs md:text-[13px] text-sand/80">— {heroData.quote.author}</footer>
                 </blockquote>
                 <div className="flex flex-wrap justify-center gap-3 pt-2">

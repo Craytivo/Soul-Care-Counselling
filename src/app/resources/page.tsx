@@ -1,10 +1,7 @@
 
 
-'use client'
 export const revalidate = 0
-export const dynamic = 'force-dynamic'
 
-import { useState, useEffect } from 'react'
 import { getResources, getFeaturedResources } from '@/lib/sanity-queries'
 import { urlFor } from '@/lib/sanity'
 import Image from 'next/image'
@@ -20,48 +17,16 @@ const categories = [
   'Spiritual Care'
 ]
 
-export default function ResourcesPage() {
-  const [allResources, setAllResources] = useState<Resource[]>([])
-  const [featuredResources, setFeaturedResources] = useState<Resource[]>([])
-  const [filteredResources, setFilteredResources] = useState<Resource[]>([])
-  const [selectedCategory, setSelectedCategory] = useState('All Resources')
-  const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    const fetchResources = async () => {
-      try {
-        const [resources, featured] = await Promise.all([
-          getResources(),
-          getFeaturedResources()
-        ])
-        setAllResources(resources)
-        setFeaturedResources(featured)
-        setFilteredResources(resources)
-      } catch (error) {
-        console.error('Error fetching resources:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchResources()
-  }, [])
+export default async function ResourcesPage() {
+  const [allResources, featuredResources] = await Promise.all([
+    getResources(),
+    getFeaturedResources()
+  ]);
+  const selectedCategory = 'All Resources';
+  const filteredResources = allResources;
 
-  useEffect(() => {
-    if (selectedCategory === 'All Resources') {
-      setFilteredResources(allResources)
-    } else {
-      const filtered = allResources.filter(resource => resource.category === selectedCategory)
-      setFilteredResources(filtered)
-    }
-  }, [selectedCategory, allResources])
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-clay"></div>
-      </div>
-    )
-  }
+  // Server components can't use interactive category selection, so default to 'All Resources'.
 
   const formatFileSize = (bytes: number) => {
     if (bytes === 0) return '0 Bytes'
@@ -71,7 +36,7 @@ export default function ResourcesPage() {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
   }
 
-  const ResourceCard = ({ resource, featured = false }: { resource: any, featured?: boolean }) => (
+  const ResourceCard = ({ resource, featured = false }: { resource: Resource, featured?: boolean }) => (
     <article className={`rounded-2xl bg-white ring-1 ring-charcoal/10 overflow-hidden hover:ring-clay/30 transition-all duration-200 ${featured ? '' : ''}`}>
       {resource.previewImage?.asset && (
         <div className={`relative ${featured ? 'h-64 md:h-auto' : 'h-48'}`}>
@@ -174,22 +139,21 @@ export default function ResourcesPage() {
       <section className="mt-8">
         <div className="flex flex-wrap gap-2">
           {categories.map((category) => (
-            <button
+            <span
               key={category}
-              onClick={() => setSelectedCategory(category)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                 category === selectedCategory
                   ? 'bg-clay text-charcoal ring-1 ring-charcoal/20'
-                  : 'bg-white text-charcoal/80 hover:bg-sand ring-1 ring-charcoal/10 hover:ring-charcoal/20'
+                  : 'bg-white text-charcoal/80 ring-1 ring-charcoal/10'
               }`}
             >
               {category}
-            </button>
+            </span>
           ))}
         </div>
       </section>
 
-      {allResources.length === 0 ? (
+  {allResources.length === 0 ? (
         /* Empty State */
         <section className="mt-16">
           <div className="text-center py-12">
