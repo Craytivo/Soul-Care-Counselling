@@ -1,3 +1,4 @@
+export const revalidate = 0
 import Hero from '../components/Hero'
 import { getTeamMembers, getHomePage } from '../lib/sanity-queries'
 import HomeClient from './HomeClient'
