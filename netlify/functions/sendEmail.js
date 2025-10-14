@@ -54,6 +54,13 @@ exports.handler = async function(event) {
     });
     busboy.on('finish', async () => {
       try {
+        // Log received fields and file info for debugging
+        console.log('Fields:', fields);
+        if (fileName) {
+          console.log('File received:', fileName, fileMime, fileBuffer ? fileBuffer.length : 0);
+        } else {
+          console.log('No file uploaded.');
+        }
         const msg = {
           to: process.env.CONTACT_EMAIL,
           from: process.env.CONTACT_EMAIL,
@@ -72,6 +79,7 @@ exports.handler = async function(event) {
           body: 'Email sent successfully!',
         });
       } catch (error) {
+        console.error('Error sending email:', error);
         resolve({
           statusCode: 500,
           body: 'Error sending email: ' + error.message,
@@ -79,6 +87,7 @@ exports.handler = async function(event) {
       }
     });
     busboy.on('error', (err) => {
+      console.error('Busboy error:', err);
       resolve({
         statusCode: 400,
         body: 'Error parsing form: ' + err.message,
@@ -87,6 +96,7 @@ exports.handler = async function(event) {
     try {
       busboy.end(body);
     } catch (err) {
+      console.error('Busboy end error:', err);
       resolve({
         statusCode: 400,
         body: 'Error ending form: ' + err.message,
@@ -94,6 +104,7 @@ exports.handler = async function(event) {
     }
     // Fallback: If busboy doesn't emit finish/error within 5 seconds, resolve with error
     setTimeout(() => {
+      console.error('Busboy timeout: Form parsing timed out.');
       resolve({
         statusCode: 408,
         body: 'Form parsing timed out.',
