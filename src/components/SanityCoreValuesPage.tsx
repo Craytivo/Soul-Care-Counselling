@@ -10,7 +10,7 @@ export default async function SanityCoreValuesPage() {
   if (!page) {
     return (
       <div className="text-center py-12">
-        <p className="text-charcoal/60">Core values page not found.</p>
+  <p className="text-charcoal/60">Core pillars page not found.</p>
       </div>
     );
   }

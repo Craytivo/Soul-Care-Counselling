@@ -5,7 +5,27 @@ import type { ContactPage } from '@/lib/sanity'
 export default function ContactClient({ pageData }: { pageData: ContactPage }) {
   const [formStatus, setFormStatus] = useState('')
 
-  // Netlify Forms handles submission automatically
+  // Custom handler for async form submission
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setFormStatus('Sending...');
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    try {
+      const res = await fetch('/.netlify/functions/sendEmail', {
+        method: 'POST',
+        body: formData,
+      });
+      if (res.ok) {
+        setFormStatus('Message sent successfully!');
+        form.reset();
+      } else {
+        setFormStatus('Error sending message.');
+      }
+    } catch (err) {
+      setFormStatus('Error sending message.');
+    }
+  };
 
   if (!pageData) {
     return (
@@ -57,7 +77,13 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
           {/* General Contact Form */}
           <div>
             <h2 className="font-heading text-xl md:text-2xl font-semibold">{pageData.contactForm.heading}</h2>
-            <form name="contact" method="POST" className="mt-4 rounded-2xl bg-white p-6 ring-1 ring-charcoal/10 space-y-4">
+            <form 
+              name="contact" 
+              method="POST" 
+              encType="multipart/form-data"
+              className="mt-4 rounded-2xl bg-white p-6 ring-1 ring-charcoal/10 space-y-4"
+              onSubmit={handleSubmit}
+            >
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label htmlFor="name" className="block text-sm font-semibold">{pageData.contactForm.fields.fullNameLabel}</label>
@@ -134,9 +160,13 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
                 >
                   {pageData.contactForm.submitButtonText}
                 </button>
-                <p className="text-sm text-charcoal/80" role="status" aria-live="polite">
-                  {formStatus}
-                </p>
+                <div className={`text-sm flex items-center gap-2 min-h-[1.5em] transition-all duration-200 ${formStatus === 'Sending...' ? 'text-bark' : formStatus.includes('successfully') ? 'text-green-700' : formStatus.includes('Error') ? 'text-red-600' : 'text-charcoal/80'}`}
+                  role="status" aria-live="polite">
+                  {formStatus === 'Sending...' && <svg className="w-4 h-4 animate-spin text-bark" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/></svg>}
+                  {formStatus.includes('successfully') && <svg className="w-4 h-4 text-green-700" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>}
+                  {formStatus.includes('Error') && <svg className="w-4 h-4 text-red-600" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>}
+                  <span>{formStatus}</span>
+                </div>
               </div>
             </form>
             <p className="mt-3 text-xs text-charcoal/70">

@@ -50,7 +50,7 @@ export default function Header() {
                 About Us
               </Link>
               <Link href="/core-values" className="uppercase tracking-[.15em] text-sm font-medium text-bark/80 hover:text-gold transition-colors duration-200 whitespace-nowrap">
-                Core Values
+                Core Pillars
               </Link>
               <Link href="/services" className="uppercase tracking-[.15em] text-sm font-medium text-bark/80 hover:text-gold transition-colors duration-200 whitespace-nowrap">
                 Services
@@ -147,7 +147,7 @@ export default function Header() {
             About Us
           </Link>
           <Link href="/core-values" className="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" onClick={closeMenu}>
-            Core Values
+            Core Pillars
           </Link>
           <Link href="/services" className="block py-2 uppercase tracking-[.15em] text-sm text-cream/90 hover:text-cream" onClick={closeMenu}>
             Services

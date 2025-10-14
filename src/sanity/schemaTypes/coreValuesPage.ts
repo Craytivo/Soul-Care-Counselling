@@ -2,7 +2,7 @@ import { defineField, defineType } from 'sanity'
 
 export const coreValuesPage = defineType({
   name: 'coreValuesPage',
-  title: 'Core Values Page',
+  title: 'Core Pillars Page',
   type: 'document',
   fields: [
     defineField({
@@ -65,7 +65,7 @@ export const coreValuesPage = defineType({
     }),
     defineField({
       name: 'values',
-      title: 'Core Values',
+  title: 'Core Pillars',
       type: 'array',
       of: [
         {
@@ -170,7 +170,7 @@ export const coreValuesPage = defineType({
       const status = isActive ? '✅' : '⏳'
       return {
         title: `${status} ${title}`,
-        subtitle: 'Core Values Page',
+  subtitle: 'Core Pillars Page',
       }
     },
   },
