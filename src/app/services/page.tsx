@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+
+export const revalidate = 0
 import SanityServices from '@/components/SanityServices'
 import { getServicesPage } from '@/lib/sanity-queries'
 import Link from 'next/link'

@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 
+export const revalidate = 0
+
 export const metadata: Metadata = {
   title: 'Terms of Use — Soul Care Counselling',
   description: 'Terms of Use for Soul Care Counselling - Understand the terms and conditions for using our faith-centered counselling services and website.',

@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 
+export const revalidate = 0
+
 export const metadata: Metadata = {
   title: 'Privacy Policy — Soul Care Counselling',
   description: 'Privacy Policy for Soul Care Counselling - Learn how we protect your personal information and maintain confidentiality in our faith-centered therapy services.',

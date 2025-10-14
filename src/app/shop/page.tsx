@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 
+export const revalidate = 0
+
 export const metadata: Metadata = {
   title: 'Shop — Soul Care Counselling',
   description: 'Discover wellness products and resources to support your healing journey. Coming soon - curated items for your mental health and spiritual growth.',
