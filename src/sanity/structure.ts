@@ -13,15 +13,11 @@ export const structure: StructureResolver = (S) =>
         .id('termsOfUsePage')
         .title('Terms of Use Page')
         .schemaType('termsOfUsePage'),
-      S.documentListItem()
-        .id('accessibilityPage')
-        .title('Accessibility Page')
-        .schemaType('accessibilityPage'),
       // All other document types
       ...S.documentTypeListItems().filter(
         (item) => {
           const id = item.getId() ?? '';
-          return !['privacyPolicyPage', 'termsOfUsePage', 'accessibilityPage'].includes(id);
+          return !['privacyPolicyPage', 'termsOfUsePage'].includes(id);
         }
       ),
     ])
