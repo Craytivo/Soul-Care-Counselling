@@ -1,12 +1,12 @@
 // Script to seed Privacy Policy and Terms of Use pages in Sanity
+import 'dotenv/config';
 import { createClient } from '@sanity/client';
-
 const client = createClient({
-  projectId: process.env.SANITY_PROJECT_ID,
-  dataset: process.env.SANITY_DATASET,
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
   token: process.env.SANITY_API_TOKEN,
   useCdn: false,
-  apiVersion: '2023-05-01',
+  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2025-09-05',
 });
 
 const privacyContent = [

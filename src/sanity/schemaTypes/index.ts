@@ -15,7 +15,6 @@ import { teamMember } from './teamMember'
 import { workshop } from './workshop'
 import privacyPolicyPage from './privacyPolicyPage'
 import termsOfUsePage from './termsOfUsePage'
-import accessibilityPage from './accessibilityPage'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -34,8 +33,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     blogPost,
     resource,
   siteSettings,
-    privacyPolicyPage,
-    termsOfUsePage,
-    accessibilityPage,
+  privacyPolicyPage,
+  termsOfUsePage,
   ],
 }

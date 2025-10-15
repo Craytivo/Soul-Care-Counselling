@@ -138,7 +138,6 @@ export default function Footer() {
             <ul className="mt-4 space-y-2 text-sm">
               <li><Link href="/privacy" className="text-bark/80 hover:text-bark">Privacy Policy</Link></li>
               <li><Link href="/terms" className="text-bark/80 hover:text-bark">Terms of Use</Link></li>
-              <li><Link href="/contact" className="text-bark/80 hover:text-bark">Accessibility</Link></li>
             </ul>
             <p className="mt-4 text-xs text-bark/60">
               Not for crisis support. If you&apos;re in immediate danger, call 911 or local emergency services.
