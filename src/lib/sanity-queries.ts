@@ -1,6 +1,21 @@
 import { client } from './sanity'
 import type { TeamMember, Workshop, Service, ServicePage, CoreValuesPage, AboutPage, AreasPage, BlogPost, SiteSettings, HomePage, Services, InternApplicationPage, FAQPage, ContactPage, Resource } from './sanity'
 
+// Privacy Policy Page
+export async function getPrivacyPolicyPage() {
+  return await client.fetch(`*[_type == "privacyPolicyPage"] | order(_updatedAt desc)[0]`);
+}
+
+// Terms of Use Page
+export async function getTermsOfUsePage() {
+  return await client.fetch(`*[_type == "termsOfUsePage"] | order(_updatedAt desc)[0]`);
+}
+
+// Accessibility Page
+export async function getAccessibilityPage() {
+  return await client.fetch(`*[_type == "accessibilityPage"] | order(_updatedAt desc)[0]`);
+}
+
 // Team Members
 export async function getTeamMembers(): Promise<TeamMember[]> {
   return await client.fetch(`
