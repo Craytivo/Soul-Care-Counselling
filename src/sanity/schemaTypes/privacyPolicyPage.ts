@@ -1,4 +1,4 @@
-export default {
+const privacyPolicyPage = {
   name: 'privacyPolicyPage',
   type: 'document',
   title: 'Privacy Policy Page',
@@ -17,3 +17,6 @@ export default {
     },
   ],
 };
+
+
+export default privacyPolicyPage;

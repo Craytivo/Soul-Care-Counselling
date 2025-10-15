@@ -1,4 +1,4 @@
-export default {
+const termsOfUsePage = {
   name: 'termsOfUsePage',
   type: 'document',
   title: 'Terms of Use Page',
@@ -17,3 +17,6 @@ export default {
     },
   ],
 };
+
+
+export default termsOfUsePage;
