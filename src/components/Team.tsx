@@ -17,7 +17,7 @@ interface TeamMember {
       _ref: string;
     };
   };
-  bio?: string;
+  bio?: unknown[]; // Portable Text array
   status?: string;
   specialties?: string[];
   slug?: { current: string };
@@ -31,8 +31,8 @@ export default function Team() {
 
   useEffect(() => {
     async function fetchData() {
-      const data = await getTeamMembers();
-      setTeamMembers(data);
+  const data = await getTeamMembers();
+  setTeamMembers(data as TeamMember[]);
     }
     fetchData();
   }, []);
@@ -178,7 +178,9 @@ export default function Team() {
                   </div>
                 </div>
                 <div className="mt-2 text-[15px] text-charcoal/90 font-medium leading-relaxed">
-                  <PortableText value={Array.isArray(member.bio) ? member.bio : (member.bio ? [{children: [{text: member.bio}], _type: 'block'}] : [])} />
+                  {member.bio && Array.isArray(member.bio) && member.bio.length > 0 ? (
+                    <PortableText value={member.bio} />
+                  ) : null}
                 </div>
               </div>
               <div className="mt-4 team-cta px-6 pb-6" style={{ minHeight: "3.5rem" }}>
