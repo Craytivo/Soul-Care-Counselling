@@ -25,7 +25,9 @@ interface TeamMember {
 export default function Team() {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   // Removed unused loading state
-  const [searchQuery, setSearchQuery] = useState<string>("");
+        (member.specialties || []).some(
+          (s) => s.trim().toLowerCase() === activeFilter.trim().toLowerCase()
+        );
   const [activeFilter, setActiveFilter] = useState<string>("All Team Members");
 
   useEffect(() => {
