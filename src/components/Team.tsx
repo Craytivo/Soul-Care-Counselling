@@ -361,43 +361,6 @@ export default function Team() {
         </section>
       )
     }
-            Faith-informed and evidence-based care.<br />
-            <span className="text-clay/80">Meet the people who will support your healing.</span>
-          </p>
-        </header>
-
-        {/* Toolbar: dropdown on mobile, tabs on desktop */}
-        <div className="mt-6 flex flex-wrap items-center gap-3 sticky top-0 z-10 bg-white/90 backdrop-blur-md py-3 shadow-sm rounded-xl">
-          <label htmlFor="teamSearch" className="sr-only">Search team</label>
-          <input 
-            id="teamSearch" 
-            type="search" 
-            placeholder="Search by name, specialty, credential, or approach…"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full sm:w-80 rounded-md border border-charcoal/20 bg-white px-3 py-2 text-sm outline-none ring-0 focus:border-clay"
-            autoComplete="off" 
-            aria-label="Search team members by name, specialty, credential, or approach"
-          />
-          {/* Dropdown for filters on mobile */}
-          <div className="w-full block md:hidden mt-3">
-            <select
-              value={activeFilter}
-              onChange={e => setActiveFilter(e.target.value)}
-              className="w-full rounded-md border border-charcoal/20 bg-white px-3 py-2 text-sm font-semibold text-bark focus:border-clay focus:ring-2 focus:ring-clay/40"
-              aria-label="Filter team by specialty"
-              id="teamFilter"
-            >
-              {filters.map(filter => (
-                <option key={filter.key} value={filter.key}>
-                  {filter.label} {filter.count > 0 ? `(${filter.count})` : ''}
-                </option>
-              ))}
-            </select>
-          </div>
-          {/* Tabs for filters on desktop */}
-          <div className="hidden md:flex flex-wrap gap-2" aria-label="Filter tags">
-            {filters.map(filter => (
               <button
                 key={filter.key}
                 type="button"
