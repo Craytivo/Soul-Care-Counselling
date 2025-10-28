@@ -85,28 +85,30 @@ export default function TeamMemberPage({ member }: TeamMemberPageProps) {
         {/* LEFT: Main narrative */}
         <article className="md:col-span-7 space-y-5 text-charcoal/90">
           <h2 className="font-heading text-xl md:text-2xl font-semibold">About {member.name.split(' ')[0]}</h2>
-          
           {member.bio.map((paragraph, index) => (
             <p key={index}>{paragraph}</p>
           ))}
-
-          <h3 className="mt-8 font-heading text-lg md:text-xl font-semibold">Specialties</h3>
-          <ul className="mt-3 list-disc pl-6 space-y-1">
-            {member.specialties.map((specialty, index) => (
-              <li key={index}>{specialty}</li>
-            ))}
-          </ul>
         </article>
 
         {/* RIGHT: Quick facts / booking */}
         <aside className="md:col-span-5 space-y-6">
-          <div className="rounded-2xl bg-white p-5 ring-1 ring-charcoal/10">
-            <h3 className="font-heading font-semibold">Areas of Focus</h3>
-            <ul className="mt-3 grid grid-cols-1 gap-2 text-sm text-charcoal/85">
-              {member.areasOfFocus.map((area, index) => (
-                <li key={index}>{area}</li>
-              ))}
-            </ul>
+          <div className="rounded-2xl bg-white p-5 ring-1 ring-charcoal/10 space-y-6">
+            <div>
+              <h3 className="font-heading font-semibold">Areas of Focus</h3>
+              <ul className="mt-3 grid grid-cols-1 gap-2 text-sm text-charcoal/85">
+                {member.areasOfFocus.map((area, index) => (
+                  <li key={index}>{area}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-heading font-semibold mt-6">Specialties</h3>
+              <ul className="mt-3 grid grid-cols-1 gap-2 text-sm text-charcoal/85">
+                {member.specialties.map((specialty, index) => (
+                  <li key={index}>{specialty}</li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           {member.acceptsBookings !== false && (
