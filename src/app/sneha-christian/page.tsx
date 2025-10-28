@@ -30,7 +30,7 @@ export default async function SnehaPage() {
   if (Array.isArray(member.bio) && member.bio.length > 0) {
     bio = member.bio
       .filter((block): block is { children: { text?: string }[] } =>
-        block && typeof block === 'object' && 'children' in block && Array.isArray((block as { children?: unknown }).children)
+        block && typeof block === 'object' && 'children' in block && Array.isArray((block as { children?: unknown[] }).children)
       )
       .map((block) =>
         block.children.map((child: { text?: string }) => child.text || '').join(' ').trim()
