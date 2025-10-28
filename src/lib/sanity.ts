@@ -46,7 +46,7 @@ export interface TeamMember {
   credentials?: string
   role: string
   image: SanityImage
-  bio: string
+  bio: unknown[]
   specialties?: string[]
   areasOfFocus?: string[]
   socialLinks?: Array<{
