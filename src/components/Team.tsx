@@ -176,7 +176,11 @@ export default function Team() {
                     )}
                   </div>
                 </div>
-                <p className="mt-2 text-[15px] text-charcoal/90 font-medium leading-relaxed">{member.bio}</p>
+                {member.bio && member.bio.split(/\n{2,}|\r?\n/).map((para, idx) => (
+                  <p key={idx} className="mt-2 text-[15px] text-charcoal/90 font-medium leading-relaxed">
+                    {para.trim()}
+                  </p>
+                ))}
               </div>
               <div className="mt-4 team-cta px-6 pb-6" style={{ minHeight: "3.5rem" }}>
                 <Link
