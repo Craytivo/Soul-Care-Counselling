@@ -5,9 +5,6 @@ export const revalidate = 0
 export const dynamic = 'force-dynamic'
 import { getTeamMember } from '@/lib/sanity-queries'
 import { urlFor } from '@/lib/sanity'
-import Image from 'next/image'
-import Link from 'next/link'
-import { PortableText, PortableTextBlock } from '@portabletext/react'
 import TeamMemberPage from '@/components/TeamMemberPage'
 
 export const metadata: Metadata = {
@@ -32,9 +29,11 @@ export default async function JessicaPage() {
   let bio: string[] = ['Professional bio coming soon.'];
   if (Array.isArray(member.bio) && member.bio.length > 0) {
     bio = member.bio
-      .filter((block): block is { children: { text?: string }[] } =>
-        block && typeof block === 'object' && 'children' in block && Array.isArray((block as { children?: unknown }).children)
-      )
+      .filter((block): block is { children: { text?: string }[] } => {
+        if (!block || typeof block !== 'object' || !('children' in block)) return false;
+        const children = (block as { children?: unknown }).children;
+        return Array.isArray(children);
+      })
       .map((block) =>
         block.children.map((child: { text?: string }) => child.text || '').join(' ').trim()
       )

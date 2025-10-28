@@ -24,12 +24,27 @@ export default async function ChristianaPage() {
   }
 
   // Convert Sanity data to TeamMemberPage format
+  // Convert Portable Text bio to string[] for TeamMemberPage
+  let bio: string[] = ['Professional bio coming soon.'];
+  if (Array.isArray(member.bio) && member.bio.length > 0) {
+    bio = member.bio
+      .filter((block): block is { children: { text?: string }[] } => {
+        if (!block || typeof block !== 'object' || !('children' in block)) return false;
+        const children = (block as { children?: unknown }).children;
+        return Array.isArray(children);
+      })
+      .map((block) =>
+        block.children.map((child: { text?: string }) => child.text || '').join(' ').trim()
+      )
+      .filter((text: string) => text.length > 0);
+    if (bio.length === 0) bio = ['Professional bio coming soon.'];
+  }
   const memberData = {
     name: member.name,
     credentials: member.credentials || '',
     role: member.role,
     image: member.image ? urlFor(member.image).width(400).height(400).url() : '/assets/img/team/placeholder.webp',
-    bio: member.bio ? [member.bio] : ['Professional bio coming soon.'],
+    bio,
     specialties: member.specialties || [],
     areasOfFocus: member.areasOfFocus || [],
     socialLinks: member.socialLinks || [],

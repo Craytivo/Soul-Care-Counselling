@@ -25,9 +25,11 @@ export default async function KhadianPage() {
   let bio: string[] = ['Professional bio coming soon.'];
   if (Array.isArray(member.bio) && member.bio.length > 0) {
     bio = member.bio
-      .filter((block): block is { children: { text?: string }[] } =>
-        block && typeof block === 'object' && 'children' in block && Array.isArray((block as { children?: unknown }).children)
-      )
+      .filter((block): block is { children: { text?: string }[] } => {
+        if (!block || typeof block !== 'object' || !('children' in block)) return false;
+        const children = (block as { children?: unknown }).children;
+        return Array.isArray(children);
+      })
       .map((block) =>
         block.children.map((child: { text?: string }) => child.text || '').join(' ').trim()
       )
