@@ -2,6 +2,7 @@
 
 
 import { useState, useMemo, useEffect } from "react";
+import type { TypedObject } from '@portabletext/types';
 import PortableText from "./PortableText";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,7 +18,7 @@ interface TeamMember {
       _ref: string;
     };
   };
-  bio?: unknown[]; // Portable Text array
+  bio?: TypedObject[]; // Portable Text array
   status?: string;
   specialties?: string[];
   slug?: { current: string };
@@ -42,7 +43,12 @@ export default function Team() {
       const searchLower = searchQuery.toLowerCase();
       // Search bio text if it's an array of blocks (Portable Text)
       const bioText = Array.isArray(member.bio)
-        ? member.bio.map((block: any) => (typeof block.children === 'object' ? block.children.map((child: any) => child.text).join(' ') : '')).join(' ')
+        ? member.bio.map((block) => {
+            if (typeof block === 'object' && 'children' in block && Array.isArray((block as any).children)) {
+              return (block as { children: { text?: string }[] }).children.map((child) => child.text || '').join(' ');
+            }
+            return '';
+          }).join(' ')
         : '';
       const matchesSearch =
         !searchQuery ||
@@ -183,7 +189,7 @@ export default function Team() {
                 </div>
                 <div className="mt-2 text-[15px] text-charcoal/90 font-medium leading-relaxed">
                   {Array.isArray(member.bio) && member.bio.length > 0 ? (
-                    <PortableText value={member.bio} />
+                    <PortableText value={member.bio as TypedObject[]} />
                   ) : (
                     <span className="italic text-charcoal/60">Professional bio coming soon.</span>
                   )}
