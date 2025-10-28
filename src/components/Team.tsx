@@ -44,8 +44,14 @@ export default function Team() {
       // Search bio text if it's an array of blocks (Portable Text)
       const bioText = Array.isArray(member.bio)
         ? member.bio.map((block) => {
-            if (typeof block === 'object' && 'children' in block && Array.isArray((block as any).children)) {
-              return (block as { children: { text?: string }[] }).children.map((child) => child.text || '').join(' ');
+            if (
+              typeof block === 'object' &&
+              block !== null &&
+              'children' in block &&
+              Array.isArray((block as { children?: unknown }).children)
+            ) {
+              const children = (block as { children: { text?: string }[] }).children;
+              return children.map((child) => child.text || '').join(' ');
             }
             return '';
           }).join(' ')
