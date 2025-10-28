@@ -177,11 +177,9 @@ export default function Team() {
                     )}
                   </div>
                 </div>
-                {member.bio && (
-                  <div className="mt-2 text-[15px] text-charcoal/90 font-medium leading-relaxed">
-                    <PortableText value={member.bio} />
-                  </div>
-                )}
+                <div className="mt-2 text-[15px] text-charcoal/90 font-medium leading-relaxed">
+                  <PortableText value={Array.isArray(member.bio) ? member.bio : (member.bio ? [{children: [{text: member.bio}], _type: 'block'}] : [])} />
+                </div>
               </div>
               <div className="mt-4 team-cta px-6 pb-6" style={{ minHeight: "3.5rem" }}>
                 <Link
