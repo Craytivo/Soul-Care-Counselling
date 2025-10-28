@@ -40,12 +40,16 @@ export default function Team() {
   const filteredMembers = useMemo(() => {
     return teamMembers.filter((member: TeamMember) => {
       const searchLower = searchQuery.toLowerCase();
+      // Search bio text if it's an array of blocks (Portable Text)
+      const bioText = Array.isArray(member.bio)
+        ? member.bio.map((block: any) => (typeof block.children === 'object' ? block.children.map((child: any) => child.text).join(' ') : '')).join(' ')
+        : '';
       const matchesSearch =
         !searchQuery ||
         member.name.toLowerCase().includes(searchLower) ||
         (member.credentials || "").toLowerCase().includes(searchLower) ||
         member.role.toLowerCase().includes(searchLower) ||
-        (member.bio || "").toLowerCase().includes(searchLower) ||
+        bioText.toLowerCase().includes(searchLower) ||
         (member.specialties || []).some((specialty: string) =>
           specialty.toLowerCase().includes(searchLower)
         );
@@ -178,9 +182,11 @@ export default function Team() {
                   </div>
                 </div>
                 <div className="mt-2 text-[15px] text-charcoal/90 font-medium leading-relaxed">
-                  {member.bio && Array.isArray(member.bio) && member.bio.length > 0 ? (
+                  {Array.isArray(member.bio) && member.bio.length > 0 ? (
                     <PortableText value={member.bio} />
-                  ) : null}
+                  ) : (
+                    <span className="italic text-charcoal/60">Professional bio coming soon.</span>
+                  )}
                 </div>
               </div>
               <div className="mt-4 team-cta px-6 pb-6" style={{ minHeight: "3.5rem" }}>
