@@ -2,6 +2,7 @@
 
 
 import { useState, useMemo, useEffect } from "react";
+import PortableText from "./PortableText";
 import Image from "next/image";
 import Link from "next/link";
 import { getTeamMembers } from "../lib/sanity-queries";
@@ -176,11 +177,11 @@ export default function Team() {
                     )}
                   </div>
                 </div>
-                {member.bio && member.bio.split(/\n{2,}|\r?\n/).map((para, idx) => (
-                  <p key={idx} className="mt-2 text-[15px] text-charcoal/90 font-medium leading-relaxed">
-                    {para.trim()}
-                  </p>
-                ))}
+                {member.bio && (
+                  <div className="mt-2 text-[15px] text-charcoal/90 font-medium leading-relaxed">
+                    <PortableText value={member.bio} />
+                  </div>
+                )}
               </div>
               <div className="mt-4 team-cta px-6 pb-6" style={{ minHeight: "3.5rem" }}>
                 <Link

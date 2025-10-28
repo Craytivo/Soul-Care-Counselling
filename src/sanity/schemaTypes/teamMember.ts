@@ -36,9 +36,9 @@ export const teamMember = defineType({
     defineField({
       name: 'bio',
       title: 'Bio',
-      type: 'text',
-      rows: 4,
-      description: 'Brief professional biography',
+      type: 'array',
+      of: [{ type: 'block' }],
+      description: 'Brief professional biography (rich text, supports paragraphs)',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
