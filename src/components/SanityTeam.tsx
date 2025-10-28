@@ -27,10 +27,17 @@ export function filterMembers(
       nameParts.some(part => part.startsWith(searchLower));
 
     // Search by other fields
+    // Handle member.bio as string[] (array of paragraphs)
+    let bioText = '';
+    if (Array.isArray(member.bio)) {
+      bioText = member.bio.join(' ');
+    } else if (typeof member.bio === 'string') {
+      bioText = member.bio;
+    }
     const matchesOtherFields = !searchQuery ||
       (member.credentials && member.credentials.toLowerCase().includes(searchLower)) ||
       member.role.toLowerCase().includes(searchLower) ||
-      (member.bio && member.bio.toLowerCase().includes(searchLower)) ||
+      (bioText && bioText.toLowerCase().includes(searchLower)) ||
       (member.specialties && member.specialties.some((specialty) => specialty.toLowerCase().includes(searchLower))) ||
       (member.areasOfFocus && member.areasOfFocus.some((area) => area.toLowerCase().includes(searchLower)));
 
@@ -196,7 +203,11 @@ export default async function SanityTeam({
                       )}
                     </div>
                   </div>
-                  <p className="mt-3 text-sm text-charcoal/80 line-clamp-3">{member.bio}</p>
+                  <p className="mt-3 text-sm text-charcoal/80 line-clamp-3">{
+                    Array.isArray(member.bio)
+                      ? member.bio.join(' ')
+                      : (typeof member.bio === 'string' ? member.bio : '')
+                  }</p>
 
                   {/* Specialties */}
                   {member.specialties && member.specialties.length > 0 && (
