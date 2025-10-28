@@ -55,12 +55,14 @@ export default function Team() {
     });
   }, [searchQuery, activeFilter, teamMembers]);
 
-  // Collect all specialties from team members
-  // Removed unused normalizeSpecialty function
-  const specialtySet = new Set<string>();
+  // Collect all specialties from team members (case-insensitive, trimmed, but display original)
+  const specialtyMap = new Map<string, string>(); // normalized -> original
   teamMembers.forEach((member: TeamMember) => {
     (member.specialties || []).forEach((spec: string) => {
-      specialtySet.add(spec.trim());
+      const normalized = spec.trim().toLowerCase();
+      if (!specialtyMap.has(normalized)) {
+        specialtyMap.set(normalized, spec.trim());
+      }
     });
   });
   const filters = [
@@ -69,10 +71,10 @@ export default function Team() {
       label: "All Team Members",
       count: teamMembers.length,
     },
-    ...Array.from(specialtySet).map((spec) => ({
-      key: spec,
-      label: spec,
-      count: teamMembers.filter((m) => (m.specialties || []).includes(spec)).length,
+    ...Array.from(specialtyMap.entries()).map(([normalized, original]) => ({
+      key: original,
+      label: original,
+      count: teamMembers.filter((m) => (m.specialties || []).some((s) => s.trim().toLowerCase() === normalized)).length,
     })),
   ];
 
