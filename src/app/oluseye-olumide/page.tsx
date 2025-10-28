@@ -34,4 +34,3 @@ export default async function OluseyePage() {
   }
   return <TeamMemberPage member={memberData} />
 }
-}
