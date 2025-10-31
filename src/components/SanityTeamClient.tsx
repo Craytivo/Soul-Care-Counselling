@@ -39,7 +39,8 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
       "Affordable therapy",
       "Parent coaching",
       "Family coaching",
-      "Parent workshops"
+      "Parent workshops",
+      "Postpartum Mental Health"
     ];
     return [
       { key: "all", label: "All Team Members", count: teamMembers.length },

@@ -35,17 +35,35 @@ export default function LegalTOC({ headings }: { headings: Heading[] }) {
         )}
       </div>
 
-      {/* Desktop: sticky */}
+      {/* Desktop: sticky - render headings in two columns (balanced) */}
       <div className="hidden md:block md:sticky md:top-24 md:self-start mb-4 w-64">
         <div className="rounded-lg border border-charcoal/8 bg-white/50 p-4">
           <strong className="block text-sm text-charcoal/80 mb-2">Contents</strong>
-          <ul className="space-y-1 text-sm text-charcoal/85">
-            {headings.map(h => (
-              <li key={h.id} className={h.level === 3 ? 'pl-4' : ''}>
-                <a href={`#${h.id}`} className="underline text-clay hover:text-bark">{h.text}</a>
-              </li>
-            ))}
-          </ul>
+          <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-charcoal/85">
+            {(() => {
+              const mid = Math.ceil(headings.length / 2)
+              const left = headings.slice(0, mid)
+              const right = headings.slice(mid)
+              return (
+                <>
+                  <ul className="space-y-1">
+                    {left.map(h => (
+                      <li key={h.id} className={h.level === 3 ? 'pl-4' : ''}>
+                        <a href={`#${h.id}`} className="underline text-clay hover:text-bark">{h.text}</a>
+                      </li>
+                    ))}
+                  </ul>
+                  <ul className="space-y-1">
+                    {right.map(h => (
+                      <li key={h.id} className={h.level === 3 ? 'pl-4' : ''}>
+                        <a href={`#${h.id}`} className="underline text-clay hover:text-bark">{h.text}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )
+            })()}
+          </div>
         </div>
       </div>
     </div>

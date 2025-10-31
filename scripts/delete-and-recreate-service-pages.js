@@ -1,4 +1,4 @@
-const { createClient } = require('@sanity/client')
+import { createClient } from '@sanity/client';
 
 // Sanity client configuration
 const client = createClient({

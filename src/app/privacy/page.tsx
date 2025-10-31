@@ -132,7 +132,7 @@ export default async function Privacy() {
           {/* Mobile TOC (LegalTOC renders mobile collapse when in the document flow) */}
           {headings.length > 0 && <div className="md:hidden mb-4"><LegalTOC headings={headings} /></div>}
 
-          <main className="prose prose-lg max-w-none md:columns-2 md:gap-8">
+          <main className="prose prose-lg max-w-none">
             {pageData?.content && (
               <PortableText value={pageData.content} components={portableTextComponents} />
             )}

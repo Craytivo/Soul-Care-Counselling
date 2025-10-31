@@ -78,6 +78,7 @@ export function getFilters(teamMembers: TeamMember[]): Filter[] {
     "Bilingual",
     "Art therapy",
     "Affordable therapy",
+    "Postpartum Mental Health",
     "Parent coaching",
     "Family coaching",
     "Parent workshops"
@@ -164,7 +165,6 @@ export default async function SanityTeam({
                 }`}
                 aria-pressed={activeFilter === filter.key}
                 type="button"
-                disabled
               >
                 {filter.label}
                 {filter.count > 0 && (
