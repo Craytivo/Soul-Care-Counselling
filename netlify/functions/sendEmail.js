@@ -61,11 +61,18 @@ exports.handler = async function(event) {
         } else {
           console.log('No file uploaded.');
         }
+        // Use CONTACT_EMAIL as recipient. Use SENDGRID_FROM for the sender if provided
+        // (recommended to be a SendGrid-verified sender). Fallback to CONTACT_EMAIL.
+        const to = process.env.CONTACT_EMAIL || 'info@soulcarecounsellor.com'
+        const from = process.env.SENDGRID_FROM || to
+
         const msg = {
-          to: process.env.CONTACT_EMAIL,
-          from: process.env.CONTACT_EMAIL,
+          to,
+          from,
           subject: 'New Form Submission',
           text: JSON.stringify(fields, null, 2),
+          // If the user included an email field, set replyTo so replies go to the submitter
+          ...(fields.email ? { replyTo: String(fields.email) } : {}),
           attachments: (fileBuffer && fileName) ? [{
             content: fileBuffer.toString('base64'),
             filename: fileName,
