@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 }
 
 export default async function NataliePage() {
-  const member = await getTeamMember('natalie-mcdonald')
+  const member = await getTeamMember('natalie-willis')
   if (!member) {
     return (
       <div className="container mx-auto py-12 text-center">
