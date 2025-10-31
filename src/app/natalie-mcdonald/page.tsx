@@ -24,7 +24,7 @@ export default async function NataliePage() {
     credentials: member.credentials || '',
     role: member.role,
     image: member.image ? urlFor(member.image).width(400).height(400).url() : '/assets/img/team/placeholder.webp',
-    bio: Array.isArray(member.bio) ? member.bio : [],
+    bio: Array.isArray(member.bio) ? (member.bio as import('@portabletext/types').PortableTextBlock[]) : [],
     specialties: member.specialties || [],
     areasOfFocus: member.areasOfFocus || [],
     socialLinks: member.socialLinks || [],
