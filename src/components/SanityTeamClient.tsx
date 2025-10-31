@@ -1,8 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import SanityTeam, { getFilters, filterMembers } from "./SanityTeam";
-import { getTeamMembers } from "@/lib/sanity-queries";
 import { urlFor } from "@/lib/sanity";
 import type { TeamMember } from "@/lib/sanity";
 import Image from "next/image";
@@ -13,30 +11,6 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("all");
 
-  // Use the provided specialty list for tabs, preserving order and capitalization
-  // NOTE: Use canonical, ASCII apostrophes here. We'll normalize both the tab labels and
-  // the incoming Sanity data (replacing curly quotes, lowercasing, trimming) before comparing.
-  const specialtyTabs = [
-    "Anxiety",
-    "Depression",
-    "Trauma",
-    "Stress management",
-    "Youth",
-    "Women's mental health",
-    "Men's mental health",
-    "Couples",
-    "Family",
-    "Addiction",
-    "Religious trauma",
-    "Spiritual abuse",
-    "Workplace stress",
-    "Bilingual",
-    "Art therapy",
-    "Affordable therapy",
-    "Parent coaching",
-    "Family coaching",
-    "Parent workshops"
-  ];
 
   // Normalization helper to make comparisons resilient to curly apostrophes & case differences
   const normalize = (val: string) => val
@@ -45,14 +19,37 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
     .trim()
     .toLowerCase();
 
-  const filters = useMemo(() => [
-    { key: "all", label: "All Team Members", count: teamMembers.length },
-    ...specialtyTabs.map(s => {
-      const normalizedTab = normalize(s);
-      const count = teamMembers.filter(m => m.specialties?.some(x => normalize(x) === normalizedTab)).length;
-      return { key: s, label: s, count };
-    })
-  ], [teamMembers]);
+  const filters = useMemo(() => {
+    const specialtyTabs = [
+      "Anxiety",
+      "Depression",
+      "Trauma",
+      "Stress management",
+      "Youth",
+      "Women's mental health",
+      "Men's mental health",
+      "Couples",
+      "Family",
+      "Addiction",
+      "Religious trauma",
+      "Spiritual abuse",
+      "Workplace stress",
+      "Bilingual",
+      "Art therapy",
+      "Affordable therapy",
+      "Parent coaching",
+      "Family coaching",
+      "Parent workshops"
+    ];
+    return [
+      { key: "all", label: "All Team Members", count: teamMembers.length },
+      ...specialtyTabs.map(s => {
+        const normalizedTab = normalize(s);
+        const count = teamMembers.filter(m => m.specialties?.some(x => normalize(x) === normalizedTab)).length;
+        return { key: s, label: s, count };
+      })
+    ];
+  }, [teamMembers]);
 
   const filteredMembers = useMemo(() => {
     const searchLower = searchQuery.toLowerCase();
@@ -186,21 +183,26 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
                       )}
                     </div>
                   </div>
-                  <p className="mt-3 text-sm text-charcoal/80 line-clamp-3">{member.bio}</p>
+
+                  <p className="mt-3 text-sm text-charcoal/80 line-clamp-3">{
+                    Array.isArray(member.bio)
+                      ? member.bio.join(' ')
+                      : (typeof member.bio === 'string' ? member.bio : '')
+                  }</p>
 
                   {/* Specialties */}
                   {member.specialties && member.specialties.length > 0 && (
                     <div className="mt-3">
                       <div className="flex flex-wrap gap-1">
-                        {member.specialties.slice(0, 3).map((specialty, index) => (
+                        {Array.isArray(member.specialties) && member.specialties.slice(0, 3).map((specialty, index) => (
                           <span
                             key={index}
                             className="inline-block px-2 py-1 text-xs bg-sand/50 text-charcoal/70 rounded-full"
                           >
-                            {specialty}
+                            {typeof specialty === 'string' ? specialty : ''}
                           </span>
                         ))}
-                        {member.specialties.length > 3 && (
+                        {Array.isArray(member.specialties) && member.specialties.length > 3 && (
                           <span className="inline-block px-2 py-1 text-xs bg-sand/50 text-charcoal/70 rounded-full">
                             +{member.specialties.length - 3} more
                           </span>
