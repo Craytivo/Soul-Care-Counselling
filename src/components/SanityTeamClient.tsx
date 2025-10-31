@@ -184,11 +184,26 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
                     </div>
                   </div>
 
-                  <p className="mt-3 text-sm text-charcoal/80 line-clamp-3">{
-                    Array.isArray(member.bio)
-                      ? member.bio.join(' ')
+                  <p className="mt-3 text-sm text-charcoal/80 line-clamp-3">
+                    {Array.isArray(member.bio)
+                      ? member.bio
+                          .filter((block): block is { children: unknown[] } => {
+                            if (!block || typeof block !== 'object' || !('children' in block)) return false;
+                            const children = (block as { children?: unknown }).children;
+                            return Array.isArray(children);
+                          })
+                          .map(block =>
+                            block.children
+                              .map(child => typeof child === 'object' && child && 'text' in child && typeof (child as { text?: unknown }).text === 'string'
+                                ? (child as { text: string }).text
+                                : ''
+                              )
+                              .join(' ')
+                          )
+                          .join(' ')
                       : (typeof member.bio === 'string' ? member.bio : '')
-                  }</p>
+                    }
+                  </p>
 
                   {/* Specialties */}
                   {member.specialties && member.specialties.length > 0 && (
