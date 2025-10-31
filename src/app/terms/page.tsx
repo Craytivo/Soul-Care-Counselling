@@ -126,24 +126,37 @@ export default async function Terms() {
         </div>
       </div>
 
-      {/* Plain-language summary */}
-      {summaryItems && summaryItems.length > 0 && (
-        <div className="mb-4 rounded-lg bg-sand/50 p-4 ring-1 ring-charcoal/10">
-          <strong className="block text-sm text-charcoal/80 mb-2">Quick summary</strong>
-          <ul className="list-disc pl-5 text-sm text-charcoal/85 space-y-1">
-            {summaryItems.map((s: string, i: number) => (
-              <li key={i}>{s}</li>
-            ))}
-          </ul>
-        </div>
-      )}
+      {/* Grid: main content + sticky TOC on desktop. On mobile the LegalTOC shows as collapsible above content. */}
+      <div className="md:grid md:grid-cols-[1fr_18rem] md:gap-8">
+        <div className="md:col-start-1">
+          {/* Plain-language summary */}
+          {summaryItems && summaryItems.length > 0 && (
+            <div className="mb-4 rounded-lg bg-sand/50 p-4 ring-1 ring-charcoal/10">
+              <strong className="block text-sm text-charcoal/80 mb-2">Quick summary</strong>
+              <ul className="list-disc pl-5 text-sm text-charcoal/85 space-y-1">
+                {summaryItems.map((s: string, i: number) => (
+                  <li key={i}>{s}</li>
+                ))}
+              </ul>
+            </div>
+          )}
 
-      {/* Small TOC / sticky */}
-      {headings.length > 0 && <LegalTOC headings={headings} />}
-      <div className="prose prose-lg max-w-none">
-        {pageData?.content && (
-          <PortableText value={pageData.content} components={portableTextComponents} />
-        )}
+          {/* Mobile TOC (LegalTOC renders mobile collapse when in the document flow) */}
+          {headings.length > 0 && <div className="md:hidden mb-4"><LegalTOC headings={headings} /></div>}
+
+          <main className="prose prose-lg max-w-none md:columns-2 md:gap-8">
+            {pageData?.content && (
+              <PortableText value={pageData.content} components={portableTextComponents} />
+            )}
+          </main>
+        </div>
+
+        {/* Desktop sticky TOC */}
+        <aside className="hidden md:block md:col-start-2">
+          <div className="md:sticky md:top-24">
+            <LegalTOC headings={headings} />
+          </div>
+        </aside>
       </div>
     </div>
   )
