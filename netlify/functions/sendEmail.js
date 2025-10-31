@@ -1,5 +1,7 @@
 const sgMail = require('@sendgrid/mail');
-const Busboy = require('busboy');
+const BusboyModule = require('busboy');
+// busboy may export the constructor as default in some bundlers/environments
+const Busboy = BusboyModule && BusboyModule.default ? BusboyModule.default : BusboyModule;
 
 // Configure SendGrid API key from environment
 if (process.env.SENDGRID_API_KEY) {
