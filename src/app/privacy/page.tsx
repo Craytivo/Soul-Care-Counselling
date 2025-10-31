@@ -32,18 +32,18 @@ function extractHeadings(content: unknown[] | undefined) {
   return headings
 }
 
-const portableTextComponents = {
+  const portableTextComponents = {
   block: {
     h2: (props: { children?: React.ReactNode }) => {
       const text = String(props.children || '')
-      return <h2 id={slugify(text)} className="mt-10 mb-4 text-2xl md:text-3xl font-bold text-bark font-heading">{props.children}</h2>
+      return <h2 id={slugify(text)} className="mt-12 mb-4 text-3xl md:text-4xl font-bold text-bark font-heading leading-tight">{props.children}</h2>
     },
     h3: (props: { children?: React.ReactNode }) => {
       const text = String(props.children || '')
-      return <h3 id={slugify(text)} className="mt-8 mb-3 text-xl md:text-2xl font-semibold text-bark font-heading">{props.children}</h3>
+      return <h3 id={slugify(text)} className="mt-8 mb-3 text-xl md:text-2xl font-semibold text-bark font-heading leading-tight">{props.children}</h3>
     },
     h4: (props: { children?: React.ReactNode }) => <h4 className="mt-6 mb-2 text-lg font-semibold text-bark font-heading">{props.children}</h4>,
-    normal: (props: { children?: React.ReactNode }) => <p className="mb-4 text-charcoal/90 leading-relaxed text-lg">{props.children}</p>,
+    normal: (props: { children?: React.ReactNode }) => <p className="mb-6 text-charcoal/90 text-base md:text-lg leading-relaxed md:leading-loose max-w-none">{props.children}</p>,
     blockquote: (props: { children?: React.ReactNode }) => <blockquote className="border-l-4 border-clay pl-4 italic text-charcoal/80 my-6">{props.children}</blockquote>,
   },
   list: {
@@ -114,37 +114,28 @@ export default async function Privacy() {
         </div>
       </div>
 
-      {/* Grid: main content + sticky TOC on desktop. On mobile the LegalTOC shows as collapsible above content. */}
-      <div className="md:grid md:grid-cols-[1fr_18rem] md:gap-8">
-        <div className="md:col-start-1">
-          {/* Plain-language summary */}
-          {summaryItems && summaryItems.length > 0 && (
-            <div className="mb-4 rounded-lg bg-sand/50 p-4 ring-1 ring-charcoal/10">
-              <strong className="block text-sm text-charcoal/80 mb-2">Quick summary</strong>
-              <ul className="list-disc pl-5 text-sm text-charcoal/85 space-y-1">
-                {summaryItems.map((s: string, i: number) => (
-                  <li key={i}>{s}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Mobile TOC (LegalTOC renders mobile collapse when in the document flow) */}
-          {headings.length > 0 && <div className="md:hidden mb-4"><LegalTOC headings={headings} /></div>}
-
-          <main className="prose prose-lg max-w-none">
-            {pageData?.content && (
-              <PortableText value={pageData.content} components={portableTextComponents} />
-            )}
-          </main>
-        </div>
-
-        {/* Desktop sticky TOC */}
-        <aside className="hidden md:block md:col-start-2">
-          <div className="md:sticky md:top-24">
-            <LegalTOC headings={headings} />
+      {/* Stack layout: quick summary -> TOC -> main content (single column on all sizes) */}
+      <div>
+        {/* Plain-language summary */}
+        {summaryItems && summaryItems.length > 0 && (
+          <div className="mb-4 rounded-lg bg-sand/50 p-4 ring-1 ring-charcoal/10">
+            <strong className="block text-sm text-charcoal/80 mb-2">Quick summary</strong>
+            <ul className="list-disc pl-5 text-sm text-charcoal/85 space-y-1">
+              {summaryItems.map((s: string, i: number) => (
+                <li key={i}>{s}</li>
+              ))}
+            </ul>
           </div>
-        </aside>
+        )}
+
+        {/* Contents (stacked below summary on all sizes) */}
+        {headings.length > 0 && <div className="mb-6"><LegalTOC headings={headings} /></div>}
+
+        <main className="prose prose-lg max-w-none">
+          {pageData?.content && (
+            <PortableText value={pageData.content} components={portableTextComponents} />
+          )}
+        </main>
       </div>
     </div>
   )
