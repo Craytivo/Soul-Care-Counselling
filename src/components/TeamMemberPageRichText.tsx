@@ -1,13 +1,14 @@
+
 import Image from 'next/image'
-import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
+import type { PortableTextBlock } from '@portabletext/types'
 
 interface TeamMemberData {
   name: string
   credentials: string
   role: string
   image: string
-  bio: unknown[]
+  bio: PortableTextBlock[]
   specialties: string[]
   areasOfFocus: string[]
   socialLinks?: {
