@@ -92,3 +92,15 @@ html {
   line-clamp: 4;
   overflow: hidden;
 }
+
+/* Print styles for legal pages */
+@media print {
+  /* Hide decorative hero and elements marked no-print */
+  .no-print { display: none !important; }
+  /* Make content full width and readable */
+  .prose { max-width: 100% !important; color: #000 !important; }
+  /* Avoid background colors in print */
+  .bg-bark, .bg-sand, .bg-cream { background: transparent !important; }
+  /* Make links visible in print with URL */
+  a[href]:after { content: " (" attr(href) ")"; font-size: 90%; }
+}

@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+  "lint": "next lint",
+  "validate-legal-toc": "node scripts/validate-legal-toc.mjs",
     "seed-team": "node scripts/seed-team-members.js",
     "upload-images": "node scripts/upload-team-images.js"
   },
