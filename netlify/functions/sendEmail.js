@@ -1,138 +1,119 @@
-  // Parse form data (using busboy)
-  // Netlify may send body as base64-encoded string. Ensure we pass a Buffer to busboy.
-  let body = event.body;
-  if (event.isBase64Encoded) {
-    body = Buffer.from(event.body, 'base64');
-  } else if (typeof event.body === 'string') {
-    // Make sure busboy gets a Buffer
-    body = Buffer.from(event.body, 'utf8');
-  }
+const sgMail = require('@sendgrid/mail');
+const Busboy = require('busboy');
 
-  // Use the Busboy constructor correctly and add a timeout that is cleared on finish/error
-  const busboy = new Busboy({ headers: event.headers });
-  let fields = {};
-  let fileBuffer = null;
-  let fileName = '';
-  let fileMime = '';
+// Configure SendGrid API key from environment
+if (process.env.SENDGRID_API_KEY) {
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+}
 
-  return new Promise((resolve) => {
-    let timedOut = false
-    const timeoutMs = 15000 // increase timeout to 15s for slower uploads
-    const timeout = setTimeout(() => {
-      timedOut = true
-      console.error('Busboy timeout: Form parsing timed out.')
-      resolve({
-        statusCode: 408,
-        body: 'Form parsing timed out.',
-      })
-    }, timeoutMs)
+module.exports.handler = async function (event, context) {
+  try {
+    if (event.httpMethod !== 'POST') {
+      return { statusCode: 405, body: 'Method Not Allowed' };
+    }
 
-    busboy.on('field', (fieldname, val) => {
-      fields[fieldname] = val;
-    });
-    busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-      fileName = filename;
-      fileMime = mimetype;
-      const buffers = [];
-      file.on('data', (data) => {
-        buffers.push(data);
+    const contentType = event.headers['content-type'] || event.headers['Content-Type'];
+    if (!contentType || !contentType.includes('multipart/form-data')) {
+      return { statusCode: 400, body: 'Invalid content type. Must be multipart/form-data.' };
+    }
+
+    if (!event.body) {
+      return { statusCode: 400, body: 'Request body is empty.' };
+    }
+
+    // Normalize body to Buffer for Busboy
+    let body = event.body;
+    if (event.isBase64Encoded) {
+      body = Buffer.from(event.body, 'base64');
+    } else if (typeof event.body === 'string') {
+      body = Buffer.from(event.body, 'utf8');
+    }
+
+    const busboy = new Busboy({ headers: event.headers });
+    const fields = {};
+    let fileBuffer = null;
+    let fileName = '';
+    let fileMime = '';
+
+    // Wrap Busboy parsing in a promise
+    await new Promise((resolve, reject) => {
+      const timeoutMs = 15000; // 15s
+      const timeout = setTimeout(() => reject(new Error('Form parsing timed out.')), timeoutMs);
+
+      busboy.on('field', (fieldname, val) => {
+        fields[fieldname] = val;
       });
-      file.on('end', () => {
-        try {
-          fileBuffer = Buffer.concat(buffers);
-        } catch (e) {
-          console.error('Error concatenating file buffers', e);
-        }
+
+      busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
+        fileName = filename;
+        fileMime = mimetype;
+        const buffers = [];
+        file.on('data', (data) => buffers.push(data));
+        file.on('end', () => {
+          try {
+            fileBuffer = Buffer.concat(buffers);
+          } catch (e) {
+            // ignore concat errors
+            console.error('File buffer concat error', e);
+          }
+        });
       });
-    });
-    busboy.on('finish', async () => {
-      if (timedOut) return
-      clearTimeout(timeout)
+
+      busboy.on('finish', () => {
+        clearTimeout(timeout);
+        resolve();
+      });
+
+      busboy.on('error', (err) => {
+        clearTimeout(timeout);
+        reject(err);
+      });
+
       try {
-        // Log received fields and file info for debugging
-        console.log('Fields:', fields);
-        if (fileName) {
-          console.log('File received:', fileName, fileMime, fileBuffer ? fileBuffer.length : 0);
-        } else {
-          console.log('No file uploaded.');
-        }
+        busboy.end(body);
+      } catch (err) {
+        clearTimeout(timeout);
+        reject(err);
+      }
+    });
 
-        const to = process.env.CONTACT_EMAIL || 'j.mubayiwa@gmail.com'
-        const from = process.env.SENDGRID_FROM || to
+    // Debug logs
+    console.log('Fields:', fields);
+    if (fileName) {
+      console.log('File received:', fileName, fileMime, fileBuffer ? fileBuffer.length : 0);
+    } else {
+      console.log('No file uploaded.');
+    }
 
-        const msg = {
-          to,
-          from,
-          subject: 'New Form Submission',
-          ...(fields.email ? { replyTo: String(fields.email) } : {}),
-          text: JSON.stringify(fields, null, 2),
-          attachments: (fileBuffer && fileName) ? [{
-            content: fileBuffer.toString('base64'),
-            filename: fileName,
-            type: fileMime,
-            disposition: 'attachment',
-          }] : [],
-        };
-        await sgMail.send(msg);
-        resolve({
-          statusCode: 200,
-          body: 'Email sent successfully!',
-        });
-      } catch (error) {
-        console.error('Error sending email:', error);
-        resolve({
-          statusCode: 500,
-          body: 'Error sending email: ' + (error && error.message ? error.message : String(error)),
-        });
-      }
-    });
-    busboy.on('error', (err) => {
-      if (!timedOut) {
-        clearTimeout(timeout)
-        console.error('Busboy error:', err);
-        resolve({
-          statusCode: 400,
-          body: 'Error parsing form: ' + err.message,
-        });
-      }
-    });
-    try {
-      busboy.end(body);
-    } catch (err) {
-      if (!timedOut) {
-        clearTimeout(timeout)
-        console.error('Busboy end error:', err);
-        resolve({
-          statusCode: 400,
-          body: 'Error ending form: ' + err.message,
-        });
-      }
+    // Prepare SendGrid message
+    const to = process.env.CONTACT_EMAIL || 'j.mubayiwa@gmail.com';
+    const from = process.env.SENDGRID_FROM || to;
+
+    const msg = {
+      to,
+      from,
+      subject: 'New Form Submission',
+      text: JSON.stringify(fields, null, 2),
+      attachments: (fileBuffer && fileName) ? [{
+        content: fileBuffer.toString('base64'),
+        filename: fileName,
+        type: fileMime,
+        disposition: 'attachment',
+      }] : [],
+      ...(fields.email ? { replyTo: String(fields.email) } : {}),
+    };
+
+    // Send email via SendGrid
+    if (!process.env.SENDGRID_API_KEY) {
+      console.warn('SENDGRID_API_KEY is not set; skipping send.');
+      return { statusCode: 200, body: 'Parsed form (send skipped in dev).' };
     }
-  });
-    });
-    busboy.on('error', (err) => {
-      console.error('Busboy error:', err);
-      resolve({
-        statusCode: 400,
-        body: 'Error parsing form: ' + err.message,
-      });
-    });
-    try {
-      busboy.end(body);
-    } catch (err) {
-      console.error('Busboy end error:', err);
-      resolve({
-        statusCode: 400,
-        body: 'Error ending form: ' + err.message,
-      });
-    }
-    // Fallback: If busboy doesn't emit finish/error within 5 seconds, resolve with error
-    setTimeout(() => {
-      console.error('Busboy timeout: Form parsing timed out.');
-      resolve({
-        statusCode: 408,
-        body: 'Form parsing timed out.',
-      });
-    }, 5000);
-  });
+
+    await sgMail.send(msg);
+
+    return { statusCode: 200, body: 'Email sent successfully!' };
+  } catch (err) {
+    console.error('sendEmail handler error:', err);
+    return { statusCode: 500, body: 'Error sending email: ' + (err && err.message ? err.message : String(err)) };
+  }
 };
