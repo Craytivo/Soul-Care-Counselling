@@ -31,7 +31,9 @@ module.exports.handler = async function (event, context) {
       body = Buffer.from(event.body, 'utf8');
     }
 
-    const busboy = new Busboy({ headers: event.headers });
+  // Some bundlers export Busboy as a factory function (callable) rather than a constructor.
+  // Call it without `new` to be compatible with both forms.
+  const busboy = typeof Busboy === 'function' ? Busboy({ headers: event.headers }) : new Busboy({ headers: event.headers });
     const fields = {};
     let fileBuffer = null;
     let fileName = '';
