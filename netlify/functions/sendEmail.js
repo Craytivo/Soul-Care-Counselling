@@ -23,7 +23,7 @@ module.exports.handler = async function (event, context) {
       return { statusCode: 400, body: 'Request body is empty.' };
     }
 
-    // Normalize body to Buffer for Busboy
+    // Normalize body to Buffer for Busboy if possible
     let body = event.body;
     if (event.isBase64Encoded) {
       body = Buffer.from(event.body, 'base64');
@@ -31,55 +31,87 @@ module.exports.handler = async function (event, context) {
       body = Buffer.from(event.body, 'utf8');
     }
 
-  // Some bundlers export Busboy as a factory function (callable) rather than a constructor.
-  // Call it without `new` to be compatible with both forms.
-  const busboy = typeof Busboy === 'function' ? Busboy({ headers: event.headers }) : new Busboy({ headers: event.headers });
+    // We'll attempt Busboy parsing for multipart bodies but add a safe fallback
     const fields = {};
     let fileBuffer = null;
     let fileName = '';
     let fileMime = '';
 
-    // Wrap Busboy parsing in a promise
-    await new Promise((resolve, reject) => {
-      const timeoutMs = 15000; // 15s
-      const timeout = setTimeout(() => reject(new Error('Form parsing timed out.')), timeoutMs);
+    const isMultipart = (event.headers['content-type'] || event.headers['Content-Type'] || '').includes('multipart/form-data');
 
-      busboy.on('field', (fieldname, val) => {
-        fields[fieldname] = val;
-      });
+    if (isMultipart && Busboy) {
+      // Some bundlers export Busboy as a factory function (callable) rather than a constructor.
+      // Call it without `new` to be compatible with both forms.
+      try {
+        const busboy = typeof Busboy === 'function' ? Busboy({ headers: event.headers }) : new Busboy({ headers: event.headers });
 
-      busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-        fileName = filename;
-        fileMime = mimetype;
-        const buffers = [];
-        file.on('data', (data) => buffers.push(data));
-        file.on('end', () => {
+        // Wrap Busboy parsing in a promise
+        await new Promise((resolve, reject) => {
+          const timeoutMs = 15000; // 15s
+          const timeout = setTimeout(() => reject(new Error('Form parsing timed out.')), timeoutMs);
+
+          busboy.on('field', (fieldname, val) => {
+            fields[fieldname] = val;
+          });
+
+          busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
+            fileName = filename;
+            fileMime = mimetype;
+            const buffers = [];
+            file.on('data', (data) => buffers.push(data));
+            file.on('end', () => {
+              try {
+                fileBuffer = Buffer.concat(buffers);
+              } catch (e) {
+                console.error('File buffer concat error', e);
+              }
+            });
+          });
+
+          busboy.on('finish', () => {
+            clearTimeout(timeout);
+            resolve();
+          });
+
+          busboy.on('error', (err) => {
+            clearTimeout(timeout);
+            reject(err);
+          });
+
           try {
-            fileBuffer = Buffer.concat(buffers);
-          } catch (e) {
-            // ignore concat errors
-            console.error('File buffer concat error', e);
+            busboy.end(body);
+          } catch (err) {
+            clearTimeout(timeout);
+            reject(err);
           }
         });
-      });
-
-      busboy.on('finish', () => {
-        clearTimeout(timeout);
-        resolve();
-      });
-
-      busboy.on('error', (err) => {
-        clearTimeout(timeout);
-        reject(err);
-      });
-
-      try {
-        busboy.end(body);
       } catch (err) {
-        clearTimeout(timeout);
-        reject(err);
+        // If Busboy fails unexpectedly, fall back to a simple parse to avoid throwing
+        console.error('Busboy parse failed, falling back to basic parse:', err);
       }
-    });
+    } else {
+      // Fallback parsing for non-multipart bodies or if Busboy isn't available/failed.
+      try {
+        if (typeof event.body === 'string' && event.headers['content-type'] && event.headers['content-type'].includes('application/x-www-form-urlencoded')) {
+          // parse urlencoded
+          const params = new URLSearchParams(event.body);
+          for (const [k, v] of params) fields[k] = v;
+        } else if (typeof event.body === 'string' && event.body.trim().startsWith('{')) {
+          // parse JSON body
+          const obj = JSON.parse(event.body);
+          Object.assign(fields, obj);
+        } else if (!isMultipart && Buffer.isBuffer(body)) {
+          // try to decode buffer as utf8 key=value pairs
+          const s = body.toString('utf8');
+          if (s.includes('=')) {
+            const params = new URLSearchParams(s);
+            for (const [k, v] of params) fields[k] = v;
+          }
+        }
+      } catch (err) {
+        console.error('Fallback parse error:', err);
+      }
+    }
 
     // Debug logs
     console.log('Fields:', fields);
