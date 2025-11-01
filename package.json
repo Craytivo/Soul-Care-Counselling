@@ -10,6 +10,8 @@
   "validate-legal-toc": "node scripts/validate-legal-toc.mjs",
     "seed-team": "node scripts/seed-team-members.js",
     "upload-images": "node scripts/upload-team-images.js"
+    ,
+    "test:send-email-local": "node ./scripts/test-send-email.js"
   },
   "dependencies": {
     "@portabletext/react": "^4.0.3",
