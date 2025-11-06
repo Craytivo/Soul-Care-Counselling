@@ -139,15 +139,30 @@ module.exports.handler = async function (event, context) {
       ...(fields.email ? { replyTo: String(fields.email) } : {}),
     };
 
-    // Send email via SendGrid
+    // Send email via SendGrid with enhanced logging
     if (!process.env.SENDGRID_API_KEY) {
       console.warn('SENDGRID_API_KEY is not set; skipping send.');
-      return { statusCode: 200, body: 'Parsed form (send skipped in dev).' };
+      return { statusCode: 200, body: 'Parsed form (send skipped because SENDGRID_API_KEY is not set).' };
     }
 
-    await sgMail.send(msg);
-
-    return { statusCode: 200, body: 'Email sent successfully!' };
+    try {
+      console.log('Attempting to send message via SendGrid to', to, 'from', from);
+      const response = await sgMail.send(msg);
+      // sgMail.send may return an array of responses for multiple recipients
+      console.log('SendGrid response:', Array.isArray(response) ? response.map(r => ({statusCode: r.statusCode, headers: r.headers})) : response);
+      return { statusCode: 200, body: 'Email sent successfully!' };
+    } catch (sendErr) {
+      // Log detailed error info from SendGrid if present
+      console.error('SendGrid send error:', sendErr);
+      if (sendErr && sendErr.response && sendErr.response.body) {
+        try {
+          console.error('SendGrid response body:', JSON.stringify(sendErr.response.body));
+        } catch (e) {
+          console.error('Error stringifying SendGrid response body', e);
+        }
+      }
+      return { statusCode: 502, body: 'Error sending email: ' + (sendErr && sendErr.message ? sendErr.message : String(sendErr)) };
+    }
   } catch (err) {
     console.error('sendEmail handler error:', err);
     return { statusCode: 500, body: 'Error sending email: ' + (err && err.message ? err.message : String(err)) };
