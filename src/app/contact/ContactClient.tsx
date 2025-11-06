@@ -4,6 +4,8 @@ import type { ContactPage } from '@/lib/sanity'
 
 export default function ContactClient({ pageData }: { pageData: ContactPage }) {
   const [formStatus, setFormStatus] = useState('')
+  const [modalOpen, setModalOpen] = useState(false)
+  const [submitName, setSubmitName] = useState('')
 
   // Custom handler for async form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -17,7 +19,10 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
         body: formData,
       });
       if (res.ok) {
-        setFormStatus('Message sent successfully!');
+        const nameVal = formData.get('name')?.toString() || '';
+        setSubmitName(nameVal);
+        setModalOpen(true);
+        setFormStatus('');
         form.reset();
       } else {
         setFormStatus('Error sending message.');
@@ -69,6 +74,30 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
           </div>
         </div>
       </section>
+      {/* Submission modal */}
+      {modalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/40" onClick={() => setModalOpen(false)} aria-hidden="true"></div>
+          <div className="relative w-full max-w-lg mx-4">
+            <div className="rounded-2xl bg-white p-6 ring-1 ring-charcoal/10 shadow-lg">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0">
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-clay text-charcoal">
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-heading text-xl font-semibold">Thanks, {submitName || 'there'}!</h3>
+                  <p className="mt-2 text-charcoal/80">We have received your message and will get back to you shortly. This confirmation was sent to the site team.</p>
+                  <div className="mt-4 flex items-center gap-3">
+                    <button onClick={() => setModalOpen(false)} className="inline-flex items-center justify-center rounded-md bg-bark px-4 py-2 font-semibold text-cream hover:bg-bark/90 ring-1 ring-charcoal/10">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Contact content */}
       <section className="mt-14 md:mt-16 grid gap-10 md:grid-cols-12 md:items-start">
@@ -160,10 +189,9 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
                 >
                   {pageData.contactForm.submitButtonText}
                 </button>
-                <div className={`text-sm flex items-center gap-2 min-h-[1.5em] transition-all duration-200 ${formStatus === 'Sending...' ? 'text-bark' : formStatus.includes('successfully') ? 'text-green-700' : formStatus.includes('Error') ? 'text-red-600' : 'text-charcoal/80'}`}
+                <div className={`text-sm flex items-center gap-2 min-h-[1.5em] transition-all duration-200 ${formStatus === 'Sending...' ? 'text-bark' : formStatus.includes('Error') ? 'text-red-600' : 'text-charcoal/80'}`}
                   role="status" aria-live="polite">
                   {formStatus === 'Sending...' && <svg className="w-4 h-4 animate-spin text-bark" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/></svg>}
-                  {formStatus.includes('successfully') && <svg className="w-4 h-4 text-green-700" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>}
                   {formStatus.includes('Error') && <svg className="w-4 h-4 text-red-600" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>}
                   <span>{formStatus}</span>
                 </div>

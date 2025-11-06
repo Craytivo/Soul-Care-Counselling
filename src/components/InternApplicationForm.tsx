@@ -8,6 +8,8 @@ interface InternApplicationFormProps {
 
 export default function InternApplicationForm({ pageData }: InternApplicationFormProps) {
   const [formStatus, setFormStatus] = useState('')
+  const [modalOpen, setModalOpen] = useState(false)
+  const [submitName, setSubmitName] = useState('')
 
   // Netlify Forms handles submission automatically
 
@@ -94,7 +96,20 @@ export default function InternApplicationForm({ pageData }: InternApplicationFor
         body: formData,
       });
       if (res.ok) {
-        setFormStatus('Application sent successfully!');
+        // Try to extract a name field from the form data
+        let nameVal = '';
+        for (const [k, v] of Array.from(formData.entries())) {
+          if (/name/i.test(k)) { nameVal = String(v); break; }
+        }
+        if (!nameVal) {
+          // fallback: first text-like field
+          for (const [k, v] of Array.from(formData.entries())) {
+            if (typeof v === 'string' && v.trim().length > 0 && v.toString().split(' ').length <= 4) { nameVal = String(v); break; }
+          }
+        }
+        setSubmitName(nameVal || 'Applicant');
+        setModalOpen(true);
+        setFormStatus('');
         form.reset();
       } else {
         setFormStatus('Error sending application.');
@@ -141,6 +156,29 @@ export default function InternApplicationForm({ pageData }: InternApplicationFor
           <span>{formStatus}</span>
         </div>
       </div>
+      {modalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/40" onClick={() => setModalOpen(false)} aria-hidden="true"></div>
+          <div className="relative w-full max-w-lg mx-4">
+            <div className="rounded-2xl bg-white p-6 ring-1 ring-charcoal/10 shadow-lg">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0">
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-clay text-charcoal">
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-heading text-xl font-semibold">Thank you, {submitName || 'Applicant'}!</h3>
+                  <p className="mt-2 text-charcoal/80">We have received your application and will be in touch if there are next steps.</p>
+                  <div className="mt-4 flex items-center gap-3">
+                    <button onClick={() => setModalOpen(false)} className="inline-flex items-center justify-center rounded-md bg-bark px-4 py-2 font-semibold text-cream hover:bg-bark/90 ring-1 ring-charcoal/10">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </form>
   )
 }
