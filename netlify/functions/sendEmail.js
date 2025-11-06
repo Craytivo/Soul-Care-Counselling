@@ -125,11 +125,38 @@ module.exports.handler = async function (event, context) {
     const to = process.env.CONTACT_EMAIL || 'j.mubayiwa@gmail.com';
     const from = process.env.SENDGRID_FROM || to;
 
+    // Build a friendly HTML and plain-text email body
+    const timestamp = new Date().toISOString();
+    const plainTextLines = [];
+    plainTextLines.push('New form submission');
+    plainTextLines.push('Timestamp: ' + timestamp);
+    for (const k of Object.keys(fields)) {
+      plainTextLines.push(`${k}: ${fields[k]}`);
+    }
+
+    const htmlLines = [];
+    htmlLines.push('<!doctype html><html><head><meta charset="utf-8"/><style>body{font-family:Arial,Helvetica,sans-serif;color:#111} .wrapper{max-width:680px;margin:0 auto;padding:20px} .header{background:#f7f7f7;padding:12px;border-radius:6px} .field{padding:8px 0;border-bottom:1px solid #eee} .label{font-weight:600;color:#333} .value{color:#111;margin-top:4px} .footer{margin-top:16px;color:#666;font-size:13px}</style></head><body><div class="wrapper">');
+    htmlLines.push('<div class="header"><h2 style="margin:0;font-size:18px">New form submission</h2></div>');
+    htmlLines.push('<div style="margin-top:12px"><strong>Timestamp:</strong> ' + timestamp + '</div>');
+    htmlLines.push('<div style="margin-top:12px">');
+    for (const k of Object.keys(fields)) {
+      const safeKey = String(k);
+      const safeVal = String(fields[k]).replace(/\n/g, '<br/>');
+      htmlLines.push(`<div class="field"><div class="label">${safeKey}</div><div class="value">${safeVal}</div></div>`);
+    }
+    htmlLines.push('</div>');
+    if (fileName) {
+      htmlLines.push(`<div style="margin-top:12px"><strong>Attachment:</strong> ${fileName} (${fileMime}; ${fileBuffer ? fileBuffer.length : 0} bytes)</div>`);
+    }
+    htmlLines.push('<div class="footer">This email was sent from your site contact form.</div>');
+    htmlLines.push('</div></body></html>');
+
     const msg = {
       to,
       from,
-      subject: 'New Form Submission',
-      text: JSON.stringify(fields, null, 2),
+      subject: 'New form submission — ' + (fields.subject || 'Contact form'),
+      text: plainTextLines.join('\n'),
+      html: htmlLines.join(''),
       attachments: (fileBuffer && fileName) ? [{
         content: fileBuffer.toString('base64'),
         filename: fileName,
