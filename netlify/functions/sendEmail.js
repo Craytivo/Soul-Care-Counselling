@@ -134,9 +134,10 @@ module.exports.handler = async function (event, context) {
       plainTextLines.push(`${k}: ${fields[k]}`);
     }
 
-    const htmlLines = [];
-    htmlLines.push('<!doctype html><html><head><meta charset="utf-8"/><style>body{font-family:Arial,Helvetica,sans-serif;color:#111} .wrapper{max-width:680px;margin:0 auto;padding:20px} .header{background:#f7f7f7;padding:12px;border-radius:6px} .field{padding:8px 0;border-bottom:1px solid #eee} .label{font-weight:600;color:#333} .value{color:#111;margin-top:4px} .footer{margin-top:16px;color:#666;font-size:13px}</style></head><body><div class="wrapper">');
-    htmlLines.push('<div class="header"><h2 style="margin:0;font-size:18px">New form submission</h2></div>');
+  const htmlLines = [];
+  // Use site brand colors from tailwind.config.ts: cream, sand, clay/gold, bark, charcoal
+  htmlLines.push('<!doctype html><html><head><meta charset="utf-8"/><style>body{font-family:Arial,Helvetica,sans-serif;color:#23201B;background:#F8F5EC} .wrapper{max-width:680px;margin:0 auto;padding:20px;background:#ffffff;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.06)} .header{background:#C49A6C;padding:14px 16px;border-radius:6px;color:#ffffff} .field{padding:12px 0;border-bottom:1px solid #f1ede6} .label{font-weight:700;color:#6E4B3A;margin-bottom:6px} .value{color:#23201B;margin-top:4px;white-space:pre-wrap} .footer{margin-top:18px;color:#666666;font-size:13px}</style></head><body><div style="padding:18px;background:#F8F5EC"> <div class="wrapper">');
+  htmlLines.push('<div class="header"><h2 style="margin:0;font-size:18px">Soul Care — New form submission</h2></div>');
     htmlLines.push('<div style="margin-top:12px"><strong>Timestamp:</strong> ' + timestamp + '</div>');
     htmlLines.push('<div style="margin-top:12px">');
     for (const k of Object.keys(fields)) {
