@@ -1,11 +1,33 @@
 "use client"
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import type { ContactPage } from '@/lib/sanity'
 
 export default function ContactClient({ pageData }: { pageData: ContactPage }) {
   const [formStatus, setFormStatus] = useState('')
   const [modalOpen, setModalOpen] = useState(false)
   const [submitName, setSubmitName] = useState('')
+  const [animateIn, setAnimateIn] = useState(false)
+  const closeBtnRef = useRef<HTMLButtonElement | null>(null)
+
+  const closeModal = () => {
+    setAnimateIn(false)
+    // wait for animation then unmount
+    setTimeout(() => setModalOpen(false), 200)
+  }
+
+  useEffect(() => {
+    if (!modalOpen) return
+    setAnimateIn(true)
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeModal()
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [modalOpen])
+
+  useEffect(() => {
+    if (animateIn) closeBtnRef.current?.focus()
+  }, [animateIn])
 
   // Custom handler for async form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -90,7 +112,7 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
                   <h3 className="font-heading text-xl font-semibold">Thanks, {submitName || 'there'}!</h3>
                   <p className="mt-2 text-charcoal/80">We have received your message and will get back to you shortly. This confirmation was sent to the site team.</p>
                   <div className="mt-4 flex items-center gap-3">
-                    <button onClick={() => setModalOpen(false)} className="inline-flex items-center justify-center rounded-md bg-bark px-4 py-2 font-semibold text-cream hover:bg-bark/90 ring-1 ring-charcoal/10">Close</button>
+                    <button ref={closeBtnRef} onClick={closeModal} className="inline-flex items-center justify-center rounded-md bg-bark px-4 py-2 font-semibold text-cream hover:bg-bark/90 ring-1 ring-charcoal/10">Close</button>
                   </div>
                 </div>
               </div>
