@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo } from "react";
 import { urlFor } from "@/lib/sanity";
@@ -14,7 +14,7 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
 
   // Normalization helper to make comparisons resilient to curly apostrophes & case differences
   const normalize = (val: string) => val
-    .replace(/[’‘‛`´]/g, "'") // unify any apostrophe-like character
+    .replace(/[â€™â€˜â€›`Â´]/g, "'") // unify any apostrophe-like character
     .replace(/\s+/g, ' ')      // collapse extra whitespace
     .trim()
     .toLowerCase();
@@ -93,23 +93,37 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
 
         {/* Toolbar: dropdown on mobile, tabs on desktop */}
         <div className="mt-6 flex flex-wrap items-center gap-3">
-          <label htmlFor="teamSearch" className="sr-only">Search team</label>
-          <input
-            id="teamSearch"
-            type="search"
-            placeholder="Search by name, specialty, credential, or approach…"
-            value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
-            className="w-full sm:w-80 rounded-md border border-charcoal/20 bg-white px-3 py-2 text-sm outline-none ring-0 focus:border-clay"
-            autoComplete="off"
-            aria-label="Search team members by name, specialty, credential, or approach"
-          />
+          <div className="w-full sm:w-80">
+            <label htmlFor="teamSearch" className="sr-only">Search team</label>
+            <div className="relative">
+              <input
+                id="teamSearch"
+                type="search"
+                placeholder="Search by name or specialty..."
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                className="w-full rounded-md border border-charcoal/20 bg-white pl-3 pr-9 py-2.5 text-sm outline-none ring-0 focus:border-clay"
+                autoComplete="off"
+                aria-label="Search team members by name, specialty, credential, or approach"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-charcoal/45 hover:text-charcoal text-sm"
+                  aria-label="Clear team search"
+                >
+                  ×
+                </button>
+              )}
+            </div>
+          </div>
           {/* Dropdown for filters on mobile */}
-          <div className="w-full block md:hidden mt-3">
+          <div className="w-full block md:hidden">
             <select
               value={activeFilter}
               onChange={e => setActiveFilter(e.target.value)}
-              className="w-full rounded-md border border-charcoal/20 bg-white px-3 py-2 text-sm font-semibold text-charcoal focus:border-clay focus:ring-2 focus:ring-clay/40"
+              className="w-full rounded-md border border-charcoal/20 bg-white px-3 py-2.5 text-sm font-semibold text-charcoal focus:border-clay focus:ring-2 focus:ring-clay/40"
               aria-label="Filter team by specialty"
               id="teamFilter"
             >
@@ -119,6 +133,21 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
                 </option>
               ))}
             </select>
+          </div>
+          <div className="w-full md:hidden flex items-center justify-between text-xs text-charcoal/70">
+            <span>{filteredMembers.length} match{filteredMembers.length === 1 ? "" : "es"}</span>
+            {(searchQuery || activeFilter !== "all") && (
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchQuery("");
+                  setActiveFilter("all");
+                }}
+                className="text-clay hover:text-bark font-medium"
+              >
+                Reset filters
+              </button>
+            )}
           </div>
           {/* Tabs for filters on desktop */}
           <div className="hidden md:flex flex-wrap gap-2" aria-label="Filter tags">
@@ -152,7 +181,7 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
         </div>
 
         {/* Grid */}
-        <ul role="list" className="mt-8 grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-stretch">
+        <ul role="list" className="mt-6 md:mt-8 grid gap-4 sm:gap-6 md:gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-stretch">
           {filteredMembers.map((member, idx) => (
             <motion.li
               key={member._id}
@@ -163,14 +192,14 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
               transition={{ duration: 0.6, delay: idx * 0.08, ease: 'easeOut' }}
             >
               <article className="h-full rounded-2xl bg-white ring-1 ring-charcoal/10 shadow-sm hover:shadow-md transition-shadow">
-                <div className="p-4">
+                <div className="p-4 sm:p-5">
                   <div className="flex items-center gap-3">
                     <Image
-                      src={urlFor(member.image).width(48).height(48).url()}
+                      src={urlFor(member.image).width(56).height(56).url()}
                       alt={member.name}
-                      className="h-12 w-12 rounded-full object-cover"
-                      width={48}
-                      height={48}
+                      className="h-14 w-14 rounded-full object-cover"
+                      width={56}
+                      height={56}
                       loading="lazy"
                     />
                     <div className="min-w-0 flex-1">
@@ -185,7 +214,7 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
                     </div>
                   </div>
 
-                  <p className="mt-3 text-sm text-charcoal/80 line-clamp-3">
+                  <p className="mt-3 text-sm text-charcoal/80 line-clamp-2 sm:line-clamp-3">
                     {Array.isArray(member.bio)
                       ? member.bio
                           .filter((block): block is { children: unknown[] } => {
@@ -210,7 +239,7 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
                   {member.specialties && member.specialties.length > 0 && (
                     <div className="mt-3">
                       <div className="flex flex-wrap gap-1">
-                        {Array.isArray(member.specialties) && member.specialties.slice(0, 3).map((specialty, index) => (
+                        {Array.isArray(member.specialties) && member.specialties.slice(0, 2).map((specialty, index) => (
                           <span
                             key={index}
                             className="inline-block px-2 py-1 text-xs bg-sand/50 text-charcoal/70 rounded-full"
@@ -218,9 +247,9 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
                             {typeof specialty === 'string' ? specialty : ''}
                           </span>
                         ))}
-                        {Array.isArray(member.specialties) && member.specialties.length > 3 && (
+                        {Array.isArray(member.specialties) && member.specialties.length > 2 && (
                           <span className="inline-block px-2 py-1 text-xs bg-sand/50 text-charcoal/70 rounded-full">
-                            +{member.specialties.length - 3} more
+                            +{member.specialties.length - 2} more
                           </span>
                         )}
                       </div>
@@ -230,13 +259,7 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
                   <div className="mt-4 team-cta" style={{ minHeight: '3.5rem' }}>
                     <Link
                       href={`/${member.slug.current}`}
-                      className="cta-label text-sm font-medium text-clay hover:text-bark block"
-                      style={{
-                        display: '-webkit-box',
-                        WebkitBoxOrient: 'vertical',
-                        WebkitLineClamp: 2,
-                        overflow: 'hidden',
-                      }}
+                      className="cta-label inline-flex items-center justify-center rounded-full border border-clay/35 bg-clay/10 px-4 py-2 text-sm font-semibold text-clay hover:text-bark hover:border-bark/35 hover:bg-bark/10 transition-colors"
                     >
                       View Profile
                     </Link>
@@ -250,3 +273,4 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
     </section>
   );
 }
+

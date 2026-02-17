@@ -13,30 +13,29 @@ interface HeroProps {
 
 const iconComponents = {
   lock: (
-    <svg className="h-5 w-5 text-cream flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-      <rect x="5" y="11" width="14" height="8" rx="2" stroke="currentColor" strokeWidth="1.5"/>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M8 11V7a4 4 0 118 0v4" />
-      <circle cx="12" cy="15" r="1.5" fill="currentColor" />
+    <svg className="h-5 w-5 text-cream flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 3.5l7 3v5.2c0 4.3-2.8 8.2-7 9.7-4.2-1.5-7-5.4-7-9.7V6.5l7-3z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9.2 12.2l2 2 3.8-4" />
     </svg>
   ),
   mapPin: (
-    <svg className="h-5 w-5 text-cream flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 21s7-6.5 7-11.5A7 7 0 005 9.5C5 14.5 12 21 12 21z" />
-      <circle cx="12" cy="9.5" r="2.5" fill="currentColor" />
+    <svg className="h-5 w-5 text-cream flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
+      <rect x="3" y="6.5" width="14" height="11" rx="2.2" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M17 10l4-2.2v8.4L17 14" />
     </svg>
   ),
   globe: (
-    <svg className="h-5 w-5 text-cream flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" fill="none" />
-      <circle cx="9" cy="13" r="1.5" fill="currentColor" />
-      <circle cx="15" cy="13" r="1.5" fill="currentColor" />
-      <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 16c1.5-2 7.5-2 9 0" />
+    <svg className="h-5 w-5 text-cream flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
+      <circle cx="8.5" cy="10.5" r="2.2" />
+      <circle cx="15.5" cy="10.5" r="2.2" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 18.2c.7-2.4 2.7-3.8 4.9-3.8s4.2 1.4 4.9 3.8" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M13.2 18.2c.5-1.9 2-3 3.8-3 1.8 0 3.2 1.1 3.8 3" />
     </svg>
   ),
   graduationCap: (
-    <svg className="h-5 w-5 text-cream flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l9-4 9 4-9 4-9-4zm0 0v6a9 9 0 0018 0V8" />
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 12v6" />
+    <svg className="h-5 w-5 text-cream flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 5.2l1.7 3.3 3.7.5-2.7 2.6.6 3.7-3.3-1.7-3.3 1.7.6-3.7-2.7-2.6 3.7-.5L12 5.2z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M6.5 19h11" />
     </svg>
   ),
 }
@@ -70,7 +69,7 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
   const isLegacy = variant === 'legacy'
 
   return (
-    <section className="relative h-[min(100vh,900px)] w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] overflow-hidden">
+    <section className="relative h-[82svh] min-h-[620px] sm:h-[88svh] lg:h-[min(100vh,900px)] w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] overflow-hidden">
       {/* Background Image */}
       {backgroundImageSrc && (
         <div className="absolute inset-0 z-0">
@@ -200,7 +199,7 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
 
       {/* ORIGINAL (centerLow / left) Layouts */}
       {layout !== 'split' && (
-        <div className="absolute inset-x-0 bottom-0 md:inset-x-0 md:bottom-0 md:top-auto h-auto md:h-[50%] min-h-[340px] z-10 flex items-end md:items-stretch py-6 md:py-0">
+        <div className="absolute inset-x-0 bottom-0 md:inset-x-0 md:bottom-0 md:top-auto h-auto md:h-[50%] min-h-[280px] md:min-h-[340px] z-10 flex items-end md:items-stretch py-3 sm:py-5 md:py-0">
           <div className={[
             'w-full px-5 sm:px-8 md:px-12 lg:px-16 xl:px-24 flex',
             layout === 'centerLow' ? 'justify-center' : 'items-end'
@@ -210,22 +209,25 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
                 ? 'mx-auto text-center max-w-4xl'
                 : 'max-w-xl md:max-w-lg lg:max-w-xl'
             ].join(' ')}>
-              <div className="relative p-4 sm:p-5 md:p-6 lg:p-7 rounded-2xl backdrop-blur-md bg-charcoal/45 ring-1 ring-white/10 space-y-3 h-full">
-                <header className="space-y-2 text-left sm:text-center">
-                  <h1 className="font-heading text-3xl sm:text-[2.3rem] md:text-[2.5rem] font-bold leading-[1.08] tracking-tight text-white/95">
+              <div className="relative p-4 sm:p-5 md:p-6 lg:p-7 rounded-2xl backdrop-blur-md bg-charcoal/45 ring-1 ring-white/10 space-y-2 sm:space-y-3 h-full">
+                <header className="space-y-1.5 sm:space-y-2 text-left sm:text-center">
+                  <h1 className="font-heading text-[clamp(2rem,7.5vw,3.15rem)] font-semibold leading-[1.03] tracking-[-0.015em] text-white/95">
                     <span className="block">{heroData.mainHeading}</span>
-                    <span className="bg-gradient-to-r from-clay via-cream to-clay bg-clip-text text-transparent">{heroData.highlightText}</span>
+                    <span className="mt-1 block bg-gradient-to-r from-clay via-cream to-clay bg-clip-text text-transparent">{heroData.highlightText}</span>
                   </h1>
-                  <p className="text-sm sm:text-base md:text-[17px] text-white/90 leading-relaxed line-clamp-none md:line-clamp-2 [text-wrap:balance]">
+                  <p className="mx-auto max-w-[42ch] text-[0.95rem] sm:text-base md:text-[1.07rem] text-white/90 leading-relaxed line-clamp-2 md:line-clamp-2 [text-wrap:balance]">
                     {heroData.description}
                   </p>
                 </header>
+                <p className="sm:hidden text-[11px] text-white/80 tracking-[0.02em]">
+                  Confidential care. Virtual appointments across Canada.
+                </p>
                 {/* Mobile quote - positioned below header */}
-                <blockquote className="block sm:hidden mt-4 border-l-2 border-clay/60 pl-3 text-left">
+                <blockquote className="hidden mt-4 border-l-2 border-clay/60 pl-3 text-left">
                   <p className="font-heading text-sm italic text-white/85 line-clamp-2">&ldquo;{heroData.quote.text}&rdquo;</p>
                   <footer className="mt-1 text-[11px] text-sand/80">— {heroData.quote.author}</footer>
                 </blockquote>
-                <div className="hidden sm:flex mt-5 mb-2 flex-col sm:flex-row gap-6 md:gap-10 lg:gap-12 justify-start md:justify-center md:mx-auto w-full max-w-2xl">
+                <div className="hidden md:flex mt-5 mb-2 flex-col sm:flex-row gap-6 md:gap-10 lg:gap-12 justify-start md:justify-center md:mx-auto w-full max-w-2xl">
                   <div className="flex flex-col gap-3 min-w-[200px] items-start">
                     {heroData.features.slice(0,2).map((feature: { icon: string; text: string }, index: number) => (
                       <div key={index} className="flex items-start gap-5">
@@ -247,24 +249,24 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
                     ))}
                   </div>
                 </div>
-                <blockquote className="hidden sm:block border-l-2 border-clay/60 pl-3 text-left">
+                <blockquote className="hidden md:block border-l-2 border-clay/60 pl-3 text-left">
                   <p className="font-heading text-sm sm:text-base md:text-[17px] italic text-white/85 line-clamp-2">&ldquo;{heroData.quote.text}&rdquo;</p>
                   <footer className="mt-1 text-[11px] sm:text-xs md:text-[13px] text-sand/80">— {heroData.quote.author}</footer>
                 </blockquote>
-                <div className="flex flex-wrap justify-center gap-3 pt-2">
+                <div className="flex flex-wrap justify-center gap-2.5 sm:gap-3 pt-2">
                   {heroData.ctaButtons.primaryButton.external ? (
                     <a
                       href={heroData.ctaButtons.primaryButton.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group inline-flex items-center justify-center rounded-full bg-clay px-8 py-4 text-sm sm:text-sm md:px-9 md:py-4 md:text-base font-semibold text-cream shadow-md ring-1 ring-clay/60 hover:shadow-lg transition-all w-full sm:w-auto"
+                      className="order-1 group inline-flex items-center justify-center rounded-full bg-clay px-6 py-3.5 text-sm sm:text-sm md:px-9 md:py-4 md:text-base font-semibold text-cream shadow-md ring-1 ring-clay/60 hover:shadow-lg transition-all w-full md:w-auto"
                     >
                       <span className="tracking-wide">{heroData.ctaButtons.primaryButton.text}</span>
                     </a>
                   ) : (
                     <Link
                       href={heroData.ctaButtons.primaryButton.url}
-                      className="group inline-flex items-center justify-center rounded-full bg-clay px-8 py-4 text-sm sm:text-sm md:px-9 md:py-4 md:text-base font-semibold text-cream shadow-md ring-1 ring-clay/60 hover:shadow-lg transition-all w-full sm:w-auto"
+                      className="order-1 group inline-flex items-center justify-center rounded-full bg-clay px-6 py-3.5 text-sm sm:text-sm md:px-9 md:py-4 md:text-base font-semibold text-cream shadow-md ring-1 ring-clay/60 hover:shadow-lg transition-all w-full md:w-auto"
                     >
                       <span className="tracking-wide">{heroData.ctaButtons.primaryButton.text}</span>
                     </Link>
@@ -274,14 +276,14 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
                       href={heroData.ctaButtons.secondaryButton.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group inline-flex items-center justify-center rounded-full border border-white/35 bg-white/15 px-7 py-3.5 text-sm md:px-8 md:py-4 md:text-base font-medium text-cream backdrop-blur-sm hover:bg-white/20 hover:border-white/60 transition-all w-full sm:w-auto"
+                      className="order-2 group inline-flex items-center justify-center rounded-full border border-white/20 bg-transparent px-5 py-2.5 text-sm md:px-8 md:py-4 md:text-base font-medium text-white/85 backdrop-blur-sm hover:bg-white/10 hover:border-white/40 transition-all w-full md:w-auto"
                     >
                       {heroData.ctaButtons.secondaryButton.text}
                     </a>
                   ) : (
                     <Link
                       href={heroData.ctaButtons.secondaryButton.url}
-                      className="group inline-flex items-center justify-center rounded-full border border-white/35 bg-white/15 px-7 py-3.5 text-sm md:px-8 md:py-4 md:text-base font-medium text-cream backdrop-blur-sm hover:bg-white/20 hover:border-white/60 transition-all w-full sm:w-auto"
+                      className="order-2 group inline-flex items-center justify-center rounded-full border border-white/20 bg-transparent px-5 py-2.5 text-sm md:px-8 md:py-4 md:text-base font-medium text-white/85 backdrop-blur-sm hover:bg-white/10 hover:border-white/40 transition-all w-full md:w-auto"
                     >
                       {heroData.ctaButtons.secondaryButton.text}
                     </Link>

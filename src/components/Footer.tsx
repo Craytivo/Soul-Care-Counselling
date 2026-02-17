@@ -24,6 +24,17 @@ export default function Footer() {
               Contact
             </Link>
           </div>
+          <p className="text-xs text-bark/55">
+            Digital experience by{' '}
+            <a
+              href="https://craytivo.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline decoration-bark/30 underline-offset-4 hover:text-bark"
+            >
+              Craytivo
+            </a>
+          </p>
         </div>
       </div>
 
@@ -151,6 +162,17 @@ export default function Footer() {
         <div className="mx-auto max-w-7xl px-4 py-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
           <p className="text-sm text-bark/70">
             &copy; {new Date().getFullYear()} Soul Care Counselling. All rights reserved.
+          </p>
+          <p className="text-xs text-bark/60">
+            Built and optimized with{' '}
+            <a
+              href="https://craytivo.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline decoration-bark/40 underline-offset-4 hover:text-bark"
+            >
+              Craytivo
+            </a>
           </p>
           <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm items-center">
             <Link href="/privacy" className="text-bark/70 hover:text-bark">Privacy</Link>
