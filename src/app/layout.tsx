@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import { Inter, Poppins } from 'next/font/google'
 import './globals.css'
 import Header from '../components/Header'
@@ -18,8 +18,11 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: 'Soul Care Christian Counselling — Home',
+  title: 'Soul Care Christian Counselling â€” Home',
   description: 'Faith-centered, culturally sensitive therapy. Virtual across Canada.',
+  verification: {
+    google: 'I46F2T5WNf56MEhLHRDB3fqOl3oLXSj_UJgHt4A0SH4',
+  },
   icons: {
     icon: [
       { url: '/favicon.ico?v=2', sizes: '32x32', type: 'image/x-icon' },
