@@ -1,5 +1,6 @@
 ﻿import type { Metadata } from 'next'
 import { Inter, Poppins } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
@@ -42,6 +43,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
+      <head>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-R5VV79YXXB"
+          strategy="afterInteractive"
+        />
+        <Script id="google-gtag-init" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-R5VV79YXXB');`}
+        </Script>
+      </head>
       <body className="bg-cream text-charcoal font-body antialiased">
         <Header />
         <main className="mx-auto max-w-7xl px-4 py-12 min-h-[60vh]">
