@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { getFAQPage } from '@/lib/sanity-queries'
 import Link from 'next/link'
+import EmptyState from '@/components/ui/EmptyState'
 
 export async function generateMetadata(): Promise<Metadata> {
   const pageData = await getFAQPage()
@@ -11,8 +12,8 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-// Disable caching for this page to ensure fresh data from Sanity
-export const revalidate = 0
+// ISR with tag revalidation for Sanity-driven content
+export const revalidate = 300
 
 export default async function FAQPage() {
   const pageData = await getFAQPage()
@@ -20,10 +21,11 @@ export default async function FAQPage() {
   // Return fallback if no data
   if (!pageData) {
     return (
-      <div className="text-center py-12">
-        <p className="text-bark/60">FAQ page content not found. Please create it in Sanity Studio.</p>
-        <Link href="/studio" className="text-gold underline">Go to Sanity Studio</Link>
-      </div>
+      <EmptyState
+        title="FAQ page content not found."
+        description="Please create it in Sanity Studio."
+        action={<Link href="/studio" className="ui-btn-primary">Go to Sanity Studio</Link>}
+      />
     )
   }
 
@@ -43,8 +45,8 @@ export default async function FAQPage() {
 
       {/* FAQ List */}
       <section className="mt-14 md:mt-16 space-y-4">
-        {pageData.faqs.map((faq, index) => (
-          <details key={index} className="rounded-xl bg-white p-6 ring-1 ring-charcoal/10">
+        {pageData.faqs.map((faq) => (
+          <details key={`${faq.question}-${faq.order}`} className="rounded-xl bg-white p-6 ring-1 ring-charcoal/10">
             <summary className="font-heading font-semibold cursor-pointer">{faq.question}</summary>
             <p className="mt-3 text-charcoal/85">{faq.answer}</p>
           </details>

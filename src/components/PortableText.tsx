@@ -1,3 +1,2 @@
-import { PortableText } from '@portabletext/react';
-
-export default PortableText;
+export * from './ui/PortableText'
+export { default } from './ui/PortableText'

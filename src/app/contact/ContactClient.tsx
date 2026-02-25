@@ -49,7 +49,7 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
       } else {
         setFormStatus('Error sending message.');
       }
-    } catch (err) {
+    } catch {
       setFormStatus('Error sending message.');
     }
   };
@@ -265,11 +265,11 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
           <div className="rounded-2xl bg-white p-5 ring-1 ring-charcoal/10">
             <h3 className="font-heading font-semibold">{pageData.contactInfo.hours.heading}</h3>
             <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-              {pageData.contactInfo.hours.schedule.map((item, index) => (
-                <>
-                  <dt key={`${index}-day`}>{item.days}</dt>
-                  <dd key={`${index}-hours`} className="text-charcoal/80">{item.hours}</dd>
-                </>
+              {pageData.contactInfo.hours.schedule.map((item) => (
+                <div key={`${item.days}-${item.hours}`} className="contents">
+                  <dt>{item.days}</dt>
+                  <dd className="text-charcoal/80">{item.hours}</dd>
+                </div>
               ))}
             </dl>
             <p className="mt-3 text-xs text-charcoal/70">{pageData.contactInfo.hours.note}</p>

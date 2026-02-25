@@ -2,10 +2,10 @@ import type { Metadata } from 'next'
 import { getAccessibilityPage } from '@/lib/sanity-queries'
 import { PortableText } from '@portabletext/react'
 
-export const revalidate = 0
+export const revalidate = 300
 
 export const metadata: Metadata = {
-  title: 'Accessibility — Soul Care Counselling',
+  title: 'Accessibility - Soul Care Counselling',
   description: 'Accessibility statement for Soul Care Counselling - Learn how we ensure our website and services are accessible to all users.',
 }
 

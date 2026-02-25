@@ -1,4 +1,4 @@
-
+﻿
 import type { Metadata } from 'next'
 import { getTermsOfUsePage } from '@/lib/sanity-queries'
 import { PortableText } from '@portabletext/react'
@@ -73,10 +73,10 @@ const portableTextComponents = {
   },
 };
 
-export const revalidate = 0
+export const revalidate = 300
 
 export const metadata: Metadata = {
-  title: 'Terms of Use — Soul Care Counselling',
+  title: 'Terms of Use - Soul Care Counselling',
   description: 'Terms of Use for Soul Care Counselling - Understand the terms and conditions for using our faith-centered counselling services and website.',
 }
 
@@ -114,11 +114,11 @@ export default async function Terms() {
       {/* Metadata row: effective date / last updated / print */}
       <div className="mb-6 flex flex-col sm:flex-row sm:items-center gap-3 text-sm text-charcoal/80">
         <div>
-          Effective: <strong>{pageData?.effectiveDate ?? (pageData?._updatedAt ? new Date(pageData._updatedAt).toLocaleDateString() : '—')}</strong>
+          Effective: <strong>{pageData?.effectiveDate ?? (pageData?._updatedAt ? new Date(pageData._updatedAt).toLocaleDateString() : '-')}</strong>
         </div>
         <div>•</div>
         <div>
-          Last updated: {pageData?._updatedAt ? <time dateTime={pageData._updatedAt}>{new Date(pageData._updatedAt).toLocaleDateString()}</time> : '—'}
+          Last updated: {pageData?._updatedAt ? <time dateTime={pageData._updatedAt}>{new Date(pageData._updatedAt).toLocaleDateString()}</time> : '-'}
         </div>
         <div className="ml-0 sm:ml-auto flex items-center gap-3">
           <a href="/contact" className="underline text-clay">Contact us about this policy</a>

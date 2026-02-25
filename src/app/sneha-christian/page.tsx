@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
 
-export const revalidate = 0
-
-export const dynamic = 'force-dynamic'
+export const revalidate = 300
 import { getTeamMember } from '@/lib/sanity-queries'
 import { urlFor } from '@/lib/sanity'
 import TeamMemberPage from '../../components/TeamMemberPage'

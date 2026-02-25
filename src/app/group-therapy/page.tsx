@@ -1,7 +1,5 @@
 import type { Metadata } from 'next'
-
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
+export const revalidate = 300
 import SanityServicePage from '@/components/SanityServicePage'
 
 export const metadata: Metadata = {

@@ -1,35 +1,27 @@
 import type { Metadata } from 'next'
 
-export const revalidate = 0
+export const revalidate = 300
 import SanityServices from '@/components/SanityServices'
 import { getServicesPage } from '@/lib/sanity-queries'
 import Link from 'next/link'
+import EmptyState from '@/components/ui/EmptyState'
 
 export const metadata: Metadata = {
   title: 'Services | Soul Care Counselling',
   description: 'Faith-centered, culturally sensitive therapy. Virtual across Canada. Explore individual therapy, affordable therapy, single-session options, and group therapy.',
 }
 
-
-export const dynamic = 'force-dynamic'
-
 export default async function ServicesPage() {
   const servicesPageData = await getServicesPage()
-
-  // Debug logging
-  console.log('Services page data:', servicesPageData ? 'Found' : 'Not found')
-  if (servicesPageData) {
-    console.log('Services count:', servicesPageData.servicesList?.length || 0)
-    console.log('Hero data:', servicesPageData.hero)
-  }
 
   // Return fallback if no data
   if (!servicesPageData) {
     return (
-      <div className="text-center py-12">
-        <p className="text-bark/60">Services page content not found. Please create it in Sanity Studio.</p>
-        <Link href="/studio" className="text-gold underline">Go to Sanity Studio</Link>
-      </div>
+      <EmptyState
+        title="Services page content not found."
+        description="Please create it in Sanity Studio."
+        action={<Link href="/studio" className="ui-btn-primary">Go to Sanity Studio</Link>}
+      />
     )
   }
 
@@ -54,7 +46,7 @@ export default async function ServicesPage() {
       </section>
 
       {/* Services from Sanity */}
-      <SanityServices />
+      <SanityServices servicesData={servicesPageData} />
 
       {/* CTA Section */}
       <section className="mt-16 md:mt-20 rounded-2xl bg-sand p-6 md:p-8 ring-1 ring-charcoal/10">

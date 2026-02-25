@@ -1,4 +1,4 @@
-export default {
+const accessibilityPage = {
   name: 'accessibilityPage',
   type: 'document',
   title: 'Accessibility Page',
@@ -17,3 +17,5 @@ export default {
     },
   ],
 };
+
+export default accessibilityPage;

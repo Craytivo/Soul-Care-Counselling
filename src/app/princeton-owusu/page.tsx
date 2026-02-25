@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-export const revalidate = 0
+export const revalidate = 300
 import TeamMemberPage from '../../components/TeamMemberPage'
 
 export const metadata: Metadata = {

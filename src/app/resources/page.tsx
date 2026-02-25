@@ -1,11 +1,12 @@
 
 
-export const revalidate = 0
+export const revalidate = 300
 
 import { getResources, getFeaturedResources } from '@/lib/sanity-queries'
 import { urlFor } from '@/lib/sanity'
 import Image from 'next/image'
 import type { Resource } from '@/lib/sanity'
+import EmptyState from '@/components/ui/EmptyState'
 
 const categories = [
   'All Resources',
@@ -156,33 +157,25 @@ export default async function ResourcesPage() {
   {allResources.length === 0 ? (
         /* Empty State */
         <section className="mt-16">
-          <div className="text-center py-12">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-sand flex items-center justify-center">
-              <svg className="w-8 h-8 text-charcoal/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-            </div>
-            <h3 className="font-heading text-lg font-semibold text-charcoal mb-2">No resources yet</h3>
-            <p className="text-charcoal/70 mb-6 max-w-md mx-auto">
-              We&apos;re preparing helpful resources to share with you. Check back soon for worksheets, guides, and therapeutic materials.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <a 
-                href="https://thesoulcarecounsellor.janeapp.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-md bg-clay px-4 py-2 font-semibold text-charcoal hover:bg-clay/90 ring-1 ring-charcoal/10"
-              >
-                Book a Free Consultation
-              </a>
-              <a 
-                href="/contact"
-                className="inline-flex items-center justify-center rounded-md bg-white px-4 py-2 font-semibold text-charcoal hover:bg-sand ring-1 ring-charcoal/10"
-              >
-                Contact Our Team
-              </a>
-            </div>
-          </div>
+          <EmptyState
+            title="No resources yet"
+            description="We're preparing helpful resources to share with you. Check back soon for worksheets, guides, and therapeutic materials."
+            action={
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <a
+                  href="https://thesoulcarecounsellor.janeapp.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="ui-btn-primary"
+                >
+                  Book a Free Consultation
+                </a>
+                <a href="/contact" className="ui-btn-ghost">
+                  Contact Our Team
+                </a>
+              </div>
+            }
+          />
         </section>
       ) : (
         <>

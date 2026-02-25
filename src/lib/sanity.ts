@@ -1,4 +1,4 @@
-import { createClient } from '@sanity/client'
+import { createClient } from 'next-sanity'
 import imageUrlBuilder from '@sanity/image-url'
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 
@@ -6,10 +6,36 @@ import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
-  useCdn: false, // Always fetch fresh data for instant updates
+  useCdn: process.env.NODE_ENV === 'production',
   apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2025-09-05',
   perspective: 'published', // Only fetch published content
 })
+
+const defaultRevalidate =
+  Number(process.env.NEXT_PUBLIC_SANITY_REVALIDATE_SECONDS) || 300
+
+type SanityFetchParams = Record<string, unknown>
+
+interface SanityFetchOptions {
+  query: string
+  params?: SanityFetchParams
+  tags?: string[]
+  revalidate?: number | false
+}
+
+export async function sanityFetch<T>({
+  query,
+  params = {},
+  tags = [],
+  revalidate = defaultRevalidate,
+}: SanityFetchOptions): Promise<T> {
+  return client.fetch<T>(query, params, {
+    next: {
+      revalidate,
+      tags,
+    },
+  })
+}
 
 // Image URL builder
 const builder = imageUrlBuilder(client)

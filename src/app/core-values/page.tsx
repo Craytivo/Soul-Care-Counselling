@@ -1,6 +1,4 @@
-
-export const dynamic = 'force-dynamic'
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import SanityCoreValuesPage from '@/components/SanityCoreValuesPage'
 
 export const metadata: Metadata = {

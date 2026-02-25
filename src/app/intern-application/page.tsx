@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { getInternApplicationPage } from '@/lib/sanity-queries'
 import InternApplicationForm from '@/components/InternApplicationForm'
 import Link from 'next/link'
+import EmptyState from '@/components/ui/EmptyState'
 
 export async function generateMetadata(): Promise<Metadata> {
   const pageData = await getInternApplicationPage()
@@ -12,8 +13,8 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-// Disable caching for this page to ensure fresh data from Sanity
-export const revalidate = 0
+// ISR with tag revalidation for Sanity-driven content
+export const revalidate = 300
 
 export default async function InternApplicationPage() {
   const pageData = await getInternApplicationPage()
@@ -21,10 +22,11 @@ export default async function InternApplicationPage() {
   // Return fallback if no data
   if (!pageData) {
     return (
-      <div className="text-center py-12">
-        <p className="text-bark/60">Intern application page content not found. Please create it in Sanity Studio.</p>
-        <Link href="/studio" className="text-gold underline">Go to Sanity Studio</Link>
-      </div>
+      <EmptyState
+        title="Intern application page content not found."
+        description="Please create it in Sanity Studio."
+        action={<Link href="/studio" className="ui-btn-primary">Go to Sanity Studio</Link>}
+      />
     )
   }
 
@@ -39,8 +41,8 @@ export default async function InternApplicationPage() {
           <h1 className="mt-3 font-heading text-3xl md:text-4xl font-bold mb-2">
             {pageData.hero.heading}
           </h1>
-          {pageData.hero.description.map((paragraph, index) => (
-            <p key={index} className="mt-3 max-w-3xl text-cream/85">
+          {pageData.hero.description.map((paragraph) => (
+            <p key={paragraph} className="mt-3 max-w-3xl text-cream/85">
               {paragraph}
             </p>
           ))}
@@ -61,8 +63,8 @@ export default async function InternApplicationPage() {
           <div className="rounded-2xl bg-sand p-5 ring-1 ring-charcoal/10">
             <h3 className="font-heading font-semibold">{pageData.sidebar.aboutSection.title}</h3>
             <ul className="mt-3 space-y-3 text-sm">
-              {pageData.sidebar.aboutSection.benefits.map((benefit, index) => (
-                <li key={index}>{benefit}</li>
+              {pageData.sidebar.aboutSection.benefits.map((benefit) => (
+                <li key={benefit}>{benefit}</li>
               ))}
             </ul>
           </div>
@@ -70,7 +72,7 @@ export default async function InternApplicationPage() {
             <h3 className="font-heading font-semibold">{pageData.sidebar.questionsSection.title}</h3>
             <p className="mt-3 text-sm text-charcoal/80">
               {pageData.sidebar.questionsSection.description.split(pageData.sidebar.questionsSection.contactEmail).map((part, index, array) => (
-                <span key={index}>
+                <span key={`${part}-${index}`}>
                   {part}
                   {index < array.length - 1 && (
                     <a 

@@ -6,6 +6,49 @@ html {
   scroll-behavior: smooth;
 }
 
+@layer base {
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible,
+  [role='button']:focus-visible {
+    outline: 2px solid transparent;
+    box-shadow: 0 0 0 2px rgba(196, 154, 108, 0.45);
+    border-radius: 0.5rem;
+  }
+}
+
+@layer components {
+  .ui-card {
+    @apply rounded-2xl bg-white ring-1 ring-charcoal/10 shadow-sm;
+  }
+
+  .ui-card-hover {
+    @apply transition-all duration-200 hover:shadow-md hover:ring-clay/30;
+  }
+
+  .ui-btn {
+    @apply inline-flex items-center justify-center rounded-md px-5 py-2.5 font-semibold transition-colors ring-1;
+  }
+
+  .ui-btn-primary {
+    @apply ui-btn bg-clay text-charcoal ring-charcoal/10 hover:bg-clay/90;
+  }
+
+  .ui-btn-secondary {
+    @apply ui-btn bg-sand text-charcoal ring-charcoal/10 hover:bg-sand/90;
+  }
+
+  .ui-btn-ghost {
+    @apply ui-btn bg-white text-charcoal ring-charcoal/10 hover:bg-sand;
+  }
+
+  .ui-input {
+    @apply w-full rounded-md border border-charcoal/20 bg-white px-3 py-2.5 text-sm text-charcoal outline-none;
+  }
+}
+
 /* Subtle animation utilities */
 @keyframes fade-in {
   from {

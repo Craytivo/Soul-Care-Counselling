@@ -15,6 +15,7 @@ import { teamMember } from './teamMember'
 import { workshop } from './workshop'
 import privacyPolicyPage from './privacyPolicyPage'
 import termsOfUsePage from './termsOfUsePage'
+import { waitlistSignup } from './waitlistSignup'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -35,5 +36,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
   siteSettings,
   privacyPolicyPage,
   termsOfUsePage,
+  waitlistSignup,
   ],
 }

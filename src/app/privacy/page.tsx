@@ -1,4 +1,4 @@
-
+﻿
 
 import type { Metadata } from 'next'
 import { getPrivacyPolicyPage } from '@/lib/sanity-queries'
@@ -63,10 +63,10 @@ function extractHeadings(content: unknown[] | undefined) {
   },
 };
 
-export const revalidate = 0
+export const revalidate = 300
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy — Soul Care Counselling',
+  title: 'Privacy Policy - Soul Care Counselling',
   description: 'Privacy Policy for Soul Care Counselling - Learn how we protect your personal information and maintain confidentiality in our faith-centered therapy services.',
 }
 
@@ -102,11 +102,11 @@ export default async function Privacy() {
       </section>
       <div className="mb-6 flex flex-col sm:flex-row sm:items-center gap-3 text-sm text-charcoal/80">
         <div>
-          Effective: <strong>{pageData?.effectiveDate ?? (pageData?._updatedAt ? new Date(pageData._updatedAt).toLocaleDateString() : '—')}</strong>
+          Effective: <strong>{pageData?.effectiveDate ?? (pageData?._updatedAt ? new Date(pageData._updatedAt).toLocaleDateString() : '-')}</strong>
         </div>
         <div>•</div>
         <div>
-          Last updated: {pageData?._updatedAt ? <time dateTime={pageData._updatedAt}>{new Date(pageData._updatedAt).toLocaleDateString()}</time> : '—'}
+          Last updated: {pageData?._updatedAt ? <time dateTime={pageData._updatedAt}>{new Date(pageData._updatedAt).toLocaleDateString()}</time> : '-'}
         </div>
         <div className="ml-0 sm:ml-auto flex items-center gap-3">
           <a href="/contact" className="underline text-clay">Contact us about this policy</a>

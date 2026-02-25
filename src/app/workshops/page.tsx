@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-export const revalidate = 0
+export const revalidate = 300
 import SanityWorkshops from '@/components/SanityWorkshops'
 
 export const metadata: Metadata = {
