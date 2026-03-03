@@ -45,6 +45,22 @@ async function fetchSanityQuery<T>(
   })
 }
 
+async function fetchSanityQuerySafe<T>(
+  query: string,
+  fallback: T,
+  options?: { params?: QueryParams; tags?: string[]; revalidate?: number | false }
+): Promise<T> {
+  try {
+    return await fetchSanityQuery<T>(query, options)
+  } catch (error) {
+    console.error(
+      `[sanity] Query failed${options?.tags?.length ? ` for ${options.tags.join(', ')}` : ''}. Using fallback data.`,
+      error
+    )
+    return fallback
+  }
+}
+
 const imageProjection = `{
   asset { _ref, _type },
   alt,
@@ -54,31 +70,34 @@ const imageProjection = `{
 
 // Privacy Policy Page
 export async function getPrivacyPolicyPage() {
-  return fetchSanityQuery<LegalPage | null>(
+  return fetchSanityQuerySafe<LegalPage | null>(
     `*[_type == "privacyPolicyPage"] | order(_updatedAt desc)[0]`,
+    null,
     { tags: ['privacy-policy-page'] }
   )
 }
 
 // Terms of Use Page
 export async function getTermsOfUsePage() {
-  return fetchSanityQuery<LegalPage | null>(
+  return fetchSanityQuerySafe<LegalPage | null>(
     `*[_type == "termsOfUsePage"] | order(_updatedAt desc)[0]`,
+    null,
     { tags: ['terms-of-use-page'] }
   )
 }
 
 // Accessibility Page
 export async function getAccessibilityPage() {
-  return fetchSanityQuery<LegalPage | null>(
+  return fetchSanityQuerySafe<LegalPage | null>(
     `*[_type == "accessibilityPage"] | order(_updatedAt desc)[0]`,
+    null,
     { tags: ['accessibility-page'] }
   )
 }
 
 // Team Members
 export async function getTeamMembers(): Promise<TeamMember[]> {
-  return fetchSanityQuery(
+  return fetchSanityQuerySafe(
     `
       *[_type == "teamMember"] | order(name asc) {
         _id,
@@ -95,12 +114,13 @@ export async function getTeamMembers(): Promise<TeamMember[]> {
         slug
       }
     `,
+    [],
     { tags: ['team-members'] }
   )
 }
 
 export async function getTeamMember(slug: string): Promise<TeamMember | null> {
-  return fetchSanityQuery(
+  return fetchSanityQuerySafe(
     `
       *[_type == "teamMember" && slug.current == $slug][0] {
         _id,
@@ -117,13 +137,14 @@ export async function getTeamMember(slug: string): Promise<TeamMember | null> {
         slug
       }
     `,
+    null,
     { params: { slug }, tags: ['team-members', `team-member:${slug}`] }
   )
 }
 
 // Workshops
 export async function getWorkshops(): Promise<Workshop[]> {
-  return fetchSanityQuery(
+  return fetchSanityQuerySafe(
     `
       *[_type == "workshop"] | order(date desc, _createdAt desc) {
         _id,
@@ -143,13 +164,14 @@ export async function getWorkshops(): Promise<Workshop[]> {
         slug
       }
     `,
+    [],
     { tags: ['workshops'] }
   )
 }
 
 // Services - Unified query
 export async function getServices(): Promise<Services | null> {
-  return fetchSanityQuery(
+  return fetchSanityQuerySafe(
     `
       *[_type == "services" && isActive == true] | order(_updatedAt desc)[0] {
         _id,
@@ -206,12 +228,13 @@ export async function getServices(): Promise<Services | null> {
         isActive
       }
     `,
+    null,
     { tags: ['services'] }
   )
 }
 
 export async function getService(slug: string): Promise<Service | null> {
-  const servicesData = await fetchSanityQuery<{ servicesList: Service | null }>(
+  const servicesData = await fetchSanityQuerySafe<{ servicesList: Service | null }>(
     `
       *[_type == "services" && isActive == true][0] {
         servicesList[slug.current == $slug && isActive == true][0] {
@@ -245,6 +268,7 @@ export async function getService(slug: string): Promise<Service | null> {
         }
       }
     `,
+    { servicesList: null },
     { params: { slug }, tags: ['services', `service:${slug}`] }
   )
 
@@ -253,7 +277,7 @@ export async function getService(slug: string): Promise<Service | null> {
 
 // Blog Posts
 export async function getBlogPosts(): Promise<BlogPost[]> {
-  return fetchSanityQuery(
+  return fetchSanityQuerySafe(
     `
       *[_type == "blogPost" && isPublished == true] | order(publishedAt desc) {
         _id,
@@ -269,12 +293,13 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
         isFeatured
       }
     `,
+    [],
     { tags: ['blog-posts'] }
   )
 }
 
 export const getBlogPost = cache(async (slug: string): Promise<BlogPost | null> => {
-  return fetchSanityQuery(
+  return fetchSanityQuerySafe(
     `
       *[_type == "blogPost" && slug.current == $slug && isPublished == true][0] {
         _id,
@@ -305,12 +330,13 @@ export const getBlogPost = cache(async (slug: string): Promise<BlogPost | null> 
         }
       }
     `,
+    null,
     { params: { slug }, tags: ['blog-posts', `blog-post:${slug}`] }
   )
 })
 
 export async function getFeaturedBlogPosts(): Promise<BlogPost[]> {
-  return fetchSanityQuery(
+  return fetchSanityQuerySafe(
     `
       *[_type == "blogPost" && isPublished == true && isFeatured == true] | order(publishedAt desc)[0...3] {
         _id,
@@ -326,12 +352,13 @@ export async function getFeaturedBlogPosts(): Promise<BlogPost[]> {
         isFeatured
       }
     `,
+    [],
     { tags: ['blog-posts'] }
   )
 }
 
 export async function getBlogPostsByCategory(category: string): Promise<BlogPost[]> {
-  return fetchSanityQuery(
+  return fetchSanityQuerySafe(
     `
       *[_type == "blogPost" && isPublished == true && category == $category] | order(publishedAt desc) {
         _id,
@@ -346,12 +373,13 @@ export async function getBlogPostsByCategory(category: string): Promise<BlogPost
         readingTime
       }
     `,
+    [],
     { params: { category }, tags: ['blog-posts', `blog-category:${category}`] }
   )
 }
 
 export async function getBlogPostsByTag(tag: string): Promise<BlogPost[]> {
-  return fetchSanityQuery(
+  return fetchSanityQuerySafe(
     `
       *[_type == "blogPost" && isPublished == true && $tag in tags] | order(publishedAt desc) {
         _id,
@@ -366,13 +394,14 @@ export async function getBlogPostsByTag(tag: string): Promise<BlogPost[]> {
         readingTime
       }
     `,
+    [],
     { params: { tag }, tags: ['blog-posts', `blog-tag:${tag}`] }
   )
 }
 
 // Core Values Page
 export async function getCoreValuesPage(): Promise<CoreValuesPage | null> {
-  const page = await fetchSanityQuery<CoreValuesPage | null>(
+  const page = await fetchSanityQuerySafe<CoreValuesPage | null>(
     `
       *[_type == "coreValuesPage" && isActive == true][0] {
         _id,
@@ -400,6 +429,7 @@ export async function getCoreValuesPage(): Promise<CoreValuesPage | null> {
         isActive
       }
     `,
+    null,
     { tags: ['core-values-page'] }
   )
 
@@ -408,7 +438,7 @@ export async function getCoreValuesPage(): Promise<CoreValuesPage | null> {
 
 // About Page
 export async function getAboutPage(): Promise<AboutPage | null> {
-  return fetchSanityQuery(
+  return fetchSanityQuerySafe(
     `
       *[_type == "aboutPage"][0] {
         _id,
@@ -452,13 +482,14 @@ export async function getAboutPage(): Promise<AboutPage | null> {
         }
       }
     `,
+    null,
     { tags: ['about-page'] }
   )
 }
 
 // Areas Page
 export async function getAreasPage(): Promise<AreasPage | null> {
-  return fetchSanityQuery(
+  return fetchSanityQuerySafe(
     `
       *[_type == "areasPage"][0] {
         _id,
@@ -483,13 +514,14 @@ export async function getAreasPage(): Promise<AreasPage | null> {
         }
       }
     `,
+    null,
     { tags: ['areas-page'] }
   )
 }
 
 // Service Pages
 export async function getServicePages(): Promise<ServicePage[]> {
-  return fetchSanityQuery(
+  return fetchSanityQuerySafe(
     `
       *[_type == "servicePage" && isActive == true] | order(title asc) {
         _id,
@@ -507,12 +539,13 @@ export async function getServicePages(): Promise<ServicePage[]> {
         isActive
       }
     `,
+    [],
     { tags: ['service-pages'] }
   )
 }
 
 export async function getServicePage(slug: string): Promise<ServicePage | null> {
-  const page = await fetchSanityQuery<ServicePage | null>(
+  const page = await fetchSanityQuerySafe<ServicePage | null>(
     `
       *[_type == "servicePage" && slug.current == $slug && isActive == true][0] {
         _id,
@@ -530,6 +563,7 @@ export async function getServicePage(slug: string): Promise<ServicePage | null> 
         isActive
       }
     `,
+    null,
     { params: { slug }, tags: ['service-pages', `service-page:${slug}`] }
   )
 
@@ -538,7 +572,7 @@ export async function getServicePage(slug: string): Promise<ServicePage | null> 
 
 // Site Settings
 export async function getSiteSettings(): Promise<SiteSettings | null> {
-  const settings = await fetchSanityQuery<SiteSettings | null>(
+  const settings = await fetchSanityQuerySafe<SiteSettings | null>(
     `
       *[_type == "siteSettings"][0] {
         _id,
@@ -555,6 +589,7 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
         socialLinks
       }
     `,
+    null,
     { tags: ['site-settings'] }
   )
 
@@ -563,7 +598,7 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
 
 // Homepage
 export async function getHomePage(): Promise<HomePage | null> {
-  return fetchSanityQuery(
+  return fetchSanityQuerySafe(
     `
       *[_type == "homePage" && isActive == true][0] {
         _id,
@@ -600,6 +635,7 @@ export async function getHomePage(): Promise<HomePage | null> {
         isActive
       }
     `,
+    null,
     { tags: ['home-page'] }
   )
 }
@@ -611,7 +647,7 @@ export async function getServicesPage(): Promise<Services | null> {
 
 // Intern Application Page
 export const getInternApplicationPage = cache(async (): Promise<InternApplicationPage | null> => {
-  return fetchSanityQuery(
+  return fetchSanityQuerySafe(
     `
       *[_type == "internApplicationPage"][0] {
         _id,
@@ -650,13 +686,14 @@ export const getInternApplicationPage = cache(async (): Promise<InternApplicatio
         }
       }
     `,
+    null,
     { tags: ['intern-application-page'] }
   )
 })
 
 // FAQ Page
 export const getFAQPage = cache(async (): Promise<FAQPage | null> => {
-  return fetchSanityQuery(
+  return fetchSanityQuerySafe(
     `
       *[_type == "faqPage" && isActive == true][0] {
         _id,
@@ -676,13 +713,14 @@ export const getFAQPage = cache(async (): Promise<FAQPage | null> => {
         isActive
       }
     `,
+    null,
     { tags: ['faq-page'] }
   )
 })
 
 // Contact Page
 export const getContactPage = cache(async (): Promise<ContactPage | null> => {
-  return fetchSanityQuery(
+  return fetchSanityQuerySafe(
     `
       *[_type == "contactPage"][0] {
         _id,
@@ -745,13 +783,14 @@ export const getContactPage = cache(async (): Promise<ContactPage | null> => {
         }
       }
     `,
+    null,
     { tags: ['contact-page'] }
   )
 })
 
 // Resources
 export async function getResources(): Promise<Resource[]> {
-  return fetchSanityQuery(
+  return fetchSanityQuerySafe(
     `
       *[_type == "resource" && isPublished == true] | order(publishedAt desc) {
         _id,
@@ -776,12 +815,13 @@ export async function getResources(): Promise<Resource[]> {
         fileSize
       }
     `,
+    [],
     { tags: ['resources'] }
   )
 }
 
 export async function getResource(slug: string): Promise<Resource | null> {
-  return fetchSanityQuery(
+  return fetchSanityQuerySafe(
     `
       *[_type == "resource" && slug.current == $slug && isPublished == true][0] {
         _id,
@@ -806,12 +846,13 @@ export async function getResource(slug: string): Promise<Resource | null> {
         fileSize
       }
     `,
+    null,
     { params: { slug }, tags: ['resources', `resource:${slug}`] }
   )
 }
 
 export async function getFeaturedResources(): Promise<Resource[]> {
-  return fetchSanityQuery(
+  return fetchSanityQuerySafe(
     `
       *[_type == "resource" && isPublished == true && isFeatured == true] | order(publishedAt desc)[0...3] {
         _id,
@@ -834,12 +875,13 @@ export async function getFeaturedResources(): Promise<Resource[]> {
         fileSize
       }
     `,
+    [],
     { tags: ['resources'] }
   )
 }
 
 export async function getResourcesByCategory(category: string): Promise<Resource[]> {
-  return fetchSanityQuery(
+  return fetchSanityQuerySafe(
     `
       *[_type == "resource" && isPublished == true && category == $category] | order(publishedAt desc) {
         _id,
@@ -862,6 +904,7 @@ export async function getResourcesByCategory(category: string): Promise<Resource
         fileSize
       }
     `,
+    [],
     { params: { category }, tags: ['resources', `resource-category:${category}`] }
   )
 }
