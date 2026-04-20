@@ -199,7 +199,7 @@ module.exports.handler = async function (event, context) {
     }
 
     // Prepare SendGrid message
-    const to = process.env.CONTACT_EMAIL || 'j.mubayiwa@gmail.com';
+    const to = process.env.CONTACT_EMAIL || 'info@thesoulcarecounsellor.com';
     const from = process.env.SENDGRID_FROM || to;
 
     // Build a friendly HTML and plain-text email body

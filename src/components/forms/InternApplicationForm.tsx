@@ -112,7 +112,7 @@ export default function InternApplicationForm({ pageData }: InternApplicationFor
     const form = e.currentTarget;
     const formData = new FormData(form);
     try {
-      const res = await fetch('/.netlify/functions/sendEmail', {
+      const res = await fetch('/api/send-email', {
         method: 'POST',
         body: formData,
       });

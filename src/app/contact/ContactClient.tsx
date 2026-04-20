@@ -36,7 +36,7 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
     const form = e.currentTarget;
     const formData = new FormData(form);
     try {
-      const res = await fetch('/.netlify/functions/sendEmail', {
+      const res = await fetch('/api/send-email', {
         method: 'POST',
         body: formData,
       });
