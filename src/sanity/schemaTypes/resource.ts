@@ -53,13 +53,13 @@ export const resource = defineType({
     }),
     defineField({
       name: 'pdfFile',
-      title: 'PDF File',
+      title: 'Download File',
       type: 'file',
       options: {
-        accept: '.pdf',
+        accept: '.pdf,.png,.jpg,.jpeg',
       },
       validation: (Rule) => Rule.required(),
-      description: 'The PDF file that users will download',
+      description: 'The file users will download (PDF or image)',
     }),
     defineField({
       name: 'category',

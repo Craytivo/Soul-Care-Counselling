@@ -82,6 +82,12 @@ export async function POST(request: NextRequest) {
     })
   } catch (error) {
     console.error('Waitlist signup error:', error)
-    return NextResponse.json({ message: 'Unable to join waitlist right now.' }, { status: 500 })
+    const details =
+      error instanceof Error
+        ? error.message
+        : typeof error === 'string'
+          ? error
+          : 'Unknown server error.'
+    return NextResponse.json({ message: `Unable to join waitlist right now: ${details}` }, { status: 500 })
   }
 }
