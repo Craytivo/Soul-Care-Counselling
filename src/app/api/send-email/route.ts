@@ -20,6 +20,13 @@ export async function POST(request: Request) {
         { status: 500 }
       )
     }
+    const to = process.env.CONTACT_EMAIL
+    if (!to) {
+      return NextResponse.json(
+        { message: 'Email service is not configured. Missing CONTACT_EMAIL.' },
+        { status: 500 }
+      )
+    }
 
     const formData = await request.formData()
     const fields: Record<string, string> = {}
@@ -51,7 +58,6 @@ export async function POST(request: Request) {
       }
     }
 
-    const to = process.env.CONTACT_EMAIL || 'info@thesoulcarecounsellor.com'
     const senderEmail =
       process.env.BREVO_SENDER_EMAIL ||
       process.env.SENDGRID_FROM ||
@@ -134,6 +140,12 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('send-email route error:', error)
-    return NextResponse.json({ message: 'Error sending email.' }, { status: 502 })
+    const details =
+      error instanceof Error
+        ? error.message
+        : typeof error === 'string'
+          ? error
+          : 'Unknown server error.'
+    return NextResponse.json({ message: `Error sending email: ${details}` }, { status: 502 })
   }
 }
