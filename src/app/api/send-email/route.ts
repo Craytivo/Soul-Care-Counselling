@@ -116,7 +116,19 @@ export async function POST(request: Request) {
     if (!response.ok) {
       const errorBody = await response.text().catch(() => '')
       console.error('Brevo send error:', response.status, errorBody)
-      return NextResponse.json({ message: 'Error sending email.' }, { status: 502 })
+
+      let providerMessage = 'Email provider rejected the request.'
+      try {
+        const parsed = JSON.parse(errorBody) as { message?: string }
+        if (parsed?.message) providerMessage = parsed.message
+      } catch {
+        if (errorBody) providerMessage = errorBody
+      }
+
+      return NextResponse.json(
+        { message: `Error sending email: ${providerMessage}` },
+        { status: 502 }
+      )
     }
 
     return NextResponse.json({ success: true })

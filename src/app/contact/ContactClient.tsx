@@ -47,7 +47,8 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
         setFormStatus('');
         form.reset();
       } else {
-        setFormStatus('Error sending message.');
+        const payload = await res.json().catch(() => null) as { message?: string } | null;
+        setFormStatus(payload?.message || 'Error sending message.');
       }
     } catch {
       setFormStatus('Error sending message.');

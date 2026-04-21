@@ -133,7 +133,8 @@ export default function InternApplicationForm({ pageData }: InternApplicationFor
         setFormStatus('');
         form.reset();
       } else {
-        setFormStatus('Error sending application.');
+        const payload = await res.json().catch(() => null) as { message?: string } | null;
+        setFormStatus(payload?.message || 'Error sending application.');
       }
     } catch {
       setFormStatus('Error sending application.');
