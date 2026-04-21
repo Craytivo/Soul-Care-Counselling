@@ -577,6 +577,7 @@ export interface Resource {
   tags?: string[]
   isPublished: boolean
   isFeatured: boolean
+  requiresEmailGate?: boolean
   publishedAt?: string
   fileSize?: number
 }

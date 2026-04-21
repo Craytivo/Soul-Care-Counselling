@@ -811,6 +811,7 @@ export async function getResources(): Promise<Resource[]> {
         tags,
         isPublished,
         isFeatured,
+        requiresEmailGate,
         publishedAt,
         fileSize
       }
@@ -842,6 +843,7 @@ export async function getResource(slug: string): Promise<Resource | null> {
         tags,
         isPublished,
         isFeatured,
+        requiresEmailGate,
         publishedAt,
         fileSize
       }
@@ -871,6 +873,7 @@ export async function getFeaturedResources(): Promise<Resource[]> {
         },
         category,
         tags,
+        requiresEmailGate,
         publishedAt,
         fileSize
       }
@@ -900,6 +903,7 @@ export async function getResourcesByCategory(category: string): Promise<Resource
         },
         category,
         tags,
+        requiresEmailGate,
         publishedAt,
         fileSize
       }

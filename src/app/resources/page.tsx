@@ -7,6 +7,8 @@ import { urlFor } from '@/lib/sanity'
 import Image from 'next/image'
 import type { Resource } from '@/lib/sanity'
 import EmptyState from '@/components/ui/EmptyState'
+import ResourceLeadForm from '@/components/forms/ResourceLeadForm'
+import GatedDownloadButton from '@/components/resources/GatedDownloadButton'
 
 const categories = [
   'All Resources',
@@ -18,6 +20,29 @@ const categories = [
   'Spiritual Care'
 ]
 
+const forcedGatedResourceMarkers = [
+  'sc thought record form',
+  'reframing anxious thoughts',
+  'pause method - emotional de-escalation',
+  'emotional regulation guide',
+]
+
+function normalizeForMatch(value?: string) {
+  return (value || '').toLowerCase().replace(/\s+/g, ' ').trim()
+}
+
+function isForcedGatedResource(resource: Resource) {
+  const title = normalizeForMatch(resource.title)
+  const originalFilename = normalizeForMatch(resource.pdfFile?.asset?.originalFilename)
+  const imageAlt = normalizeForMatch(resource.previewImage?.alt)
+
+  return forcedGatedResourceMarkers.some(
+    (marker) =>
+      title.includes(marker) ||
+      originalFilename.includes(marker) ||
+      imageAlt.includes(marker)
+  )
+}
 
 export default async function ResourcesPage() {
   const [allResources, featuredResources] = await Promise.all([
@@ -37,7 +62,9 @@ export default async function ResourcesPage() {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
   }
 
-  const ResourceCard = ({ resource, featured = false }: { resource: Resource, featured?: boolean }) => (
+  const ResourceCard = ({ resource, featured = false }: { resource: Resource, featured?: boolean }) => {
+    const isGated = Boolean(resource.requiresEmailGate || isForcedGatedResource(resource))
+    return (
     <article className={`rounded-2xl bg-white ring-1 ring-charcoal/10 overflow-hidden hover:ring-clay/30 transition-all duration-200 ${featured ? '' : ''}`}>
       {resource.previewImage?.asset && (
         <div className={`relative ${featured ? 'h-64 md:h-auto' : 'h-48'}`}>
@@ -67,16 +94,21 @@ export default async function ResourcesPage() {
       )}
       
       <div className={`${featured ? 'p-6 md:p-8' : 'p-6'}`}>
-        <div className="flex items-center gap-2 mb-3">
-          {resource.category && (
-            <span className="px-3 py-1 bg-sand text-charcoal text-xs font-medium rounded-full">
-              {resource.category}
-            </span>
-          )}
-          {resource.pdfFile?.asset?.size && (
-            <span className="text-charcoal/60 text-sm">{formatFileSize(resource.pdfFile.asset.size)}</span>
-          )}
-        </div>
+          <div className="flex items-center gap-2 mb-3">
+            {resource.category && (
+              <span className="px-3 py-1 bg-sand text-charcoal text-xs font-medium rounded-full">
+                {resource.category}
+              </span>
+            )}
+            {isGated && (
+              <span className="px-3 py-1 bg-bark text-cream text-xs font-medium rounded-full">
+                Email required
+              </span>
+            )}
+            {resource.pdfFile?.asset?.size && (
+              <span className="text-charcoal/60 text-sm">{formatFileSize(resource.pdfFile.asset.size)}</span>
+            )}
+          </div>
         
         <h3 className={`font-heading font-semibold mb-3 ${featured ? 'text-xl md:text-2xl' : 'text-lg'}`}>
           {resource.title}
@@ -102,23 +134,19 @@ export default async function ResourcesPage() {
           </div>
           
           {resource.pdfFile?.asset?.url && (
-            <a
-              href={resource.pdfFile.asset.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              download={resource.pdfFile.asset.originalFilename}
-              className="inline-flex items-center px-4 py-2 text-sm font-semibold text-charcoal bg-clay hover:bg-clay/90 rounded-md transition-colors ring-1 ring-charcoal/10"
-            >
-              <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              Download
-            </a>
+            <GatedDownloadButton
+              requiresEmailGate={isGated}
+              downloadUrl={resource.pdfFile.asset.url}
+              fileName={resource.pdfFile.asset.originalFilename}
+              resourceTitle={resource.title}
+              resourceSlug={resource.slug.current}
+            />
           )}
         </div>
       </div>
     </article>
-  )
+    )
+  }
 
   return (
     <>
@@ -185,6 +213,9 @@ export default async function ResourcesPage() {
               <h2 className="font-heading text-2xl font-semibold mb-6">Featured Resources</h2>
               <div className="space-y-8">
                 {featuredResources.map((resource) => (
+                  (() => {
+                    const isGated = Boolean(resource.requiresEmailGate || isForcedGatedResource(resource))
+                    return (
                   <div key={resource._id} className="rounded-2xl bg-white ring-1 ring-charcoal/10 overflow-hidden">
                     <div className="md:grid md:grid-cols-2 md:gap-8">
                       {resource.previewImage?.asset && (
@@ -220,6 +251,11 @@ export default async function ResourcesPage() {
                               {resource.category}
                             </span>
                           )}
+                          {isGated && (
+                            <span className="px-3 py-1 bg-bark text-cream text-xs font-medium rounded-full">
+                              Email required
+                            </span>
+                          )}
                           {resource.pdfFile?.asset?.size && (
                             <span className="text-charcoal/60 text-sm">{formatFileSize(resource.pdfFile.asset.size)}</span>
                           )}
@@ -243,23 +279,21 @@ export default async function ResourcesPage() {
                             </div>
                           </div>
                           {resource.pdfFile?.asset?.url && (
-                            <a
-                              href={resource.pdfFile.asset.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              download={resource.pdfFile.asset.originalFilename}
+                            <GatedDownloadButton
+                              requiresEmailGate={isGated}
+                              downloadUrl={resource.pdfFile.asset.url}
+                              fileName={resource.pdfFile.asset.originalFilename}
+                              resourceTitle={resource.title}
+                              resourceSlug={resource.slug.current}
                               className="inline-flex items-center px-4 py-2 font-semibold text-charcoal bg-clay hover:bg-clay/90 rounded-md transition-colors ring-1 ring-charcoal/10"
-                            >
-                              <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                              </svg>
-                              Download
-                            </a>
+                            />
                           )}
                         </div>
                       </div>
                     </div>
                   </div>
+                    )
+                  })()
                 ))}
               </div>
             </section>
@@ -280,20 +314,11 @@ export default async function ResourcesPage() {
       {/* Newsletter Signup */}
       <section className="mt-16 rounded-2xl bg-sand p-6 md:p-8 ring-1 ring-charcoal/10">
         <div className="max-w-2xl mx-auto text-center">
-          <h3 className="font-heading text-xl md:text-2xl font-semibold mb-3">Stay Updated</h3>
+          <h3 className="font-heading text-xl md:text-2xl font-semibold mb-3">Get New Resources First</h3>
           <p className="text-charcoal/80 mb-6">
-            Get notified when new resources become available. Join our community for the latest therapeutic tools and guidance.
+            Join the list and we will email you when fresh worksheets, guides, and tools are published.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-4 py-2 rounded-md border border-charcoal/20 focus:outline-none focus:ring-2 focus:ring-clay focus:border-transparent"
-            />
-            <button className="px-6 py-2 bg-clay text-charcoal font-semibold rounded-md hover:bg-clay/90 transition-colors">
-              Subscribe
-            </button>
-          </div>
+          <ResourceLeadForm />
         </div>
       </section>
 

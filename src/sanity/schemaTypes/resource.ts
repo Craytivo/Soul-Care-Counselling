@@ -106,6 +106,13 @@ export const resource = defineType({
       description: 'Whether this resource should be featured prominently',
     }),
     defineField({
+      name: 'requiresEmailGate',
+      title: 'Require Email Before Download',
+      type: 'boolean',
+      initialValue: false,
+      description: 'When enabled, visitors must submit email to unlock this file download.',
+    }),
+    defineField({
       name: 'publishedAt',
       title: 'Published Date',
       type: 'datetime',
