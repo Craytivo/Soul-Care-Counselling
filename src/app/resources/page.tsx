@@ -9,6 +9,7 @@ import type { Resource } from '@/lib/sanity'
 import EmptyState from '@/components/ui/EmptyState'
 import ResourceLeadForm from '@/components/forms/ResourceLeadForm'
 import GatedDownloadButton from '@/components/resources/GatedDownloadButton'
+import Link from 'next/link'
 
 const categories = [
   'All Resources',
@@ -44,6 +45,11 @@ function isForcedGatedResource(resource: Resource) {
   )
 }
 
+function getResourceImageAlt(resource: Resource) {
+  const trimmedAlt = resource.previewImage?.alt?.trim()
+  return trimmedAlt || `${resource.title} resource preview`
+}
+
 export default async function ResourcesPage() {
   const [allResources, featuredResources] = await Promise.all([
     getResources(),
@@ -69,11 +75,13 @@ export default async function ResourcesPage() {
       {resource.previewImage?.asset && (
         <div className={`relative ${featured ? 'h-64 md:h-auto' : 'h-48'}`}>
           <Image
-            src={urlFor(resource.previewImage).width(featured ? 600 : 400).height(featured ? 400 : 300).url()}
-            alt={resource.previewImage.alt || resource.title}
+            src={urlFor(resource.previewImage).width(featured ? 600 : 400).height(featured ? 400 : 300).auto('format').url()}
+            alt={getResourceImageAlt(resource)}
             fill
             className="object-cover"
             priority={featured}
+            quality={75}
+            sizes={featured ? '(max-width: 768px) 100vw, 50vw' : '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'}
           />
         </div>
       )}
@@ -180,6 +188,17 @@ export default async function ResourcesPage() {
             </span>
           ))}
         </div>
+        <p className="mt-4 text-sm text-charcoal/75">
+          Looking for deeper support as you apply these tools? Explore our{' '}
+          <Link href="/services" className="underline decoration-charcoal/30 hover:decoration-charcoal">
+            counselling services
+          </Link>{' '}
+          or{' '}
+          <Link href="/contact" className="underline decoration-charcoal/30 hover:decoration-charcoal">
+            speak with our team
+          </Link>
+          .
+        </p>
       </section>
 
   {allResources.length === 0 ? (
@@ -221,11 +240,13 @@ export default async function ResourcesPage() {
                       {resource.previewImage?.asset && (
                         <div className="relative h-64 md:h-auto">
                           <Image
-                            src={urlFor(resource.previewImage).width(600).height(400).url()}
-                            alt={resource.previewImage.alt || resource.title}
+                            src={urlFor(resource.previewImage).width(600).height(400).auto('format').url()}
+                            alt={getResourceImageAlt(resource)}
                             fill
                             className="object-cover"
                             priority
+                            quality={75}
+                            sizes="(max-width: 768px) 100vw, 50vw"
                           />
                         </div>
                       )}

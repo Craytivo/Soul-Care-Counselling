@@ -9,6 +9,17 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: pageData?.title ? `${pageData.title} | Soul Care Counselling` : 'FAQs | Soul Care Counselling',
     description: pageData?.metaDescription || 'Frequently Asked Questions about Soul Care Counselling services.',
+    alternates: {
+      canonical: '/faq',
+    },
+    openGraph: {
+      title: pageData?.title ? `${pageData.title} | Soul Care Counselling` : 'FAQs | Soul Care Counselling',
+      description: pageData?.metaDescription || 'Frequently Asked Questions about Soul Care Counselling services.',
+      url: 'https://thesoulcarecounsellor.ca/faq',
+      siteName: 'Soul Care Counselling',
+      locale: 'en_CA',
+      type: 'website',
+    },
   }
 }
 
@@ -29,8 +40,25 @@ export default async function FAQPage() {
     )
   }
 
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: pageData.faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       {/* Hero */}
       <section className="relative overflow-hidden rounded-2xl bg-bark text-cream ring-1 ring-cream/15">
         <div className="absolute -right-12 -top-12 h-56 w-56 rounded-full bg-gradient-to-br from-clay/40 to-cream/10 blur-2xl"></div>

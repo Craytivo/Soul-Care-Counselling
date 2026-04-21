@@ -45,6 +45,20 @@ export default async function ServicesPage() {
         </div>
       </section>
 
+      <section className="mx-auto mt-6 max-w-3xl text-center">
+        <p className="text-sm text-charcoal/75">
+          Prefer to start with practical tools first? Visit our{' '}
+          <Link href="/resources" className="underline decoration-charcoal/30 hover:decoration-charcoal">
+            resources library
+          </Link>
+          . Have a question about fit or next steps?{' '}
+          <Link href="/contact" className="underline decoration-charcoal/30 hover:decoration-charcoal">
+            Contact our team
+          </Link>
+          .
+        </p>
+      </section>
+
       {/* Services from Sanity */}
       <SanityServices servicesData={servicesPageData} />
 

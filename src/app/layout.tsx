@@ -19,6 +19,7 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://thesoulcarecounsellor.ca'),
   title: 'Soul Care Christian Counselling â€” Home',
   description: 'Faith-centered, culturally sensitive therapy. Virtual across Canada.',
   verification: {
@@ -34,6 +35,16 @@ export const metadata: Metadata = {
       { url: '/apple-icon.png?v=2', sizes: '180x180', type: 'image/png' },
     ],
   },
+}
+
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Soul Care Counselling',
+  url: 'https://thesoulcarecounsellor.ca',
+  email: 'info@thesoulcarecounsellor.com',
+  logo: 'https://thesoulcarecounsellor.ca/icon.png',
+  sameAs: ['https://www.instagram.com/heybelovedhey'],
 }
 
 export default function RootLayout({
@@ -56,6 +67,9 @@ gtag('config', 'G-R5VV79YXXB');`}
         </Script>
       </head>
       <body className="bg-cream text-charcoal font-body antialiased">
+        <Script id="org-jsonld" type="application/ld+json" strategy="afterInteractive">
+          {JSON.stringify(organizationJsonLd)}
+        </Script>
         <Header />
         <main className="mx-auto max-w-7xl px-4 py-12 min-h-[60vh]">
           {children}

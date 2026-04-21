@@ -223,6 +223,17 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
             <p className="mt-3 text-xs text-charcoal/70">
               {pageData.contactForm.crisisNotice}
             </p>
+            <p className="mt-2 text-xs text-charcoal/70">
+              Looking for self-guided support first? Explore our{' '}
+              <a href="/resources" className="underline decoration-charcoal/30 hover:decoration-charcoal">
+                resource library
+              </a>{' '}
+              or review our{' '}
+              <a href="/services" className="underline decoration-charcoal/30 hover:decoration-charcoal">
+                counselling services
+              </a>
+              .
+            </p>
           </div>
         </div>
 

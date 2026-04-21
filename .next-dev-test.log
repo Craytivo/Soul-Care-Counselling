@@ -1,0 +1,16 @@
+
+> soul-care-counselling@0.1.0 dev
+> next dev --turbopack --port 3018
+
+   ▲ Next.js 15.5.9 (Turbopack)
+   - Local:        http://localhost:3018
+   - Network:      http://192.168.1.88:3018
+   - Environments: .env.local
+
+ ✓ Starting...
+Creating turbopack project { dir: 'C:\\Users\\user\\Documents\\soulcare-next', testMode: true }
+ ✓ Ready in 3s
+ ○ Compiling /api/send-email ...
+ ✓ Compiled /api/send-email in 3s
+ POST /api/send-email 200 in 4244ms
+ POST /api/send-email 200 in 587ms
