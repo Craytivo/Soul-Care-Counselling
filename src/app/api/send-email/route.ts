@@ -43,16 +43,23 @@ export async function POST(request: Request) {
         continue
       }
 
-      if (value instanceof File) {
-        if (!value.size) continue
-        const buffer = Buffer.from(await value.arrayBuffer())
-        const safeFilename = (value.name || `${key}.bin`).replace(/[^a-zA-Z0-9._-]/g, '_')
+      const maybeFile = value as unknown as {
+        size?: number
+        name?: string
+        type?: string
+        arrayBuffer?: () => Promise<ArrayBuffer>
+      }
 
-        fields[key] = `[file] ${safeFilename} (${value.type || 'application/octet-stream'}, ${value.size} bytes)`
+      if (typeof maybeFile.arrayBuffer === 'function') {
+        if (!maybeFile.size) continue
+        const buffer = Buffer.from(await maybeFile.arrayBuffer())
+        const safeFilename = (maybeFile.name || `${key}.bin`).replace(/[^a-zA-Z0-9._-]/g, '_')
+
+        fields[key] = `[file] ${safeFilename} (${maybeFile.type || 'application/octet-stream'}, ${maybeFile.size} bytes)`
         attachments.push({
           content: buffer.toString('base64'),
           filename: safeFilename,
-          type: value.type || 'application/octet-stream',
+          type: maybeFile.type || 'application/octet-stream',
           disposition: 'attachment',
         })
       }
