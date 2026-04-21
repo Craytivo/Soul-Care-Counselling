@@ -314,9 +314,9 @@ export default async function ResourcesPage() {
       {/* Newsletter Signup */}
       <section className="mt-16 rounded-2xl bg-sand p-6 md:p-8 ring-1 ring-charcoal/10">
         <div className="max-w-2xl mx-auto text-center">
-          <h3 className="font-heading text-xl md:text-2xl font-semibold mb-3">Get New Resources First</h3>
+          <h3 className="font-heading text-xl md:text-2xl font-semibold mb-3">Your Private Wellness Library</h3>
           <p className="text-charcoal/80 mb-6">
-            Join the list and we will email you when fresh worksheets, guides, and tools are published.
+            Join our community to receive thoughtfully curated worksheets, guides, and practical tools designed for steady emotional growth.
           </p>
           <ResourceLeadForm />
         </div>

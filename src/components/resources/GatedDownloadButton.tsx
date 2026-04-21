@@ -74,7 +74,7 @@ export default function GatedDownloadButton({
       const payload = (await response.json().catch(() => ({}))) as { message?: string }
       if (!response.ok) {
         setStatus('error')
-        setMessage(payload.message || 'Unable to unlock this resource right now.')
+        setMessage(payload.message || 'We could not unlock this download right now. Please try again.')
         return
       }
 
@@ -86,7 +86,7 @@ export default function GatedDownloadButton({
       window.open(downloadUrl, '_blank', 'noopener,noreferrer')
     } catch {
       setStatus('error')
-      setMessage('Unable to unlock this resource right now.')
+      setMessage('We could not unlock this download right now. Please try again.')
     }
   }
 
@@ -101,16 +101,16 @@ export default function GatedDownloadButton({
             d="M12 11c1.657 0 3-1.343 3-3V7a3 3 0 10-6 0v1c0 1.657 1.343 3 3 3zm-7 8v-3a4 4 0 014-4h6a4 4 0 014 4v3"
           />
         </svg>
-        Get Resource
+        Get Instant Access
       </button>
 
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div className="absolute inset-0 bg-black/40" onClick={() => setOpen(false)} aria-hidden="true" />
           <div className="relative w-full max-w-md mx-4 rounded-2xl bg-white p-6 ring-1 ring-charcoal/10 shadow-lg">
-            <h4 className="font-heading text-xl font-semibold">Unlock This Download</h4>
+            <h4 className="font-heading text-xl font-semibold">Get Premium Access</h4>
             <p className="mt-2 text-sm text-charcoal/80">
-              Enter your email and we will open <span className="font-medium">{resourceTitle}</span>.
+              Enter your best email for immediate access to <span className="font-medium">{resourceTitle}</span>. We will also send future tools that match your growth journey.
             </p>
 
             <form onSubmit={onSubmit} className="mt-4 space-y-3">
@@ -144,7 +144,7 @@ export default function GatedDownloadButton({
                   disabled={status === 'submitting'}
                   className="inline-flex items-center justify-center rounded-md bg-bark px-4 py-2 font-semibold text-cream hover:bg-bark/90 disabled:opacity-70"
                 >
-                  {status === 'submitting' ? 'Unlocking...' : 'Unlock Download'}
+                  {status === 'submitting' ? 'Preparing access...' : 'Unlock My Download'}
                 </button>
                 <button
                   type="button"
@@ -161,4 +161,3 @@ export default function GatedDownloadButton({
     </>
   )
 }
-

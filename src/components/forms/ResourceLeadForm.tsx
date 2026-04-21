@@ -31,17 +31,17 @@ export default function ResourceLeadForm() {
       const payload = (await response.json().catch(() => ({}))) as { message?: string }
       if (!response.ok) {
         setStatus('error')
-        setMessage(payload.message || 'Unable to subscribe right now.')
+        setMessage(payload.message || 'We could not complete your request right now. Please try again.')
         return
       }
 
       setStatus('success')
-      setMessage(payload.message || 'You are subscribed.')
+      setMessage(payload.message || 'You are in. We will send new resources to your inbox.')
       setEmail('')
       setFirstName('')
     } catch {
       setStatus('error')
-      setMessage('Unable to subscribe right now.')
+      setMessage('We could not complete your request right now. Please try again.')
     }
   }
 
@@ -75,13 +75,13 @@ export default function ResourceLeadForm() {
           disabled={status === 'submitting'}
           className="px-6 py-2 bg-clay text-charcoal font-semibold rounded-md hover:bg-clay/90 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
         >
-          {status === 'submitting' ? 'Subscribing...' : 'Subscribe'}
+          {status === 'submitting' ? 'Saving your spot...' : 'Get Resource Updates'}
         </button>
         <a
           href="/contact"
           className="px-6 py-2 bg-white text-charcoal font-semibold rounded-md ring-1 ring-charcoal/15 hover:bg-charcoal/5 transition-colors"
         >
-          Need something specific?
+          Request a specific resource
         </a>
       </div>
 
@@ -101,4 +101,3 @@ export default function ResourceLeadForm() {
     </form>
   )
 }
-
