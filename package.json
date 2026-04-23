@@ -20,6 +20,7 @@
     "@sanity/vision": "^4.6.1",
     "@sendgrid/mail": "^8.1.6",
     "busboy": "^1.6.0",
+    "critters": "^0.0.23",
     "dotenv": "^17.2.2",
     "next": "^15.5.9",
     "next-sanity": "^11.1.0",

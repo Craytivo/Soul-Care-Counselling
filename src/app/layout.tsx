@@ -117,6 +117,9 @@ gtag('config', 'G-R5VV79YXXB');`}
         <Script id="org-jsonld" type="application/ld+json" strategy="afterInteractive">
           {JSON.stringify(organizationJsonLd)}
         </Script>
+        <Script id="website-jsonld" type="application/ld+json" strategy="afterInteractive">
+          {JSON.stringify(websiteJsonLd)}
+        </Script>
         <Header />
         <main className="mx-auto max-w-7xl px-4 py-12 min-h-[60vh] content-block">
           {children}
