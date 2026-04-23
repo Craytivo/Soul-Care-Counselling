@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://thesoulcarecounsellor.ca/sitemap.xml

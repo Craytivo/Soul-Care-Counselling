@@ -14,14 +14,15 @@ html {
   select:focus-visible,
   [role='button']:focus-visible {
     outline: 2px solid transparent;
-    box-shadow: 0 0 0 2px rgba(196, 154, 108, 0.45);
-    border-radius: 0.5rem;
+    box-shadow: 0 0 0 3px rgba(196, 154, 108, 0.4), 0 0 0 6px rgba(196, 154, 108, 0.1);
+    border-radius: 8px;
   }
 }
 
 @layer components {
   .ui-card {
     @apply rounded-2xl bg-white ring-1 ring-charcoal/10 shadow-sm;
+    background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,245,236,0.95) 100%);
   }
 
   .ui-card-hover {
@@ -29,11 +30,16 @@ html {
   }
 
   .ui-btn {
-    @apply inline-flex items-center justify-center rounded-md px-5 py-2.5 font-semibold transition-colors ring-1;
+    @apply inline-flex items-center justify-center rounded-md px-5 py-2.5 font-semibold transition-all ring-1;
   }
 
   .ui-btn-primary {
     @apply ui-btn bg-clay text-charcoal ring-charcoal/10 hover:bg-clay/90;
+  }
+
+  .ui-btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(196, 154, 108, 0.3);
   }
 
   .ui-btn-secondary {
@@ -46,6 +52,34 @@ html {
 
   .ui-input {
     @apply w-full rounded-md border border-charcoal/20 bg-white px-3 py-2.5 text-sm text-charcoal outline-none;
+  }
+
+  /* Skeleton loading animation */
+  .skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+
+  @keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* Content entrance animation */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .content-block {
+    animation: fadeInUp 0.6s ease-out;
   }
 }
 

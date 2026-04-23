@@ -102,7 +102,7 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div className="absolute inset-0 bg-black/40" onClick={() => setModalOpen(false)} aria-hidden="true"></div>
           <div className="relative w-full max-w-lg mx-4">
-            <div className="rounded-2xl bg-white p-6 ring-1 ring-charcoal/10 shadow-lg">
+            <div className="ui-card p-6 shadow-lg">
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0">
                   <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-clay text-charcoal">
@@ -133,7 +133,7 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
               name="contact" 
               method="POST" 
               encType="multipart/form-data"
-              className="mt-4 rounded-2xl bg-white p-6 ring-1 ring-charcoal/10 space-y-4"
+              className="mt-4 ui-card p-6 space-y-4"
               onSubmit={handleSubmit}
             >
               <div className="grid gap-4 sm:grid-cols-2">
@@ -274,7 +274,7 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
             </div>
           </div>
 
-          <div className="rounded-2xl bg-white p-5 ring-1 ring-charcoal/10">
+          <div className="ui-card p-5">
             <h3 className="font-heading font-semibold">{pageData.contactInfo.hours.heading}</h3>
             <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
               {pageData.contactInfo.hours.schedule.map((item) => (

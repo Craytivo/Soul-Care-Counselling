@@ -20,10 +20,44 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://thesoulcarecounsellor.ca'),
-  title: 'Soul Care Christian Counselling â€” Home',
+  title: {
+    default: 'Soul Care Christian Counselling — Home',
+    template: '%s | Soul Care Christian Counselling'
+  },
   description: 'Faith-centered, culturally sensitive therapy. Virtual across Canada.',
+  keywords: ['Christian counselling', 'therapy', 'mental health', 'faith-based', 'virtual counselling', 'Canada'],
+  authors: [{ name: 'Soul Care Counselling' }],
+  creator: 'Soul Care Counselling',
+  publisher: 'Soul Care Counselling',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   verification: {
     google: 'I46F2T5WNf56MEhLHRDB3fqOl3oLXSj_UJgHt4A0SH4',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_CA',
+    url: 'https://thesoulcarecounsellor.ca',
+    title: 'Soul Care Christian Counselling',
+    description: 'Faith-centered, culturally sensitive therapy. Virtual across Canada.',
+    siteName: 'Soul Care Christian Counselling',
+    images: [
+      {
+        url: 'https://thesoulcarecounsellor.ca/icon.png',
+        width: 32,
+        height: 32,
+        alt: 'Soul Care Counselling Logo',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Soul Care Christian Counselling',
+    description: 'Faith-centered, culturally sensitive therapy. Virtual across Canada.',
+    images: ['https://thesoulcarecounsellor.ca/icon.png'],
   },
   icons: {
     icon: [
@@ -45,6 +79,19 @@ const organizationJsonLd = {
   email: 'info@thesoulcarecounsellor.com',
   logo: 'https://thesoulcarecounsellor.ca/icon.png',
   sameAs: ['https://www.instagram.com/heybelovedhey'],
+}
+
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Soul Care Christian Counselling',
+  url: 'https://thesoulcarecounsellor.ca',
+  description: 'Faith-centered, culturally sensitive therapy. Virtual across Canada.',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: 'https://thesoulcarecounsellor.ca/services?search={search_term_string}',
+    'query-input': 'required name=search_term_string',
+  },
 }
 
 export default function RootLayout({
@@ -71,7 +118,7 @@ gtag('config', 'G-R5VV79YXXB');`}
           {JSON.stringify(organizationJsonLd)}
         </Script>
         <Header />
-        <main className="mx-auto max-w-7xl px-4 py-12 min-h-[60vh]">
+        <main className="mx-auto max-w-7xl px-4 py-12 min-h-[60vh] content-block">
           {children}
         </main>
         <Footer />
