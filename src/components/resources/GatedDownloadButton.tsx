@@ -1,7 +1,8 @@
 "use client"
 
 import { FormEvent, useMemo, useState } from 'react'
-import { trackConsultationClick, trackLeadFormSubmit } from '@/lib/tracking'
+import { useRouter } from 'next/navigation'
+import { trackLeadFormSubmit } from '@/lib/tracking'
 
 interface GatedDownloadButtonProps {
   requiresEmailGate?: boolean
@@ -12,7 +13,7 @@ interface GatedDownloadButtonProps {
   className?: string
 }
 
-type GateStatus = 'idle' | 'submitting' | 'success' | 'error'
+type GateStatus = 'idle' | 'submitting' | 'error'
 
 export default function GatedDownloadButton({
   requiresEmailGate = false,
@@ -22,12 +23,12 @@ export default function GatedDownloadButton({
   resourceSlug,
   className,
 }: GatedDownloadButtonProps) {
+  const router = useRouter()
   const [open, setOpen] = useState(false)
   const [firstName, setFirstName] = useState('')
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<GateStatus>('idle')
   const [message, setMessage] = useState('')
-  const bookingUrl = 'https://thesoulcarecounsellor.janeapp.com'
 
   const buttonClassName = useMemo(
     () =>
@@ -64,7 +65,7 @@ export default function GatedDownloadButton({
     setMessage('')
 
     try {
-      const response = await fetch('/api/waitlist', {
+      const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
@@ -80,16 +81,18 @@ export default function GatedDownloadButton({
         return
       }
 
-      setStatus('success')
-      setMessage('Your download is ready. We have also sent this resource to your inbox.')
+      setOpen(false)
+      setStatus('idle')
+      setMessage('')
       trackLeadFormSubmit({
         formName: 'resource-gated-download',
         source: `resource-download:${resourceSlug}`,
-        method: 'api_waitlist',
+        method: 'api_subscribe',
       })
       setEmail('')
       setFirstName('')
       window.open(downloadUrl, '_blank', 'noopener,noreferrer')
+      router.push('/thank-you')
     } catch {
       setStatus('error')
       setMessage('We could not unlock this download right now. Please try again.')
@@ -119,8 +122,7 @@ export default function GatedDownloadButton({
               Enter your first name and email for immediate access to <span className="font-medium">{resourceTitle}</span>. We only send practical resources and you can unsubscribe any time.
             </p>
 
-            {status !== 'success' ? (
-              <form onSubmit={onSubmit} className="mt-4 space-y-3">
+            <form onSubmit={onSubmit} className="mt-4 space-y-3">
               <input
                 type="text"
                 value={firstName}
@@ -166,40 +168,7 @@ export default function GatedDownloadButton({
                   Cancel
                 </button>
               </div>
-              </form>
-            ) : (
-              <div className="mt-4 rounded-lg bg-sand p-4 ring-1 ring-charcoal/10">
-                <p className="text-sm text-charcoal/85">{message}</p>
-                <div className="mt-3 flex flex-col gap-2 sm:flex-row">
-                  <a
-                    href={bookingUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() =>
-                      trackConsultationClick({
-                        location: 'resource-download-thank-you',
-                        label: 'Book a Free Consultation',
-                        url: bookingUrl,
-                      })
-                    }
-                    className="inline-flex items-center justify-center rounded-md bg-clay px-4 py-2 font-semibold text-charcoal hover:bg-clay/90 ring-1 ring-charcoal/10"
-                  >
-                    Book a Free Consultation
-                  </a>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setOpen(false)
-                      setStatus('idle')
-                      setMessage('')
-                    }}
-                    className="inline-flex items-center justify-center rounded-md bg-white px-4 py-2 font-semibold text-charcoal ring-1 ring-charcoal/15 hover:bg-charcoal/5"
-                  >
-                    Close
-                  </button>
-                </div>
-              </div>
-            )}
+            </form>
           </div>
         </div>
       )}

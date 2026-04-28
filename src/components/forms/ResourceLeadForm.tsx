@@ -1,16 +1,17 @@
 "use client"
 
 import { FormEvent, useState } from 'react'
-import { trackConsultationClick, trackLeadFormSubmit } from '@/lib/tracking'
+import { useRouter } from 'next/navigation'
+import { trackLeadFormSubmit } from '@/lib/tracking'
 
 type SubmitState = 'idle' | 'submitting' | 'success' | 'error'
 
 export default function ResourceLeadForm() {
+  const router = useRouter()
   const [firstName, setFirstName] = useState('')
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<SubmitState>('idle')
   const [message, setMessage] = useState('')
-  const bookingUrl = 'https://thesoulcarecounsellor.janeapp.com'
   const mailerLiteGroupId = process.env.NEXT_PUBLIC_MAILERLITE_GROUP_ID
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -21,7 +22,7 @@ export default function ResourceLeadForm() {
     setMessage('')
 
     try {
-      const response = await fetch('/api/waitlist', {
+      const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
@@ -38,57 +39,16 @@ export default function ResourceLeadForm() {
         return
       }
 
-      setStatus('success')
       trackLeadFormSubmit({
         formName: 'resource-lead-form',
         source: 'resources',
-        method: 'api_waitlist',
+        method: 'api_subscribe',
       })
-      setMessage(payload.message || 'Thanks for signing up. Your resource updates are on the way.')
-      setEmail('')
-      setFirstName('')
+      router.push('/thank-you')
     } catch {
       setStatus('error')
       setMessage('We could not complete your request right now. Please try again.')
     }
-  }
-
-  if (status === 'success') {
-    return (
-      <div className="mx-auto max-w-md rounded-xl bg-white p-5 text-left ring-1 ring-charcoal/10">
-        <h4 className="font-heading text-lg font-semibold">You are in, and we are glad you are here.</h4>
-        <p className="mt-2 text-sm text-charcoal/80">
-          {message} If you want support that is tailored to your story, you can book a consultation with Jessica.
-        </p>
-        <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-          <a
-            href={bookingUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() =>
-              trackConsultationClick({
-                location: 'resource-lead-thank-you',
-                label: 'Book a Consultation',
-                url: bookingUrl,
-              })
-            }
-            className="inline-flex items-center justify-center rounded-md bg-clay px-5 py-2.5 font-semibold text-charcoal hover:bg-clay/90 ring-1 ring-charcoal/10"
-          >
-            Book a Consultation
-          </a>
-          <button
-            type="button"
-            onClick={() => {
-              setStatus('idle')
-              setMessage('')
-            }}
-            className="inline-flex items-center justify-center rounded-md bg-white px-5 py-2.5 font-semibold text-charcoal ring-1 ring-charcoal/15 hover:bg-charcoal/5"
-          >
-            Continue Browsing
-          </button>
-        </div>
-      </div>
-    )
   }
 
   return (
