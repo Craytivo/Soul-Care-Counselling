@@ -19,6 +19,39 @@ function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 }
 
+async function syncMailerLiteSubscriber(email: string, firstName: string) {
+  const apiToken = process.env.MAILERLITE_API_TOKEN
+  const groupId = process.env.MAILERLITE_GROUP_ID
+
+  if (!apiToken || !groupId) return false
+
+  const response = await fetch('https://connect.mailerlite.com/api/subscribers', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${apiToken}`,
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify({
+      email,
+      fields: {
+        name: firstName || undefined,
+      },
+      groups: [groupId],
+      status: 'active',
+    }),
+    cache: 'no-store',
+  })
+
+  if (!response.ok) {
+    const errorText = await response.text().catch(() => '')
+    console.error('MailerLite sync failed:', response.status, errorText)
+    return false
+  }
+
+  return true
+}
+
 export async function POST(request: NextRequest) {
   try {
     if (!process.env.SANITY_API_TOKEN) {
@@ -72,13 +105,15 @@ export async function POST(request: NextRequest) {
     )
 
     await transaction.commit()
+    const mailerLiteSynced = await syncMailerLiteSubscriber(email, firstName).catch(() => false)
 
     return NextResponse.json({
       success: true,
       alreadyRegistered: Boolean(existing),
+      mailerLiteSynced,
       message: existing
-        ? 'You are already on the waitlist. We updated your latest signup.'
-        : 'You are on the waitlist. We will notify you at launch.',
+        ? 'You are already subscribed. We updated your latest signup.'
+        : 'Thanks for subscribing. Please check your inbox for your next resource.',
     })
   } catch (error) {
     console.error('Waitlist signup error:', error)

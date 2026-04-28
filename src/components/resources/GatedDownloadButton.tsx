@@ -1,6 +1,7 @@
 "use client"
 
 import { FormEvent, useMemo, useState } from 'react'
+import { trackConsultationClick, trackLeadFormSubmit } from '@/lib/tracking'
 
 interface GatedDownloadButtonProps {
   requiresEmailGate?: boolean
@@ -11,7 +12,7 @@ interface GatedDownloadButtonProps {
   className?: string
 }
 
-type GateStatus = 'idle' | 'submitting' | 'error'
+type GateStatus = 'idle' | 'submitting' | 'success' | 'error'
 
 export default function GatedDownloadButton({
   requiresEmailGate = false,
@@ -26,6 +27,7 @@ export default function GatedDownloadButton({
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<GateStatus>('idle')
   const [message, setMessage] = useState('')
+  const bookingUrl = 'https://thesoulcarecounsellor.janeapp.com'
 
   const buttonClassName = useMemo(
     () =>
@@ -78,9 +80,13 @@ export default function GatedDownloadButton({
         return
       }
 
-      setOpen(false)
-      setStatus('idle')
-      setMessage('')
+      setStatus('success')
+      setMessage('Your download is ready. We have also sent this resource to your inbox.')
+      trackLeadFormSubmit({
+        formName: 'resource-gated-download',
+        source: `resource-download:${resourceSlug}`,
+        method: 'api_waitlist',
+      })
       setEmail('')
       setFirstName('')
       window.open(downloadUrl, '_blank', 'noopener,noreferrer')
@@ -110,17 +116,19 @@ export default function GatedDownloadButton({
           <div className="relative w-full max-w-md mx-4 rounded-2xl bg-white p-6 ring-1 ring-charcoal/10 shadow-lg">
             <h4 className="font-heading text-xl font-semibold">Get Premium Access</h4>
             <p className="mt-2 text-sm text-charcoal/80">
-              Enter your best email for immediate access to <span className="font-medium">{resourceTitle}</span>. We will also send future tools that match your growth journey.
+              Enter your first name and email for immediate access to <span className="font-medium">{resourceTitle}</span>. We only send practical resources and you can unsubscribe any time.
             </p>
 
-            <form onSubmit={onSubmit} className="mt-4 space-y-3">
+            {status !== 'success' ? (
+              <form onSubmit={onSubmit} className="mt-4 space-y-3">
               <input
                 type="text"
                 value={firstName}
                 onChange={(event) => setFirstName(event.target.value)}
-                placeholder="First name (optional)"
+                placeholder="First name"
                 className="w-full px-3 py-2 rounded-md border border-charcoal/20 focus:outline-none focus:ring-2 focus:ring-clay"
                 autoComplete="given-name"
+                required
               />
               <input
                 type="email"
@@ -148,13 +156,50 @@ export default function GatedDownloadButton({
                 </button>
                 <button
                   type="button"
-                  onClick={() => setOpen(false)}
+                  onClick={() => {
+                    setOpen(false)
+                    setStatus('idle')
+                    setMessage('')
+                  }}
                   className="inline-flex items-center justify-center rounded-md bg-white px-4 py-2 font-semibold text-charcoal ring-1 ring-charcoal/15 hover:bg-charcoal/5"
                 >
                   Cancel
                 </button>
               </div>
-            </form>
+              </form>
+            ) : (
+              <div className="mt-4 rounded-lg bg-sand p-4 ring-1 ring-charcoal/10">
+                <p className="text-sm text-charcoal/85">{message}</p>
+                <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+                  <a
+                    href={bookingUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() =>
+                      trackConsultationClick({
+                        location: 'resource-download-thank-you',
+                        label: 'Book a Free Consultation',
+                        url: bookingUrl,
+                      })
+                    }
+                    className="inline-flex items-center justify-center rounded-md bg-clay px-4 py-2 font-semibold text-charcoal hover:bg-clay/90 ring-1 ring-charcoal/10"
+                  >
+                    Book a Free Consultation
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setOpen(false)
+                      setStatus('idle')
+                      setMessage('')
+                    }}
+                    className="inline-flex items-center justify-center rounded-md bg-white px-4 py-2 font-semibold text-charcoal ring-1 ring-charcoal/15 hover:bg-charcoal/5"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}

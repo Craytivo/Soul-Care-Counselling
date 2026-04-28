@@ -4,6 +4,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { trackConsultationClick } from '@/lib/tracking'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -184,6 +185,13 @@ export default function Header() {
             href="https://thesoulcarecounsellor.janeapp.com"
             target="_blank" 
             rel="noopener noreferrer"
+            onClick={() =>
+              trackConsultationClick({
+                location: 'mobile-menu',
+                label: 'Book a Free Consultation',
+                url: 'https://thesoulcarecounsellor.janeapp.com',
+              })
+            }
             className="mt-6 inline-flex items-center justify-center rounded-xl bg-gold px-6 py-3 font-bold tracking-wide text-bark hover:bg-gold/90 shadow-lg transition-all duration-200 hover:scale-105"
           >
             Book a Free Consultation

@@ -5,6 +5,7 @@ import SanityServices from '@/components/SanityServices'
 import { getServicesPage } from '@/lib/sanity-queries'
 import Link from 'next/link'
 import EmptyState from '@/components/ui/EmptyState'
+import ConsultationCta from '@/components/cta/ConsultationCta'
 
 export const metadata: Metadata = {
   title: 'Services | Soul Care Counselling',
@@ -62,34 +63,32 @@ export default async function ServicesPage() {
       {/* Services from Sanity */}
       <SanityServices servicesData={servicesPageData} />
 
-      {/* CTA Section */}
-      <section className="mt-16 md:mt-20 rounded-2xl bg-sand p-6 md:p-8 ring-1 ring-charcoal/10">
-        <div className="grid gap-6 md:grid-cols-3 md:items-center">
-          <div className="md:col-span-2">
-            <h3 className="font-heading text-xl md:text-2xl font-semibold">{servicesPageData.cta.title}</h3>
-            <p className="mt-2 text-charcoal/80">{servicesPageData.cta.description}</p>
-          </div>
-          <div className="md:justify-self-end">
-            {servicesPageData.cta.external ? (
-              <a 
-                href={servicesPageData.cta.buttonUrl}
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-md bg-clay px-5 py-2.5 font-semibold text-charcoal hover:bg-clay/90 ring-1 ring-charcoal/10"
-              >
-                {servicesPageData.cta.buttonText}
-              </a>
-            ) : (
+      {servicesPageData.cta.external ? (
+        <ConsultationCta
+          title={servicesPageData.cta.title}
+          description={servicesPageData.cta.description}
+          buttonText={servicesPageData.cta.buttonText}
+          bookingUrl={servicesPageData.cta.buttonUrl}
+          trackingLocation="services-bottom"
+        />
+      ) : (
+        <section className="mt-16 md:mt-20 rounded-2xl bg-sand p-6 md:p-8 ring-1 ring-charcoal/10">
+          <div className="grid gap-6 md:grid-cols-3 md:items-center">
+            <div className="md:col-span-2">
+              <h3 className="font-heading text-xl md:text-2xl font-semibold">{servicesPageData.cta.title}</h3>
+              <p className="mt-2 text-charcoal/80">{servicesPageData.cta.description}</p>
+            </div>
+            <div className="md:justify-self-end">
               <Link
                 href={servicesPageData.cta.buttonUrl}
                 className="inline-flex items-center justify-center rounded-md bg-clay px-5 py-2.5 font-semibold text-charcoal hover:bg-clay/90 ring-1 ring-charcoal/10"
               >
                 {servicesPageData.cta.buttonText}
               </Link>
-            )}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
     </>
   )
 }

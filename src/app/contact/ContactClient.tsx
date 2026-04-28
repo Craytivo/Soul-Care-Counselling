@@ -1,6 +1,8 @@
 "use client"
 import { useState, useEffect, useRef } from 'react'
 import type { ContactPage } from '@/lib/sanity'
+import ConsultationCta from '@/components/cta/ConsultationCta'
+import { trackConsultationClick } from '@/lib/tracking'
 
 export default function ContactClient({ pageData }: { pageData: ContactPage }) {
   const [formStatus, setFormStatus] = useState('')
@@ -90,6 +92,13 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
               href={pageData.contactInfo.quickContact.bookingUrl}
               target="_blank" 
               rel="noopener noreferrer"
+              onClick={() =>
+                trackConsultationClick({
+                  location: 'contact-hero',
+                  label: pageData.hero.consultationButtonText,
+                  url: pageData.contactInfo.quickContact.bookingUrl,
+                })
+              }
               className="inline-flex items-center justify-center rounded-md bg-cream/10 px-5 py-2.5 font-semibold text-cream hover:bg-cream/15 ring-1 ring-cream/20"
             >
               {pageData.hero.consultationButtonText}
@@ -266,6 +275,13 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
                   href={pageData.contactInfo.quickContact.bookingUrl}
                   target="_blank" 
                   rel="noopener noreferrer"
+                  onClick={() =>
+                    trackConsultationClick({
+                      location: 'contact-sidebar',
+                      label: pageData.contactInfo.quickContact.bookingText,
+                      url: pageData.contactInfo.quickContact.bookingUrl,
+                    })
+                  }
                   className="underline underline-offset-4 decoration-charcoal/30 hover:decoration-charcoal"
                 >
                   {pageData.contactInfo.quickContact.bookingText}
@@ -289,25 +305,14 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
         </aside>
       </section>
 
-      {/* Final CTA */}
-      <section className="mt-16 md:mt-20 rounded-2xl bg-sand p-6 md:p-8 ring-1 ring-charcoal/10">
-        <div className="grid gap-6 md:grid-cols-3 md:items-center">
-          <div className="md:col-span-2">
-            <h3 className="font-heading text-xl md:text-2xl font-semibold">{pageData.finalCta.heading}</h3>
-            <p className="mt-2 text-charcoal/80">{pageData.finalCta.description}</p>
-          </div>
-          <div className="md:justify-self-end">
-            <a 
-              href={pageData.finalCta.buttonUrl}
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-md bg-clay px-5 py-2.5 font-semibold text-charcoal hover:bg-clay/90 ring-1 ring-charcoal/10"
-            >
-              {pageData.finalCta.buttonText}
-            </a>
-          </div>
-        </div>
-      </section>
+      <ConsultationCta
+        title={pageData.finalCta.heading}
+        description={pageData.finalCta.description}
+        buttonText={pageData.finalCta.buttonText}
+        bookingUrl={pageData.finalCta.buttonUrl}
+        trackingLocation="contact-bottom"
+        className="md:mt-20"
+      />
     </>
   )
 }
