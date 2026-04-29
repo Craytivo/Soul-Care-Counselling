@@ -413,7 +413,7 @@ export default function ResourcesClient({ allResources, featuredResources }: Res
             </div>
             <h3 className="text-xl font-semibold text-charcoal mb-2">No resources yet</h3>
             <p className="text-charcoal/70 mb-8 max-w-md mx-auto">
-              We're preparing helpful resources to share with you. Check back soon for worksheets, guides, and therapeutic materials.
+              We&apos;re preparing helpful resources to share with you. Check back soon for worksheets, guides, and therapeutic materials.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a

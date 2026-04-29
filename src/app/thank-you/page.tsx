@@ -125,7 +125,7 @@ export default function ThankYouPage() {
         {/* Bottom reassurance */}
         <div className="mt-8 text-center">
           <p className="text-xs text-charcoal/50">
-            We're here to support you every step of the way. Your wellbeing is our priority.
+            We&apos;re here to support you every step of the way. Your wellbeing is our priority.
           </p>
         </div>
       </div>
