@@ -140,7 +140,7 @@ export default function GatedDownloadButton({
               </div>
               <h4 className="font-heading text-2xl font-bold text-charcoal mb-2">Get Instant Access</h4>
               <p className="text-sm text-charcoal/80 leading-relaxed">
-                Download <span className="font-semibold text-clay">"{resourceTitle}"</span> immediately after signing up
+                Download <span className="font-semibold text-clay">&quot;{resourceTitle}&quot;</span> immediately after signing up
               </p>
             </div>
 
