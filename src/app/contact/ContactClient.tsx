@@ -71,9 +71,10 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
   return (
     <>
       {/* Page hero */}
-      <section className="relative overflow-hidden rounded-2xl bg-bark text-cream ring-1 ring-cream/15">
+      <section className="relative overflow-hidden rounded-2xl bg-bark text-cream ring-1 ring-cream/15 hero-gradient-overlay">
         <div className="absolute -right-12 -top-12 h-56 w-56 rounded-full bg-gradient-to-br from-clay/40 to-cream/10 blur-2xl" aria-hidden="true"></div>
-        <div className="relative z-10 px-6 py-10 md:px-10 md:py-14">
+        <div className="absolute -right-12 -top-12 h-56 w-56 rounded-full bg-gradient-to-br from-clay/30 to-cream/20 blur-3xl" aria-hidden="true"></div>
+        <div className="relative z-10 px-6 py-10 md:px-10 md:py-14 scroll-animate">
           <span className="inline-flex items-center gap-2 rounded-full bg-cream/10 px-3 py-1 ring-1 ring-cream/30 uppercase tracking-[.22em] text-[11px]">
             {pageData.hero.badge}
           </span>

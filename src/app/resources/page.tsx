@@ -1,6 +1,6 @@
 
 
-export const revalidate = 300
+export const revalidate = 60
 
 import { getResources, getFeaturedResources } from '@/lib/sanity-queries'
 import { urlFor } from '@/lib/sanity'

@@ -11,30 +11,31 @@ interface HeroProps {
   layout?: 'left' | 'centerLow' | 'split'
 }
 
-const iconComponents = {
-  lock: (
+// Icon components for better maintainability and reusability
+const IconComponents = {
+  Lock: () => (
     <svg className="h-5 w-5 text-cream flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 3.5l7 3v5.2c0 4.3-2.8 8.2-7 9.7-4.2-1.5-7-5.4-7-9.7V6.5l7-3z" />
       <path strokeLinecap="round" strokeLinejoin="round" d="M9.2 12.2l2 2 3.8-4" />
     </svg>
   ),
-  mapPin: (
+  MapPin: () => (
     <svg className="h-5 w-5 text-cream flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
       <rect x="3" y="6.5" width="14" height="11" rx="2.2" />
       <path strokeLinecap="round" strokeLinejoin="round" d="M17 10l4-2.2v8.4L17 14" />
     </svg>
   ),
-  globe: (
+  Globe: () => (
     <svg className="h-5 w-5 text-cream flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
       <circle cx="8.5" cy="10.5" r="2.2" />
       <circle cx="15.5" cy="10.5" r="2.2" />
       <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 18.2c.7-2.4 2.7-3.8 4.9-3.8s4.2 1.4 4.9 3.8" />
-      <path strokeLinecap="round" strokeLinejoin="round" d="M13.2 18.2c.5-1.9 2-3 3.8-3 1.8 0 3.2 1.1 3.8 3" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M13.2 18.2c.5-1.9 2-3 3.8 1.8 0 3.2 1.1 3.8 3" />
     </svg>
   ),
-  graduationCap: (
+  GraduationCap: () => (
     <svg className="h-5 w-5 text-cream flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 5.2l1.7 3.3 3.7.5-2.7 2.6.6 3.7-3.3-1.7-3.3 1.7.6-3.7-2.7-2.6 3.7-.5L12 5.2z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 5.2l1.7 3.3 3.7.5-2.7 2.6.6 3.7-3.3 1.7.6-3.7-2.7-2.6 3.7-.5L12 5.2z" />
       <path strokeLinecap="round" strokeLinejoin="round" d="M6.5 19h11" />
     </svg>
   ),
@@ -69,7 +70,7 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
   const isLegacy = variant === 'legacy'
 
   return (
-    <section className="relative h-[82svh] min-h-[620px] sm:h-[88svh] lg:h-[min(100vh,900px)] w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] overflow-hidden">
+    <section className="hero-section relative h-[100dvh] min-h-[620px] sm:h-[88svh] lg:h-[min(100vh,900px)] w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] overflow-hidden">
       {/* Background Image */}
       {backgroundImageSrc && (
         <div className="absolute inset-0 z-0">
@@ -86,12 +87,12 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
             <div className="absolute inset-0 bg-charcoal/70" />
           ) : (
             <>
-              {/* Lightened directional gradient for improved image visibility */}
-              <div className="absolute inset-0 bg-gradient-to-r from-charcoal/65 via-charcoal/35 to-transparent md:from-charcoal/55 md:via-charcoal/25" />
-              {/* Softer radial vignette */}
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(0,0,0,0.04),rgba(0,0,0,0.22)_55%,rgba(0,0,0,0.38)_85%)] mix-blend-multiply" />
-              {/* Subtle noise layer for texture (optional) */}
-              <div className="pointer-events-none absolute inset-0 opacity-[0.18] [background-image:radial-gradient(rgba(255,255,255,0.15)_1px,transparent_1px)] [background-size:3px_3px]" />
+              {/* Enhanced gradient with cleaner design */}
+              <div className="absolute inset-0 bg-gradient-to-br from-charcoal/40 via-charcoal/20 to-transparent" />
+              {/* Cleaner radial vignette */}
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_50%,rgba(0,0,0,0.08),rgba(0,0,0,0.15)_85%)]" />
+              {/* Subtle texture overlay */}
+              <div className="pointer-events-none absolute inset-0 opacity-[0.12] [background-image:radial-gradient(rgba(255,255,255,0.1)_2px,transparent_2px)] [background-size:4px_4px]" />
             </>
           )}
         </div>
@@ -101,17 +102,17 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
       {/* Bottom Content Band (40% height) */}
       {layout === 'split' && (
         <div className="absolute inset-0 md:inset-x-0 md:bottom-0 md:top-auto h-full md:h-[50%] min-h-[360px] z-10 flex items-center md:items-stretch py-6 md:py-0">
-          <div className="w-full mx-auto px-6 md:px-10 lg:px-14 xl:px-20 max-w-7xl flex">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center md:items-stretch w-full justify-center">
-              {/* Left Column */}
-              <div className="lg:col-span-7 flex flex-col">
-                <div className="pr-1">
-                  <header className="space-y-2 text-center md:text-left">
-                    <h1 className="font-heading text-[2.2rem] sm:text-4xl lg:text-[2.9rem] font-bold leading-[1.05] tracking-tight text-white">
+        <div className="w-full mx-auto px-6 md:px-10 lg:px-14 xl:px-20 max-w-7xl flex">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center md:items-stretch w-full justify-center">
+            {/* Left Column */}
+            <div className="lg:col-span-7 flex flex-col">
+              <div className="pr-1">
+                <header className="space-y-2 sm:space-y-3 text-center md:text-left">
+                    <h1 className="font-heading text-[2.5rem] sm:text-4xl lg:text-[3.2rem] font-bold leading-tight text-white text-shadow-medium">
                       <span className="block">{heroData.mainHeading}</span>
                       <span className="bg-gradient-to-r from-clay via-cream to-clay bg-clip-text text-transparent">{heroData.highlightText}</span>
                     </h1>
-                    <p className="max-w-2xl mx-auto md:mx-0 text-sm sm:text-base lg:text-lg text-white/90 leading-relaxed line-clamp-none md:line-clamp-2 [text-wrap:balance]">
+                    <p className="max-w-3xl mx-auto md:mx-0 text-[1rem] sm:text-lg lg:text-xl text-white/90 leading-relaxed line-clamp-none md:line-clamp-2 [text-wrap:balance] mt-4">
                       {heroData.description}
                     </p>
                   </header>
@@ -121,7 +122,10 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
                       {heroData.features.slice(0,2).map((feature: { icon: string; text: string }) => (
                         <div key={`${feature.icon}-${feature.text}`} className="flex items-start gap-5">
                           <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-clay/90 text-cream ring-1 ring-white/25 flex-shrink-0">
-                            {iconComponents[feature.icon as keyof typeof iconComponents]}
+                            {(() => {
+                              const Icon = IconComponents[feature.icon as keyof typeof IconComponents];
+                              return Icon ? <Icon /> : null;
+                            })()}
                           </span>
                           <span className="text-[12px] sm:text-[13px] text-white/90 leading-snug max-w-[14rem] text-left">{feature.text}</span>
                         </div>
@@ -131,7 +135,10 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
                       {heroData.features.slice(2,4).map((feature: { icon: string; text: string }) => (
                         <div key={`${feature.icon}-${feature.text}`} className="flex items-start gap-5">
                           <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-clay/90 text-cream ring-1 ring-white/25 flex-shrink-0">
-                            {iconComponents[feature.icon as keyof typeof iconComponents]}
+                            {(() => {
+                              const Icon = IconComponents[feature.icon as keyof typeof IconComponents];
+                              return Icon ? <Icon /> : null;
+                            })()}
                           </span>
                           <span className="text-[12px] sm:text-[13px] text-white/90 leading-snug max-w-[14rem] text-left">{feature.text}</span>
                         </div>
@@ -232,7 +239,10 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
                     {heroData.features.slice(0,2).map((feature: { icon: string; text: string }) => (
                       <div key={`${feature.icon}-${feature.text}`} className="flex items-start gap-5">
                         <span className="flex h-8 w-8 items-center justify-center rounded-md bg-clay/85 text-cream ring-1 ring-white/20 flex-shrink-0">
-                          {iconComponents[feature.icon as keyof typeof iconComponents]}
+                          {(() => {
+                              const Icon = IconComponents[feature.icon as keyof typeof IconComponents];
+                              return Icon ? <Icon /> : null;
+                            })()}
                         </span>
                         <span className="text-[11px] sm:text-xs md:text-[13px] text-white/85 leading-snug max-w-[13rem] text-left">{feature.text}</span>
                       </div>
@@ -242,7 +252,10 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
                     {heroData.features.slice(2,4).map((feature: { icon: string; text: string }) => (
                       <div key={`${feature.icon}-${feature.text}`} className="flex items-start gap-5">
                         <span className="flex h-8 w-8 items-center justify-center rounded-md bg-clay/85 text-cream ring-1 ring-white/20 flex-shrink-0">
-                          {iconComponents[feature.icon as keyof typeof iconComponents]}
+                          {(() => {
+                              const Icon = IconComponents[feature.icon as keyof typeof IconComponents];
+                              return Icon ? <Icon /> : null;
+                            })()}
                         </span>
                         <span className="text-[11px] sm:text-xs md:text-[13px] text-white/85 leading-snug max-w-[13rem] text-left">{feature.text}</span>
                       </div>

@@ -181,7 +181,7 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
         </div>
 
         {/* Grid */}
-        <ul role="list" className="mt-6 md:mt-8 grid gap-4 sm:gap-6 md:gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-stretch">
+        <ul role="list" className="mt-6 md:mt-8 grid gap-3 sm:gap-4 md:gap-6 lg:gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-stretch">
           {filteredMembers.map((member, idx) => (
             <motion.li
               key={member._id}
@@ -191,19 +191,21 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.6, delay: idx * 0.08, ease: 'easeOut' }}
             >
-              <article className="h-full rounded-2xl bg-white ring-1 ring-charcoal/10 shadow-sm hover:shadow-md transition-shadow">
+              <article className="group h-full rounded-2xl bg-white ring-1 ring-charcoal/10 shadow-sm hover:shadow-md transition-all duration-200">
                 <div className="p-4 sm:p-5">
                   <div className="flex items-center gap-3">
-                    <Image
-                      src={urlFor(member.image).width(56).height(56).url()}
-                      alt={member.name}
-                      className="h-14 w-14 rounded-full object-cover"
-                      width={56}
-                      height={56}
-                      loading="lazy"
-                    />
+                    <div className="relative">
+                      <Image
+                        src={urlFor(member.image).width(56).height(56).url()}
+                        alt={member.name}
+                        className="h-14 w-14 rounded-full object-cover transition-transform group-hover:scale-102"
+                        width={56}
+                        height={56}
+                        loading="lazy"
+                      />
+                    </div>
                     <div className="min-w-0 flex-1">
-                      <h3 className="font-semibold text-charcoal">{member.name}</h3>
+                      <h3 className="font-semibold text-charcoal group-hover:text-clay transition-colors">{member.name}</h3>
                       {member.credentials && (
                         <p className="text-sm text-charcoal/70">{member.credentials}</p>
                       )}
@@ -214,7 +216,7 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
                     </div>
                   </div>
 
-                  <p className="mt-3 text-sm text-charcoal/80 line-clamp-2 sm:line-clamp-3">
+                  <p className="mt-4 text-sm text-charcoal/80 leading-relaxed line-clamp-3 sm:line-clamp-4">
                     {Array.isArray(member.bio)
                       ? member.bio
                           .filter((block): block is { children: unknown[] } => {
@@ -259,9 +261,14 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
                   <div className="mt-4 team-cta" style={{ minHeight: '3.5rem' }}>
                     <Link
                       href={`/${member.slug.current}`}
-                      className="cta-label inline-flex items-center justify-center rounded-full border border-clay/35 bg-clay/10 px-4 py-2 text-sm font-semibold text-clay hover:text-bark hover:border-bark/35 hover:bg-bark/10 transition-colors"
+                      className="cta-label inline-flex items-center justify-center rounded-full border border-clay/35 bg-clay/10 px-4 py-2 text-sm font-semibold text-clay hover:text-bark hover:border-bark/35 hover:bg-bark/10 transition-all duration-200"
                     >
-                      View Profile
+                      <span className="flex items-center gap-2">
+                        View Profile
+                        <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                        </svg>
+                      </span>
                     </Link>
                   </div>
                 </div>
