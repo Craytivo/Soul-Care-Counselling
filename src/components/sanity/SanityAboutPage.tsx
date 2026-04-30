@@ -2,6 +2,7 @@ import { getAboutPage } from '@/lib/sanity-queries'
 import { urlFor } from '@/lib/sanity'
 import { PortableText } from '@portabletext/react'
 import Image from 'next/image'
+import Link from 'next/link'
 import AboutTeamClient from '@/components/AboutTeamClient'
 import { getTeamMembers } from '@/lib/sanity-queries'
 export default async function SanityAboutPage() {
@@ -18,17 +19,22 @@ export default async function SanityAboutPage() {
       normal: (props: { children?: React.ReactNode }) => <p className="mb-4 text-[0.98rem] md:text-[1.03rem] leading-7 text-charcoal/88 max-w-[66ch]">{props.children}</p>,
     },
     list: {
-      bullet: (props: { children?: React.ReactNode }) => <ul className="list-disc pl-5 mb-4 space-y-2 text-charcoal/88 max-w-[66ch]">{props.children}</ul>,
-      number: (props: { children?: React.ReactNode }) => <ol className="list-decimal pl-5 mb-4 space-y-2 text-charcoal/88 max-w-[66ch]">{props.children}</ol>,
+      bullet: (props: { children?: React.ReactNode }) => <ul className="space-y-1.5 mb-4 max-w-[66ch]">{props.children}</ul>,
+      number: (props: { children?: React.ReactNode }) => <ol className="space-y-1.5 mb-4 list-decimal pl-5 max-w-[66ch]">{props.children}</ol>,
     },
     listItem: {
-      bullet: (props: { children?: React.ReactNode }) => <li className="mb-2">{props.children}</li>,
-      number: (props: { children?: React.ReactNode }) => <li className="mb-2">{props.children}</li>,
+      bullet: (props: { children?: React.ReactNode }) => (
+        <li className="flex items-start gap-2.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-clay flex-shrink-0 mt-2" />
+          <span className="text-charcoal/75 leading-relaxed">{props.children}</span>
+        </li>
+      ),
+      number: (props: { children?: React.ReactNode }) => <li className="text-charcoal/75 leading-relaxed">{props.children}</li>,
     },
   };
 
   return (
-  <article className="mx-auto max-w-7xl py-8 md:py-10 px-4">
+  <>
       {/* Hero Section */}
       <section className="relative overflow-hidden rounded-2xl bg-bark text-cream ring-1 ring-cream/15">
         {/* Background image */}
@@ -45,6 +51,7 @@ export default async function SanityAboutPage() {
         )}
         {/* Home-consistent overlay stack for text contrast */}
         <div className="absolute inset-0 bg-gradient-to-r from-charcoal/65 via-charcoal/35 to-transparent md:from-charcoal/55 md:via-charcoal/25" />
+        <div className="absolute -left-12 -bottom-12 h-48 w-48 rounded-full bg-gradient-to-tr from-cream/10 to-clay/20 blur-2xl" aria-hidden="true" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(0,0,0,0.04),rgba(0,0,0,0.22)_55%,rgba(0,0,0,0.38)_85%)] mix-blend-multiply" />
         <div className="pointer-events-none absolute inset-0 opacity-[0.18] [background-image:radial-gradient(rgba(255,255,255,0.15)_1px,transparent_1px)] [background-size:3px_3px]" />
         <div className="relative z-10 grid md:grid-cols-2 gap-8 md:gap-10 items-center px-5 py-8 md:px-10 md:py-14">
@@ -78,12 +85,10 @@ export default async function SanityAboutPage() {
           )}
         </div>
       </section>
-      {/* Welcome + Pillars Section */}
+      {/* Welcome Section */}
         <section className="mt-10 md:mt-12 relative">
           <div className="absolute inset-0 bg-gradient-to-br from-sand/60 via-white/80 to-clay/30 pointer-events-none rounded-2xl" />
-          <div className="relative z-10 grid md:grid-cols-[1fr_32px_1.2fr] gap-0 items-stretch min-h-[520px] rounded-2xl overflow-hidden shadow-lg">
-            {/* Welcome Column */}
-            <div className="flex flex-col h-full justify-center max-w-3xl px-5 md:px-6 py-8 md:py-14">
+          <div className="relative z-10 rounded-2xl overflow-hidden px-5 md:px-8 py-8 md:py-14">
               <header className="mb-4 flex items-center gap-3">
                 <span className="inline-block w-2 h-8 rounded bg-clay md:mr-2" />
                 <h2 className="font-heading text-[clamp(1.7rem,4.8vw,2.5rem)] font-semibold leading-tight tracking-tight text-bark">{pageData.welcome.title}</h2>
@@ -91,36 +96,33 @@ export default async function SanityAboutPage() {
               <div className="space-y-4 md:space-y-5 text-charcoal/90 prose prose-base md:prose-lg max-w-none">
                 <PortableText value={pageData.welcome.content as import('@portabletext/types').TypedObject[]} components={portableTextComponents} />
               </div>
-            </div>
-            {/* Vertical Accent Divider */}
-            <div className="hidden md:flex justify-center items-center">
-              <div className="w-1 h-5/6 bg-gradient-to-b from-clay/80 via-bark/30 to-sand/0 rounded-full" />
-            </div>
-            {/* Pillars Column */}
-            <div className="flex flex-col h-full justify-center px-5 md:px-6 py-8 md:py-14">
-              <h3 className="font-heading text-[clamp(1.5rem,4.5vw,2rem)] font-semibold text-bark mb-5 flex items-center gap-2">
-                {pageData.pillars.title}
-              </h3>
-              <ul className="grid gap-4 sm:grid-cols-2">
-                {pageData.pillars.pillarList.map((pillar) => (
-                  <li
-                    key={pillar.title}
-                    className="rounded-xl bg-white/80 backdrop-blur p-4 ring-1 ring-clay/10 shadow h-full flex flex-col justify-start transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg group"
-                  >
-                    <div className="mb-1">
-                      <h4 className="font-semibold text-base text-bark line-clamp-1">{pillar.title}</h4>
-                    </div>
-                    <p className="text-charcoal/80 text-sm leading-relaxed line-clamp-4">{pillar.description}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
           </div>
         </section>
+
+      {/* Pillars Section */}
+      <section className="mt-10 md:mt-12">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="inline-block w-2 h-8 rounded bg-clay" />
+          <h2 className="font-heading text-[clamp(1.5rem,4.5vw,2rem)] font-semibold leading-tight tracking-tight text-bark">
+            {pageData.pillars.title}
+          </h2>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {pageData.pillars.pillarList.map((pillar, i) => (
+            <div
+              key={pillar.title}
+              className="group relative rounded-2xl bg-white p-6 ring-1 ring-charcoal/5 hover:ring-clay/15 hover:shadow-lg hover:shadow-charcoal/[0.04] transition-all duration-300"
+            >
+              <span className="text-xs font-mono text-clay/40 tabular-nums">{String(i + 1).padStart(2, '0')}</span>
+              <h4 className="mt-2 font-heading font-semibold text-bark leading-snug">{pillar.title}</h4>
+              <p className="mt-2 text-charcoal/70 text-sm leading-relaxed">{pillar.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
       {/* Director Section */}
       <section className="mt-12 md:mt-16">
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-sand/55 via-white to-clay/20 p-4 ring-1 ring-charcoal/10 md:p-6">
-          <div className="ui-card p-5 text-charcoal/90 md:p-8">
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-sand/55 via-white to-clay/20 p-5 md:p-8 ring-1 ring-charcoal/5">
             <div className="grid items-center gap-5 md:grid-cols-[190px_minmax(0,1fr)] md:gap-6">
               {pageData.director.image && (
                 <figure className="mx-auto w-full max-w-[190px] overflow-hidden rounded-xl bg-sand p-2 ring-1 ring-charcoal/10 md:mx-0">
@@ -200,7 +202,6 @@ export default async function SanityAboutPage() {
                 </a>
               )}
             </div>
-          </div>
         </div>
       </section>
       {/* Meet the team - Now matches homepage */}
@@ -208,53 +209,78 @@ export default async function SanityAboutPage() {
         <AboutTeamClient teamMembers={teamMembers} />
       </section>
       {/* Careers / Internship Section */}
-      <section className="mt-12 md:mt-16 rounded-2xl bg-gradient-to-br from-sand/55 via-white to-clay/20 p-6 md:p-8 ring-1 ring-charcoal/10">
-        <div className="ui-card p-5 text-charcoal/90 md:p-8">
-          <div className="flex items-start gap-4 md:gap-6">
-            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-clay/15 text-clay">
-              <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.7">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+      <section className="mt-12 md:mt-16 rounded-2xl bg-gradient-to-br from-sand/60 to-sand/40 backdrop-blur-sm p-8 md:p-10 ring-1 ring-charcoal/5">
+        <div className="md:grid md:grid-cols-2 md:gap-10 md:items-center">
+          <div className="mb-6 md:mb-0">
+            <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-clay/15 mb-4">
+              <svg className="w-5 h-5 text-clay" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.58l-.001-.031m10.364-4.669a12 12 0 01-4.4 0m-4.4 0a12 12 0 01-4.4 0m8.8 0a3 3 0 11-4.4 0m4.4 0a3 3 0 10-4.4 0m-8.8 0a3 3 0 11-4.4 0m4.4 0a3 3 0 10-4.4 0" />
               </svg>
             </div>
-            <div className="flex-1">
-              <h3 className="font-heading text-xl md:text-2xl font-semibold tracking-tight text-bark">Join Our Team</h3>
-              <p className="mt-2 text-charcoal/80 max-w-[60ch]">
-                We offer clinical internship opportunities for graduate students and emerging therapists looking to gain experience in faith-centered, culturally responsive counselling.
-              </p>
-              <div className="mt-4">
-                <a
-                  href="/intern-application"
-                  className="inline-flex items-center justify-center rounded-full bg-clay px-6 py-3 text-sm font-semibold text-cream shadow-md ring-1 ring-clay/60 hover:shadow-lg transition-all"
-                >
-                  Apply to be an Intern
-                </a>
-              </div>
-            </div>
+            <h3 className="font-heading text-xl md:text-2xl font-semibold mb-2 tracking-tight">Join Our Team</h3>
+            <p className="text-charcoal/75 leading-relaxed">
+              Clinical internship opportunities for graduate students and emerging therapists — gain experience in faith-centered, culturally responsive counselling.
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row md:flex-col gap-3">
+            <Link
+              href="/intern-application"
+              className="inline-flex items-center justify-center rounded-full bg-clay px-6 py-2.5 font-semibold text-cream hover:bg-clay/90 transition-colors text-sm"
+            >
+              Apply to be an Intern
+            </Link>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center rounded-full bg-white px-6 py-2.5 font-medium text-charcoal/70 ring-1 ring-charcoal/10 hover:bg-charcoal/5 transition-colors text-sm"
+            >
+              Ask Us a Question
+            </Link>
           </div>
         </div>
       </section>
       {/* Final CTA */}
       {pageData.cta && (
-        <section className="mt-12 md:mt-16 rounded-2xl bg-sand p-5 md:p-8 ring-1 ring-charcoal/10">
-          <div className="grid gap-6 md:grid-cols-3 md:items-center">
-            <div className="md:col-span-2">
-              <h3 className="font-heading text-xl md:text-2xl font-semibold tracking-tight">{pageData.cta.title}</h3>
-              <p className="mt-2 text-charcoal/80 max-w-[60ch]">{pageData.cta.description}</p>
+        <section className="mt-16 rounded-2xl bg-gradient-to-br from-sand/60 to-sand/40 backdrop-blur-sm p-8 md:p-10 ring-1 ring-charcoal/5">
+          <div className="md:grid md:grid-cols-2 md:gap-10 md:items-center">
+            <div className="mb-6 md:mb-0">
+              <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-clay/15 mb-4">
+                <svg className="w-5 h-5 text-clay" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75a2.25 2.25 0 012.25-2.25h15a2.25 2.25 0 012.25 2.25z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 7.5l9 6 9-6" />
+                </svg>
+              </div>
+              <h3 className="font-heading text-xl md:text-2xl font-semibold mb-2 tracking-tight">{pageData.cta.title}</h3>
+              <p className="text-charcoal/75 leading-relaxed">{pageData.cta.description}</p>
             </div>
-            {pageData.cta.buttonText && pageData.cta.buttonLink && (
-              <div className="md:col-span-1 flex md:justify-end">
+            <div className="flex flex-col sm:flex-row md:flex-col gap-3">
+              {pageData.cta.external ? (
                 <a
                   href={pageData.cta.buttonLink}
-                  className="inline-flex w-full md:w-auto items-center justify-center rounded-full bg-clay px-6 py-3 text-sm font-semibold text-cream shadow-md ring-1 ring-clay/60 hover:shadow-lg transition-all"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-full bg-clay px-6 py-2.5 font-semibold text-cream hover:bg-clay/90 transition-colors text-sm"
                 >
                   {pageData.cta.buttonText}
                 </a>
-              </div>
-            )}
+              ) : (
+                <Link
+                  href={pageData.cta.buttonLink}
+                  className="inline-flex items-center justify-center rounded-full bg-clay px-6 py-2.5 font-semibold text-cream hover:bg-clay/90 transition-colors text-sm"
+                >
+                  {pageData.cta.buttonText}
+                </Link>
+              )}
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center rounded-full bg-white px-6 py-2.5 font-medium text-charcoal/70 ring-1 ring-charcoal/10 hover:bg-charcoal/5 transition-colors text-sm"
+              >
+                Contact Our Team
+              </Link>
+            </div>
           </div>
         </section>
       )}
-    </article>
+  </>
   );
 }
 
