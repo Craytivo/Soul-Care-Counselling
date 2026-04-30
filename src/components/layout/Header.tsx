@@ -43,15 +43,12 @@ export default function Header() {
           </Link>
 
           {/* CENTER: Desktop nav */}
-          <nav className="hidden lg:flex items-center justify-center gap-8" aria-label="Primary">
+          <nav className="hidden lg:flex items-center justify-center gap-7" aria-label="Primary">
               <Link href="/" className="uppercase tracking-[.15em] text-sm font-medium text-bark/80 hover:text-gold transition-colors duration-200 whitespace-nowrap">
                 Home
               </Link>
               <Link href="/about" className="uppercase tracking-[.15em] text-sm font-medium text-bark/80 hover:text-gold transition-colors duration-200 whitespace-nowrap">
                 About Us
-              </Link>
-              <Link href="/core-values" className="uppercase tracking-[.15em] text-sm font-medium text-bark/80 hover:text-gold transition-colors duration-200 whitespace-nowrap">
-                Core Values
               </Link>
               <Link href="/services" className="uppercase tracking-[.15em] text-sm font-medium text-bark/80 hover:text-gold transition-colors duration-200 whitespace-nowrap">
                 Services
@@ -62,16 +59,13 @@ export default function Header() {
               <Link href="/resources" className="uppercase tracking-[.15em] text-sm font-medium text-bark/80 hover:text-gold transition-colors duration-200 whitespace-nowrap">
                 Resources
               </Link>
-              <Link href="/faq" className="uppercase tracking-[.15em] text-sm font-medium text-bark/80 hover:text-gold transition-colors duration-200 whitespace-nowrap">
-                FAQs
-              </Link>
               <Link href="/contact" className="uppercase tracking-[.15em] text-sm font-medium text-bark/80 hover:text-gold transition-colors duration-200 whitespace-nowrap">
                 Contact
               </Link>
             </nav>
 
-          {/* RIGHT: CTA + Hamburger */}
-          <div className="hidden lg:flex items-center gap-3">
+          {/* RIGHT: CTA (desktop) + Hamburger (mobile) */}
+          <div className="flex items-center justify-end">
             <a
               href="https://thesoulcarecounsellor.janeapp.com"
               target="_blank"
@@ -83,41 +77,41 @@ export default function Header() {
                   url: 'https://thesoulcarecounsellor.janeapp.com',
                 })
               }
-              className="inline-flex items-center justify-center rounded-full bg-clay px-5 py-2.5 text-sm font-semibold text-cream shadow-md ring-1 ring-clay/60 hover:shadow-lg transition-all"
+              className="hidden lg:inline-flex items-center justify-center rounded-lg bg-clay px-4 py-2 text-sm font-semibold text-cream shadow-sm ring-1 ring-clay/50 hover:bg-clay/90 hover:shadow-md transition-all"
             >
-              Book a Free Consultation
+              Book Consultation
             </a>
+            <button
+              type="button"
+              onClick={toggleMenu}
+              className={`lg:hidden shrink-0 inline-flex items-center justify-center h-10 w-10 rounded-lg ring-1 ring-bark/20 hover:bg-gold/10 hover:ring-gold/40 transition-all duration-200 ${isMenuOpen ? 'scale-110 bg-gold/10 ring-gold/40' : ''}`}
+              aria-controls="menuPanel"
+              aria-expanded={isMenuOpen}
+              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+              onKeyDown={e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  toggleMenu();
+                }
+              }}
+            >
+              <span className="sr-only">{isMenuOpen ? 'Close menu' : 'Open menu'}</span>
+              <span className={`relative w-5 h-5 block ${isMenuOpen ? 'opacity-70' : ''}`}>
+                {/* Hamburger to X animation */}
+                <span
+                  className={`absolute left-0 top-1 w-5 h-0.5 bg-bark rounded transition-all duration-300 ${isMenuOpen ? 'rotate-45 top-2.5 bg-bark' : ''}`}
+                  style={{ transitionProperty: 'transform, top, background' }}
+                ></span>
+                <span
+                  className={`absolute left-0 top-2.5 w-5 h-0.5 bg-bark rounded transition-all duration-300 ${isMenuOpen ? 'opacity-0' : ''}`}
+                  style={{ transitionProperty: 'opacity' }}
+                ></span>
+                <span
+                  className={`absolute left-0 top-4 w-5 h-0.5 bg-bark rounded transition-all duration-300 ${isMenuOpen ? '-rotate-45 top-2.5 bg-bark' : ''}`}
+                  style={{ transitionProperty: 'transform, top, background' }}
+                ></span>
+              </span>
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={toggleMenu}
-            className={`justify-self-end shrink-0 inline-flex items-center justify-center h-12 w-12 rounded-xl ring-1 ring-bark/20 hover:bg-gold/10 hover:ring-gold/40 transition-all duration-200 ${isMenuOpen ? 'scale-110 bg-gold/10 ring-gold/40' : ''}`}
-            aria-controls="menuPanel"
-            aria-expanded={isMenuOpen}
-            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-            onKeyDown={e => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                toggleMenu();
-              }
-            }}
-          >
-            <span className="sr-only">{isMenuOpen ? 'Close menu' : 'Open menu'}</span>
-            <span className={`relative w-6 h-6 block ${isMenuOpen ? 'opacity-70' : ''}`}> 
-              {/* Hamburger to X animation */}
-              <span
-                className={`absolute left-0 top-1 w-6 h-0.5 bg-bark rounded transition-all duration-300 ${isMenuOpen ? 'rotate-45 top-3 bg-bark' : ''}`}
-                style={{ transitionProperty: 'transform, top, background' }}
-              ></span>
-              <span
-                className={`absolute left-0 top-3 w-6 h-0.5 bg-bark rounded transition-all duration-300 ${isMenuOpen ? 'opacity-0' : ''}`}
-                style={{ transitionProperty: 'opacity' }}
-              ></span>
-              <span
-                className={`absolute left-0 top-5 w-6 h-0.5 bg-bark rounded transition-all duration-300 ${isMenuOpen ? '-rotate-45 top-3 bg-bark' : ''}`}
-                style={{ transitionProperty: 'transform, top, background' }}
-              ></span>
-            </span>
-          </button>
         </div>
       </header>
 
@@ -133,7 +127,7 @@ export default function Header() {
       {/* Mobile Menu Panel */}
       <aside
         id="menuPanel"
-  className={`fixed right-0 top-0 z-[60] h-screen w-[86%] max-w-sm bg-bark/95 text-cream shadow-xl border-l border-cream/15 overflow-y-auto transition-transform duration-300 ${
+        className={`fixed inset-y-0 right-0 z-[60] w-[86%] max-w-sm bg-bark/95 text-cream shadow-xl border-l border-cream/15 overflow-y-auto transition-transform duration-300 ${
           isMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         aria-hidden={!isMenuOpen}

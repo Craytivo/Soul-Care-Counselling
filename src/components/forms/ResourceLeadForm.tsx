@@ -52,9 +52,9 @@ export default function ResourceLeadForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-3 max-w-md mx-auto" data-mailerlite-embed="resources">
-      <p className="text-sm text-charcoal/75">
-        Receive practical, compassionate tools by email. We respect your inbox and you can unsubscribe any time.
+    <form onSubmit={onSubmit} className="space-y-3" data-mailerlite-embed="resources">
+      <p className="text-xs text-charcoal/50 mb-1">
+        Receive practical, compassionate tools by email. Unsubscribe any time.
       </p>
       {mailerLiteGroupId && <input type="hidden" name="ml_group_id" value={mailerLiteGroupId} />}
       <div className="grid gap-3 sm:grid-cols-2">
@@ -64,7 +64,7 @@ export default function ResourceLeadForm() {
           value={firstName}
           onChange={(event) => setFirstName(event.target.value)}
           placeholder="First name"
-          className="px-4 py-2 rounded-md border border-charcoal/20 focus:outline-none focus:ring-2 focus:ring-clay focus:border-transparent"
+          className="px-4 py-2.5 rounded-full border border-charcoal/10 focus:outline-none focus:ring-2 focus:ring-clay focus:border-transparent text-sm"
           autoComplete="given-name"
           required
         />
@@ -74,27 +74,19 @@ export default function ResourceLeadForm() {
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           placeholder="Enter your email"
-          className="px-4 py-2 rounded-md border border-charcoal/20 focus:outline-none focus:ring-2 focus:ring-clay focus:border-transparent"
+          className="px-4 py-2.5 rounded-full border border-charcoal/10 focus:outline-none focus:ring-2 focus:ring-clay focus:border-transparent text-sm"
           autoComplete="email"
           required
         />
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-3 justify-center">
-        <button
-          type="submit"
-          disabled={status === 'submitting'}
-          className="px-6 py-2 bg-clay text-charcoal font-semibold rounded-md hover:bg-clay/90 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
-        >
-          {status === 'submitting' ? 'Saving your details...' : 'Send Me the Free Resources'}
-        </button>
-        <a
-          href="/contact"
-          className="px-6 py-2 bg-white text-charcoal font-semibold rounded-md ring-1 ring-charcoal/15 hover:bg-charcoal/5 transition-colors"
-        >
-          Request a specific resource
-        </a>
-      </div>
+      <button
+        type="submit"
+        disabled={status === 'submitting'}
+        className="w-full px-6 py-2.5 bg-clay text-charcoal font-semibold rounded-full hover:bg-clay/90 transition-colors disabled:opacity-70 disabled:cursor-not-allowed text-sm"
+      >
+        {status === 'submitting' ? 'Saving your details...' : 'Send Me the Free Resources'}
+      </button>
 
       <p
         className={`text-sm min-h-[1.25rem] ${

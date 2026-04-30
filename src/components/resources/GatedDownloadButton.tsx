@@ -116,7 +116,7 @@ export default function GatedDownloadButton({
       {open && createPortal(
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setOpen(false)} aria-hidden="true" />
-          <div className="relative w-full max-w-lg mx-4 rounded-3xl bg-white p-8 ring-1 ring-charcoal/10 shadow-2xl transform transition-all duration-300 scale-100 opacity-100">
+          <div className="relative w-full max-w-md mx-4 rounded-2xl bg-white p-7 ring-1 ring-charcoal/5 shadow-xl transform transition-all duration-300 scale-100 opacity-100">
             {/* Close button */}
             <button
               onClick={() => {
@@ -133,69 +133,63 @@ export default function GatedDownloadButton({
 
             {/* Header with resource preview */}
             <div className="text-center mb-6">
-              <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-clay to-bark flex items-center justify-center shadow-lg">
-                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-clay/10 flex items-center justify-center">
+                <svg className="w-5 h-5 text-clay" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                 </svg>
               </div>
-              <h4 className="font-heading text-2xl font-bold text-charcoal mb-2">Get Instant Access</h4>
-              <p className="text-sm text-charcoal/80 leading-relaxed">
-                Download <span className="font-semibold text-clay">&quot;{resourceTitle}&quot;</span> immediately after signing up
+              <h4 className="font-heading text-xl font-semibold text-charcoal mb-1.5 tracking-tight">Get Instant Access</h4>
+              <p className="text-sm text-charcoal/70 leading-relaxed">
+                Download <span className="font-medium text-clay">&quot;{resourceTitle}&quot;</span> after signing up
               </p>
             </div>
 
             {/* Value proposition */}
-            <div className="bg-gradient-to-r from-sand/50 to-cream/50 rounded-xl p-4 mb-6">
-              <div className="flex items-center gap-3 mb-3">
-                <svg className="w-5 h-5 text-green-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                <span className="text-sm font-medium text-charcoal">Immediate download access</span>
+            <div className="bg-sand/30 rounded-xl p-4 mb-6 ring-1 ring-charcoal/5">
+              <div className="flex items-center gap-3 mb-2.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-clay flex-shrink-0" />
+                <span className="text-sm text-charcoal/80">Immediate download access</span>
               </div>
-              <div className="flex items-center gap-3 mb-3">
-                <svg className="w-5 h-5 text-green-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                <span className="text-sm font-medium text-charcoal">Weekly practical resources</span>
+              <div className="flex items-center gap-3 mb-2.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-clay flex-shrink-0" />
+                <span className="text-sm text-charcoal/80">Weekly practical resources</span>
               </div>
               <div className="flex items-center gap-3">
-                <svg className="w-5 h-5 text-green-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                <span className="text-sm font-medium text-charcoal">Unsubscribe anytime</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-clay flex-shrink-0" />
+                <span className="text-sm text-charcoal/80">Unsubscribe anytime</span>
               </div>
             </div>
 
-            <form onSubmit={onSubmit} className="space-y-4">
+            <form onSubmit={onSubmit} className="space-y-3">
               <div>
-                <label htmlFor="firstName" className="block text-sm font-medium text-charcoal mb-1">First Name</label>
+                <label htmlFor="firstName" className="block text-xs font-medium text-charcoal/70 mb-1">First Name</label>
                 <input
                   id="firstName"
                   type="text"
                   value={firstName}
                   onChange={(event) => setFirstName(event.target.value)}
-                  placeholder="Enter your first name"
-                  className="w-full px-4 py-3 rounded-xl border border-charcoal/20 focus:outline-none focus:ring-2 focus:ring-clay/50 focus:border-clay/50 transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                  placeholder="Your first name"
+                  className="w-full px-4 py-2.5 rounded-full border border-charcoal/10 focus:outline-none focus:ring-2 focus:ring-clay/40 focus:border-clay/40 transition-all duration-200 text-sm"
                   autoComplete="given-name"
                   required
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-charcoal mb-1">Email Address</label>
+                <label htmlFor="email" className="block text-xs font-medium text-charcoal/70 mb-1">Email Address</label>
                 <input
                   id="email"
                   type="email"
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
-                  placeholder="Enter your email address"
-                  className="w-full px-4 py-3 rounded-xl border border-charcoal/20 focus:outline-none focus:ring-2 focus:ring-clay/50 focus:border-clay/50 transition-all duration-200 bg-white/80 backdrop-blur-sm"
+                  placeholder="Your email address"
+                  className="w-full px-4 py-2.5 rounded-full border border-charcoal/10 focus:outline-none focus:ring-2 focus:ring-clay/40 focus:border-clay/40 transition-all duration-200 text-sm"
                   autoComplete="email"
                   required
                 />
               </div>
 
               {message && (
-                <div className="bg-red-50 border border-red-200 rounded-xl p-3">
+                <div className="bg-red-50/80 border border-red-200/60 rounded-xl p-3">
                   <p className="text-sm text-red-700" role="status" aria-live="polite">
                     {message}
                   </p>
@@ -203,18 +197,15 @@ export default function GatedDownloadButton({
               )}
 
               {/* Privacy assurance */}
-              <div className="flex items-start gap-2 text-xs text-charcoal/60">
-                <svg className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-4.25 9.5-9.5 9.5s-9.5-4.275-9.5-9.5c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                <span>We respect your privacy and will never share your information. Unsubscribe with one click.</span>
-              </div>
+              <p className="text-xs text-charcoal/50 leading-relaxed">
+                We respect your privacy. Unsubscribe with one click.
+              </p>
 
-              <div className="flex gap-3 pt-2">
+              <div className="flex gap-3 pt-1">
                 <button
                   type="submit"
                   disabled={status === 'submitting'}
-                  className="flex-1 inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-clay to-bark px-6 py-3 font-semibold text-cream hover:from-clay/90 hover:to-bark/90 disabled:opacity-70 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+                  className="flex-1 inline-flex items-center justify-center rounded-full bg-clay px-6 py-2.5 font-semibold text-cream hover:bg-clay/90 disabled:opacity-70 transition-all duration-200 text-sm"
                 >
                   {status === 'submitting' ? (
                     <>
@@ -222,15 +213,10 @@ export default function GatedDownloadButton({
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
-                      Preparing your download...
+                      Preparing download...
                     </>
                   ) : (
-                    <>
-                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                      </svg>
-                      Get Instant Access
-                    </>
+                    'Get Instant Access'
                   )}
                 </button>
                 <button
@@ -240,7 +226,7 @@ export default function GatedDownloadButton({
                     setStatus('idle')
                     setMessage('')
                   }}
-                  className="inline-flex items-center justify-center rounded-xl bg-white px-6 py-3 font-semibold text-charcoal ring-1 ring-charcoal/15 hover:bg-charcoal/5 transition-all duration-200"
+                  className="inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 font-medium text-charcoal/70 ring-1 ring-charcoal/10 hover:bg-charcoal/5 transition-all duration-200 text-sm"
                 >
                   Maybe Later
                 </button>

@@ -60,17 +60,16 @@ function InlineResourceCard({ resource }: { resource: Resource }) {
   return (
     <article className="group h-full rounded-2xl bg-white ring-1 ring-charcoal/10 overflow-hidden hover:ring-clay/20 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
       {resource.previewImage?.asset && (
-        <div className="relative w-full overflow-hidden bg-sand/30" style={{ aspectRatio: '4/3', minHeight: '300px' }}>
+        <div className="w-full">
           <Image
-            src={urlFor(resource.previewImage).width(400).height(300).auto('format').url()}
+            src={urlFor(resource.previewImage).width(600).height(450).auto('format').url()}
             alt={getResourceImageAlt(resource)}
-            fill
-            className="object-contain transition-transform duration-300 group-hover:scale-102"
+            width={600}
+            height={450}
+            className="w-full h-auto"
             quality={85}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            style={{ objectFit: 'contain' }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
       )}
       

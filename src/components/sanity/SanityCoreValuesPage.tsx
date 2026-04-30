@@ -75,12 +75,12 @@ export default async function SanityCoreValuesPage() {
 
       {/* Values */}
       <section className="mt-14 rounded-2xl bg-sand/40 p-4 ring-1 ring-charcoal/10 md:mt-16 md:p-6">
-        <div className="space-y-6 md:space-y-8">
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {page.values.map((value: { title: string; description: string; order: number }) => (
-            <article key={`${value.order}-${value.title}`} className="ui-card p-6 md:p-8">
-              <h2 className="font-heading text-2xl font-semibold tracking-tight md:text-3xl">{value.title}</h2>
-              <div className="mt-3 h-px w-16 bg-clay/60" aria-hidden="true"></div>
-              <p className="mt-5 max-w-[70ch] whitespace-pre-line text-[1.02rem] leading-8 text-charcoal/85 md:text-[1.06rem]">
+            <article key={`${value.order}-${value.title}`} className="ui-card p-6 md:p-7">
+              <h2 className="font-heading text-xl font-semibold tracking-tight md:text-2xl">{value.title}</h2>
+              <div className="mt-3 h-px w-12 bg-clay/60" aria-hidden="true"></div>
+              <p className="mt-4 whitespace-pre-line text-[1rem] leading-7 text-charcoal/85 md:text-[1.02rem]">
                 {value.description}
               </p>
             </article>
