@@ -157,7 +157,7 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
 
           </span>
 
-          <h1 className="mt-3 font-heading text-3xl md:text-4xl font-bold">{pageData.hero.heading}</h1>
+          <h1 className="mt-3 font-heading text-3xl md:text-4xl font-bold leading-tight text-balance">{pageData.hero.heading}</h1>
 
           <p className="mt-3 max-w-3xl text-cream/85">
 

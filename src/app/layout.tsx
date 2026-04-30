@@ -1,6 +1,6 @@
 ﻿import type { Metadata } from 'next'
 
-import { Inter, Poppins } from 'next/font/google'
+import { Inter, Poppins, Source_Serif_4 } from 'next/font/google'
 
 import Script from 'next/script'
 
@@ -35,6 +35,20 @@ const poppins = Poppins({
   variable: '--font-poppins',
 
   display: 'swap',
+
+})
+
+const sourceSerif = Source_Serif_4({
+
+  subsets: ['latin'],
+
+  weight: ['400', '500', '600'],
+
+  variable: '--font-serif',
+
+  display: 'swap',
+
+  style: ['normal', 'italic'],
 
 })
 
@@ -204,7 +218,7 @@ export default function RootLayout({
 
   return (
 
-    <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
+    <html lang="en" className={`${inter.variable} ${poppins.variable} ${sourceSerif.variable}`}>
 
       <head>
 
@@ -228,7 +242,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
       </head>
 
-      <body className="bg-cream text-charcoal font-body antialiased">
+      <body className="bg-cream text-charcoal font-serif antialiased">
 
         {gtmId && (
 

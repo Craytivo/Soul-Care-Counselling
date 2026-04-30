@@ -42,7 +42,7 @@ export default async function SanityAreasPage() {
               {pageData.hero.badge}
             </span>
           )}
-          <h1 className="mt-3 font-heading text-3xl md:text-4xl font-bold tracking-tight">
+          <h1 className="mt-3 font-heading text-3xl md:text-4xl font-bold tracking-tight leading-tight text-balance">
             {pageData.hero.title}
           </h1>
           <p className="mt-3 max-w-3xl text-cream/85 leading-relaxed">

@@ -67,7 +67,7 @@ export default async function FAQPage() {
           <span className="inline-flex items-center gap-2 rounded-full bg-cream/10 px-3 py-1 ring-1 ring-cream/30 uppercase tracking-[.22em] text-[11px]">
             {pageData.hero.badge}
           </span>
-          <h1 className="mt-3 font-heading text-3xl md:text-4xl font-bold tracking-tight">{pageData.hero.heading}</h1>
+          <h1 className="mt-3 font-heading text-3xl md:text-4xl font-bold tracking-tight leading-tight text-balance">{pageData.hero.heading}</h1>
           <p className="mt-3 max-w-3xl text-cream/85 leading-relaxed">{pageData.hero.description}</p>
         </div>
       </section>

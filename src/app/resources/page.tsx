@@ -339,7 +339,7 @@ export default async function ResourcesPage() {
 
           </span>
 
-          <h1 className="mt-3 font-heading text-3xl md:text-4xl font-bold tracking-tight">Helpful Resources</h1>
+          <h1 className="mt-3 font-heading text-3xl md:text-4xl font-bold tracking-tight leading-tight text-balance">Helpful Resources</h1>
 
           <p className="mt-3 max-w-3xl text-cream/85">
 

@@ -36,7 +36,7 @@ export default async function ServicesPage() {
           <span className="inline-flex items-center gap-2 rounded-full bg-cream/10 px-3 py-1 ring-1 ring-cream/30 uppercase tracking-[.22em] text-[11px]">
             {servicesPageData.hero.badge}
           </span>
-          <h1 className="mt-3 font-heading text-3xl md:text-4xl font-bold">{servicesPageData.hero.heading}</h1>
+          <h1 className="mt-3 font-heading text-3xl md:text-4xl font-bold leading-tight text-balance">{servicesPageData.hero.heading}</h1>
           <div className="mt-3 max-w-3xl text-cream/85">
             {servicesPageData.hero.priceHighlight ? (
               <>

@@ -363,6 +363,15 @@ html {
   overflow: hidden;
 }
 
+/* Text balance for headlines - prevents awkward orphans */
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
 /* Print styles for legal pages */
 @media print {
   /* Hide decorative hero and elements marked no-print */
