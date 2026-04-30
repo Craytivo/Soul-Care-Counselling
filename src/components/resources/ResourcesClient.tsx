@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import Link from 'next/link'
 import { Resource } from '@/lib/sanity'
 import GatedDownloadButton from './GatedDownloadButton'
 import { urlFor } from '@/lib/sanity'
@@ -423,9 +424,9 @@ export default function ResourcesClient({ allResources, featuredResources }: Res
               >
                 Book a Free Consultation
               </a>
-              <a href="/contact" className="inline-flex items-center px-6 py-3 font-semibold text-charcoal bg-white hover:bg-sand/50 rounded-full transition-all duration-300 ring-1 ring-charcoal/10 hover:ring-clay/30">
+              <Link href="/contact" className="inline-flex items-center px-6 py-3 font-semibold text-charcoal bg-white hover:bg-sand/50 rounded-full transition-all duration-300 ring-1 ring-charcoal/10 hover:ring-clay/30">
                 Contact Our Team
-              </a>
+              </Link>
             </div>
           </div>
         </section>

@@ -443,11 +443,11 @@ export default async function ResourcesPage() {
 
                 </a>
 
-                <a href="/contact" className="ui-btn-ghost">
+                <Link href="/contact" className="ui-btn-ghost">
 
                   Contact Our Team
 
-                </a>
+                </Link>
 
               </div>
 

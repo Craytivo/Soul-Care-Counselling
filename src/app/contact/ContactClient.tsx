@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from 'react'
+import Link from 'next/link'
 
 import type { ContactPage } from '@/lib/sanity'
 
@@ -470,19 +471,19 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
 
               Looking for self-guided support first? Explore our{' '}
 
-              <a href="/resources" className="underline decoration-charcoal/30 hover:decoration-charcoal">
+              <Link href="/resources" className="underline decoration-charcoal/30 hover:decoration-charcoal">
 
                 resource library
 
-              </a>{' '}
+              </Link>{' '}
 
               or review our{' '}
 
-              <a href="/services" className="underline decoration-charcoal/30 hover:decoration-charcoal">
+              <Link href="/services" className="underline decoration-charcoal/30 hover:decoration-charcoal">
 
                 counselling services
 
-              </a>
+              </Link>
 
               .
 
