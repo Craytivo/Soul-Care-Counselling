@@ -19,9 +19,8 @@ function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 }
 
-async function syncMailerLiteSubscriber(email: string, firstName: string) {
+async function syncMailerLiteSubscriber(email: string, firstName: string, groupId: string) {
   const apiToken = process.env.MAILERLITE_API_TOKEN
-  const groupId = process.env.MAILERLITE_GROUP_ID
 
   if (!apiToken || !groupId) return false
 
@@ -105,7 +104,10 @@ export async function POST(request: NextRequest) {
     )
 
     await transaction.commit()
-    const mailerLiteSynced = await syncMailerLiteSubscriber(email, firstName).catch(() => false)
+    const groupId = source === 'shop'
+      ? (process.env.MAILERLITE_SHOP_GROUP_ID || process.env.MAILERLITE_GROUP_ID!)
+      : process.env.MAILERLITE_GROUP_ID!
+    const mailerLiteSynced = await syncMailerLiteSubscriber(email, firstName, groupId).catch(() => false)
 
     return NextResponse.json({
       success: true,

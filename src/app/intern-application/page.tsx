@@ -60,15 +60,18 @@ export default async function InternApplicationPage() {
 
         {/* RIGHT: Intern Info Side Column */}
         <aside className="md:col-span-5 mt-10 md:mt-[3.25rem] space-y-6">
-          <div className="rounded-2xl bg-sand p-5 ring-1 ring-charcoal/10">
+          <div className="rounded-2xl bg-sand p-5 ring-1 ring-charcoal/5">
             <h3 className="font-heading font-semibold">{pageData.sidebar.aboutSection.title}</h3>
-            <ul className="mt-3 space-y-3 text-sm">
+            <ul className="mt-3 space-y-2.5 text-sm">
               {pageData.sidebar.aboutSection.benefits.map((benefit) => (
-                <li key={benefit}>{benefit}</li>
+                <li key={benefit} className="flex items-start gap-2.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-clay flex-shrink-0 mt-1.5" />
+                  <span className="text-charcoal/75 leading-relaxed">{benefit}</span>
+                </li>
               ))}
             </ul>
           </div>
-          <div className="rounded-2xl bg-white p-5 ring-1 ring-charcoal/10">
+          <div className="rounded-2xl bg-white p-5 ring-1 ring-charcoal/5">
             <h3 className="font-heading font-semibold">{pageData.sidebar.questionsSection.title}</h3>
             <p className="mt-3 text-sm text-charcoal/80">
               {pageData.sidebar.questionsSection.description.split(pageData.sidebar.questionsSection.contactEmail).map((part, index, array) => (

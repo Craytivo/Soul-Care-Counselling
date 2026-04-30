@@ -15,7 +15,7 @@ export default function Header() {
   return (
     <>
   <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md text-bark shadow-lg border-b border-gold/20">
-        <div className="mx-auto max-w-7xl px-4 py-4 grid grid-cols-[auto_1fr_auto] items-center gap-4">
+        <div className="mx-auto max-w-7xl px-4 py-4 flex items-center justify-between gap-3">
           {/* LEFT: Brand */}
           <Link href="/" className="flex items-center gap-3">
             {/* Logo on black circle */}
@@ -64,8 +64,8 @@ export default function Header() {
               </Link>
             </nav>
 
-          {/* RIGHT: CTA (desktop) + Hamburger (mobile) */}
-          <div className="flex items-center justify-end">
+          {/* RIGHT: CTA + Hamburger */}
+          <div className="flex items-center gap-2 justify-end">
             <a
               href="https://thesoulcarecounsellor.janeapp.com"
               target="_blank"
@@ -77,14 +77,14 @@ export default function Header() {
                   url: 'https://thesoulcarecounsellor.janeapp.com',
                 })
               }
-              className="hidden lg:inline-flex items-center justify-center rounded-lg bg-clay px-4 py-2 text-sm font-semibold text-cream shadow-sm ring-1 ring-clay/50 hover:bg-clay/90 hover:shadow-md transition-all"
+              className="inline-flex items-center justify-center rounded-lg bg-clay px-3 py-1.5 text-xs font-semibold text-cream shadow-sm ring-1 ring-clay/50 hover:bg-clay/90 hover:shadow-md transition-all lg:px-4 lg:py-2 lg:text-sm whitespace-nowrap"
             >
-              Book Consultation
+              <span className="lg:hidden">Book</span><span className="hidden lg:inline">Book Consultation</span>
             </a>
             <button
               type="button"
               onClick={toggleMenu}
-              className={`lg:hidden shrink-0 inline-flex items-center justify-center h-10 w-10 rounded-lg ring-1 ring-bark/20 hover:bg-gold/10 hover:ring-gold/40 transition-all duration-200 ${isMenuOpen ? 'scale-110 bg-gold/10 ring-gold/40' : ''}`}
+              className={`shrink-0 inline-flex items-center justify-center h-10 w-10 rounded-lg ring-1 ring-bark/20 hover:bg-gold/10 hover:ring-gold/40 transition-all duration-200 ${isMenuOpen ? 'scale-110 bg-gold/10 ring-gold/40' : ''}`}
               aria-controls="menuPanel"
               aria-expanded={isMenuOpen}
               aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}

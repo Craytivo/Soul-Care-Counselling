@@ -171,7 +171,7 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
 
               href={`mailto:${pageData.contactInfo.quickContact.emailAddress}`}
 
-              className="inline-flex items-center justify-center rounded-md bg-clay px-5 py-2.5 font-semibold text-charcoal hover:bg-clay/90 ring-1 ring-cream/20"
+              className="inline-flex items-center justify-center rounded-full bg-clay px-5 py-2.5 font-semibold text-cream hover:bg-clay/90 transition-colors text-sm"
 
             >
 
@@ -201,7 +201,7 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
 
               }
 
-              className="inline-flex items-center justify-center rounded-md bg-cream/10 px-5 py-2.5 font-semibold text-cream hover:bg-cream/15 ring-1 ring-cream/20"
+              className="inline-flex items-center justify-center rounded-full bg-cream/10 px-5 py-2.5 font-semibold text-cream hover:bg-cream/15 ring-1 ring-cream/20 transition-colors text-sm"
 
             >
 
@@ -225,15 +225,15 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
 
           <div className="relative w-full max-w-lg mx-4">
 
-            <div className="ui-card p-6 shadow-lg">
+            <div className="rounded-2xl bg-white p-6 md:p-8 ring-1 ring-charcoal/5 shadow-xl">
 
               <div className="flex items-start gap-4">
 
                 <div className="flex-shrink-0">
 
-                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-clay text-charcoal">
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-clay/15 text-clay">
 
-                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
 
                   </div>
 
@@ -243,11 +243,11 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
 
                   <h3 className="font-heading text-xl font-semibold">Thanks, {submitName || 'there'}!</h3>
 
-                  <p className="mt-2 text-charcoal/80">We have received your message and will get back to you shortly. This confirmation was sent to the site team.</p>
+                  <p className="mt-2 text-charcoal/75 leading-relaxed">We have received your message and will get back to you shortly.</p>
 
                   <div className="mt-4 flex items-center gap-3">
 
-                    <button ref={closeBtnRef} onClick={closeModal} className="inline-flex items-center justify-center rounded-md bg-bark px-4 py-2 font-semibold text-cream hover:bg-bark/90 ring-1 ring-charcoal/10">Close</button>
+                    <button ref={closeBtnRef} onClick={closeModal} className="inline-flex items-center justify-center rounded-full bg-clay px-5 py-2 font-semibold text-cream hover:bg-clay/90 transition-colors text-sm">Close</button>
 
                   </div>
 
@@ -287,17 +287,19 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
 
               encType="multipart/form-data"
 
-              className="mt-4 ui-card p-6 space-y-4"
+              className="mt-4 rounded-2xl bg-white p-6 md:p-8 ring-1 ring-charcoal/5 space-y-5"
 
               onSubmit={handleSubmit}
 
             >
 
+              <input type="hidden" name="form-name" value="contact" />
+
               <div className="grid gap-4 sm:grid-cols-2">
 
                 <div>
 
-                  <label htmlFor="name" className="block text-sm font-semibold">{pageData.contactForm.fields.fullNameLabel}</label>
+                  <label htmlFor="name" className="block text-sm font-medium text-charcoal/80">{pageData.contactForm.fields.fullNameLabel}</label>
 
                   <input
 
@@ -309,7 +311,7 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
 
                     required
 
-                    className="mt-1 w-full rounded-md border border-charcoal/20 bg-white px-3 py-2 outline-none ring-0 focus:border-clay"
+                    className="mt-1 w-full rounded-full border border-charcoal/10 bg-white px-4 py-2.5 text-sm outline-none ring-0 focus:border-clay focus:ring-2 focus:ring-clay/20 placeholder:text-charcoal/40"
 
                     placeholder={pageData.contactForm.fields.fullNamePlaceholder}
 
@@ -319,7 +321,7 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
 
                 <div>
 
-                  <label htmlFor="email" className="block text-sm font-semibold">{pageData.contactForm.fields.emailLabel}</label>
+                  <label htmlFor="email" className="block text-sm font-medium text-charcoal/80">{pageData.contactForm.fields.emailLabel}</label>
 
                   <input
 
@@ -331,7 +333,7 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
 
                     required
 
-                    className="mt-1 w-full rounded-md border border-charcoal/20 bg-white px-3 py-2 outline-none ring-0 focus:border-clay"
+                    className="mt-1 w-full rounded-full border border-charcoal/10 bg-white px-4 py-2.5 text-sm outline-none ring-0 focus:border-clay focus:ring-2 focus:ring-clay/20 placeholder:text-charcoal/40"
 
                     placeholder={pageData.contactForm.fields.emailPlaceholder}
 
@@ -341,7 +343,7 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
 
                 <div>
 
-                  <label htmlFor="phone" className="block text-sm font-semibold">{pageData.contactForm.fields.phoneLabel}</label>
+                  <label htmlFor="phone" className="block text-sm font-medium text-charcoal/80">{pageData.contactForm.fields.phoneLabel}</label>
 
                   <input
 
@@ -353,7 +355,7 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
 
                     required
 
-                    className="mt-1 w-full rounded-md border border-charcoal/20 bg-white px-3 py-2 outline-none ring-0 focus:border-clay"
+                    className="mt-1 w-full rounded-full border border-charcoal/10 bg-white px-4 py-2.5 text-sm outline-none ring-0 focus:border-clay focus:ring-2 focus:ring-clay/20 placeholder:text-charcoal/40"
 
                     placeholder={pageData.contactForm.fields.phonePlaceholder}
 
@@ -363,7 +365,7 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
 
                 <div>
 
-                  <label htmlFor="subject" className="block text-sm font-semibold">{pageData.contactForm.fields.subjectLabel}</label>
+                  <label htmlFor="subject" className="block text-sm font-medium text-charcoal/80">{pageData.contactForm.fields.subjectLabel}</label>
 
                   <input
 
@@ -375,7 +377,7 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
 
                     required
 
-                    className="mt-1 w-full rounded-md border border-charcoal/20 bg-white px-3 py-2 outline-none ring-0 focus:border-clay"
+                    className="mt-1 w-full rounded-full border border-charcoal/10 bg-white px-4 py-2.5 text-sm outline-none ring-0 focus:border-clay focus:ring-2 focus:ring-clay/20 placeholder:text-charcoal/40"
 
                     placeholder={pageData.contactForm.fields.subjectPlaceholder}
 
@@ -387,7 +389,7 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
 
               <div>
 
-                <label htmlFor="message" className="block text-sm font-semibold">{pageData.contactForm.fields.messageLabel}</label>
+                <label htmlFor="message" className="block text-sm font-medium text-charcoal/80">{pageData.contactForm.fields.messageLabel}</label>
 
                 <textarea
 
@@ -395,11 +397,11 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
 
                   name="message"
 
-                  rows={6}
+                  rows={5}
 
                   required
 
-                  className="mt-1 w-full rounded-md border border-charcoal/20 bg-white px-3 py-2 outline-none ring-0 focus:border-clay"
+                  className="mt-1 w-full rounded-2xl border border-charcoal/10 bg-white px-4 py-2.5 text-sm outline-none ring-0 focus:border-clay focus:ring-2 focus:ring-clay/20 placeholder:text-charcoal/40"
 
                   placeholder={pageData.contactForm.fields.messagePlaceholder}
 
@@ -419,7 +421,7 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
 
                   required
 
-                  className="mt-1 h-4 w-4 rounded border-charcoal/30"
+                  className="mt-1 h-4 w-4 rounded border-charcoal/20 text-clay focus:ring-clay/20"
 
                 />
 
@@ -437,7 +439,7 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
 
                   type="submit"
 
-                  className="inline-flex items-center justify-center rounded-md bg-bark px-5 py-2.5 font-semibold text-cream hover:bg-bark/90 ring-1 ring-charcoal/10"
+                  className="inline-flex items-center justify-center rounded-full bg-clay px-6 py-2.5 font-semibold text-cream hover:bg-clay/90 transition-colors text-sm"
 
                 >
 
@@ -499,7 +501,7 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
 
         <aside className="md:col-span-5 mt-10 md:mt-[3.25rem] space-y-6">
 
-          <div className="rounded-2xl bg-sand p-5 ring-1 ring-charcoal/10">
+          <div className="rounded-2xl bg-sand p-5 ring-1 ring-charcoal/5">
 
             <h3 className="font-heading font-semibold">{pageData.contactInfo.quickContact.heading}</h3>
 
@@ -583,7 +585,7 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
 
 
 
-          <div className="ui-card p-5">
+          <div className="rounded-2xl bg-white p-5 ring-1 ring-charcoal/5">
 
             <h3 className="font-heading font-semibold">{pageData.contactInfo.hours.heading}</h3>
 

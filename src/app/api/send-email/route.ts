@@ -2,6 +2,38 @@ import { NextResponse } from 'next/server'
 
 export const runtime = 'nodejs'
 
+async function syncMailerLiteSubscriber(email: string, firstName: string, groupId: string) {
+  const apiToken = process.env.MAILERLITE_API_TOKEN
+  if (!apiToken || !groupId) return false
+
+  try {
+    const response = await fetch('https://connect.mailerlite.com/api/subscribers', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiToken}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        fields: { name: firstName || undefined },
+        groups: [groupId],
+        status: 'active',
+      }),
+      cache: 'no-store',
+    })
+
+    if (!response.ok) {
+      const errorText = await response.text().catch(() => '')
+      console.error('MailerLite sync failed:', response.status, errorText)
+      return false
+    }
+    return true
+  } catch {
+    return false
+  }
+}
+
 function escapeHtml(value: string): string {
   return value
     .replace(/&/g, '&amp;')
@@ -74,6 +106,15 @@ export async function POST(request: Request) {
     const timestamp = new Date().toISOString()
     const formName = fields.subject || fields.form || fields['form-name'] || 'Website form'
 
+    // Determine MailerLite group based on form name
+    const formIdentifier = (fields['form-name'] || fields.form || '').toLowerCase()
+    const mailerLiteGroupId =
+      formIdentifier === 'intern-application'
+        ? process.env.MAILERLITE_INTERN_GROUP_ID
+        : formIdentifier === 'contact'
+          ? process.env.MAILERLITE_CONTACT_GROUP_ID
+          : null
+
     const textLines: string[] = [
       'New form submission',
       `Timestamp: ${timestamp}`,
@@ -142,6 +183,12 @@ export async function POST(request: Request) {
         { message: `Error sending email: ${providerMessage}` },
         { status: 502 }
       )
+    }
+
+    // Sync to MailerLite if a group was matched (non-blocking, don't fail the response)
+    if (mailerLiteGroupId && fields.email) {
+      const subscriberName = fields.name || fields.firstName || ''
+      syncMailerLiteSubscriber(fields.email, subscriberName, mailerLiteGroupId).catch(() => {})
     }
 
     return NextResponse.json({ success: true })
