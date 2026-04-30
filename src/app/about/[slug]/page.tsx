@@ -1,17 +1,29 @@
 import type { Metadata } from 'next'
+import TeamMemberPage from '../../../components/TeamMemberPage'
 import { getTeamMember } from '@/lib/sanity-queries'
 import { urlFor } from '@/lib/sanity'
 
-import TeamMemberPage from '../../components/TeamMemberPage'
-
-export const metadata: Metadata = {
-  title: 'Christiana — Soul Care Counselling',
-  description: 'Meet Christiana, a dedicated therapist at Soul Care Counselling.',
+interface PageProps {
+  params: Promise<{ slug: string }>
 }
 
-export default async function ChristianaPage() {
-  const member = await getTeamMember('christiana-takyi')
-  
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params
+  const member = await getTeamMember(slug)
+  if (!member) {
+    return {
+      title: 'Team Member Not Found | Soul Care Counselling',
+    }
+  }
+  return {
+    title: `Soul Care — ${member.name}`,
+    description: `Bio for ${member.name} — ${member.role} at Soul Care Christian Counselling.`,
+  }
+}
+
+export default async function TeamMemberPageWrapper({ params }: PageProps) {
+  const { slug } = await params
+  const member = await getTeamMember(slug)
   if (!member) {
     return (
       <div className="container mx-auto py-12 text-center">
@@ -20,10 +32,8 @@ export default async function ChristianaPage() {
       </div>
     )
   }
-
-  // Convert Sanity data to TeamMemberPage format
   // Convert Portable Text bio to string[] for TeamMemberPage
-  let bio: string[] = ['Professional bio coming soon.'];
+  let bio: string[] = ['Professional bio coming soon.']
   if (Array.isArray(member.bio) && member.bio.length > 0) {
     bio = member.bio
       .filter((block): block is { children: { text?: string }[] } => {
@@ -48,6 +58,5 @@ export default async function ChristianaPage() {
     socialLinks: member.socialLinks || [],
     acceptsBookings: member.acceptsBookings
   }
-
   return <TeamMemberPage member={memberData} />
 }

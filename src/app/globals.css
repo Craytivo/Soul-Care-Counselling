@@ -168,9 +168,6 @@ html {
     }
   }
 
-  .content-block {
-    animation: fadeInUp 0.6s ease-out;
-  }
 }
 
 /* Subtle animation utilities */
@@ -244,17 +241,6 @@ html {
 }
 
 /* Smooth scroll animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @keyframes slideInFromLeft {
   from {
     opacity: 0;
@@ -315,9 +301,9 @@ html {
   overflow: hidden;
 }
 
-/* iPhone 17 specific optimizations */
+/* iOS optimizations */
 @supports (-webkit-touch-callout: none) {
-  /* iPhone 17 and newer iOS optimizations */
+  /* iOS-specific optimizations for better performance */
   .team-card {
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
@@ -361,7 +347,7 @@ html {
   }
 }
 
-/* iPhone 17 viewport height fix */
+/* Dynamic viewport height fix for mobile browsers */
 @supports (height: 100dvh) {
   .hero-section {
     height: 100dvh;

@@ -131,7 +131,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           {JSON.stringify(websiteJsonLd)}
         </Script>
         <Header />
-        <main className="mx-auto max-w-7xl px-4 py-12 min-h-[60vh] content-block">
+        <main className="mx-auto max-w-7xl px-4 py-12 min-h-[60vh]">
           {children}
         </main>
         <Footer />

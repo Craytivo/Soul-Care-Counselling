@@ -29,20 +29,24 @@ export default async function ServicesPage() {
   return (
     <>
       {/* Hero */}
-      <section className="mx-auto max-w-3xl text-center">
-        <span className="inline-flex items-center gap-2 rounded-full bg-sand/70 px-3 py-1 ring-1 ring-charcoal/10 uppercase tracking-[.22em] text-[11px] text-charcoal/80">
-          {servicesPageData.hero.badge}
-        </span>
-        <h1 className="mt-3 font-heading text-3xl md:text-4xl font-bold">{servicesPageData.hero.heading}</h1>
-        <div className="mt-3 text-charcoal/80">
-          {servicesPageData.hero.priceHighlight ? (
-            <>
-              {servicesPageData.hero.priceHighlight.text} <span className="font-bold text-bark">{servicesPageData.hero.priceHighlight.price}</span> {servicesPageData.hero.priceHighlight.suffix}.<br />
-              {servicesPageData.hero.description}
-            </>
-          ) : (
-            <p>{servicesPageData.hero.description}</p>
-          )}
+      <section className="relative overflow-hidden rounded-2xl bg-bark text-cream ring-1 ring-cream/15">
+        <div className="absolute -right-12 -top-12 h-56 w-56 rounded-full bg-gradient-to-br from-clay/40 to-cream/10 blur-2xl"></div>
+        <div className="absolute -left-8 -bottom-8 h-40 w-40 rounded-full bg-gradient-to-br from-blue/20 to-transparent blur-xl"></div>
+        <div className="relative z-10 px-6 py-10 md:px-10 md:py-14">
+          <span className="inline-flex items-center gap-2 rounded-full bg-cream/10 px-3 py-1 ring-1 ring-cream/30 uppercase tracking-[.22em] text-[11px]">
+            {servicesPageData.hero.badge}
+          </span>
+          <h1 className="mt-3 font-heading text-3xl md:text-4xl font-bold">{servicesPageData.hero.heading}</h1>
+          <div className="mt-3 max-w-3xl text-cream/85">
+            {servicesPageData.hero.priceHighlight ? (
+              <>
+                {servicesPageData.hero.priceHighlight.text} <span className="font-bold text-cream">{servicesPageData.hero.priceHighlight.price}</span> {servicesPageData.hero.priceHighlight.suffix}.<br />
+                {servicesPageData.hero.description}
+              </>
+            ) : (
+              <p>{servicesPageData.hero.description}</p>
+            )}
+          </div>
         </div>
       </section>
 

@@ -3,7 +3,6 @@
 export const revalidate = 60
 
 import { getResources, getFeaturedResources } from '@/lib/sanity-queries'
-import type { Resource } from '@/lib/sanity'
 import ResourceLeadForm from '@/components/forms/ResourceLeadForm'
 import ResourcesClient from '@/components/resources/ResourcesClient'
 import ConsultationCta from '@/components/cta/ConsultationCta'

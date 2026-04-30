@@ -207,6 +207,32 @@ export default async function SanityAboutPage() {
   <section className="mt-12 md:mt-16">
         <AboutTeamClient teamMembers={teamMembers} />
       </section>
+      {/* Careers / Internship Section */}
+      <section className="mt-12 md:mt-16 rounded-2xl bg-gradient-to-br from-sand/55 via-white to-clay/20 p-6 md:p-8 ring-1 ring-charcoal/10">
+        <div className="ui-card p-5 text-charcoal/90 md:p-8">
+          <div className="flex items-start gap-4 md:gap-6">
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-clay/15 text-clay">
+              <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.7">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </div>
+            <div className="flex-1">
+              <h3 className="font-heading text-xl md:text-2xl font-semibold tracking-tight text-bark">Join Our Team</h3>
+              <p className="mt-2 text-charcoal/80 max-w-[60ch]">
+                We offer clinical internship opportunities for graduate students and emerging therapists looking to gain experience in faith-centered, culturally responsive counselling.
+              </p>
+              <div className="mt-4">
+                <a
+                  href="/intern-application"
+                  className="inline-flex items-center justify-center rounded-full bg-clay px-6 py-3 text-sm font-semibold text-cream shadow-md ring-1 ring-clay/60 hover:shadow-lg transition-all"
+                >
+                  Apply to be an Intern
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       {/* Final CTA */}
       {pageData.cta && (
         <section className="mt-12 md:mt-16 rounded-2xl bg-sand p-5 md:p-8 ring-1 ring-charcoal/10">

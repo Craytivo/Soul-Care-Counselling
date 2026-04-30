@@ -51,7 +51,7 @@ export default function Header() {
                 About Us
               </Link>
               <Link href="/core-values" className="uppercase tracking-[.15em] text-sm font-medium text-bark/80 hover:text-gold transition-colors duration-200 whitespace-nowrap">
-                Core Pillars
+                Core Values
               </Link>
               <Link href="/services" className="uppercase tracking-[.15em] text-sm font-medium text-bark/80 hover:text-gold transition-colors duration-200 whitespace-nowrap">
                 Services
@@ -59,15 +59,35 @@ export default function Header() {
               <Link href="/areas" className="uppercase tracking-[.15em] text-sm font-medium text-bark/80 hover:text-gold transition-colors duration-200 whitespace-nowrap">
                 Areas of Focus
               </Link>
-              <Link href="/intern-application" className="uppercase tracking-[.15em] text-sm font-medium text-bark/80 hover:text-gold transition-colors duration-200 whitespace-nowrap">
-                Apply to be an Intern
-              </Link>
               <Link href="/resources" className="uppercase tracking-[.15em] text-sm font-medium text-bark/80 hover:text-gold transition-colors duration-200 whitespace-nowrap">
                 Resources
               </Link>
+              <Link href="/faq" className="uppercase tracking-[.15em] text-sm font-medium text-bark/80 hover:text-gold transition-colors duration-200 whitespace-nowrap">
+                FAQs
+              </Link>
+              <Link href="/contact" className="uppercase tracking-[.15em] text-sm font-medium text-bark/80 hover:text-gold transition-colors duration-200 whitespace-nowrap">
+                Contact
+              </Link>
             </nav>
 
-          {/* RIGHT: Hamburger */}
+          {/* RIGHT: CTA + Hamburger */}
+          <div className="hidden lg:flex items-center gap-3">
+            <a
+              href="https://thesoulcarecounsellor.janeapp.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() =>
+                trackConsultationClick({
+                  location: 'desktop-nav',
+                  label: 'Book a Free Consultation',
+                  url: 'https://thesoulcarecounsellor.janeapp.com',
+                })
+              }
+              className="inline-flex items-center justify-center rounded-full bg-clay px-5 py-2.5 text-sm font-semibold text-cream shadow-md ring-1 ring-clay/60 hover:shadow-lg transition-all"
+            >
+              Book a Free Consultation
+            </a>
+          </div>
           <button
             type="button"
             onClick={toggleMenu}
