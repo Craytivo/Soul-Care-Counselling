@@ -1,6 +1,7 @@
 'use client'
 
 import { useScrollReveal } from '@/hooks/useScrollReveal'
+import { cn } from '@/lib/cn'
 
 interface ScrollRevealProps {
   children: React.ReactNode
@@ -8,10 +9,6 @@ interface ScrollRevealProps {
   variant?: 'reveal' | 'reveal-left' | 'reveal-right' | 'reveal-scale'
   delay?: 0 | 1 | 2 | 3 | 4 | 5
   as?: keyof JSX.IntrinsicElements
-}
-
-function cn(...classes: (string | boolean | undefined)[]) {
-  return classes.filter(Boolean).join(' ')
 }
 
 export default function ScrollReveal({

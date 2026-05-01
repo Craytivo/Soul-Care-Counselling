@@ -1,9 +1,10 @@
 "use client"
 
-import { FormEvent, useMemo, useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { trackLeadFormSubmit } from '@/lib/tracking'
 import { createPortal } from 'react-dom'
+import { cn } from '@/lib/cn'
 
 interface GatedDownloadButtonProps {
   requiresEmailGate?: boolean
@@ -31,12 +32,7 @@ export default function GatedDownloadButton({
   const [status, setStatus] = useState<GateStatus>('idle')
   const [message, setMessage] = useState('')
 
-  const buttonClassName = useMemo(
-    () =>
-      className ||
-      'inline-flex items-center px-4 py-2 text-sm font-semibold text-charcoal bg-clay hover:bg-clay/90 rounded-md transition-colors ring-1 ring-charcoal/10',
-    [className]
-  )
+  const defaultButtonClasses = 'inline-flex items-center px-4 py-2 text-sm font-semibold text-charcoal bg-clay hover:bg-clay/90 rounded-md transition-colors ring-1 ring-charcoal/10'
 
   if (!requiresEmailGate) {
     return (
@@ -45,7 +41,7 @@ export default function GatedDownloadButton({
         target="_blank"
         rel="noopener noreferrer"
         download={fileName}
-        className={buttonClassName}
+        className={cn(defaultButtonClasses, className)}
       >
         <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
@@ -108,7 +104,7 @@ export default function GatedDownloadButton({
           e.stopPropagation()
           setOpen(true)
         }} 
-        className={buttonClassName}
+        className={cn(defaultButtonClasses, className)}
       >
         Get Access
       </button>

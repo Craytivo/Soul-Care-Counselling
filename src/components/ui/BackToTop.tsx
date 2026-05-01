@@ -2,10 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { ArrowUp } from 'lucide-react'
-
-function cn(...classes: (string | boolean | undefined)[]) {
-  return classes.filter(Boolean).join(' ')
-}
+import { cn } from '@/lib/cn'
 
 export default function BackToTop() {
   const [isVisible, setIsVisible] = useState(false)
