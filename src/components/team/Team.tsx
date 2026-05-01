@@ -7,6 +7,7 @@ import PortableText from "@/components/PortableText";
 import Image from "next/image";
 import Link from "next/link";
 import { getTeamMembers } from "@/lib/sanity-queries";
+import { extractBioText } from "@/lib/portable-text";
 
 interface TeamMember {
   _id: string;
@@ -42,20 +43,7 @@ export default function Team() {
     return teamMembers.filter((member: TeamMember) => {
       const searchLower = searchQuery.toLowerCase();
       // Search bio text if it's an array of blocks (Portable Text)
-      const bioText = Array.isArray(member.bio)
-        ? member.bio.map((block) => {
-            if (
-              typeof block === 'object' &&
-              block !== null &&
-              'children' in block &&
-              Array.isArray((block as { children?: unknown }).children)
-            ) {
-              const children = (block as { children: { text?: string }[] }).children;
-              return children.map((child) => child.text || '').join(' ');
-            }
-            return '';
-          }).join(' ')
-        : '';
+      const bioText = extractBioText(member.bio);
       const matchesSearch =
         !searchQuery ||
         member.name.toLowerCase().includes(searchLower) ||
