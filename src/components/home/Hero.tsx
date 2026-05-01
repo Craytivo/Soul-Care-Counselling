@@ -453,14 +453,14 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
                       href={heroData.ctaButtons.primaryButton.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="order-1 group inline-flex items-center justify-center rounded-full bg-clay px-5 py-2.5 text-sm md:px-9 md:py-4 md:text-base font-semibold text-cream shadow-md ring-1 ring-clay/60 hover:shadow-lg transition-all w-full md:w-auto"
+                      className="order-1 group inline-flex items-center justify-center rounded-full bg-clay px-5 py-2.5 text-sm md:px-9 md:py-4 md:text-base font-semibold text-cream shadow-md ring-1 ring-clay/60 hover:shadow-lg magnetic transition-all w-full md:w-auto"
                     >
                       <span className="tracking-wide">{heroData.ctaButtons.primaryButton.text}</span>
                     </a>
                   ) : (
                     <Link
                       href={heroData.ctaButtons.primaryButton.url}
-                      className="order-1 group inline-flex items-center justify-center rounded-full bg-clay px-5 py-2.5 text-sm md:px-9 md:py-4 md:text-base font-semibold text-cream shadow-md ring-1 ring-clay/60 hover:shadow-lg transition-all w-full md:w-auto"
+                      className="order-1 group inline-flex items-center justify-center rounded-full bg-clay px-5 py-2.5 text-sm md:px-9 md:py-4 md:text-base font-semibold text-cream shadow-md ring-1 ring-clay/60 hover:shadow-lg magnetic transition-all w-full md:w-auto"
                     >
                       <span className="tracking-wide">{heroData.ctaButtons.primaryButton.text}</span>
                     </Link>
@@ -470,14 +470,14 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
                       href={heroData.ctaButtons.secondaryButton.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="order-2 group inline-flex items-center justify-center rounded-full border border-white/20 bg-transparent px-4 py-2 text-sm md:px-8 md:py-4 md:text-base font-medium text-white/85 backdrop-blur-sm hover:bg-white/10 hover:border-white/40 transition-all w-full md:w-auto"
+                      className="order-2 group inline-flex items-center justify-center rounded-full border border-white/20 bg-transparent px-4 py-2 text-sm md:px-8 md:py-4 md:text-base font-medium text-white/85 backdrop-blur-sm hover:bg-white/10 hover:border-white/40 magnetic transition-all w-full md:w-auto"
                     >
                       {heroData.ctaButtons.secondaryButton.text}
                     </a>
                   ) : (
                     <Link
                       href={heroData.ctaButtons.secondaryButton.url}
-                      className="order-2 group inline-flex items-center justify-center rounded-full border border-white/20 bg-transparent px-4 py-2 text-sm md:px-8 md:py-4 md:text-base font-medium text-white/85 backdrop-blur-sm hover:bg-white/10 hover:border-white/40 transition-all w-full md:w-auto"
+                      className="order-2 group inline-flex items-center justify-center rounded-full border border-white/20 bg-transparent px-4 py-2 text-sm md:px-8 md:py-4 md:text-base font-medium text-white/85 backdrop-blur-sm hover:bg-white/10 hover:border-white/40 magnetic transition-all w-full md:w-auto"
                     >
                       {heroData.ctaButtons.secondaryButton.text}
                     </Link>

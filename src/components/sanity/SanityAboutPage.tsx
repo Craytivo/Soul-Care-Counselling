@@ -58,11 +58,11 @@ export default async function SanityAboutPage() {
           {/* LEFT: Text */}
           <div>
             {pageData.hero.badge && (
-              <span className="inline-flex items-center gap-2 rounded-full bg-cream/10 px-3 py-1 ring-1 ring-cream/30 uppercase tracking-[.22em] text-[11px]">
+              <span className="inline-flex items-center gap-2 rounded-full bg-cream/10 px-3 py-1 ring-1 ring-cream/30 eyebrow text-[11px]">
                 {pageData.hero.badge}
               </span>
             )}
-            <h1 className="mt-3 font-heading text-[clamp(2rem,6vw,3rem)] font-semibold leading-[1.05] tracking-[-0.015em]">
+            <h1 className="mt-3 font-heading text-[clamp(2rem,6vw,3rem)] font-semibold leading-[1.05] tracking-tight">
               {pageData.hero.title}
             </h1>
             <p className="mt-3 max-w-[62ch] text-[0.98rem] md:text-[1.06rem] leading-relaxed text-cream/88">
@@ -71,7 +71,7 @@ export default async function SanityAboutPage() {
           </div>
           {/* RIGHT: Featured Image */}
           {pageData.hero.featuredImage && (
-            <div className="relative flex justify-center overflow-hidden rounded-xl shadow-elevation-2 ring-2 ring-white/20">
+            <div className="relative flex justify-center overflow-hidden rounded-2xl shadow-elevation-2 ring-2 ring-white/20 img-zoom">
               <Image
                 src={urlFor(pageData.hero.featuredImage).url()}
                 alt={pageData.hero.featuredImage.alt || pageData.hero.title}

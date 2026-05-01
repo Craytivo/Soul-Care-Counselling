@@ -182,7 +182,7 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
         </div>
 
         {/* Grid */}
-        <ul role="list" className="mt-6 md:mt-8 grid gap-3 sm:gap-4 md:gap-6 lg:gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-stretch">
+        <ul role="list" className="mt-6 md:mt-8 grid gap-3 sm:gap-4 md:gap-6 lg:gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-stretch stagger-grid">
           {filteredMembers.map((member, idx) => (
             <motion.li
               key={member._id}
@@ -195,11 +195,11 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
               <article className="group h-full rounded-2xl bg-white ring-1 ring-charcoal/10 shadow-sm hover:shadow-md transition-all duration-200">
                 <div className="p-4 sm:p-5">
                   <div className="flex items-center gap-3">
-                    <div className="relative">
+                    <div className="relative img-zoom rounded-full">
                       <Image
                         src={urlFor(member.image).width(56).height(56).url()}
                         alt={member.name}
-                        className="h-14 w-14 rounded-full object-cover transition-transform group-hover:scale-102"
+                        className="h-14 w-14 rounded-full object-cover"
                         width={56}
                         height={56}
                         loading="lazy"
