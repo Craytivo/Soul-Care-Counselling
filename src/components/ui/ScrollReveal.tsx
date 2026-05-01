@@ -20,6 +20,7 @@ export default function ScrollReveal({
 }: ScrollRevealProps) {
   const { ref, isVisible } = useScrollReveal<HTMLDivElement>()
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const Tag = Component as any
 
   return (

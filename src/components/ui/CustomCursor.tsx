@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 import { useMousePosition } from '@/hooks/useMousePosition'
 import { cn } from '@/lib/cn'
 

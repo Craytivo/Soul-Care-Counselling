@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 interface TeamMemberData {
   name: string
-  credentials: string
+  credentials?: string
   role: string
   image: string
   bio: string[]
