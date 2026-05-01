@@ -67,6 +67,9 @@ export default async function ServicesPage() {
       {/* Services from Sanity */}
       <SanityServices servicesData={servicesPageData} />
 
+      {/* Section Divider */}
+      <div className="section-divider" />
+
       {servicesPageData.cta.external ? (
         <ConsultationCta
           title={servicesPageData.cta.title}

@@ -92,6 +92,9 @@ export default async function FAQPage() {
         <FAQSection key={group.id} {...group} />
       ))}
 
+      {/* Section Divider */}
+      <div className="section-divider" />
+
       {/* CTA */}
       <div className="mt-16 shadow-elevation-2 rounded-2xl">
         <CTASection icon="question" />
