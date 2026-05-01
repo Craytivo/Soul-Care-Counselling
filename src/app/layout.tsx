@@ -10,6 +10,7 @@ import Header from '../components/Header'
 
 import Footer from '../components/Footer'
 import BackToTop from '@/components/ui/BackToTop'
+import CustomCursor from '@/components/ui/CustomCursor'
 
 const gtmId = process.env.NEXT_PUBLIC_GTM_ID
 
@@ -288,6 +289,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <Footer />
 
         <BackToTop />
+
+        <CustomCursor />
 
       </body>
 
