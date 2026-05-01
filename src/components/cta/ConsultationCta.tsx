@@ -25,7 +25,7 @@ export default function ConsultationCta({
 
   return (
     <section
-      className={`mt-16 rounded-2xl p-6 md:p-8 ring-1 ${isDark ? 'bg-bark text-cream ring-cream/15' : 'bg-sand text-charcoal ring-charcoal/10'} ${className}`}
+      className={`mt-16 rounded-2xl p-6 md:p-8 ring-1 shadow-elevation-2 ${isDark ? 'glass-dark text-cream ring-cream/20' : 'glass text-charcoal ring-charcoal/10'} ${className}`}
     >
       <div className="grid gap-6 md:grid-cols-3 md:items-center">
         <div className="md:col-span-2">
@@ -44,10 +44,10 @@ export default function ConsultationCta({
                 url: bookingUrl,
               })
             }
-            className={`inline-flex items-center justify-center rounded-md px-5 py-2.5 font-semibold ring-1 transition-colors ${
+            className={`inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold ring-1 transition-all duration-200 shadow-elevation-1 hover:shadow-elevation-2 hover:scale-[1.02] ${
               isDark
-                ? 'bg-clay text-charcoal ring-charcoal/10 hover:bg-clay/90'
-                : 'bg-clay text-charcoal ring-charcoal/10 hover:bg-clay/90'
+                ? 'bg-clay text-charcoal ring-clay hover:bg-clay/90'
+                : 'bg-clay text-cream ring-clay/50 hover:bg-clay/90'
             }`}
           >
             {buttonText}

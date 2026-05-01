@@ -36,7 +36,7 @@ export default async function SanityAboutPage() {
   return (
   <>
       {/* Hero Section */}
-      <section className="relative overflow-hidden rounded-2xl bg-bark text-cream ring-1 ring-cream/15">
+      <section className="relative overflow-hidden rounded-2xl bg-bark text-cream ring-1 ring-cream/15 shadow-elevation-3">
         {/* Background image */}
         {pageData.hero.backgroundImage && (
           <div className="absolute inset-0">
@@ -71,7 +71,7 @@ export default async function SanityAboutPage() {
           </div>
           {/* RIGHT: Featured Image */}
           {pageData.hero.featuredImage && (
-            <div className="relative flex justify-center overflow-hidden rounded-xl shadow-lg">
+            <div className="relative flex justify-center overflow-hidden rounded-xl shadow-elevation-2 ring-2 ring-white/20">
               <Image
                 src={urlFor(pageData.hero.featuredImage).url()}
                 alt={pageData.hero.featuredImage.alt || pageData.hero.title}
@@ -86,8 +86,7 @@ export default async function SanityAboutPage() {
         </div>
       </section>
       {/* Welcome Section */}
-        <section className="mt-10 md:mt-12 relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-sand/60 via-white/80 to-clay/30 pointer-events-none rounded-2xl" />
+        <section className="mt-10 md:mt-12 relative glass rounded-2xl shadow-elevation-2">
           <div className="relative z-10 rounded-2xl overflow-hidden px-5 md:px-8 py-8 md:py-14">
               <header className="mb-4 flex items-center gap-3">
                 <span className="inline-block w-2 h-8 rounded bg-clay md:mr-2" />
