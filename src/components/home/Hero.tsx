@@ -368,7 +368,7 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
 
               <div className="lg:col-span-5 h-full hidden md:flex">
 
-                <div className="relative backdrop-blur-md bg-charcoal/35 ring-1 ring-white/15 rounded-2xl p-5 sm:p-6 lg:p-7 shadow-[0_4px_30px_-6px_rgba(0,0,0,0.55)] w-full flex flex-col justify-between">
+                <div className="relative glass-dark rounded-2xl p-5 sm:p-6 lg:p-7 shadow-elevation-3 w-full flex flex-col justify-between">
 
                   <blockquote className="space-y-3">
 
@@ -415,7 +415,7 @@ export default function Hero({ homePageData, variant = 'elevated', layout = 'cen
 
             ].join(' ')}>
 
-              <div className="relative p-4 sm:p-5 md:p-6 lg:p-7 rounded-2xl backdrop-blur-md bg-charcoal/45 ring-1 ring-white/10 space-y-2 sm:space-y-3 h-full">
+              <div className="relative p-4 sm:p-5 md:p-6 lg:p-7 rounded-2xl glass-dark space-y-2 sm:space-y-3 h-full">
 
                 <header className="space-y-1.5 sm:space-y-2 text-left sm:text-center">
 

@@ -60,7 +60,7 @@ export default async function FAQPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
 
       {/* Hero */}
-      <section className="relative overflow-hidden rounded-2xl bg-bark text-cream ring-1 ring-cream/15">
+      <section className="relative overflow-hidden rounded-2xl bg-bark text-cream ring-1 ring-cream/15 shadow-elevation-3">
         <div className="absolute -right-12 -top-12 h-56 w-56 rounded-full bg-gradient-to-br from-clay/40 to-cream/10 blur-2xl" aria-hidden="true" />
         <div className="absolute -left-12 -bottom-12 h-48 w-48 rounded-full bg-gradient-to-tr from-cream/10 to-clay/20 blur-2xl" aria-hidden="true" />
         <div className="relative z-10 px-6 py-10 md:px-10 md:py-14">
@@ -74,7 +74,7 @@ export default async function FAQPage() {
 
       {/* Quick-nav category pills */}
       <section className="mt-8">
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 glass rounded-2xl p-3">
           {categories.map((cat) => (
             <a
               key={cat}
@@ -93,7 +93,9 @@ export default async function FAQPage() {
       ))}
 
       {/* CTA */}
-      <CTASection icon="question" />
+      <div className="mt-16 shadow-elevation-2 rounded-2xl">
+        <CTASection icon="question" />
+      </div>
     </>
   )
 }

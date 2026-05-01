@@ -14,7 +14,7 @@ export default function FAQAccordion({ question, answer, index, defaultOpen = fa
   const [isOpen, setIsOpen] = useState(defaultOpen)
 
   return (
-    <div className="rounded-2xl bg-white ring-1 ring-charcoal/5 overflow-hidden hover:ring-charcoal/10 hover:shadow-lg hover:shadow-charcoal/[0.03] transition-all duration-300">
+    <div className="rounded-2xl bg-white ring-1 ring-charcoal/5 overflow-hidden hover:ring-charcoal/10 shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-300">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left"

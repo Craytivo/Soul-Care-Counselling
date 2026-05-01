@@ -372,6 +372,105 @@ html {
   text-wrap: pretty;
 }
 
+/* ===========================================
+   VISUAL REFINEMENTS - Agency Level Polish
+   =========================================== */
+
+/* Gradient Mesh Backgrounds - Animated subtle gradients */
+.gradient-mesh {
+  background: 
+    radial-gradient(at 40% 20%, hsla(28, 52%, 66%, 0.15) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, hsla(35, 60%, 75%, 0.1) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, hsla(38, 45%, 70%, 0.12) 0px, transparent 50%),
+    radial-gradient(at 80% 50%, hsla(28, 40%, 60%, 0.08) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, hsla(35, 50%, 72%, 0.1) 0px, transparent 50%),
+    linear-gradient(to bottom, var(--bg-color, #F8F5EC), var(--bg-color, #F8F5EC));
+  position: relative;
+}
+
+.gradient-mesh-hero {
+  background: 
+    radial-gradient(at 20% 30%, rgba(196, 154, 108, 0.25) 0px, transparent 50%),
+    radial-gradient(at 80% 20%, rgba(230, 221, 198, 0.3) 0px, transparent 45%),
+    radial-gradient(at 40% 80%, rgba(196, 154, 108, 0.2) 0px, transparent 55%),
+    radial-gradient(at 90% 70%, rgba(110, 75, 58, 0.15) 0px, transparent 40%),
+    linear-gradient(135deg, rgba(248, 245, 236, 0.95), rgba(230, 221, 198, 0.9));
+}
+
+/* Glass Morphism Cards */
+.glass {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 
+    0 4px 30px rgba(0, 0, 0, 0.05),
+    0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.glass-dark {
+  background: rgba(110, 75, 58, 0.65);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Deeper, Layered Shadows */
+.shadow-elevation-1 {
+  box-shadow: 
+    0 1px 2px rgba(35, 32, 27, 0.04),
+    0 2px 4px rgba(35, 32, 27, 0.02);
+}
+
+.shadow-elevation-2 {
+  box-shadow: 
+    0 4px 6px -1px rgba(35, 32, 27, 0.05),
+    0 2px 4px -2px rgba(35, 32, 27, 0.03),
+    0 8px 16px -4px rgba(196, 154, 108, 0.06);
+}
+
+.shadow-elevation-3 {
+  box-shadow: 
+    0 12px 24px -4px rgba(35, 32, 27, 0.08),
+    0 8px 16px -6px rgba(35, 32, 27, 0.04),
+    0 20px 40px -8px rgba(196, 154, 108, 0.1);
+}
+
+/* Colored brand shadows */
+.shadow-clay {
+  box-shadow: 0 8px 30px rgba(196, 154, 108, 0.25);
+}
+
+.shadow-bark {
+  box-shadow: 0 12px 40px rgba(110, 75, 58, 0.2);
+}
+
+/* Noise Texture Overlay */
+.noise-overlay {
+  position: relative;
+}
+
+.noise-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+/* Smooth gradient text */
+.gradient-text-clay {
+  background: linear-gradient(135deg, #C49A6C 0%, #8B7355 50%, #6E4B3A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 /* Print styles for legal pages */
 @media print {
   /* Hide decorative hero and elements marked no-print */
