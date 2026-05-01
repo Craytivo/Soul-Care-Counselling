@@ -85,8 +85,8 @@ export default function TeamMemberPage({ member }: TeamMemberPageProps) {
         {/* LEFT: Main narrative */}
         <article className="md:col-span-7 space-y-5 text-charcoal/90">
           <h2 className="font-heading text-xl md:text-2xl font-semibold">About {member.name.split(' ')[0]}</h2>
-          {member.bio.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
+          {member.bio.map((paragraph, index) => (
+            <p key={`bio-${index}`}>{paragraph}</p>
           ))}
         </article>
 
@@ -96,16 +96,16 @@ export default function TeamMemberPage({ member }: TeamMemberPageProps) {
             <div>
               <h3 className="font-heading font-semibold">Areas of Focus</h3>
               <ul className="mt-3 grid grid-cols-1 gap-2 text-sm text-charcoal/85">
-                {member.areasOfFocus.map((area) => (
-                  <li key={area}>{area}</li>
+                {member.areasOfFocus.map((area, index) => (
+                  <li key={`area-${index}`}>{area}</li>
                 ))}
               </ul>
             </div>
             <div>
               <h3 className="font-heading font-semibold mt-6">Specialties</h3>
               <ul className="mt-3 grid grid-cols-1 gap-2 text-sm text-charcoal/85">
-                {member.specialties.map((specialty) => (
-                  <li key={specialty}>{specialty}</li>
+                {member.specialties.map((specialty, index) => (
+                  <li key={`specialty-${index}`}>{specialty}</li>
                 ))}
               </ul>
             </div>

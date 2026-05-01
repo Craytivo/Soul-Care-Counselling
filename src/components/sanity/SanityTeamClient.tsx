@@ -244,7 +244,7 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
 
                   <div className="mt-4 team-cta" style={{ minHeight: '3.5rem' }}>
                     <Link
-                      href={`/${member.slug.current}`}
+                      href={`/about/${member.slug.current}`}
                       className="cta-label inline-flex items-center justify-center rounded-full border border-clay/35 bg-clay/10 px-4 py-2 text-sm font-semibold text-clay hover:text-bark hover:border-bark/35 hover:bg-bark/10 transition-all duration-200"
                     >
                       <span className="flex items-center gap-2">

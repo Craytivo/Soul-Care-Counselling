@@ -232,7 +232,7 @@ export default async function SanityTeam({
 
                   <div className="mt-4 team-cta" style={{ minHeight: '3.5rem' }}>
                     <Link
-                      href={`/${member.slug.current}`}
+                      href={`/about/${member.slug.current}`}
                       className="cta-label text-sm font-medium text-clay hover:text-bark block"
                       style={{
                         display: '-webkit-box',

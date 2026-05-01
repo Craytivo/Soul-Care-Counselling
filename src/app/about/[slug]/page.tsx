@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { getTeamMember } from '@/lib/sanity-queries'
+import { getTeamMember, getTeamMembers } from '@/lib/sanity-queries'
 import { urlFor } from '@/lib/sanity'
 import { extractBioParagraphs } from '@/lib/portable-text'
 import TeamMemberPage from '@/components/team/TeamMemberPage'
@@ -8,6 +8,14 @@ interface TeamMemberPageProps {
   params: Promise<{
     slug: string
   }>
+}
+
+// Generate static pages for all team members at build time
+export async function generateStaticParams() {
+  const members = await getTeamMembers()
+  return members.map((member) => ({
+    slug: member.slug.current,
+  }))
 }
 
 export default async function TeamMemberRoute({ params }: TeamMemberPageProps) {
