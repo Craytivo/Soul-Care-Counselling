@@ -1,506 +1,157 @@
-import Image from 'next/image'
-
-import Link from 'next/link'
-
-import { urlFor } from '@/lib/sanity'
-
-import type { HomePage } from '@/lib/sanity'
-
-
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, Globe2, GraduationCap, LockKeyhole, MapPin, ShieldCheck } from "lucide-react";
+import { urlFor } from "@/lib/sanity";
+import type { HomePage } from "@/lib/sanity";
 
 interface HeroProps {
-
-  homePageData: HomePage | null
-
-  /** Presentation style */
-
-  variant?: 'elevated' | 'legacy'
-
-  /** Content layout style */
-
-  layout?: 'left' | 'centerLow' | 'split'
-
+  homePageData: HomePage | null;
+  variant?: "elevated" | "legacy";
+  layout?: "left" | "centerLow" | "split";
 }
 
-
+type HeroButton = {
+  text: string;
+  url: string;
+  external: boolean;
+};
 
 const iconComponents = {
+  lock: LockKeyhole,
+  mapPin: MapPin,
+  globe: Globe2,
+  graduationCap: GraduationCap,
+};
 
-  lock: (
+function HeroButtonLink({
+  button,
+  variant,
+}: {
+  button: HeroButton;
+  variant: "primary" | "secondary";
+}) {
+  const className =
+    variant === "primary"
+      ? "group inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-clay px-5 py-3 text-sm font-semibold text-cream shadow-elevation-2 ring-1 ring-clay/40 transition hover:bg-bark hover:shadow-elevation-3 focus:outline-none focus:ring-2 focus:ring-cream/70 focus:ring-offset-2 focus:ring-offset-charcoal sm:w-auto"
+      : "inline-flex min-h-12 w-full items-center justify-center rounded-lg border border-white/30 bg-white/10 px-5 py-3 text-sm font-semibold text-white backdrop-blur-md transition hover:border-white/50 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-cream/70 focus:ring-offset-2 focus:ring-offset-charcoal sm:w-auto";
 
-    <svg className="h-5 w-5 text-cream flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
+  const content = (
+    <>
+      {button.text}
+      {variant === "primary" && <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />}
+    </>
+  );
 
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 3.5l7 3v5.2c0 4.3-2.8 8.2-7 9.7-4.2-1.5-7-5.4-7-9.7V6.5l7-3z" />
-
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9.2 12.2l2 2 3.8-4" />
-
-    </svg>
-
-  ),
-
-  mapPin: (
-
-    <svg className="h-5 w-5 text-cream flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
-
-      <rect x="3" y="6.5" width="14" height="11" rx="2.2" />
-
-      <path strokeLinecap="round" strokeLinejoin="round" d="M17 10l4-2.2v8.4L17 14" />
-
-    </svg>
-
-  ),
-
-  globe: (
-
-    <svg className="h-5 w-5 text-cream flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
-
-      <circle cx="8.5" cy="10.5" r="2.2" />
-
-      <circle cx="15.5" cy="10.5" r="2.2" />
-
-      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 18.2c.7-2.4 2.7-3.8 4.9-3.8s4.2 1.4 4.9 3.8" />
-
-      <path strokeLinecap="round" strokeLinejoin="round" d="M13.2 18.2c.5-1.9 2-3 3.8-3 1.8 0 3.2 1.1 3.8 3" />
-
-    </svg>
-
-  ),
-
-  graduationCap: (
-
-    <svg className="h-5 w-5 text-cream flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
-
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 5.2l1.7 3.3 3.7.5-2.7 2.6.6 3.7-3.3-1.7-3.3 1.7.6-3.7-2.7-2.6 3.7-.5L12 5.2z" />
-
-      <path strokeLinecap="round" strokeLinejoin="round" d="M6.5 19h11" />
-
-    </svg>
-
-  ),
-
-}
-
-
-
-export default function Hero({ homePageData, variant = 'elevated', layout = 'centerLow' }: HeroProps) {
-
-  // Return early if no homepage data is available
-
-  if (!homePageData || !homePageData.hero) {
-
+  if (button.external) {
     return (
-
-      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-sand to-cream">
-
-        <div className="text-center text-bark/60">
-
-          <p className="text-lg">Please create homepage content in Sanity Studio</p>
-
-          <p className="text-sm mt-2">Visit <Link href="/studio" className="text-gold underline">Sanity Studio</Link> to add homepage content</p>
-
-        </div>
-
-      </section>
-
-    )
-
+      <a href={button.url} target="_blank" rel="noopener noreferrer" className={className}>
+        {content}
+      </a>
+    );
   }
-
-
-
-  const heroData = homePageData.hero
-
-  const backgroundImageSrc = heroData.backgroundImage 
-
-    ? urlFor(heroData.backgroundImage).width(1920).height(1080).quality(90).url()
-
-    : null
-
-  const backgroundImageAlt = heroData.backgroundImage?.alt || 'Hero background'
-
-
-
-  // Sanity hotspot support for better focal visibility
-
-  // Replace 'any' with a more specific type if available, otherwise use 'unknown'
-
-  const hotspot = (heroData.backgroundImage as { hotspot?: { x: number; y: number } })?.hotspot
-
-  const objectPosition = hotspot
-
-    ? `${(hotspot.x * 100).toFixed(2)}% ${(hotspot.y * 100).toFixed(2)}%`
-
-    : '50% 50%'
-
-
-
-  const isLegacy = variant === 'legacy'
-
-
 
   return (
+    <Link href={button.url} className={className}>
+      {content}
+    </Link>
+  );
+}
 
-    <section className="relative h-[82svh] min-h-[620px] sm:h-[88svh] lg:h-[min(100vh,900px)] w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] overflow-hidden">
-
-      {/* Background Image */}
-
-      {backgroundImageSrc && (
-
-        <div className="absolute inset-0 z-0">
-
-          <Image
-
-            src={backgroundImageSrc}
-
-            alt={backgroundImageAlt}
-
-            fill
-
-            style={{ objectPosition }}
-
-            className="hero-bg-img object-cover w-full h-full scale-105 will-change-transform duration-[3s] ease-out"
-
-            priority
-
-            sizes="100vw"
-
-          />
-
-          {isLegacy ? (
-
-            <div className="absolute inset-0 bg-charcoal/70" />
-
-          ) : (
-
-            <>
-
-              {/* Lightened directional gradient for improved image visibility */}
-
-              <div className="absolute inset-0 bg-gradient-to-r from-charcoal/65 via-charcoal/35 to-transparent md:from-charcoal/55 md:via-charcoal/25" />
-
-              {/* Softer radial vignette */}
-
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(0,0,0,0.04),rgba(0,0,0,0.22)_55%,rgba(0,0,0,0.38)_85%)] mix-blend-multiply" />
-
-              {/* Subtle noise layer for texture (optional) */}
-
-              <div className="pointer-events-none absolute inset-0 opacity-[0.18] [background-image:radial-gradient(rgba(255,255,255,0.15)_1px,transparent_1px)] [background-size:3px_3px]" />
-
-            </>
-
-          )}
-
+export default function Hero({ homePageData }: HeroProps) {
+  if (!homePageData?.hero) {
+    return (
+      <section className="relative flex min-h-[70svh] items-center justify-center bg-gradient-to-br from-sand to-cream px-5 text-center">
+        <div className="text-bark/70">
+          <p className="text-lg font-semibold">Please create homepage content in Sanity Studio</p>
+          <p className="mt-2 text-sm">
+            Visit{" "}
+            <Link href="/studio" className="text-bark underline underline-offset-4">
+              Sanity Studio
+            </Link>{" "}
+            to add homepage content
+          </p>
         </div>
-
-      )}
-
-
-
-      {/* Content Wrapper */}
-
-      {/* Bottom Content Band (40% height) */}
-
-      {layout === 'split' && (
-
-        <div className="absolute inset-0 md:inset-x-0 md:bottom-0 md:top-auto h-full md:h-[50%] min-h-[360px] z-10 flex items-center md:items-stretch py-6 md:py-0">
-
-          <div className="w-full mx-auto px-6 md:px-10 lg:px-14 xl:px-20 max-w-7xl flex">
-
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center md:items-stretch w-full justify-center">
-
-              {/* Left Column */}
-
-              <div className="lg:col-span-7 flex flex-col">
-
-                <div className="pr-1">
-
-                  <header className="space-y-2 text-center md:text-left">
-
-                    <h1 className="font-heading text-[2.2rem] sm:text-4xl lg:text-[2.9rem] font-bold leading-[1.05] tracking-tight text-white">
-
-                      <span className="block">{heroData.mainHeading}</span>
-
-                      <span className="bg-gradient-to-r from-clay via-cream to-clay bg-clip-text text-transparent">{heroData.highlightText}</span>
-
-                    </h1>
-
-                    <p className="max-w-2xl mx-auto md:mx-0 text-sm sm:text-base lg:text-lg text-white/90 leading-relaxed [text-wrap:balance]">
-
-                      {heroData.description}
-
-                    </p>
-
-                  </header>
-
-                  {/* Features two columns (left aligned) */}
-
-                  <div className="mt-6 mb-2 flex flex-col sm:flex-row gap-6 md:gap-10 lg:gap-12 justify-start md:justify-center md:mx-auto w-full max-w-2xl">
-
-                    <div className="flex flex-col gap-3 min-w-[200px] items-start">
-
-                      {heroData.features.slice(0,2).map((feature: { icon: string; text: string }) => (
-
-                        <div key={`${feature.icon}-${feature.text}`} className="flex items-start gap-5">
-
-                          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-clay/90 text-cream ring-1 ring-white/25 flex-shrink-0">
-
-                            {iconComponents[feature.icon as keyof typeof iconComponents]}
-
-                          </span>
-
-                          <span className="text-[12px] sm:text-[13px] text-white/90 leading-snug max-w-[14rem] text-left">{feature.text}</span>
-
-                        </div>
-
-                      ))}
-
-                    </div>
-
-                    <div className="flex flex-col gap-3 min-w-[200px] items-start">
-
-                      {heroData.features.slice(2,4).map((feature: { icon: string; text: string }) => (
-
-                        <div key={`${feature.icon}-${feature.text}`} className="flex items-start gap-5">
-
-                          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-clay/90 text-cream ring-1 ring-white/25 flex-shrink-0">
-
-                            {iconComponents[feature.icon as keyof typeof iconComponents]}
-
-                          </span>
-
-                          <span className="text-[12px] sm:text-[13px] text-white/90 leading-snug max-w-[14rem] text-left">{feature.text}</span>
-
-                        </div>
-
-                      ))}
-
-                    </div>
-
-                  </div>
-
-                  {/* Mobile quote (reintroduced) */}
-
-                  <blockquote className="hidden mt-5 md:hidden mx-auto max-w-md text-white/85">
-
-                    <p className="font-heading text-sm sm:text-base leading-snug italic">“{heroData.quote.text}”</p>
-
-                    <footer className="mt-1 text-[11px] text-sand/70">— {heroData.quote.author}</footer>
-
-                  </blockquote>
-
-                </div>
-
-                <div className="mt-6 flex flex-col xs:flex-row flex-wrap gap-3 md:gap-3 justify-start">
-
-                  {heroData.ctaButtons.primaryButton.external ? (
-
-                    <a
-
-                      href={heroData.ctaButtons.primaryButton.url}
-
-                      target="_blank"
-
-                      rel="noopener noreferrer"
-
-                      className="group inline-flex items-center justify-center rounded-full bg-clay px-8 py-4 text-sm sm:text-sm md:px-9 md:py-4 md:text-base font-semibold text-cream shadow-md ring-1 ring-clay/60 hover:shadow-lg transition-all w-full xs:w-auto"
-
-                    >
-
-                      <span className="tracking-wide">{heroData.ctaButtons.primaryButton.text}</span>
-
-                    </a>
-
-                  ) : (
-
-                    <Link
-
-                      href={heroData.ctaButtons.primaryButton.url}
-
-                      className="group inline-flex items-center justify-center rounded-full bg-clay px-8 py-4 text-sm sm:text-sm md:px-9 md:py-4 md:text-base font-semibold text-cream shadow-md ring-1 ring-clay/60 hover:shadow-lg transition-all w-full xs:w-auto"
-
-                    >
-
-                      <span className="tracking-wide">{heroData.ctaButtons.primaryButton.text}</span>
-
-                    </Link>
-
-                  )}
-
-                  {heroData.ctaButtons.secondaryButton.external ? (
-
-                    <a
-
-                      href={heroData.ctaButtons.secondaryButton.url}
-
-                      target="_blank"
-
-                      rel="noopener noreferrer"
-
-                      className="group inline-flex items-center justify-center rounded-full border border-white/35 bg-white/15 px-7 py-3.5 text-sm md:px-8 md:py-4 md:text-base font-medium text-cream backdrop-blur-sm hover:bg-white/20 hover:border-white/60 transition-all w-full xs:w-auto"
-
-                    >
-
-                      {heroData.ctaButtons.secondaryButton.text}
-
-                    </a>
-
-                  ) : (
-
-                    <Link
-
-                      href={heroData.ctaButtons.secondaryButton.url}
-
-                      className="group inline-flex items-center justify-center rounded-full border border-white/35 bg-white/15 px-7 py-3.5 text-sm md:px-8 md:py-4 md:text-base font-medium text-cream backdrop-blur-sm hover:bg-white/20 hover:border-white/60 transition-all w-full xs:w-auto"
-
-                    >
-
-                      {heroData.ctaButtons.secondaryButton.text}
-
-                    </Link>
-
-                  )}
-
-                </div>
-
-              </div>
-
-              {/* Right Column Quote (hidden on mobile) */}
-
-              <div className="lg:col-span-5 h-full hidden md:flex">
-
-                <div className="relative glass-dark rounded-2xl p-5 sm:p-6 lg:p-7 shadow-elevation-3 w-full flex flex-col justify-between">
-
-                  <blockquote className="space-y-3">
-
-                    <p className="font-heading text-lg sm:text-xl lg:text-2xl font-semibold text-white/95 leading-snug">
-
-                      “{heroData.quote.text}”
-
-                    </p>
-
-                    <footer className="text-[11px] sm:text-xs md:text-sm text-sand/80 tracking-wide uppercase">— {heroData.quote.author}</footer>
-
-                  </blockquote>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      )}
-
-
-
-      {/* ORIGINAL (centerLow / left) Layouts */}
-      {layout !== 'split' && (
-        <div className="absolute inset-x-0 bottom-0 md:inset-x-0 md:bottom-0 md:top-auto h-auto md:h-[50%] min-h-[280px] md:min-h-[340px] max-h-[85svh] md:max-h-[55vh] z-10 flex items-end md:items-stretch py-3 sm:py-5 md:py-0">
-          <div className={[
-            'w-full px-5 sm:px-8 md:px-12 lg:px-16 xl:px-24 flex',
-            layout === 'centerLow' ? 'justify-center' : 'items-end'
-
-          ].join(' ')}>
-
-            <div className={[
-
-              layout === 'centerLow'
-
-                ? 'mx-auto text-center max-w-4xl'
-
-                : 'max-w-xl md:max-w-lg lg:max-w-xl'
-
-            ].join(' ')}>
-
-              <div className="relative p-4 sm:p-5 md:p-6 lg:p-7 rounded-2xl glass-dark space-y-2 sm:space-y-3 h-full">
-
-                <header className="space-y-1.5 sm:space-y-2 text-left sm:text-center">
-
-                  <h1 className="font-heading text-[clamp(2rem,7.5vw,3.15rem)] font-semibold leading-[1.03] tracking-[-0.015em] text-white/95">
-
-                    <span className="block">{heroData.mainHeading}</span>
-
-                    <span className="mt-1 block bg-gradient-to-r from-clay via-cream to-clay bg-clip-text text-transparent">{heroData.highlightText}</span>
-
-                  </h1>
-
-                  <p className="mx-auto max-w-[42ch] text-[0.95rem] sm:text-base md:text-[1.07rem] text-white/90 leading-relaxed [text-wrap:balance]">
-
-                    {heroData.description}
-
-                  </p>
-
-                </header>
-
-                <p className="sm:hidden text-[11px] text-white/80 tracking-[0.02em]">
-
-                  Confidential care. Virtual appointments across Canada.
-
-                </p>
-
-                {/* Mobile quote - positioned below header */}
-                <blockquote className="hidden mt-4 border-l-2 border-clay/60 pl-3 text-left">
-                  <p className="font-heading text-sm italic text-white/85">&ldquo;{heroData.quote.text}&rdquo;</p>
-                  <footer className="mt-1 text-[11px] text-sand/80">— {heroData.quote.author}</footer>
-                </blockquote>
-
-                <div className="flex flex-wrap justify-center gap-2 sm:gap-3 pt-1 sm:pt-2">
-                  {heroData.ctaButtons.primaryButton.external ? (
-                    <a
-                      href={heroData.ctaButtons.primaryButton.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="order-1 group inline-flex items-center justify-center rounded-full bg-clay px-5 py-2.5 text-sm md:px-9 md:py-4 md:text-base font-semibold text-cream shadow-md ring-1 ring-clay/60 hover:shadow-lg magnetic transition-all w-full md:w-auto"
-                    >
-                      <span className="tracking-wide">{heroData.ctaButtons.primaryButton.text}</span>
-                    </a>
-                  ) : (
-                    <Link
-                      href={heroData.ctaButtons.primaryButton.url}
-                      className="order-1 group inline-flex items-center justify-center rounded-full bg-clay px-5 py-2.5 text-sm md:px-9 md:py-4 md:text-base font-semibold text-cream shadow-md ring-1 ring-clay/60 hover:shadow-lg magnetic transition-all w-full md:w-auto"
-                    >
-                      <span className="tracking-wide">{heroData.ctaButtons.primaryButton.text}</span>
-                    </Link>
-                  )}
-                  {heroData.ctaButtons.secondaryButton.external ? (
-                    <a
-                      href={heroData.ctaButtons.secondaryButton.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="order-2 group inline-flex items-center justify-center rounded-full border border-white/20 bg-transparent px-4 py-2 text-sm md:px-8 md:py-4 md:text-base font-medium text-white/85 backdrop-blur-sm hover:bg-white/10 hover:border-white/40 magnetic transition-all w-full md:w-auto"
-                    >
-                      {heroData.ctaButtons.secondaryButton.text}
-                    </a>
-                  ) : (
-                    <Link
-                      href={heroData.ctaButtons.secondaryButton.url}
-                      className="order-2 group inline-flex items-center justify-center rounded-full border border-white/20 bg-transparent px-4 py-2 text-sm md:px-8 md:py-4 md:text-base font-medium text-white/85 backdrop-blur-sm hover:bg-white/10 hover:border-white/40 magnetic transition-all w-full md:w-auto"
-                    >
-                      {heroData.ctaButtons.secondaryButton.text}
-                    </Link>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Desktop object-position tweak to push image up */}
-      <style jsx>{`
-        @media (min-width: 1024px) {
-          .hero-bg-img { object-position: 50% 40% !important; }
-        }
-        /* Subtle gradient to improve text legibility in bottom band without covering faces above */
-        section > .hero-bottom-gradient:after {content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(12,12,12,0.78),rgba(18,18,18,0.55) 35%,rgba(24,24,24,0.25) 65%,rgba(32,32,32,0));pointer-events:none;}
-      `}</style>
-
-    </section>
-
-  )
-
+      </section>
+    );
   }
 
+  const heroData = homePageData.hero;
+  const backgroundImageSrc = heroData.backgroundImage
+    ? urlFor(heroData.backgroundImage).width(2200).height(1400).quality(92).url()
+    : null;
+  const backgroundImageAlt = heroData.backgroundImage?.alt || "Soul Care Counselling team";
+  const hotspot = (heroData.backgroundImage as { hotspot?: { x: number; y: number } })?.hotspot;
+  const objectPosition = hotspot
+    ? `${(hotspot.x * 100).toFixed(2)}% ${(hotspot.y * 100).toFixed(2)}%`
+    : "50% 42%";
+  const features = [...(heroData.features ?? [])].sort((a, b) => (a.order ?? 0) - (b.order ?? 0)).slice(0, 4);
+
+  return (
+    <section className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] min-h-[86svh] w-screen overflow-hidden bg-charcoal text-white sm:min-h-[82svh] lg:min-h-[min(860px,92vh)]">
+      {backgroundImageSrc && (
+        <Image
+          src={backgroundImageSrc}
+          alt={backgroundImageAlt}
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+          style={{ objectPosition }}
+        />
+      )}
+
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(35,32,27,0.12)_0%,rgba(35,32,27,0.42)_42%,rgba(35,32,27,0.88)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(35,32,27,0.86)_0%,rgba(35,32,27,0.62)_42%,rgba(35,32,27,0.20)_100%)] opacity-80" />
+      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-charcoal/55 via-charcoal/18 to-transparent" />
+
+      <div className="relative z-10 mx-auto flex min-h-[86svh] max-w-7xl flex-col justify-end px-5 pb-20 pt-24 sm:min-h-[82svh] sm:px-8 sm:pb-24 lg:min-h-[min(860px,92vh)] lg:px-10 lg:pb-28">
+        <div className="max-w-3xl">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/18 bg-white/12 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-cream backdrop-blur-md">
+            <ShieldCheck className="h-3.5 w-3.5" />
+            Virtual counselling across Canada
+          </div>
+
+          <h1 className="mt-5 font-heading text-4xl font-bold leading-[1.04] text-white text-balance sm:text-5xl lg:text-6xl">
+            <span className="block">{heroData.mainHeading}</span>
+            <span className="mt-1 block text-clay">{heroData.highlightText}</span>
+          </h1>
+
+          <p className="mt-5 max-w-2xl text-base leading-7 text-white/86 sm:text-lg">
+            {heroData.description}
+          </p>
+
+          <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+            <HeroButtonLink button={heroData.ctaButtons.primaryButton} variant="primary" />
+            <HeroButtonLink button={heroData.ctaButtons.secondaryButton} variant="secondary" />
+          </div>
+        </div>
+
+        <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {features.map((feature) => {
+            const Icon = iconComponents[feature.icon] ?? ShieldCheck;
+
+            return (
+              <div key={`${feature.icon}-${feature.text}`} className="flex items-center gap-3 rounded-xl border border-white/14 bg-white/10 px-3.5 py-3 backdrop-blur-md">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-clay/90 text-cream ring-1 ring-white/20">
+                  <Icon className="h-[18px] w-[18px]" />
+                </span>
+                <span className="text-sm font-medium leading-snug text-white/88">{feature.text}</span>
+              </div>
+            );
+          })}
+        </div>
+
+        {heroData.quote?.text && (
+          <blockquote className="mt-5 max-w-2xl border-l border-clay/70 pl-4 text-white/82">
+            <p className="font-serif text-sm italic leading-6 sm:text-base">&ldquo;{heroData.quote.text}&rdquo;</p>
+            {heroData.quote.author && (
+              <footer className="mt-1 text-xs font-semibold uppercase tracking-[0.16em] text-sand/80">
+                {heroData.quote.author}
+              </footer>
+            )}
+          </blockquote>
+        )}
+      </div>
+    </section>
+  );
+}

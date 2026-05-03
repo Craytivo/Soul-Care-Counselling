@@ -669,33 +669,6 @@ html {
   }
 }
 
-/* ===========================================
-   CUSTOM CURSOR SYSTEM
-   =========================================== */
-
-/* Hide default cursor on desktop devices */
-@media (pointer: fine) {
-  * {
-    cursor: none !important;
-  }
-  
-  a, button, [role="button"], [role="link"], input, textarea, select, label[for] {
-    cursor: none !important;
-  }
-}
-
-/* Custom cursor container */
-.custom-cursor {
-  will-change: transform, left, top;
-}
-
-/* Hide custom cursor on touch devices */
-@media (pointer: coarse) {
-  .custom-cursor {
-    display: none !important;
-  }
-}
-
 /* Print styles for legal pages */
 @media print {
   /* Hide decorative hero and elements marked no-print */

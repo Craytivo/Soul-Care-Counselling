@@ -1,109 +1,163 @@
-﻿"use client";
+"use client";
 
-import { useState, useMemo } from "react";
-import { urlFor } from "@/lib/sanity";
-import type { TeamMember } from "@/lib/sanity";
+import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowRight, ChevronDown, Search, SlidersHorizontal, X } from "lucide-react";
 import { motion } from "framer-motion";
 import { extractBioText } from "@/lib/portable-text";
+import { urlFor } from "@/lib/sanity";
+import type { TeamMember } from "@/lib/sanity";
+
+interface TeamFilter {
+  key: string;
+  label: string;
+  count: number;
+}
+
+const ALL_FILTER: TeamFilter = {
+  key: "all",
+  label: "All clinicians",
+  count: 0,
+};
+
+const PRIORITY_SPECIALTIES = [
+  "Anxiety",
+  "Depression",
+  "Trauma",
+  "Couples",
+  "Youth",
+  "Family",
+  "Women's mental health",
+  "Men's mental health",
+  "Stress management",
+  "Postpartum Mental Health",
+  "Affordable therapy",
+  "Bilingual",
+];
+
+const normalize = (value: string) =>
+  value
+    .replace(/[’‘‛`´]/g, "'")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+
+function getFilters(teamMembers: TeamMember[]): TeamFilter[] {
+  const specialtyMap = new Map<string, TeamFilter>();
+
+  teamMembers.forEach((member) => {
+    member.specialties?.forEach((specialty) => {
+      const label = specialty.trim();
+      if (!label) return;
+
+      const key = normalize(label);
+      const existing = specialtyMap.get(key);
+
+      specialtyMap.set(key, {
+        key,
+        label: existing?.label ?? label,
+        count: (existing?.count ?? 0) + 1,
+      });
+    });
+  });
+
+  const priority = new Map(PRIORITY_SPECIALTIES.map((specialty, index) => [normalize(specialty), index]));
+
+  return [
+    { ...ALL_FILTER, count: teamMembers.length },
+    ...Array.from(specialtyMap.values()).sort((a, b) => {
+      const priorityA = priority.get(a.key) ?? Number.POSITIVE_INFINITY;
+      const priorityB = priority.get(b.key) ?? Number.POSITIVE_INFINITY;
+
+      if (priorityA !== priorityB) return priorityA - priorityB;
+      if (b.count !== a.count) return b.count - a.count;
+
+      return a.label.localeCompare(b.label);
+    }),
+  ];
+}
+
+function getImageUrl(member: TeamMember) {
+  if (!member.image) return "/assets/img/team/placeholder.webp";
+
+  try {
+    return urlFor(member.image).width(160).height(160).url();
+  } catch {
+    return "/assets/img/team/placeholder.webp";
+  }
+}
 
 export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMember[] }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("all");
 
-
-  // Normalization helper to make comparisons resilient to curly apostrophes & case differences
-  const normalize = (val: string) => val
-    .replace(/[’‘‛`´]/g, "'") // unify any apostrophe-like character
-    .replace(/\s+/g, ' ')      // collapse extra whitespace
-    .trim()
-    .toLowerCase();
-
-  const filters = useMemo(() => {
-    const specialtyTabs = [
-      "Anxiety",
-      "Depression",
-      "Trauma",
-      "Stress management",
-      "Youth",
-      "Women's mental health",
-      "Men's mental health",
-      "Couples",
-      "Family",
-      "Addiction",
-      "Religious trauma",
-      "Spiritual abuse",
-      "Workplace stress",
-      "Bilingual",
-      "Art therapy",
-      "Affordable therapy",
-      "Parent coaching",
-      "Family coaching",
-      "Parent workshops",
-      "Postpartum Mental Health"
-    ];
-    return [
-      { key: "all", label: "All Team Members", count: teamMembers.length },
-      ...specialtyTabs.map(s => {
-        const normalizedTab = normalize(s);
-        const count = teamMembers.filter(m => m.specialties?.some(x => normalize(x) === normalizedTab)).length;
-        return { key: s, label: s, count };
-      })
-    ];
-  }, [teamMembers]);
+  const filters = useMemo(() => getFilters(teamMembers), [teamMembers]);
+  const activeFilterOption = filters.find((filter) => filter.key === activeFilter) ?? filters[0];
+  const quickFilters = filters.filter((filter) => filter.key !== "all").slice(0, 6);
 
   const filteredMembers = useMemo(() => {
-    const searchLower = searchQuery.toLowerCase();
-    return teamMembers.filter(member => {
-      // Enhanced search by name (first name, last name, full name)
-      const fullName = member.name.toLowerCase();
-      const nameParts = member.name.toLowerCase().split(' ');
-      const matchesName = !searchQuery ||
-        fullName.includes(searchLower) ||
-        nameParts.some(part => part.includes(searchLower)) ||
-        nameParts.some(part => part.startsWith(searchLower));
+    const searchLower = normalize(searchQuery);
 
-      // Search by specialty
-      const matchesSpecialty = !searchQuery ||
-        (member.specialties && member.specialties.some(s => normalize(s).includes(searchLower)));
+    return teamMembers.filter((member) => {
+      const bioText = extractBioText(member.bio);
+      const searchableValues = [
+        member.name,
+        member.credentials,
+        member.role,
+        bioText,
+        ...(member.specialties ?? []),
+        ...(member.areasOfFocus ?? []),
+      ];
 
-      const matchesSearch = matchesName || matchesSpecialty;
+      const matchesSearch =
+        !searchLower || searchableValues.some((value) => value && normalize(value).includes(searchLower));
 
-      if (activeFilter === "all") return matchesSearch;
-      // Filter by specialty (case-insensitive, trimmed)
-      const normalizedFilter = normalize(activeFilter);
-      return matchesSearch && member.specialties?.some(x => normalize(x) === normalizedFilter);
+      const matchesFilter =
+        activeFilter === "all" || member.specialties?.some((specialty) => normalize(specialty) === activeFilter);
+
+      return matchesSearch && matchesFilter;
     });
   }, [teamMembers, searchQuery, activeFilter]);
 
-  return (
-    <section id="team" className="mt-16 md:mt-24">
-      <div className="mx-auto max-w-7xl">
-        <header className="max-w-2xl">
-          <span className="inline-flex items-center gap-2 rounded-full bg-sand/70 px-3 py-1 ring-1 ring-charcoal/10 uppercase tracking-[.22em] text-[11px] text-charcoal/80">
-            Our Team
-          </span>
-          <h2 className="mt-3 font-heading text-2xl md:text-3xl font-bold text-charcoal">
-            Warm, culturally responsive clinicians
-          </h2>
-          <p className="mt-3 text-charcoal/80">
-            Faith-informed and evidence-based care. Meet the people who will support your healing.
-          </p>
-        </header>
+  const hasActiveFilters = Boolean(searchQuery) || activeFilter !== "all";
 
-        {/* Toolbar: dropdown on mobile, tabs on desktop */}
-        <div className="mt-6 flex flex-wrap items-center gap-3">
-          <div className="w-full sm:w-80">
-            <label htmlFor="teamSearch" className="sr-only">Search team</label>
+  return (
+    <section id="team" className="mt-14 md:mt-20">
+      <div className="mx-auto max-w-7xl">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <header className="max-w-2xl">
+            <span className="inline-flex items-center gap-2 rounded-full bg-sand/70 px-3 py-1 ring-1 ring-charcoal/10 uppercase tracking-[.22em] text-[11px] text-charcoal/80">
+              Our Team
+            </span>
+            <h2 className="mt-3 font-heading text-2xl md:text-3xl font-bold text-charcoal">
+              Warm, culturally responsive clinicians
+            </h2>
+            <p className="mt-3 text-charcoal/80">
+              Faith-informed and evidence-based care. Filter by focus area to find the right support more quickly.
+            </p>
+          </header>
+
+          <div className="flex items-center gap-3 text-sm text-charcoal/70">
+            <span className="font-semibold text-charcoal">{filteredMembers.length}</span>
+            <span>{filteredMembers.length === 1 ? "clinician" : "clinicians"} in view</span>
+          </div>
+        </div>
+
+        <div className="mt-8 rounded-2xl border border-charcoal/10 bg-white/85 p-4 shadow-elevation-2 backdrop-blur sm:p-5 md:mt-9">
+          <div className="grid gap-3 lg:grid-cols-[minmax(260px,1fr)_minmax(260px,340px)_auto] lg:items-center">
+            <label htmlFor="teamSearch" className="sr-only">
+              Search team
+            </label>
             <div className="relative">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-charcoal/45" />
               <input
                 id="teamSearch"
                 type="search"
-                placeholder="Search by name or specialty..."
+                placeholder="Search by name, specialty, or approach"
                 value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                className="w-full rounded-md border border-charcoal/20 bg-white pl-3 pr-9 py-2.5 text-sm outline-none ring-0 focus:border-clay"
+                onChange={(event) => setSearchQuery(event.target.value)}
+                className="h-11 w-full rounded-lg border border-charcoal/15 bg-white pl-9 pr-10 text-sm text-charcoal outline-none transition focus:border-clay focus:ring-2 focus:ring-clay/25"
                 autoComplete="off"
                 aria-label="Search team members by name, specialty, credential, or approach"
               />
@@ -111,157 +165,187 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
                 <button
                   type="button"
                   onClick={() => setSearchQuery("")}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-charcoal/45 hover:text-charcoal text-sm"
+                  className="absolute right-2 top-1/2 inline-flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full text-charcoal/45 transition hover:bg-sand/70 hover:text-charcoal"
                   aria-label="Clear team search"
                 >
-                  ×
+                  <X className="h-4 w-4" />
                 </button>
               )}
             </div>
-          </div>
-          {/* Dropdown for filters on mobile */}
-          <div className="w-full block md:hidden">
-            <select
-              value={activeFilter}
-              onChange={e => setActiveFilter(e.target.value)}
-              className="w-full rounded-md border border-charcoal/20 bg-white px-3 py-2.5 text-sm font-semibold text-charcoal focus:border-clay focus:ring-2 focus:ring-clay/40"
-              aria-label="Filter team by specialty"
-              id="teamFilter"
+
+            <label htmlFor="teamFilter" className="sr-only">
+              Filter team by specialty
+            </label>
+            <div className="relative">
+              <SlidersHorizontal className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-charcoal/45" />
+              <select
+                id="teamFilter"
+                value={activeFilter}
+                onChange={(event) => setActiveFilter(event.target.value)}
+                className="h-11 w-full appearance-none rounded-lg border border-charcoal/15 bg-white pl-9 pr-10 text-sm font-semibold text-charcoal outline-none transition focus:border-clay focus:ring-2 focus:ring-clay/25"
+                aria-label="Filter team by specialty"
+              >
+                {filters.map((filter) => (
+                  <option key={filter.key} value={filter.key}>
+                    {filter.label} ({filter.count})
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-charcoal/45" />
+            </div>
+
+            <button
+              type="button"
+              onClick={() => {
+                setSearchQuery("");
+                setActiveFilter("all");
+              }}
+              className="inline-flex h-11 items-center justify-center rounded-lg border border-charcoal/15 px-4 text-sm font-semibold text-charcoal transition hover:border-bark/30 hover:bg-sand/60 disabled:pointer-events-none disabled:opacity-45"
+              disabled={!hasActiveFilters}
             >
-              {filters.map(filter => (
-                <option key={filter.key} value={filter.key}>
-                  {filter.label} {filter.count > 0 ? `(${filter.count})` : ''}
-                </option>
-              ))}
-            </select>
+              Reset
+            </button>
           </div>
-          <div className="w-full md:hidden flex items-center justify-between text-xs text-charcoal/70">
-            <span>{filteredMembers.length} match{filteredMembers.length === 1 ? "" : "es"}</span>
-            {(searchQuery || activeFilter !== "all") && (
+
+          <div className="mt-3 flex flex-col gap-3 border-t border-charcoal/10 pt-3 md:flex-row md:items-center md:justify-between">
+            <div className="flex min-w-0 items-center gap-2 text-sm text-charcoal/70">
+              <span className="shrink-0 rounded-full bg-cream px-3 py-1 font-semibold text-charcoal ring-1 ring-charcoal/10">
+                {activeFilterOption?.label ?? "All clinicians"}
+              </span>
+              <span className="truncate">
+                {hasActiveFilters ? "Showing the best matches for your selection" : "Choose a focus area or search directly"}
+              </span>
+            </div>
+
+            <div className="-mx-2 flex gap-2 overflow-x-auto px-2 py-1 md:max-w-[52%] md:justify-end" aria-label="Popular specialty filters">
               <button
                 type="button"
-                onClick={() => {
-                  setSearchQuery("");
-                  setActiveFilter("all");
-                }}
-                className="text-clay hover:text-bark font-medium"
-              >
-                Reset filters
-              </button>
-            )}
-          </div>
-          {/* Tabs for filters on desktop */}
-          <div className="hidden md:flex flex-wrap gap-2" aria-label="Filter tags">
-            {filters.map((filter) => (
-              <button
-                key={filter.key}
-                type="button"
-                aria-label={`Filter by ${filter.label}`}
-                className={`px-3 py-1 rounded-full text-xs font-semibold ring-1 ring-charcoal/15 transition-colors focus:outline-none focus:ring-2 focus:ring-bark/40 focus:ring-offset-2 ${
-                  activeFilter === filter.key
-                    ? 'bg-clay text-charcoal'
-                    : 'bg-white hover:bg-sand'
+                onClick={() => setActiveFilter("all")}
+                className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-semibold ring-1 transition ${
+                  activeFilter === "all"
+                    ? "bg-charcoal text-white ring-charcoal"
+                    : "bg-white text-charcoal ring-charcoal/15 hover:bg-sand/60"
                 }`}
-                aria-pressed={activeFilter === filter.key}
-                onClick={() => setActiveFilter(filter.key)}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    setActiveFilter(filter.key);
-                  }
-                }}
+                aria-pressed={activeFilter === "all"}
               >
-                <span className="text-bark font-bold">{filter.label}</span>
-                {filter.count > 0 && (
-                  <span className="ml-1 px-1.5 py-0.5 rounded-full bg-charcoal/20 text-bark font-semibold">
+                All
+              </button>
+              {quickFilters.map((filter) => (
+                <button
+                  key={filter.key}
+                  type="button"
+                  onClick={() => setActiveFilter(filter.key)}
+                  className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-semibold ring-1 transition ${
+                    activeFilter === filter.key
+                      ? "bg-charcoal text-white ring-charcoal"
+                      : "bg-white text-charcoal ring-charcoal/15 hover:bg-sand/60"
+                  }`}
+                  aria-pressed={activeFilter === filter.key}
+                >
+                  {filter.label}
+                  <span className={activeFilter === filter.key ? "ml-1 text-white/70" : "ml-1 text-charcoal/45"}>
                     {filter.count}
                   </span>
-                )}
-              </button>
-            ))}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Grid */}
-        <ul role="list" className="mt-6 md:mt-8 grid gap-3 sm:gap-4 md:gap-6 lg:gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-stretch stagger-grid">
-          {filteredMembers.map((member, idx) => (
-            <motion.li
-              key={member._id}
-              className="team-card"
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.6, delay: idx * 0.08, ease: 'easeOut' }}
-            >
-              <article className="group h-full rounded-2xl bg-white ring-1 ring-charcoal/10 shadow-sm hover:shadow-md transition-all duration-200">
-                <div className="p-4 sm:p-5">
-                  <div className="flex items-center gap-3">
-                    <div className="relative img-zoom rounded-full">
-                      <Image
-                        src={urlFor(member.image).width(56).height(56).url()}
-                        alt={member.name}
-                        className="h-14 w-14 rounded-full object-cover"
-                        width={56}
-                        height={56}
-                        loading="lazy"
-                      />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <h3 className="font-semibold text-charcoal group-hover:text-clay transition-colors">{member.name}</h3>
-                      {member.credentials && (
-                        <p className="text-sm text-charcoal/70">{member.credentials}</p>
-                      )}
-                      <p className="text-xs text-charcoal/60">{member.role}</p>
-                      {!member.acceptsBookings && (
-                        <p className="text-xs text-charcoal/50">Not Accepting Clients</p>
-                      )}
-                    </div>
-                  </div>
+        {filteredMembers.length > 0 ? (
+          <ul role="list" className="mt-8 grid gap-5 sm:grid-cols-1 md:mt-10 md:grid-cols-2 md:gap-7 lg:grid-cols-3 xl:grid-cols-4 xl:gap-8 items-stretch stagger-grid">
+            {filteredMembers.map((member, index) => {
+              const specialties = Array.isArray(member.specialties) ? member.specialties : [];
 
-                  <p className="mt-4 text-sm text-charcoal/80 leading-relaxed line-clamp-3 sm:line-clamp-4">
-                    {extractBioText(member.bio)}
-                  </p>
+              return (
+                <motion.li
+                  key={member._id}
+                  className="team-card"
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.18 }}
+                  transition={{ duration: 0.45, delay: Math.min(index * 0.04, 0.24), ease: "easeOut" }}
+                >
+                  <article className="group flex h-full flex-col rounded-2xl border border-charcoal/10 bg-white shadow-elevation-1 transition duration-200 hover:-translate-y-0.5 hover:border-clay/35 hover:shadow-elevation-3">
+                    <div className="flex flex-1 flex-col p-5">
+                      <div className="flex items-start gap-4">
+                        <Image
+                          src={getImageUrl(member)}
+                          alt={member.name}
+                          className="h-16 w-16 rounded-full object-cover ring-1 ring-charcoal/10"
+                          width={64}
+                          height={64}
+                          loading="lazy"
+                        />
+                        <div className="min-w-0 flex-1">
+                          <h3 className="font-heading text-base font-semibold leading-tight text-charcoal transition-colors group-hover:text-bark">
+                            {member.name}
+                          </h3>
+                          {member.credentials && (
+                            <p className="mt-1 text-sm font-medium text-charcoal/65">{member.credentials}</p>
+                          )}
+                          <p className="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-clay">{member.role}</p>
+                          {!member.acceptsBookings && (
+                            <span className="mt-2 inline-flex rounded-full bg-sand/55 px-2.5 py-1 text-[11px] font-semibold text-charcoal/65">
+                              Not accepting clients
+                            </span>
+                          )}
+                        </div>
+                      </div>
 
-                  {/* Specialties */}
-                  {member.specialties && member.specialties.length > 0 && (
-                    <div className="mt-3">
-                      <div className="flex flex-wrap gap-1">
-                        {Array.isArray(member.specialties) && member.specialties.slice(0, 2).map((specialty) => (
-                          <span
-                            key={specialty}
-                            className="inline-block px-2 py-1 text-xs bg-sand/50 text-charcoal/70 rounded-full"
-                          >
-                            {typeof specialty === 'string' ? specialty : ''}
-                          </span>
-                        ))}
-                        {Array.isArray(member.specialties) && member.specialties.length > 2 && (
-                          <span className="inline-block px-2 py-1 text-xs bg-sand/50 text-charcoal/70 rounded-full">
-                            +{member.specialties.length - 2} more
-                          </span>
-                        )}
+                      <p className="mt-4 text-sm leading-relaxed text-charcoal/76 line-clamp-4">
+                        {extractBioText(member.bio) || "Professional bio coming soon."}
+                      </p>
+
+                      {specialties.length > 0 && (
+                        <div className="mt-4 flex flex-wrap gap-1.5">
+                          {specialties.slice(0, 3).map((specialty) => (
+                            <span key={specialty} className="rounded-full bg-cream px-2.5 py-1 text-xs font-medium text-charcoal/72 ring-1 ring-charcoal/5">
+                              {specialty}
+                            </span>
+                          ))}
+                          {specialties.length > 3 && (
+                            <span className="rounded-full bg-white px-2.5 py-1 text-xs font-medium text-charcoal/55 ring-1 ring-charcoal/10">
+                              +{specialties.length - 3}
+                            </span>
+                          )}
+                        </div>
+                      )}
+
+                      <div className="mt-auto pt-5">
+                        <Link
+                          href={`/about/${member.slug.current}`}
+                          className="inline-flex w-full items-center justify-between rounded-lg border border-clay/30 bg-clay/10 px-3.5 py-2.5 text-sm font-semibold text-bark transition hover:border-bark/35 hover:bg-bark/10 focus:outline-none focus:ring-2 focus:ring-bark/30 focus:ring-offset-2"
+                        >
+                          View profile
+                          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                        </Link>
                       </div>
                     </div>
-                  )}
-
-                  <div className="mt-4 team-cta" style={{ minHeight: '3.5rem' }}>
-                    <Link
-                      href={`/about/${member.slug.current}`}
-                      className="cta-label inline-flex items-center justify-center rounded-full border border-clay/35 bg-clay/10 px-4 py-2 text-sm font-semibold text-clay hover:text-bark hover:border-bark/35 hover:bg-bark/10 transition-all duration-200"
-                    >
-                      <span className="flex items-center gap-2">
-                        View Profile
-                        <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                        </svg>
-                      </span>
-                    </Link>
-                  </div>
-                </div>
-              </article>
-            </motion.li>
-          ))}
-        </ul>
+                  </article>
+                </motion.li>
+              );
+            })}
+          </ul>
+        ) : (
+          <div className="mt-8 rounded-2xl border border-charcoal/10 bg-white p-8 text-center shadow-elevation-1">
+            <h3 className="font-heading text-xl font-semibold text-charcoal">No clinicians match those filters</h3>
+            <p className="mx-auto mt-2 max-w-md text-sm text-charcoal/70">
+              Try a broader specialty or clear the search to see the full team.
+            </p>
+            <button
+              type="button"
+              onClick={() => {
+                setSearchQuery("");
+                setActiveFilter("all");
+              }}
+              className="mt-5 inline-flex h-10 items-center justify-center rounded-lg bg-charcoal px-4 text-sm font-semibold text-white transition hover:bg-bark"
+            >
+              Show all clinicians
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
 }
-
