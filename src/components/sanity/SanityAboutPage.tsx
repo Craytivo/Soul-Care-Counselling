@@ -4,282 +4,240 @@ import { PortableText } from '@portabletext/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import AboutTeamClient from '@/components/AboutTeamClient'
+import DirectorSection from '@/components/about/DirectorSection'
+import JoinTeamCTA from '@/components/about/JoinTeamCTA'
+import ReadyToHealCTA from '@/components/about/ReadyToHealCTA'
 import { getTeamMembers } from '@/lib/sanity-queries'
+
 export default async function SanityAboutPage() {
   const pageData = await getAboutPage();
   const teamMembers = await getTeamMembers();
+  
   if (!pageData) {
-    return <div className="container mx-auto py-12 text-center">No content available for this page.</div>;
+    return (
+      <div className="mx-auto max-w-7xl px-5 py-12 text-center sm:px-8 md:px-10 xl:px-12">
+        <p className="text-charcoal/70">No content available for this page.</p>
+      </div>
+    );
   }
 
   const portableTextComponents = {
     block: {
       h3: (props: { children?: React.ReactNode }) => <h3 className="font-heading text-xl md:text-2xl font-semibold tracking-tight text-bark mt-8 mb-3">{props.children}</h3>,
       h4: (props: { children?: React.ReactNode }) => <h4 className="font-heading text-lg md:text-xl font-semibold tracking-tight text-bark mt-6 mb-2">{props.children}</h4>,
-      normal: (props: { children?: React.ReactNode }) => <p className="mb-4 text-[0.98rem] md:text-[1.03rem] leading-7 text-charcoal/88 max-w-[66ch]">{props.children}</p>,
+      normal: (props: { children?: React.ReactNode }) => <p className="mb-4 text-[0.95rem] md:text-[1.01rem] leading-7 text-charcoal/85">{props.children}</p>,
     },
     list: {
-      bullet: (props: { children?: React.ReactNode }) => <ul className="space-y-1.5 mb-4 max-w-[66ch]">{props.children}</ul>,
-      number: (props: { children?: React.ReactNode }) => <ol className="space-y-1.5 mb-4 list-decimal pl-5 max-w-[66ch]">{props.children}</ol>,
+      bullet: (props: { children?: React.ReactNode }) => <ul className="space-y-2 mb-4">{props.children}</ul>,
+      number: (props: { children?: React.ReactNode }) => <ol className="space-y-2 mb-4 list-decimal pl-6">{props.children}</ol>,
     },
     listItem: {
       bullet: (props: { children?: React.ReactNode }) => (
-        <li className="flex items-start gap-2.5">
+        <li className="flex items-start gap-3">
           <span className="w-1.5 h-1.5 rounded-full bg-clay flex-shrink-0 mt-2" />
-          <span className="text-charcoal/75 leading-relaxed">{props.children}</span>
+          <span className="text-charcoal/80 leading-relaxed">{props.children}</span>
         </li>
       ),
-      number: (props: { children?: React.ReactNode }) => <li className="text-charcoal/75 leading-relaxed">{props.children}</li>,
+      number: (props: { children?: React.ReactNode }) => <li className="text-charcoal/80 leading-relaxed">{props.children}</li>,
     },
   };
 
   return (
-  <>
-      {/* Hero Section */}
-      <section className="relative overflow-hidden rounded-2xl bg-bark text-cream ring-1 ring-cream/15 shadow-elevation-3">
-        {/* Background image */}
+    <div className="-mx-4 -my-12 bg-cream">
+      {/* HERO SECTION - Full bleed dark background */}
+      <section className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-hidden bg-charcoal text-white">
+        {/* Background image with overlay */}
         {pageData.hero.backgroundImage && (
-          <div className="absolute inset-0">
-            <Image
-              src={urlFor(pageData.hero.backgroundImage).url()}
-              alt={pageData.hero.backgroundImage.alt || pageData.hero.title}
-              fill
-              className="object-cover scale-105 will-change-transform duration-[3s] ease-out"
-              priority
-            />
-          </div>
+          <Image
+            src={urlFor(pageData.hero.backgroundImage).width(2200).height(1400).quality(92).url()}
+            alt={pageData.hero.backgroundImage.alt || pageData.hero.title}
+            fill
+            priority
+            className="object-cover"
+            style={{ objectPosition: '50% 42%' }}
+          />
         )}
-        {/* Home-consistent overlay stack for text contrast */}
-        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/65 via-charcoal/35 to-transparent md:from-charcoal/55 md:via-charcoal/25" />
-        <div className="absolute -left-12 -bottom-12 h-48 w-48 rounded-full bg-gradient-to-tr from-cream/10 to-clay/20 blur-2xl" aria-hidden="true" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(0,0,0,0.04),rgba(0,0,0,0.22)_55%,rgba(0,0,0,0.38)_85%)] mix-blend-multiply" />
-        <div className="pointer-events-none absolute inset-0 opacity-[0.18] [background-image:radial-gradient(rgba(255,255,255,0.15)_1px,transparent_1px)] [background-size:3px_3px]" />
-        <div className="relative z-10 grid md:grid-cols-2 gap-8 md:gap-10 items-center px-5 py-8 md:px-10 md:py-14">
-          {/* LEFT: Text */}
-          <div>
+        {/* Gradient overlays for text contrast */}
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(35,32,27,0.12)_0%,rgba(35,32,27,0.42)_42%,rgba(35,32,27,0.88)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(35,32,27,0.86)_0%,rgba(35,32,27,0.62)_42%,rgba(35,32,27,0.20)_100%)] opacity-80" />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-charcoal/55 via-charcoal/18 to-transparent" />
+
+        {/* Content */}
+        <div className="relative z-10 mx-auto flex min-h-[70vh] max-w-7xl flex-col justify-end px-5 pb-20 pt-24 sm:min-h-[72vh] sm:px-8 lg:min-h-[min(820px,90vh)] lg:px-10 lg:pb-28">
+          <div className="max-w-3xl">
             {pageData.hero.badge && (
-              <span className="inline-flex items-center gap-2 rounded-full bg-cream/10 px-3 py-1 ring-1 ring-cream/30 eyebrow text-[11px]">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/18 bg-white/12 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-cream backdrop-blur-md">
                 {pageData.hero.badge}
-              </span>
+              </div>
             )}
-            <h1 className="mt-3 font-heading text-[clamp(2rem,6vw,3rem)] font-semibold leading-[1.05] tracking-tight">
+
+            <h1 className="mt-5 font-heading text-4xl font-bold leading-[1.04] text-white text-balance sm:text-5xl lg:text-6xl">
               {pageData.hero.title}
             </h1>
-            <p className="mt-3 max-w-[62ch] text-[0.98rem] md:text-[1.06rem] leading-relaxed text-cream/88">
+
+            <p className="mt-5 max-w-2xl text-base leading-7 text-white/86 sm:text-lg">
               {pageData.hero.description}
             </p>
-          </div>
-          {/* RIGHT: Featured Image */}
-          {pageData.hero.featuredImage && (
-            <div className="relative flex justify-center overflow-hidden rounded-2xl shadow-elevation-2 ring-2 ring-white/20 img-zoom">
-              <Image
-                src={urlFor(pageData.hero.featuredImage).url()}
-                alt={pageData.hero.featuredImage.alt || pageData.hero.title}
-                width={600}
-                height={400}
-                className="w-full max-w-[600px] h-auto object-cover object-top"
-                style={{ objectPosition: '0 -20%' }}
-                priority
-              />
-            </div>
-          )}
-        </div>
-      </section>
-      {/* Welcome Section */}
-        <section className="mt-10 md:mt-12 relative glass rounded-2xl shadow-elevation-2">
-          <div className="relative z-10 rounded-2xl overflow-hidden px-5 md:px-8 py-8 md:py-14">
-              <header className="mb-4 flex items-center gap-3">
-                <span className="inline-block w-2 h-8 rounded bg-clay md:mr-2" />
-                <h2 className="font-heading text-[clamp(1.7rem,4.8vw,2.5rem)] font-semibold leading-tight tracking-tight text-bark">{pageData.welcome.title}</h2>
-              </header>
-              <div className="space-y-4 md:space-y-5 text-charcoal/90 prose prose-base md:prose-lg max-w-none">
-                <PortableText value={pageData.welcome.content as import('@portabletext/types').TypedObject[]} components={portableTextComponents} />
-              </div>
-          </div>
-        </section>
 
-      {/* Pillars Section */}
-      <section className="mt-10 md:mt-12">
-        <div className="flex items-center gap-3 mb-6">
-          <span className="inline-block w-2 h-8 rounded bg-clay" />
-          <h2 className="font-heading text-[clamp(1.5rem,4.5vw,2rem)] font-semibold leading-tight tracking-tight text-bark">
-            {pageData.pillars.title}
-          </h2>
-        </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {pageData.pillars.pillarList.map((pillar, i) => (
-            <div
-              key={pillar.title}
-              className="group relative rounded-2xl bg-white p-6 ring-1 ring-charcoal/5 hover:ring-clay/15 hover:shadow-lg hover:shadow-charcoal/[0.04] transition-all duration-300"
-            >
-              <span className="text-xs font-mono text-clay/40 tabular-nums">{String(i + 1).padStart(2, '0')}</span>
-              <h4 className="mt-2 font-heading font-semibold text-bark leading-snug">{pillar.title}</h4>
-              <p className="mt-2 text-charcoal/70 text-sm leading-relaxed">{pillar.description}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-      {/* Director Section */}
-      <section className="mt-12 md:mt-16">
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-sand/55 via-white to-clay/20 p-5 md:p-8 ring-1 ring-charcoal/5">
-            <div className="grid items-center gap-5 md:grid-cols-[190px_minmax(0,1fr)] md:gap-6">
-              {pageData.director.image && (
-                <figure className="mx-auto w-full max-w-[190px] overflow-hidden rounded-xl bg-sand p-2 ring-1 ring-charcoal/10 md:mx-0">
-                  <Image
-                    src={urlFor(pageData.director.image).url()}
-                    width={365}
-                    height={365}
-                    alt={pageData.director.image.alt || pageData.director.name}
-                    className="block aspect-square h-auto w-full rounded-lg object-cover"
-                  />
-                </figure>
-              )}
-
-              <div className="min-w-0">
-                {pageData.director.badge && (
-                  <span className="inline-flex items-center gap-2 rounded-full bg-sand/70 px-3 py-1 text-[11px] uppercase tracking-[.22em] text-charcoal/80 ring-1 ring-charcoal/10">
-                    {pageData.director.badge}
-                  </span>
-                )}
-                <h3 className="mt-3 font-heading text-[clamp(1.6rem,4.2vw,2.2rem)] font-semibold leading-tight tracking-tight">
-                  {pageData.director.name}
-                </h3>
-                {pageData.director.credentials && (
-                  <p className="mt-1 text-sm font-medium text-charcoal/70 md:text-base">{pageData.director.credentials}</p>
-                )}
-              </div>
-            </div>
-
-            <div className="mt-5 h-px w-16 bg-clay/60" aria-hidden="true"></div>
-
-            <div className="mt-5 space-y-4 md:space-y-5">
-              {pageData.director.description
-                .split(/\n{2,}/)
-                .filter(Boolean)
-                .map((paragraph, index) => (
-                  <p
-                    key={`${pageData.director.name}-paragraph-${index}`}
-                    className="whitespace-pre-line text-[1rem] leading-8 text-charcoal/88 md:text-[1.04rem] md:leading-8"
-                  >
-                    {paragraph}
-                  </p>
-                ))}
-            </div>
-
-            {pageData.director.quote && (
-              <blockquote className="mt-6 border-l-4 border-clay pl-4">
-                <p className="text-[1rem] italic leading-relaxed text-charcoal/85 md:text-[1.04rem]">&ldquo;{pageData.director.quote}&rdquo;</p>
-              </blockquote>
-            )}
-
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              {pageData.director.bookingLink && (
-                <a
-                  href={pageData.director.bookingLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="ui-btn ui-btn-primary"
-                >
-                  {pageData.director.bookingText || 'Book a Free Consultation'}
-                </a>
-              )}
-              {pageData.director.psychologyTodayImage && pageData.director.psychologyTodayLink && (
-                <a
-                  href={pageData.director.psychologyTodayLink}
-                  target="_blank"
-                  rel="noopener noreferrer nofollow"
-                  className="inline-block rounded-lg bg-white/70 p-2 ring-1 ring-charcoal/10 transition-opacity hover:opacity-90"
-                  aria-label="Verified by Psychology Today"
-                >
-                  <Image
-                    src={urlFor(pageData.director.psychologyTodayImage).url()}
-                    alt={pageData.director.psychologyTodayImage.alt || 'Verified by Psychology Today'}
-                    width={320}
-                    height={110}
-                    className="h-8 w-auto md:h-10"
-                  />
-                </a>
-              )}
-            </div>
-        </div>
-      </section>
-      {/* Meet the team - Now matches homepage */}
-  <section className="mt-12 md:mt-16">
-        <AboutTeamClient teamMembers={teamMembers} />
-      </section>
-      {/* Careers / Internship Section */}
-      <section className="mt-12 md:mt-16 rounded-2xl bg-gradient-to-br from-sand/60 to-sand/40 backdrop-blur-sm p-8 md:p-10 ring-1 ring-charcoal/5">
-        <div className="md:grid md:grid-cols-2 md:gap-10 md:items-center">
-          <div className="mb-6 md:mb-0">
-            <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-clay/15 mb-4">
-              <svg className="w-5 h-5 text-clay" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.58l-.001-.031m10.364-4.669a12 12 0 01-4.4 0m-4.4 0a12 12 0 01-4.4 0m8.8 0a3 3 0 11-4.4 0m4.4 0a3 3 0 10-4.4 0m-8.8 0a3 3 0 11-4.4 0m4.4 0a3 3 0 10-4.4 0" />
-              </svg>
-            </div>
-            <h3 className="font-heading text-xl md:text-2xl font-semibold mb-2 tracking-tight">Join Our Team</h3>
-            <p className="text-charcoal/75 leading-relaxed">
-              Clinical internship opportunities for graduate students and emerging therapists — gain experience in faith-centered, culturally responsive counselling.
-            </p>
-          </div>
-          <div className="flex flex-col sm:flex-row md:flex-col gap-3">
-            <Link
-              href="/intern-application"
-              className="inline-flex items-center justify-center rounded-full bg-clay px-6 py-2.5 font-semibold text-cream hover:bg-clay/90 transition-colors text-sm"
-            >
-              Apply to be an Intern
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center rounded-full bg-white px-6 py-2.5 font-medium text-charcoal/70 ring-1 ring-charcoal/10 hover:bg-charcoal/5 transition-colors text-sm"
-            >
-              Ask Us a Question
-            </Link>
-          </div>
-        </div>
-      </section>
-      {/* Final CTA */}
-      {pageData.cta && (
-        <section className="mt-16 rounded-2xl bg-gradient-to-br from-sand/60 to-sand/40 backdrop-blur-sm p-8 md:p-10 ring-1 ring-charcoal/5">
-          <div className="md:grid md:grid-cols-2 md:gap-10 md:items-center">
-            <div className="mb-6 md:mb-0">
-              <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-clay/15 mb-4">
-                <svg className="w-5 h-5 text-clay" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75a2.25 2.25 0 012.25-2.25h15a2.25 2.25 0 012.25 2.25z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 7.5l9 6 9-6" />
-                </svg>
-              </div>
-              <h3 className="font-heading text-xl md:text-2xl font-semibold mb-2 tracking-tight">{pageData.cta.title}</h3>
-              <p className="text-charcoal/75 leading-relaxed">{pageData.cta.description}</p>
-            </div>
-            <div className="flex flex-col sm:flex-row md:flex-col gap-3">
-              {pageData.cta.external ? (
-                <a
-                  href={pageData.cta.buttonLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-full bg-clay px-6 py-2.5 font-semibold text-cream hover:bg-clay/90 transition-colors text-sm"
-                >
-                  {pageData.cta.buttonText}
-                </a>
-              ) : (
-                <Link
-                  href={pageData.cta.buttonLink}
-                  className="inline-flex items-center justify-center rounded-full bg-clay px-6 py-2.5 font-semibold text-cream hover:bg-clay/90 transition-colors text-sm"
-                >
-                  {pageData.cta.buttonText}
-                </Link>
-              )}
+            {/* CTA Buttons */}
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center rounded-full bg-white px-6 py-2.5 font-medium text-charcoal/70 ring-1 ring-charcoal/10 hover:bg-charcoal/5 transition-colors text-sm"
+                className="group inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-clay px-5 py-3 text-sm font-semibold text-cream shadow-elevation-2 ring-1 ring-clay/40 transition hover:bg-bark hover:shadow-elevation-3 sm:w-auto"
               >
-                Contact Our Team
+                Book a Consultation
+                <svg className="h-4 w-4 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex min-h-12 w-full items-center justify-center rounded-lg border border-white/30 bg-white/10 px-5 py-3 text-sm font-semibold text-white backdrop-blur-md transition hover:border-white/50 hover:bg-white/20 sm:w-auto"
+              >
+                Get in Touch
               </Link>
             </div>
           </div>
-        </section>
-      )}
-  </>
+        </div>
+      </section>
+
+      {/* Main content container - matches homepage structure */}
+      <section className="relative z-20 -mt-14 rounded-t-[2rem] border-t border-white/70 bg-cream shadow-[0_-22px_55px_rgba(35,32,27,0.16)] sm:-mt-16 sm:rounded-t-[2.5rem] lg:-mt-20">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-clay/35 to-transparent" />
+        
+        <div className="mx-auto max-w-7xl px-5 py-10 sm:px-8 md:px-10 md:py-12 lg:py-16 xl:px-12">
+          {/* OUR STORY / WELCOME SECTION */}
+          <section className="mb-16 md:mb-20">
+            <div className="flex items-center gap-3 mb-5">
+              <span className="inline-block w-2 h-8 rounded bg-clay" />
+              <h2 className="font-heading text-2xl md:text-3xl font-bold tracking-tight text-bark">
+                Our Story
+              </h2>
+            </div>
+            <p className="mb-6 text-base md:text-lg leading-relaxed text-charcoal/85 max-w-3xl">
+              {pageData.welcome.title}
+            </p>
+            <div className="grid gap-8 md:grid-cols-2 md:gap-10">
+              <div className="space-y-4">
+                <PortableText value={pageData.welcome.content as import('@portabletext/types').TypedObject[]} components={portableTextComponents} />
+              </div>
+            </div>
+          </section>
+
+          {/* OUR APPROACH / PILLARS - Card Grid */}
+          <section className="mb-16 md:mb-20">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="inline-block w-2 h-8 rounded bg-clay" />
+              <h2 className="font-heading text-2xl md:text-3xl font-bold tracking-tight text-bark">
+                {pageData.pillars.title}
+              </h2>
+            </div>
+            <p className="mb-8 text-base text-charcoal/80 max-w-3xl">
+              Our foundation is built on compassion, evidence, and your unique needs.
+            </p>
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 md:gap-6">
+              {pageData.pillars.pillarList.map((pillar, i) => (
+                <div
+                  key={pillar.title}
+                  className="group relative rounded-2xl bg-white p-6 md:p-7 ring-1 ring-charcoal/8 hover:ring-clay/25 hover:shadow-elevation-2 transition-all duration-200 hover:-translate-y-0.5"
+                >
+                  <span className="text-xs font-mono text-clay/40 tabular-nums">{String(i + 1).padStart(2, '0')}</span>
+                  <h3 className="mt-3 font-heading font-semibold text-bark leading-snug text-lg">{pillar.title}</h3>
+                  <p className="mt-3 text-charcoal/75 text-sm md:text-base leading-relaxed">{pillar.description}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* FOUNDER / DIRECTOR SECTION */}
+          <DirectorSection
+            name={pageData.director.name}
+            credentials={pageData.director.credentials}
+            badge={pageData.director.badge}
+            image={pageData.director.image}
+            description={pageData.director.description}
+            quote={pageData.director.quote}
+            bookingLink={pageData.director.bookingLink}
+            bookingText={pageData.director.bookingText}
+            psychologyTodayImage={pageData.director.psychologyTodayImage}
+            psychologyTodayLink={pageData.director.psychologyTodayLink}
+          />
+
+          {/* MEET THE TEAM SECTION */}
+          <section className="mb-16 md:mb-20">
+            <AboutTeamClient teamMembers={teamMembers} />
+          </section>
+
+          {/* WHY CLIENTS CHOOSE US - Trust Building Section */}
+          <section className="mb-16 md:mb-20">
+            <div className="flex items-center gap-3 mb-5">
+              <span className="inline-block w-2 h-8 rounded bg-clay" />
+              <h2 className="font-heading text-2xl md:text-3xl font-bold tracking-tight text-bark">
+                Why Clients Choose Us
+              </h2>
+            </div>
+            <p className="mb-8 text-base text-charcoal/80 max-w-3xl">
+              Soul Care Counsellor stands out through our commitment to safety, expertise, and your whole wellbeing.
+            </p>
+            <div className="grid gap-5 sm:grid-cols-2 md:gap-6">
+              {[
+                {
+                  title: "Confidential & Safe",
+                  description: "Your privacy is sacred. Every conversation is secure and protected by professional standards."
+                },
+                {
+                  title: "Culturally Responsive",
+                  description: "We understand and honor your background, values, and unique life experience."
+                },
+                {
+                  title: "Faith-Informed Care",
+                  description: "For those who value it, we integrate your faith perspective into therapeutic work."
+                },
+                {
+                  title: "Flexible Sessions",
+                  description: "Virtual counselling across Canada with appointment times that fit your life."
+                },
+                {
+                  title: "Experienced Team",
+                  description: "Licensed clinicians with specialized training in trauma, anxiety, relationships, and more."
+                },
+                {
+                  title: "Personalized Approach",
+                  description: "Treatment plans designed for your specific goals and needs, not a one-size-fits-all model."
+                }
+              ].map((benefit, idx) => (
+                <div
+                  key={idx}
+                  className="rounded-2xl bg-white p-5 md:p-6 ring-1 ring-charcoal/8 hover:ring-clay/25 hover:shadow-elevation-2 transition-all duration-200 hover:-translate-y-0.5"
+                >
+                  <h3 className="font-heading font-semibold text-bark text-lg mb-2">{benefit.title}</h3>
+                  <p className="text-charcoal/75 text-sm md:text-base leading-relaxed">{benefit.description}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* INTERNSHIP / CAREERS SECTION */}
+          <JoinTeamCTA
+            title="Join Our Team"
+            description="We're looking for passionate graduate students and emerging therapists to join us as clinical interns. Gain meaningful experience in faith-centered, culturally responsive counselling."
+          />
+
+          {/* FINAL CTA - Ready to Begin Healing */}
+          {pageData.cta && (
+            <ReadyToHealCTA
+              title={pageData.cta.title || 'Ready to Begin Healing?'}
+              description={pageData.cta.description}
+              buttonText={pageData.cta.buttonText}
+              buttonLink={pageData.cta.buttonLink}
+              isExternal={pageData.cta.external}
+              secondaryButtonText="Our Areas of Focus"
+              secondaryButtonLink="/areas"
+            />
+          )}
+        </div>
+      </section>
+    </div>
   );
 }
 

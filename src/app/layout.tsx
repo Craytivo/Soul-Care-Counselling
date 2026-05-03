@@ -1,6 +1,6 @@
 ﻿import type { Metadata } from 'next'
 
-import { Inter, Poppins, Source_Serif_4 } from 'next/font/google'
+import { Manrope, Playfair_Display, Lora } from 'next/font/google'
 
 import Script from 'next/script'
 
@@ -15,38 +15,23 @@ const gtmId = process.env.NEXT_PUBLIC_GTM_ID
 
 
 
-const inter = Inter({ 
-
+const manrope = Manrope({
   subsets: ['latin'],
-
   variable: '--font-inter',
-
   display: 'swap',
-
 })
 
-
-
-const poppins = Poppins({ 
-
+const playfairDisplay = Playfair_Display({
   subsets: ['latin'],
-
   weight: ['600', '700'],
-
   variable: '--font-poppins',
-
   display: 'swap',
-
 })
 
-const sourceSerif = Source_Serif_4({
-
+const lora = Lora({
   subsets: ['latin'],
-
   weight: ['400', '500', '600'],
-
   variable: '--font-serif',
-
   display: 'swap',
 
   style: ['normal', 'italic'],
@@ -219,7 +204,7 @@ export default function RootLayout({
 
   return (
 
-    <html lang="en" className={`${inter.variable} ${poppins.variable} ${sourceSerif.variable}`}>
+    <html lang="en" className={`${manrope.variable} ${playfairDisplay.variable} ${lora.variable}`}>
 
       <head>
 
