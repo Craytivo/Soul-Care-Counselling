@@ -142,8 +142,8 @@ export default function Hero({ homePageData }: HeroProps) {
         </div>
 
         {heroData.quote?.text && (
-          <blockquote className="mt-5 max-w-2xl border-l border-clay/70 pl-4 text-white/82">
-            <p className="font-serif text-sm italic leading-6 sm:text-base">&ldquo;{heroData.quote.text}&rdquo;</p>
+          <blockquote className="mt-5 max-w-2xl border-l border-clay/70 pl-4 text-[#FFFFFF]">
+            <p className="font-serif text-sm italic leading-6 sm:text-base text-[#FFFFFF]">&ldquo;{heroData.quote.text}&rdquo;</p>
             {heroData.quote.author && (
               <footer className="mt-1 text-xs font-semibold uppercase tracking-[0.16em] text-sand/80">
                 {heroData.quote.author}
