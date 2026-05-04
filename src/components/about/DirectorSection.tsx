@@ -6,16 +6,25 @@ import { ArrowUpRight, Quote } from 'lucide-react'
 import { urlFor } from '@/lib/sanity'
 import { useState, useEffect, useRef } from 'react'
 
+interface SanityImage {
+  _type: 'image'
+  asset: {
+    _ref: string
+    _type: 'reference'
+  }
+  alt?: string
+}
+
 interface DirectorSectionProps {
   name: string
   credentials?: string
   badge?: string
-  image?: any
+  image?: SanityImage
   description: string
   quote?: string
   bookingLink?: string
   bookingText?: string
-  psychologyTodayImage?: any
+  psychologyTodayImage?: SanityImage
   psychologyTodayLink?: string
   slug?: string
 }
@@ -47,7 +56,6 @@ export default function DirectorSection({
   // Quote typing effect
   const [displayedQuote, setDisplayedQuote] = useState('')
   const quoteRef = useRef<HTMLDivElement>(null)
-  const [quoteVisible, setQuoteVisible] = useState(false)
 
   useEffect(() => {
     // Check screen size
@@ -98,7 +106,6 @@ export default function DirectorSection({
     const quoteObserver = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && quote) {
-          setQuoteVisible(true)
           let index = 0
           const typeInterval = setInterval(() => {
             if (index < quote.length) {
@@ -248,7 +255,7 @@ export default function DirectorSection({
             >
               <Quote className="w-6 h-6 sm:w-8 sm:h-8 text-clay/20 mb-3 mx-auto" />
               <p className="text-lg sm:text-xl md:text-2xl font-serif italic text-charcoal/80 leading-relaxed">
-                "{displayedQuote}"
+                &quot;{displayedQuote}&quot;
                 <span className="inline-block w-0.5 h-5 sm:h-6 bg-clay ml-1 animate-pulse" />
               </p>
             </div>

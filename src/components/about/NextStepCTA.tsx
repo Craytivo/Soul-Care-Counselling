@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import CTAButton from './CTAButton'
 
 interface NextStepCTAProps {
   joinTeamTitle?: string
@@ -128,7 +127,7 @@ export default function NextStepCTA({
             {/* Trust message */}
             <div className="mt-12 pt-10 border-t border-charcoal/10">
               <p className="text-center text-sm font-medium text-charcoal/60 tracking-wide">
-                💙 Every step matters. We're here to meet you with compassion and expertise.
+                💙 Every step matters. We&apos;re here to meet you with compassion and expertise.
               </p>
             </div>
           </div>

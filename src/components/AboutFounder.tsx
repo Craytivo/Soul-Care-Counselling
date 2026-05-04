@@ -50,7 +50,7 @@ export default function AboutFounder() {
               href="/about/jessica-robinson-grant"
               className="inline-flex items-center text-charcoal font-semibold hover:text-clay transition-colors duration-200 group"
             >
-              Read Jessica's full story
+              Read Jessica&apos;s full story
               <svg
                 className="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200"
                 fill="none"
