@@ -1,7 +1,5 @@
 ﻿import type { Metadata } from 'next'
 
-import { Manrope, Playfair_Display, Lora } from 'next/font/google'
-
 import Script from 'next/script'
 
 import './globals.css'
@@ -10,33 +8,9 @@ import Header from '../components/Header'
 
 import Footer from '../components/Footer'
 import BackToTop from '@/components/ui/BackToTop'
+import { interTight, inter, fontVariables } from '@/lib/fonts'
 
 const gtmId = process.env.NEXT_PUBLIC_GTM_ID
-
-
-
-const manrope = Manrope({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-})
-
-const playfairDisplay = Playfair_Display({
-  subsets: ['latin'],
-  weight: ['600', '700'],
-  variable: '--font-poppins',
-  display: 'swap',
-})
-
-const lora = Lora({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
-  variable: '--font-serif',
-  display: 'swap',
-
-  style: ['normal', 'italic'],
-
-})
 
 
 
@@ -204,7 +178,7 @@ export default function RootLayout({
 
   return (
 
-    <html lang="en" className={`${manrope.variable} ${playfairDisplay.variable} ${lora.variable}`}>
+    <html lang="en" className={fontVariables}>
 
       <head>
 

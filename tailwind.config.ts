@@ -16,14 +16,28 @@ const config: Config = {
         cream: '#F8F5EC',
         sand: '#E6DDC6',
         clay: '#C49A6C',
-        gold: '#C49A6C', // Using clay color for gold consistency
+        gold: '#C49A6C',
         bark: '#6E4B3A',
         charcoal: '#23201B'
       },
       fontFamily: {
-        heading: ['var(--font-poppins)', 'Playfair Display', 'Georgia', 'serif'],
-        serif: ['var(--font-serif)', 'Lora', 'Georgia', 'serif'],
-        body: ['var(--font-inter)', 'Manrope', 'ui-sans-serif', 'system-ui', 'sans-serif']
+        heading: ['var(--font-heading)', 'Inter Tight', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        body: ['var(--font-body)', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        serif: ['var(--font-serif)', 'Georgia', 'serif']
+      },
+      fontSize: {
+        xs: '0.75rem',
+        sm: '0.875rem',
+        base: '1rem',
+        lg: '1.125rem',
+        xl: '1.25rem'
+      },
+      letterSpacing: {
+        'heading-tighter': '-0.025em',
+        'heading-tight': '-0.015em',
+        'body-normal': '-0.015em',
+        'label-wider': '0.05em',
+        'label-widest': '0.1em'
       }
     },
   },

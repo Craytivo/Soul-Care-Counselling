@@ -2,11 +2,82 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  scroll-behavior: smooth;
-}
+/* ===========================
+   TYPOGRAPHY FOUNDATION
+   =========================== */
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-body), 'Inter', ui-sans-serif, system-ui, sans-serif;
+    font-size: 1rem;
+    color: rgb(35, 32, 27, 0.9);
+    line-height: 1.625;
+    font-feature-settings: 'kern' 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Heading base styles */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-semibold text-wrap;
+    text-wrap: balance;
+    letter-spacing: -0.015em;
+  }
+
+  h1 {
+    @apply leading-tight;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+  }
+
+  h2 {
+    @apply leading-snug;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  h3 {
+    @apply leading-snug;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+  }
+
+  h4 {
+    @apply leading-snug;
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+  }
+
+  h5 {
+    @apply leading-normal;
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+  }
+
+  h6 {
+    @apply leading-normal;
+  }
+
+  /* Paragraph styles */
+  p {
+    @apply font-body text-base md:text-lg leading-relaxed text-charcoal/85;
+    max-width: 65ch;
+  }
+
+  /* Strong and emphasis */
+  strong {
+    @apply font-semibold;
+  }
+
+  em {
+    @apply font-serif italic;
+  }
+
+  /* Links */
+  a {
+    @apply transition-colors duration-200;
+  }
+
+  /* Focus styles */
   button:focus-visible,
   a:focus-visible,
   input:focus-visible,
@@ -19,6 +90,110 @@ html {
       0 0 0 8px rgba(196, 154, 108, 0.15),
       0 0 0 12px rgba(196, 154, 108, 0.05);
     border-radius: 8px;
+  }
+}
+
+/* ===========================
+   TYPOGRAPHY UTILITIES
+   =========================== */
+
+@layer components {
+  /* Heading styles with fluid scaling */
+  .heading-xl {
+    font-family: var(--font-heading), 'Inter Tight', ui-sans-serif, system-ui, sans-serif;
+    font-weight: 600;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  .heading-lg {
+    font-family: var(--font-heading), 'Inter Tight', ui-sans-serif, system-ui, sans-serif;
+    font-weight: 600;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  .heading-md {
+    font-family: var(--font-heading), 'Inter Tight', ui-sans-serif, system-ui, sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+  }
+
+  .heading-sm {
+    font-family: var(--font-heading), 'Inter Tight', ui-sans-serif, system-ui, sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+
+  /* Body text styles with proper max-width */
+  .body-text {
+    font-family: var(--font-body), 'Inter', ui-sans-serif, system-ui, sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    letter-spacing: -0.015em;
+    color: rgb(35, 32, 27, 0.85);
+    max-width: 65ch;
+  }
+
+  .body-text-large {
+    font-family: var(--font-body), 'Inter', ui-sans-serif, system-ui, sans-serif;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    letter-spacing: -0.015em;
+    color: rgb(35, 32, 27, 0.85);
+    max-width: 65ch;
+  }
+
+  .body-text-small {
+    font-family: var(--font-body), 'Inter', ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+    color: rgb(35, 32, 27, 0.75);
+  }
+
+  /* Label and small text with positive tracking */
+  .label-text {
+    font-family: var(--font-body), 'Inter', ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgb(35, 32, 27, 0.6);
+  }
+
+  .small-text {
+    font-family: var(--font-body), 'Inter', ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+    color: rgb(35, 32, 27, 0.75);
+  }
+
+  /* Section spacing */
+  .section-spacing {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+
+  .section-padding {
+    @apply px-5 sm:px-8 md:px-10 xl:px-12;
+  }
+
+  /* Content container */
+  .content-max {
+    @apply max-w-3xl;
+  }
+
+  .content-wide {
+    @apply max-w-4xl;
   }
 
   /* Enhanced gradient overlays */
@@ -40,9 +215,8 @@ html {
     background: radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
     pointer-events: none;
   }
-}
 
-@layer components {
+  /* UI Cards */
   .ui-card {
     @apply rounded-2xl bg-white ring-1 ring-charcoal/10 shadow-sm;
     background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,245,236,0.95) 100%);
@@ -52,7 +226,6 @@ html {
     @apply transition-all duration-300 hover:shadow-md hover:ring-clay/30;
   }
 
-  /* Enhanced card hover effects */
   .card-hover-lift {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -65,71 +238,18 @@ html {
     border-color: rgba(196, 154, 108, 0.3);
   }
 
-  /* Enhanced text shadows for depth */
-  .text-shadow-subtle {
-    text-shadow: 0 1px 2px rgba(35, 32, 27, 0.1);
-  }
-
-  .text-shadow-medium {
-    text-shadow: 0 2px 4px rgba(35, 32, 27, 0.15);
-  }
-
-  /* Gradient text effects */
-  .text-gradient {
-    background: linear-gradient(135deg, #C49A6C 0%, #6E4B3A 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .text-gradient-subtle {
-    background: linear-gradient(135deg, #6E4B3A 0%, #C49A6C 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
+  /* Buttons */
   .ui-btn {
     @apply inline-flex items-center justify-center rounded-md px-5 py-2.5 font-semibold transition-all ring-1;
   }
 
   .ui-btn-primary {
-    @apply ui-btn bg-clay text-charcoal ring-charcoal/10 hover:bg-clay/90;
+    @apply ui-btn bg-clay text-cream ring-clay/40 hover:bg-bark;
   }
 
   .ui-btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(196, 154, 108, 0.4);
-  }
-
-  /* Enhanced button animations */
-  .btn-modern {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .btn-modern::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-    transition: left 0.6s ease;
-  }
-
-  .btn-modern:hover::before {
-    left: 100%;
-  }
-
-  .btn-press {
-    transition: all 0.15s ease;
-  }
-
-  .btn-press:active {
-    transform: translateY(0) scale(0.98);
-    box-shadow: 0 2px 8px rgba(196, 154, 108, 0.2);
+    box-shadow: 0 8px 25px rgba(196, 154, 108, 0.3);
   }
 
   .ui-btn-secondary {
@@ -140,37 +260,39 @@ html {
     @apply ui-btn bg-white text-charcoal ring-charcoal/10 hover:bg-sand;
   }
 
+  /* Inputs */
   .ui-input {
     @apply w-full rounded-md border border-charcoal/20 bg-white px-3 py-2.5 text-sm text-charcoal outline-none;
   }
 
-  /* Skeleton loading animation */
+  /* Skeleton loading */
   .skeleton {
     background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
     background-size: 200% 100%;
     animation: loading 1.5s infinite;
   }
-
-  @keyframes loading {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-  }
-
-  /* Content entrance animation */
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
 }
 
-/* Subtle animation utilities */
+/* ===========================
+   ANIMATIONS
+   =========================== */
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -191,6 +313,41 @@ html {
   }
 }
 
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Animation utilities */
 .animate-in {
   animation-fill-mode: both;
 }
@@ -201,6 +358,22 @@ html {
 
 .slide-in-from-bottom {
   animation-name: slide-in-from-bottom;
+}
+
+.scroll-animate {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.scroll-animate-left {
+  animation: slideInFromLeft 0.6s ease-out;
+}
+
+.scroll-animate-right {
+  animation: slideInFromRight 0.6s ease-out;
+}
+
+.scroll-indicator {
+  animation: bounce 2s infinite;
 }
 
 .duration-700 {
@@ -227,73 +400,29 @@ html {
   animation-delay: 1000ms;
 }
 
-/* Make every team CTA exactly two text lines tall */
-#team .team-cta { 
-  min-height: 3.5rem; /* ≈ 2 lines of text-sm + padding */ 
-}
-
-#team .team-cta .cta-label {
+/* Line clamp utilities */
+.line-clamp-2 {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;   /* clamp to 2 lines */
+  -webkit-line-clamp: 2;
   line-clamp: 2;
   overflow: hidden;
 }
 
-/* Smooth scroll animations */
-@keyframes slideInFromLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
 }
 
-@keyframes slideInFromRight {
-  from {
-    opacity: 0;
-    transform: translateX(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+/* Team section specific */
+#team .team-cta { 
+  min-height: 3.5rem;
 }
 
-.scroll-animate {
-  animation: fadeInUp 0.8s ease-out;
-}
-
-.scroll-animate-left {
-  animation: slideInFromLeft 0.6s ease-out;
-}
-
-.scroll-animate-right {
-  animation: slideInFromRight 0.6s ease-out;
-}
-
-/* Enhanced scroll indicators */
-.scroll-indicator {
-  animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-10px);
-  }
-  60% {
-    transform: translateY(-5px);
-  }
-}
-
-/* Line clamp utilities */
-.line-clamp-2 {
+#team .team-cta .cta-label {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;

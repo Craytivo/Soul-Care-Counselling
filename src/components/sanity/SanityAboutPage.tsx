@@ -5,8 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import AboutTeamClient from '@/components/AboutTeamClient'
 import DirectorSection from '@/components/about/DirectorSection'
-import JoinTeamCTA from '@/components/about/JoinTeamCTA'
-import ReadyToHealCTA from '@/components/about/ReadyToHealCTA'
+import NextStepCTA from '@/components/about/NextStepCTA'
 import { getTeamMembers } from '@/lib/sanity-queries'
 
 export default async function SanityAboutPage() {
@@ -25,7 +24,7 @@ export default async function SanityAboutPage() {
     block: {
       h3: (props: { children?: React.ReactNode }) => <h3 className="font-heading text-xl md:text-2xl font-semibold tracking-tight text-bark mt-8 mb-3">{props.children}</h3>,
       h4: (props: { children?: React.ReactNode }) => <h4 className="font-heading text-lg md:text-xl font-semibold tracking-tight text-bark mt-6 mb-2">{props.children}</h4>,
-      normal: (props: { children?: React.ReactNode }) => <p className="mb-4 text-[0.95rem] md:text-[1.01rem] leading-7 text-charcoal/85">{props.children}</p>,
+      normal: (props: { children?: React.ReactNode }) => <p className="mb-4 text-[0.95rem] md:text-[1.01rem] leading-7 text-charcoal/85 max-w-65ch">{props.children}</p>,
     },
     list: {
       bullet: (props: { children?: React.ReactNode }) => <ul className="space-y-2 mb-4">{props.children}</ul>,
@@ -35,10 +34,10 @@ export default async function SanityAboutPage() {
       bullet: (props: { children?: React.ReactNode }) => (
         <li className="flex items-start gap-3">
           <span className="w-1.5 h-1.5 rounded-full bg-clay flex-shrink-0 mt-2" />
-          <span className="text-charcoal/80 leading-relaxed">{props.children}</span>
+          <span className="text-charcoal/80 leading-relaxed max-w-65ch">{props.children}</span>
         </li>
       ),
-      number: (props: { children?: React.ReactNode }) => <li className="text-charcoal/80 leading-relaxed">{props.children}</li>,
+      number: (props: { children?: React.ReactNode }) => <li className="text-charcoal/80 leading-relaxed max-w-65ch">{props.children}</li>,
     },
   };
 
@@ -75,7 +74,7 @@ export default async function SanityAboutPage() {
               {pageData.hero.title}
             </h1>
 
-            <p className="mt-5 max-w-2xl text-base leading-7 text-white/86 sm:text-lg">
+            <p className="mt-5 max-w-2xl text-base leading-7 text-cream sm:text-lg">
               {pageData.hero.description}
             </p>
 
@@ -121,6 +120,36 @@ export default async function SanityAboutPage() {
               <div className="space-y-4">
                 <PortableText value={pageData.welcome.content as import('@portabletext/types').TypedObject[]} components={portableTextComponents} />
               </div>
+              {/* CTA Buttons Column */}
+              <div className="flex flex-col gap-4 justify-start">
+                <Link
+                  href="/contact"
+                  className="group inline-flex items-center justify-center gap-3 rounded-lg bg-clay px-6 py-4 text-sm font-semibold text-cream shadow-elevation-2 ring-1 ring-clay/40 transition hover:bg-bark hover:shadow-elevation-3"
+                >
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
+                  Book a Consultation
+                </Link>
+                <Link
+                  href="/services"
+                  className="inline-flex items-center justify-center gap-3 rounded-lg border border-clay/40 bg-clay/10 px-6 py-4 text-sm font-semibold text-bark transition hover:bg-clay/20 hover:border-clay/60"
+                >
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  Explore Our Services
+                </Link>
+                <Link
+                  href="/areas"
+                  className="inline-flex items-center justify-center gap-3 rounded-lg border border-charcoal/15 bg-white px-6 py-4 text-sm font-semibold text-bark transition hover:bg-sand hover:border-charcoal/20"
+                >
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  Areas We Specialize In
+                </Link>
+              </div>
             </div>
           </section>
 
@@ -135,7 +164,7 @@ export default async function SanityAboutPage() {
             <p className="mb-8 text-base text-charcoal/80 max-w-3xl">
               Our foundation is built on compassion, evidence, and your unique needs.
             </p>
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 md:gap-6">
+            <div className="grid gap-5 md:grid-cols-3 md:gap-6">
               {pageData.pillars.pillarList.map((pillar, i) => (
                 <div
                   key={pillar.title}
@@ -217,22 +246,11 @@ export default async function SanityAboutPage() {
             </div>
           </section>
 
-          {/* INTERNSHIP / CAREERS SECTION */}
-          <JoinTeamCTA
-            title="Join Our Team"
-            description="We're looking for passionate graduate students and emerging therapists to join us as clinical interns. Gain meaningful experience in faith-centered, culturally responsive counselling."
-          />
-
-          {/* FINAL CTA - Ready to Begin Healing */}
+          {/* INTERNSHIP / CAREERS SECTION - Combined with final CTA */}
           {pageData.cta && (
-            <ReadyToHealCTA
-              title={pageData.cta.title || 'Ready to Begin Healing?'}
-              description={pageData.cta.description}
-              buttonText={pageData.cta.buttonText}
-              buttonLink={pageData.cta.buttonLink}
-              isExternal={pageData.cta.external}
-              secondaryButtonText="Our Areas of Focus"
-              secondaryButtonLink="/areas"
+            <NextStepCTA
+              joinTeamTitle="Ready to Take the Next Step?"
+              joinTeamDescription="Whether you're seeking therapy, exploring an internship, or have questions about our services, we're here to support you."
             />
           )}
         </div>

@@ -116,7 +116,7 @@ export default function Hero({ homePageData }: HeroProps) {
             <span className="mt-1 block text-clay">{heroData.highlightText}</span>
           </h1>
 
-          <p className="mt-5 max-w-2xl text-base leading-7 text-white/86 sm:text-lg">
+          <p className="mt-5 max-w-2xl text-base leading-7 text-cream sm:text-lg">
             {heroData.description}
           </p>
 
