@@ -24,6 +24,16 @@ import Link from 'next/link'
 
 import ConsultationCta from '@/components/cta/ConsultationCta'
 
+// Helper to add cache-busting to image URLs based on resource update time
+function getResourceImageUrl(resource: Resource, width: number, height: number) {
+  const baseUrl = urlFor(resource.previewImage).width(width).height(height).auto('format').url()
+  // Add cache-buster using _updatedAt timestamp
+  const cacheBuster = resource._updatedAt 
+    ? new Date(resource._updatedAt).getTime().toString(36).slice(-6)
+    : Date.now().toString(36).slice(-6)
+  return `${baseUrl}?v=${cacheBuster}`
+}
+
 
 
 const categories = [
@@ -154,7 +164,7 @@ export default async function ResourcesPage() {
 
           <Image
 
-            src={urlFor(resource.previewImage).width(featured ? 600 : 600).height(featured ? 450 : 450).auto('format').url()}
+            src={getResourceImageUrl(resource, 600, 450)}
 
             alt={getResourceImageAlt(resource)}
 
@@ -489,7 +499,7 @@ export default async function ResourcesPage() {
 
                           <Image
 
-                            src={urlFor(resource.previewImage).width(600).height(450).auto('format').url()}
+                            src={getResourceImageUrl(resource, 600, 450)}
 
                             alt={getResourceImageAlt(resource)}
 

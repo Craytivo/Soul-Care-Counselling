@@ -795,6 +795,7 @@ export async function getResources(): Promise<Resource[]> {
       *[_type == "resource" && isPublished == true] | order(publishedAt desc) {
         _id,
         _type,
+        _updatedAt,
         title,
         description,
         slug,
@@ -827,6 +828,7 @@ export async function getResource(slug: string): Promise<Resource | null> {
       *[_type == "resource" && slug.current == $slug && isPublished == true][0] {
         _id,
         _type,
+        _updatedAt,
         title,
         description,
         slug,
@@ -859,6 +861,7 @@ export async function getFeaturedResources(): Promise<Resource[]> {
       *[_type == "resource" && isPublished == true && isFeatured == true] | order(publishedAt desc)[0...3] {
         _id,
         _type,
+        _updatedAt,
         title,
         description,
         slug,

@@ -557,6 +557,7 @@ export interface ContactPage {
 export interface Resource {
   _id: string
   _type: 'resource'
+  _updatedAt?: string
   title: string
   description: string
   slug: {
