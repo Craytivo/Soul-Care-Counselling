@@ -1,5 +1,7 @@
 'use client'
 
+// CTA component for booking consultations
+
 import { trackConsultationClick } from '@/lib/tracking'
 
 interface ConsultationCtaProps {
