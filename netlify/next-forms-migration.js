@@ -7,6 +7,6 @@ module.exports = async function nextFormsMigration({ utils }) {
   // No custom logic is needed unless you want to customize form handling
   utils.status.show({
     title: 'Netlify Next.js Forms migration',
-    summary: 'Migration file present for Netlify Forms support.'
+    summary: 'Migration file present for Netlify Forms support.',
   })
 }

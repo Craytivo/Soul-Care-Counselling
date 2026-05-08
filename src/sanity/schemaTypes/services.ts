@@ -156,21 +156,24 @@ export const services = defineType({
                   title: 'Price Amount',
                   type: 'number',
                   description: 'Numeric price value',
-                  hidden: ({ parent }) => parent?.displayType === 'custom' || parent?.displayType === 'hidden',
+                  hidden: ({ parent }) =>
+                    parent?.displayType === 'custom' || parent?.displayType === 'hidden',
                 }),
                 defineField({
                   name: 'currency',
                   title: 'Currency',
                   type: 'string',
                   initialValue: '$',
-                  hidden: ({ parent }) => parent?.displayType === 'custom' || parent?.displayType === 'hidden',
+                  hidden: ({ parent }) =>
+                    parent?.displayType === 'custom' || parent?.displayType === 'hidden',
                 }),
                 defineField({
                   name: 'suffix',
                   title: 'Price Suffix',
                   type: 'string',
                   description: 'e.g., "per session", "for 7 sessions"',
-                  hidden: ({ parent }) => parent?.displayType === 'custom' || parent?.displayType === 'hidden',
+                  hidden: ({ parent }) =>
+                    parent?.displayType === 'custom' || parent?.displayType === 'hidden',
                 }),
                 defineField({
                   name: 'packageSessions',
@@ -330,7 +333,7 @@ export const services = defineType({
       servicesCount: 'servicesList',
     },
     prepare({ title, isActive, servicesCount }) {
-      const count = servicesCount ? servicesCount.length : 0;
+      const count = servicesCount ? servicesCount.length : 0
       return {
         title: title || 'Services Page',
         subtitle: `${count} services • ${isActive ? 'Active' : 'Inactive'}`,

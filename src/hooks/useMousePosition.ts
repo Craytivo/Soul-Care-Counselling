@@ -23,14 +23,14 @@ export function useMousePosition() {
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       pendingUpdate.current = { x: e.clientX, y: e.clientY }
-      
+
       if (!rafRef.current) {
         rafRef.current = requestAnimationFrame(updatePosition)
       }
     }
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true })
-    
+
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
       if (rafRef.current) {

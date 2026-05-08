@@ -17,88 +17,108 @@ export default function ReadyToHealCTA({
   buttonLink = '/contact',
   isExternal = false,
   secondaryButtonText = 'Learn More',
-  secondaryButtonLink = '/areas'
+  secondaryButtonLink = '/areas',
 }: ReadyToHealCTAProps) {
-  
   const PrimaryButton = isExternal ? 'a' : Link
   const SecondaryButton = Link
 
   return (
     <section className="mb-0">
       {/* Decorative top gradient */}
-      <div className="h-px bg-gradient-to-r from-transparent via-clay/40 to-transparent mb-16 md:mb-20" />
+      <div className="mb-16 h-px bg-gradient-to-r from-transparent via-clay/40 to-transparent md:mb-20" />
 
-      <div className="relative rounded-3xl overflow-hidden">
+      <div className="relative overflow-hidden rounded-3xl">
         {/* Background with subtle gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-clay/12 via-sand/8 to-cream opacity-40" />
-        
+        <div className="from-clay/12 via-sand/8 absolute inset-0 bg-gradient-to-br to-cream opacity-40" />
+
         {/* Subtle decorative elements */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-clay/8 to-transparent rounded-full blur-3xl -mr-48 -mt-48" />
-        <div className="absolute bottom-0 left-0 w-72 h-72 bg-gradient-to-tr from-sand/10 to-transparent rounded-full blur-3xl -ml-36 -mb-36" />
+        <div className="from-clay/8 absolute right-0 top-0 -mr-48 -mt-48 h-96 w-96 rounded-full bg-gradient-to-br to-transparent blur-3xl" />
+        <div className="absolute bottom-0 left-0 -mb-36 -ml-36 h-72 w-72 rounded-full bg-gradient-to-tr from-sand/10 to-transparent blur-3xl" />
 
         {/* Content */}
-        <div className="relative z-10 text-center px-6 md:px-10 py-16 md:py-20 lg:py-24">
-          
+        <div className="relative z-10 px-6 py-16 text-center md:px-10 md:py-20 lg:py-24">
           {/* Icon accent above heading */}
-          <div className="flex justify-center mb-6">
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-clay/10 ring-1 ring-clay/25">
-              <svg className="w-6 h-6 text-clay" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <div className="mb-6 flex justify-center">
+            <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-clay/10 ring-1 ring-clay/25">
+              <svg
+                className="h-6 w-6 text-clay"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
               </svg>
             </div>
           </div>
 
           {/* Main heading */}
-          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-bark leading-tight mb-5">
+          <h2 className="mb-5 font-heading text-3xl font-bold leading-tight tracking-tight text-bark md:text-4xl lg:text-5xl">
             {title}
           </h2>
 
           {/* Divider */}
-          <div className="flex justify-center mb-6">
-            <div className="h-1 w-12 bg-gradient-to-r from-clay/0 via-clay to-clay/0 rounded-full" />
+          <div className="mb-6 flex justify-center">
+            <div className="h-1 w-12 rounded-full bg-gradient-to-r from-clay/0 via-clay to-clay/0" />
           </div>
 
           {/* Description */}
-          <p className="mx-auto mb-10 max-w-2xl text-lg md:text-xl leading-relaxed text-charcoal/80">
+          <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-charcoal/80 md:text-xl">
             {description}
           </p>
 
           {/* CTA Buttons - stacked on mobile, side-by-side on larger screens */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-md sm:max-w-none mx-auto">
+          <div className="mx-auto flex max-w-md flex-col items-center justify-center gap-4 sm:max-w-none sm:flex-row">
             {isExternal ? (
               <a
                 href={buttonLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-clay px-8 py-4 font-semibold text-cream shadow-elevation-2 ring-1 ring-clay/40 transition-all hover:bg-bark hover:shadow-elevation-3 focus:outline-none focus:ring-2 focus:ring-clay/50 focus:ring-offset-2"
+                className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-clay px-8 py-4 font-semibold text-cream ring-1 ring-clay/40 transition-all shadow-elevation-2 hover:bg-bark hover:shadow-elevation-3 focus:outline-none focus:ring-2 focus:ring-clay/50 focus:ring-offset-2 sm:w-auto"
               >
                 {buttonText}
-                <svg className="h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <svg
+                  className="h-5 w-5 transition-transform group-hover:translate-x-1"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </a>
             ) : (
               <Link
                 href={buttonLink}
-                className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-clay px-8 py-4 font-semibold text-cream shadow-elevation-2 ring-1 ring-clay/40 transition-all hover:bg-bark hover:shadow-elevation-3 focus:outline-none focus:ring-2 focus:ring-clay/50 focus:ring-offset-2"
+                className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-clay px-8 py-4 font-semibold text-cream ring-1 ring-clay/40 transition-all shadow-elevation-2 hover:bg-bark hover:shadow-elevation-3 focus:outline-none focus:ring-2 focus:ring-clay/50 focus:ring-offset-2 sm:w-auto"
               >
                 {buttonText}
-                <svg className="h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <svg
+                  className="h-5 w-5 transition-transform group-hover:translate-x-1"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </Link>
             )}
-            
+
             <SecondaryButton
               href={secondaryButtonLink}
-              className="w-full sm:w-auto inline-flex items-center justify-center rounded-xl border border-charcoal/15 bg-white/70 px-8 py-4 font-semibold text-charcoal/75 ring-1 ring-charcoal/10 transition-all hover:border-charcoal/25 hover:bg-white/90 hover:ring-charcoal/15 focus:outline-none focus:ring-2 focus:ring-clay/50 focus:ring-offset-2 backdrop-blur-sm"
+              className="inline-flex w-full items-center justify-center rounded-xl border border-charcoal/15 bg-white/70 px-8 py-4 font-semibold text-charcoal/75 ring-1 ring-charcoal/10 backdrop-blur-sm transition-all hover:border-charcoal/25 hover:bg-white/90 hover:ring-charcoal/15 focus:outline-none focus:ring-2 focus:ring-clay/50 focus:ring-offset-2 sm:w-auto"
             >
               {secondaryButtonText}
             </SecondaryButton>
           </div>
 
           {/* Trust statement */}
-          <p className="mt-8 text-sm font-medium text-charcoal/60 tracking-wide">
+          <p className="mt-8 text-sm font-medium tracking-wide text-charcoal/60">
             💙 Your wellbeing is our priority. Every session is confidential and tailored to you.
           </p>
         </div>

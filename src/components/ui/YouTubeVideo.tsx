@@ -33,7 +33,7 @@ export default function YouTubeVideo({ videoId, title, className = '' }: YouTube
       <div className={wrapperClasses}>
         <div className={aspectClasses} style={{ paddingBottom: ASPECT_RATIO_PADDING }}>
           <iframe
-            className="absolute inset-0 w-full h-full rounded-lg"
+            className="absolute inset-0 h-full w-full rounded-lg"
             src={embedUrl}
             title={title}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -45,25 +45,25 @@ export default function YouTubeVideo({ videoId, title, className = '' }: YouTube
   }
 
   return (
-    <div className={cn(wrapperClasses, 'cursor-pointer group')} onClick={() => setIsPlaying(true)}>
+    <div className={cn(wrapperClasses, 'group cursor-pointer')} onClick={() => setIsPlaying(true)}>
       <div className={aspectClasses} style={{ paddingBottom: ASPECT_RATIO_PADDING }}>
         <Image
           src={thumbnailUrl}
           alt={`${title} - YouTube Video`}
           width={400}
           height={225}
-          className="absolute inset-0 w-full h-full object-cover rounded-lg"
+          className="absolute inset-0 h-full w-full rounded-lg object-cover"
         />
-        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors rounded-lg" />
+        <div className="absolute inset-0 rounded-lg bg-black/20 transition-colors group-hover:bg-black/30" />
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
-            <Play className="w-6 h-6 text-white fill-white ml-1" />
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-red-600 shadow-lg transition-transform group-hover:scale-110">
+            <Play className="ml-1 h-6 w-6 fill-white text-white" />
           </div>
         </div>
         <div className="absolute bottom-4 left-4 right-4">
-          <div className="bg-black/70 backdrop-blur-sm rounded-lg p-3">
-            <p className="text-white text-sm font-medium line-clamp-2">{title}</p>
-            <p className="text-white/80 text-xs mt-1">Click to play</p>
+          <div className="rounded-lg bg-black/70 p-3 backdrop-blur-sm">
+            <p className="line-clamp-2 text-sm font-medium text-white">{title}</p>
+            <p className="mt-1 text-xs text-white/80">Click to play</p>
           </div>
         </div>
       </div>

@@ -14,21 +14,22 @@ export const areasPage = defineType({
           name: 'badge',
           title: 'Badge Text',
           type: 'string',
-          initialValue: 'Areas of Focus'
+          initialValue: 'Areas of Focus',
         }),
         defineField({
           name: 'title',
           title: 'Title',
           type: 'string',
-          initialValue: 'Support for your season'
+          initialValue: 'Support for your season',
         }),
         defineField({
           name: 'description',
           title: 'Description',
           type: 'text',
-          initialValue: 'Explore the areas we commonly work with, delivered through faith-integrated, evidence-based care.'
-        })
-      ]
+          initialValue:
+            'Explore the areas we commonly work with, delivered through faith-integrated, evidence-based care.',
+        }),
+      ],
     }),
     defineField({
       name: 'areas',
@@ -44,7 +45,7 @@ export const areasPage = defineType({
               name: 'title',
               title: 'Title',
               type: 'string',
-              validation: Rule => Rule.required()
+              validation: (Rule) => Rule.required(),
             }),
             defineField({
               name: 'slug',
@@ -52,9 +53,9 @@ export const areasPage = defineType({
               type: 'slug',
               options: {
                 source: 'title',
-                maxLength: 96
+                maxLength: 96,
               },
-              validation: Rule => Rule.required()
+              validation: (Rule) => Rule.required(),
             }),
             defineField({
               name: 'content',
@@ -66,43 +67,43 @@ export const areasPage = defineType({
                   styles: [
                     { title: 'Normal', value: 'normal' },
                     { title: 'H3', value: 'h3' },
-                    { title: 'H4', value: 'h4' }
+                    { title: 'H4', value: 'h4' },
                   ],
                   lists: [
                     { title: 'Bullet', value: 'bullet' },
-                    { title: 'Number', value: 'number' }
+                    { title: 'Number', value: 'number' },
                   ],
                   marks: {
                     decorators: [
                       { title: 'Strong', value: 'strong' },
-                      { title: 'Emphasis', value: 'em' }
-                    ]
-                  }
-                }
-              ]
+                      { title: 'Emphasis', value: 'em' },
+                    ],
+                  },
+                },
+              ],
             }),
             defineField({
               name: 'order',
               title: 'Display Order',
               type: 'number',
-              initialValue: 0
-            })
+              initialValue: 0,
+            }),
           ],
           preview: {
             select: {
               title: 'title',
-              order: 'order'
+              order: 'order',
             },
             prepare(selection) {
               const { title, order } = selection
               return {
                 title: title,
-                subtitle: `Order: ${order || 0}`
+                subtitle: `Order: ${order || 0}`,
               }
-            }
-          }
-        }
-      ]
+            },
+          },
+        },
+      ],
     }),
     defineField({
       name: 'cta',
@@ -113,44 +114,44 @@ export const areasPage = defineType({
           name: 'title',
           title: 'Title',
           type: 'string',
-          initialValue: 'Ready to begin?'
+          initialValue: 'Ready to begin?',
         }),
         defineField({
           name: 'description',
           title: 'Description',
           type: 'text',
-          initialValue: 'Book a free 15-minute consultation to explore fit and next steps.'
+          initialValue: 'Book a free 15-minute consultation to explore fit and next steps.',
         }),
         defineField({
           name: 'buttonText',
           title: 'Button Text',
           type: 'string',
-          initialValue: 'Book a Free Consultation'
+          initialValue: 'Book a Free Consultation',
         }),
         defineField({
           name: 'buttonLink',
           title: 'Button Link',
           type: 'url',
-          initialValue: 'https://thesoulcarecounsellor.janeapp.com'
+          initialValue: 'https://thesoulcarecounsellor.janeapp.com',
         }),
         defineField({
           name: 'external',
           title: 'External Link',
           type: 'boolean',
-          initialValue: true
-        })
-      ]
-    })
+          initialValue: true,
+        }),
+      ],
+    }),
   ],
   preview: {
     select: {
-      title: 'hero.title'
+      title: 'hero.title',
     },
     prepare(selection) {
       return {
         title: 'Areas of Focus Page',
-        subtitle: selection.title
+        subtitle: selection.title,
       }
-    }
-  }
+    },
+  },
 })

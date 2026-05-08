@@ -52,7 +52,7 @@ async function combineServicesData() {
       title: servicesPage.title || 'Services',
       metaDescription: servicesPage.metaDescription,
       hero: servicesPage.hero,
-      servicesList: services.map(service => ({
+      servicesList: services.map((service) => ({
         title: service.title,
         slug: service.slug,
         description: service.description,
@@ -60,10 +60,10 @@ async function combineServicesData() {
         features: service.features,
         pricing: service.pricing,
         buttons: service.buttons,
-        isActive: service.isActive !== false // Default to true if not specified
+        isActive: service.isActive !== false, // Default to true if not specified
       })),
       cta: servicesPage.cta,
-      isActive: servicesPage.isActive !== false
+      isActive: servicesPage.isActive !== false,
     }
 
     // Create the new unified document
@@ -75,7 +75,6 @@ async function combineServicesData() {
     console.log(`   - 1 services page`)
     console.log(`   - ${services.length} individual services`)
     console.log(`   - Combined into 1 unified document`)
-
   } catch (error) {
     console.error('❌ Error during migration:', error)
   }

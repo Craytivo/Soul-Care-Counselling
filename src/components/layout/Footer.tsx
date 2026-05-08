@@ -28,7 +28,9 @@ export default function Footer() {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(196,154,108,0.24),transparent_32%),radial-gradient(circle_at_92%_10%,rgba(248,245,236,0.12),transparent_28%)]" />
           <div className="relative grid gap-8 px-6 py-8 sm:px-8 md:py-10 lg:grid-cols-[1fr_auto] lg:items-end lg:px-10">
             <div className="max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-clay">Soul Care Counselling</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-clay">
+                Soul Care Counselling
+              </p>
               <p className="mt-4 max-w-[18ch] font-heading text-3xl font-semibold leading-[1.08] text-white sm:text-4xl md:max-w-[22ch]">
                 Warm, practical counselling grounded in evidence-based care and Christian faith.
               </p>
@@ -39,14 +41,14 @@ export default function Footer() {
                 href="https://thesoulcarecounsellor.janeapp.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-clay px-5 py-3 text-sm font-semibold text-charcoal shadow-elevation-2 transition hover:bg-sand focus:outline-none focus:ring-2 focus:ring-cream/70 focus:ring-offset-2 focus:ring-offset-charcoal"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-clay px-5 py-3 text-sm font-semibold text-charcoal transition shadow-elevation-2 hover:bg-sand focus:outline-none focus:ring-2 focus:ring-cream/70 focus:ring-offset-2 focus:ring-offset-charcoal"
               >
                 Book a Free Consultation
                 <ArrowUpRight className="h-4 w-4" />
               </a>
               <Link
                 href="/contact"
-                className="inline-flex min-h-12 items-center justify-center rounded-lg border border-cream/18 bg-white/8 px-5 py-3 text-sm font-semibold text-cream backdrop-blur transition hover:border-cream/35 hover:bg-white/12 focus:outline-none focus:ring-2 focus:ring-cream/70 focus:ring-offset-2 focus:ring-offset-charcoal"
+                className="border-cream/18 bg-white/8 hover:bg-white/12 inline-flex min-h-12 items-center justify-center rounded-lg border px-5 py-3 text-sm font-semibold text-cream backdrop-blur transition hover:border-cream/35 focus:outline-none focus:ring-2 focus:ring-cream/70 focus:ring-offset-2 focus:ring-offset-charcoal"
               >
                 Contact
               </Link>
@@ -59,8 +61,12 @@ export default function Footer() {
         <div className="border-t border-charcoal/10 pt-12 md:pt-14">
           <div className="grid gap-12 lg:grid-cols-[1.3fr_2fr] lg:gap-16">
             <div className="max-w-md">
-              <Link href="/" className="inline-flex items-center gap-4" aria-label="Soul Care Counselling home">
-                <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white shadow-elevation-2 ring-1 ring-charcoal/8">
+              <Link
+                href="/"
+                className="inline-flex items-center gap-4"
+                aria-label="Soul Care Counselling home"
+              >
+                <span className="ring-charcoal/8 flex h-16 w-16 items-center justify-center rounded-2xl bg-white ring-1 shadow-elevation-2">
                   <Image
                     src="/assets/logo/logo-s-c-intertwined.png"
                     alt="Soul Care Counselling Logo"
@@ -84,7 +90,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Soul Care Instagram profile"
-                  className="inline-flex min-h-10 items-center gap-2 rounded-lg border border-charcoal/10 bg-white px-3.5 py-2 text-sm font-semibold text-bark/78 shadow-elevation-1 transition hover:border-clay/35 hover:text-bark hover:shadow-elevation-2 focus:outline-none focus:ring-2 focus:ring-bark/20 focus:ring-offset-2 focus:ring-offset-cream"
+                  className="text-bark/78 inline-flex min-h-10 items-center gap-2 rounded-lg border border-charcoal/10 bg-white px-3.5 py-2 text-sm font-semibold transition shadow-elevation-1 hover:border-clay/35 hover:text-bark hover:shadow-elevation-2 focus:outline-none focus:ring-2 focus:ring-bark/20 focus:ring-offset-2 focus:ring-offset-cream"
                 >
                   <svg
                     className="h-4 w-4"
@@ -104,7 +110,7 @@ export default function Footer() {
                 </a>
                 <Link
                   href="/contact"
-                  className="inline-flex min-h-10 items-center rounded-lg border border-charcoal/10 bg-white px-3.5 py-2 text-sm font-semibold text-bark/78 shadow-elevation-1 transition hover:border-clay/35 hover:text-bark hover:shadow-elevation-2 focus:outline-none focus:ring-2 focus:ring-bark/20 focus:ring-offset-2 focus:ring-offset-cream"
+                  className="text-bark/78 inline-flex min-h-10 items-center rounded-lg border border-charcoal/10 bg-white px-3.5 py-2 text-sm font-semibold transition shadow-elevation-1 hover:border-clay/35 hover:text-bark hover:shadow-elevation-2 focus:outline-none focus:ring-2 focus:ring-bark/20 focus:ring-offset-2 focus:ring-offset-cream"
                 >
                   Get in touch
                 </Link>
@@ -116,7 +122,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer nofollow"
                   aria-label="Soul Care Psychology Today verification badge"
-                  className="inline-flex rounded-xl bg-white p-2.5 shadow-elevation-1 ring-1 ring-charcoal/8 transition hover:shadow-elevation-2"
+                  className="ring-charcoal/8 inline-flex rounded-xl bg-white p-2.5 ring-1 transition shadow-elevation-1 hover:shadow-elevation-2"
                 >
                   <Image
                     src="/assets/img/icons/psychology-today.png"
@@ -131,8 +137,13 @@ export default function Footer() {
             </div>
 
             <div className="grid gap-10 sm:grid-cols-3 lg:gap-12">
-              <nav aria-label="Quick links" className="sm:border-l sm:border-charcoal/10 sm:pl-6 lg:pl-8">
-                <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-bark">Quick Links</h3>
+              <nav
+                aria-label="Quick links"
+                className="sm:border-l sm:border-charcoal/10 sm:pl-6 lg:pl-8"
+              >
+                <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-bark">
+                  Quick Links
+                </h3>
                 <ul className="mt-6 space-y-3.5">
                   {quickLinks.map((link) => (
                     <li key={link.href}>
@@ -144,8 +155,13 @@ export default function Footer() {
                 </ul>
               </nav>
 
-              <nav aria-label="Resources" className="sm:border-l sm:border-charcoal/10 sm:pl-6 lg:pl-8">
-                <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-bark">Resources</h3>
+              <nav
+                aria-label="Resources"
+                className="sm:border-l sm:border-charcoal/10 sm:pl-6 lg:pl-8"
+              >
+                <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-bark">
+                  Resources
+                </h3>
                 <ul className="mt-6 space-y-3.5">
                   {resourceLinks.map((link) => (
                     <li key={link.href}>
@@ -169,7 +185,9 @@ export default function Footer() {
               </nav>
 
               <nav aria-label="Legal" className="sm:border-l sm:border-charcoal/10 sm:pl-6 lg:pl-8">
-                <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-bark">Policies</h3>
+                <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-bark">
+                  Policies
+                </h3>
                 <ul className="mt-6 space-y-3.5">
                   <li>
                     <Link href="/privacy" className={linkClass}>
@@ -182,8 +200,9 @@ export default function Footer() {
                     </Link>
                   </li>
                 </ul>
-                <p className="mt-7 rounded-2xl border border-charcoal/10 bg-white/72 p-4 text-xs leading-6 text-bark/62 shadow-elevation-1">
-                  Not for crisis support. If you&apos;re in immediate danger, call 911 or local emergency services.
+                <p className="bg-white/72 text-bark/62 mt-7 rounded-2xl border border-charcoal/10 p-4 text-xs leading-6 shadow-elevation-1">
+                  Not for crisis support. If you&apos;re in immediate danger, call 911 or local
+                  emergency services.
                 </p>
               </nav>
             </div>
@@ -209,7 +228,7 @@ export default function Footer() {
             </a>
           </div>
 
-          <p className="text-xs text-bark/58">
+          <p className="text-bark/58 text-xs">
             Built and optimized with{' '}
             <a
               href="https://craytivo.com/"

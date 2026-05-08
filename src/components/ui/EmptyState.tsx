@@ -12,7 +12,12 @@ export default function EmptyState({
   return (
     <div className="ui-card p-8 text-center">
       <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-sand ring-1 ring-charcoal/10">
-        <svg className="h-7 w-7 text-charcoal/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg
+          className="h-7 w-7 text-charcoal/60"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"

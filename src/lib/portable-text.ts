@@ -15,10 +15,11 @@ export function extractBioText(bio: unknown): string {
       if (!block || typeof block !== 'object') return false
       return 'children' in block && Array.isArray((block as PortableTextBlock).children)
     })
-    .map(block =>
-      block.children
-        ?.map(child => (typeof child?.text === 'string' ? child.text : ''))
-        .join(' ') ?? ''
+    .map(
+      (block) =>
+        block.children
+          ?.map((child) => (typeof child?.text === 'string' ? child.text : ''))
+          .join(' ') ?? ''
     )
     .join(' ')
 }
@@ -35,10 +36,11 @@ export function extractBioParagraphs(bio: unknown): string[] {
       if (!block || typeof block !== 'object') return false
       return 'children' in block && Array.isArray((block as PortableTextBlock).children)
     })
-    .map(block =>
-      block.children
-        ?.map(child => (typeof child?.text === 'string' ? child.text : ''))
-        .join(' ') ?? ''
+    .map(
+      (block) =>
+        block.children
+          ?.map((child) => (typeof child?.text === 'string' ? child.text : ''))
+          .join(' ') ?? ''
     )
-    .filter(paragraph => paragraph.length > 0)
+    .filter((paragraph) => paragraph.length > 0)
 }

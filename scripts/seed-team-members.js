@@ -7,7 +7,7 @@ const client = createClient({
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
   token: process.env.SANITY_API_TOKEN,
   useCdn: false,
-  apiVersion: '2025-09-05'
+  apiVersion: '2025-09-05',
 })
 
 // Team members data based on your existing content
@@ -17,20 +17,31 @@ const teamMembers = [
     name: 'Jessica Robinson Grant',
     credentials: 'MSW, RSW',
     role: 'Clinical Social Worker',
-    bio: 'Jessica is a compassionate clinical social worker specializing in trauma therapy and faith-based counseling. She brings years of experience helping individuals and couples navigate life\'s challenges with a holistic, faith-centered approach.',
-    specialties: ['Trauma Therapy', 'Faith-Based Counseling', 'Individual Therapy', 'Couples Counseling'],
-    areasOfFocus: ['Anxiety', 'Depression', 'Relationship Issues', 'Grief and Loss', 'Spiritual Growth'],
+    bio: "Jessica is a compassionate clinical social worker specializing in trauma therapy and faith-based counseling. She brings years of experience helping individuals and couples navigate life's challenges with a holistic, faith-centered approach.",
+    specialties: [
+      'Trauma Therapy',
+      'Faith-Based Counseling',
+      'Individual Therapy',
+      'Couples Counseling',
+    ],
+    areasOfFocus: [
+      'Anxiety',
+      'Depression',
+      'Relationship Issues',
+      'Grief and Loss',
+      'Spiritual Growth',
+    ],
     socialLinks: [
       {
         label: '@jessicarobinsongrant',
         url: 'https://instagram.com/jessicarobinsongrant',
-        type: 'instagram'
-      }
+        type: 'instagram',
+      },
     ],
     acceptsBookings: true,
     slug: {
-      current: 'jessica-robinson-grant'
-    }
+      current: 'jessica-robinson-grant',
+    },
   },
   {
     _type: 'teamMember',
@@ -44,13 +55,13 @@ const teamMembers = [
       {
         label: '@HeyBelovedHey',
         url: 'https://instagram.com/HeyBelovedHey',
-        type: 'instagram'
-      }
+        type: 'instagram',
+      },
     ],
     acceptsBookings: false,
     slug: {
-      current: 'davene'
-    }
+      current: 'davene',
+    },
   },
   {
     _type: 'teamMember',
@@ -63,8 +74,8 @@ const teamMembers = [
     socialLinks: [],
     acceptsBookings: true,
     slug: {
-      current: 'princeton'
-    }
+      current: 'princeton',
+    },
   },
   {
     _type: 'teamMember',
@@ -77,8 +88,8 @@ const teamMembers = [
     socialLinks: [],
     acceptsBookings: true,
     slug: {
-      current: 'anita'
-    }
+      current: 'anita',
+    },
   },
   {
     _type: 'teamMember',
@@ -91,8 +102,8 @@ const teamMembers = [
     socialLinks: [],
     acceptsBookings: true,
     slug: {
-      current: 'baraka'
-    }
+      current: 'baraka',
+    },
   },
   {
     _type: 'teamMember',
@@ -105,8 +116,8 @@ const teamMembers = [
     socialLinks: [],
     acceptsBookings: true,
     slug: {
-      current: 'josh'
-    }
+      current: 'josh',
+    },
   },
   {
     _type: 'teamMember',
@@ -119,8 +130,8 @@ const teamMembers = [
     socialLinks: [],
     acceptsBookings: true,
     slug: {
-      current: 'khadian'
-    }
+      current: 'khadian',
+    },
   },
   {
     _type: 'teamMember',
@@ -133,8 +144,8 @@ const teamMembers = [
     socialLinks: [],
     acceptsBookings: true,
     slug: {
-      current: 'natalie'
-    }
+      current: 'natalie',
+    },
   },
   {
     _type: 'teamMember',
@@ -147,8 +158,8 @@ const teamMembers = [
     socialLinks: [],
     acceptsBookings: true,
     slug: {
-      current: 'nigel'
-    }
+      current: 'nigel',
+    },
   },
   {
     _type: 'teamMember',
@@ -161,25 +172,24 @@ const teamMembers = [
     socialLinks: [],
     acceptsBookings: true,
     slug: {
-      current: 'oluseye'
-    }
-  }
+      current: 'oluseye',
+    },
+  },
 ]
 
 async function seedTeamMembers() {
   try {
     console.log('🚀 Starting to seed team members...')
-    
+
     for (const member of teamMembers) {
       console.log(`📝 Creating team member: ${member.name}`)
-      
+
       const result = await client.create(member)
       console.log(`✅ Created: ${member.name} (ID: ${result._id})`)
     }
-    
+
     console.log('🎉 All team members have been created successfully!')
     console.log('🌐 Check your Sanity Studio at http://localhost:3000/studio')
-    
   } catch (error) {
     console.error('❌ Error seeding team members:', error)
   }

@@ -33,9 +33,12 @@ function getRequestSecret(request: NextRequest): string | null {
 export async function POST(request: NextRequest) {
   try {
     const secret = getRequestSecret(request)
-    
+
     // Check for secret to confirm this is a valid request
-    if (secret !== process.env.SANITY_REVALIDATE_SECRET && secret !== process.env.SANITY_API_TOKEN) {
+    if (
+      secret !== process.env.SANITY_REVALIDATE_SECRET &&
+      secret !== process.env.SANITY_API_TOKEN
+    ) {
       return NextResponse.json({ message: 'Invalid secret' }, { status: 401 })
     }
 
@@ -83,25 +86,28 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    return NextResponse.json({ 
-      revalidated: true, 
+    return NextResponse.json({
+      revalidated: true,
       tags: Array.from(tags),
       message: 'Content revalidated successfully via tags',
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     })
   } catch (err) {
     console.error('Revalidation error:', err)
-    return NextResponse.json({ 
-      message: 'Error revalidating content',
-      error: err instanceof Error ? err.message : 'Unknown error'
-    }, { status: 500 })
+    return NextResponse.json(
+      {
+        message: 'Error revalidating content',
+        error: err instanceof Error ? err.message : 'Unknown error',
+      },
+      { status: 500 }
+    )
   }
 }
 
 // Allow GET requests for testing
 export async function GET(request: NextRequest) {
   const secret = getRequestSecret(request)
-  
+
   if (secret !== process.env.SANITY_REVALIDATE_SECRET && secret !== process.env.SANITY_API_TOKEN) {
     return NextResponse.json({ message: 'Invalid secret' }, { status: 401 })
   }
@@ -109,14 +115,17 @@ export async function GET(request: NextRequest) {
   try {
     revalidateTag('sanity')
     revalidatePath('/notes')
-    return NextResponse.json({ 
+    return NextResponse.json({
       message: 'Sanity tags revalidated successfully',
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     })
   } catch (err) {
-    return NextResponse.json({ 
-      message: 'Error revalidating',
-      error: err instanceof Error ? err.message : 'Unknown error'
-    }, { status: 500 })
+    return NextResponse.json(
+      {
+        message: 'Error revalidating',
+        error: err instanceof Error ? err.message : 'Unknown error',
+      },
+      { status: 500 }
+    )
   }
 }

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "entry": [
+    "src/app/**/page.tsx",
+    "src/app/**/layout.tsx",
+    "src/app/**/route.ts",
+    "src/app/sitemap.ts",
+    "src/app/robots.ts",
+    "next.config.js",
+    "sanity.config.ts",
+    "sanity.cli.ts"
+  ],
+  "project": ["src/**/*.{ts,tsx}"],
+  "ignore": [
+    "src/lib/sanity.ts",
+    "src/lib/sanity.types.ts",
+    "src/components/AboutFounder.tsx",
+    "src/components/PortableText.tsx",
+    "src/components/SanityTeam.tsx",
+    "src/components/Skeleton.tsx",
+    "src/components/Team.tsx",
+    "src/components/TeamMemberPage.tsx"
+  ],
+  "ignoreDependencies": [
+    "@types/node",
+    "@types/react",
+    "@types/react-dom",
+    "critters",
+    "web-vitals"
+  ],
+  "rules": {
+    "types": "warn",
+    "enumMembers": "warn",
+    "classMembers": "warn"
+  }
+}

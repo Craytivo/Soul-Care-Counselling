@@ -1,34 +1,38 @@
-
-import YouTubeVideo from '@/components/YouTubeVideo';
-import { getWorkshops } from '@/lib/sanity-queries';
-import type { Workshop } from '@/lib/sanity';
+import YouTubeVideo from '@/components/YouTubeVideo'
+import { getWorkshops } from '@/lib/sanity-queries'
+import type { Workshop } from '@/lib/sanity'
 
 export default async function SanityWorkshops() {
-  const workshops = await getWorkshops();
+  const workshops = await getWorkshops()
 
   if (!workshops || workshops.length === 0) {
     return (
       <section className="mt-16">
         <div className="mx-auto max-w-7xl">
-          <div className="text-center py-12">
-            <p className="text-charcoal/60">No workshops found. Please check your Sanity configuration.</p>
+          <div className="py-12 text-center">
+            <p className="text-charcoal/60">
+              No workshops found. Please check your Sanity configuration.
+            </p>
           </div>
         </div>
       </section>
-    );
+    )
   }
 
   // Only show recorded workshops
-  const recordedWorkshops = workshops.filter((workshop: Workshop) => workshop.isRecorded);
+  const recordedWorkshops = workshops.filter((workshop: Workshop) => workshop.isRecorded)
 
   return (
     <>
       {/* Workshop Recordings */}
       <section className="mt-16">
-        <h2 className="font-heading text-2xl font-semibold mb-6">Workshop Recordings</h2>
+        <h2 className="mb-6 font-heading text-2xl font-semibold">Workshop Recordings</h2>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-1">
           {recordedWorkshops.map((workshop: Workshop) => (
-            <article key={workshop._id} className="rounded-2xl bg-white ring-1 ring-charcoal/10 overflow-hidden hover:ring-clay/30 transition-all duration-200">
+            <article
+              key={workshop._id}
+              className="overflow-hidden rounded-2xl bg-white ring-1 ring-charcoal/10 transition-all duration-200 hover:ring-clay/30"
+            >
               <div className="grid gap-6 md:grid-cols-2">
                 {/* Video Preview */}
                 <div className="p-6">
@@ -42,27 +46,32 @@ export default async function SanityWorkshops() {
                 </div>
 
                 {/* Workshop Details */}
-                <div className="p-6 flex flex-col justify-between">
+                <div className="flex flex-col justify-between p-6">
                   <div>
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="px-3 py-1 bg-sand text-charcoal text-xs font-medium rounded-full">
+                    <div className="mb-3 flex items-center gap-2">
+                      <span className="rounded-full bg-sand px-3 py-1 text-xs font-medium text-charcoal">
                         Recording
                       </span>
-                      <span className="text-charcoal/60 text-sm">Free Access</span>
+                      <span className="text-sm text-charcoal/60">Free Access</span>
                     </div>
-                    <h3 className="font-heading text-lg font-semibold mb-3">{workshop.title}</h3>
-                    <p className="text-charcoal/85 mb-4 text-sm leading-relaxed">{workshop.description}</p>
+                    <h3 className="mb-3 font-heading text-lg font-semibold">{workshop.title}</h3>
+                    <p className="mb-4 text-sm leading-relaxed text-charcoal/85">
+                      {workshop.description}
+                    </p>
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-sand flex items-center justify-center">
-                      <span className="text-charcoal font-semibold text-xs">
-                        {workshop.instructor.split(' ').map((n: string) => n[0]).join('')}
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-sand">
+                      <span className="text-xs font-semibold text-charcoal">
+                        {workshop.instructor
+                          .split(' ')
+                          .map((n: string) => n[0])
+                          .join('')}
                       </span>
                     </div>
                     <div>
-                      <p className="font-medium text-sm">{workshop.instructor}</p>
-                      <p className="text-charcoal/60 text-xs">{workshop.instructorRole}</p>
+                      <p className="text-sm font-medium">{workshop.instructor}</p>
+                      <p className="text-xs text-charcoal/60">{workshop.instructorRole}</p>
                     </div>
                   </div>
                 </div>
@@ -72,5 +81,5 @@ export default async function SanityWorkshops() {
         </div>
       </section>
     </>
-  );
+  )
 }

@@ -19,14 +19,14 @@ async function addSnehaChristiana() {
         name: 'Sneha Christian',
         credentials: 'MSW, RSW',
         role: 'Clinical Social Worker',
-        bio: 'Sneha is a dedicated clinical social worker with a passion for helping individuals navigate life\'s challenges. She brings a compassionate and evidence-based approach to therapy, specializing in supporting clients through difficult transitions and mental health concerns.',
+        bio: "Sneha is a dedicated clinical social worker with a passion for helping individuals navigate life's challenges. She brings a compassionate and evidence-based approach to therapy, specializing in supporting clients through difficult transitions and mental health concerns.",
         specialties: [
           'Individual Therapy',
           'Mental Health Counseling',
           'Life Transitions',
           'Anxiety & Depression',
           'Trauma-Informed Care',
-          'CBT & DBT Approaches'
+          'CBT & DBT Approaches',
         ],
         areasOfFocus: [
           'Anxiety & Depression',
@@ -34,14 +34,14 @@ async function addSnehaChristiana() {
           'Trauma Recovery',
           'Emotional Regulation',
           'Self-Esteem & Identity',
-          'Stress Management'
+          'Stress Management',
         ],
         socialLinks: [],
         acceptsBookings: true,
         slug: {
           _type: 'slug',
-          current: 'sneha-christian'
-        }
+          current: 'sneha-christian',
+        },
       },
       {
         _type: 'teamMember',
@@ -55,7 +55,7 @@ async function addSnehaChristiana() {
           'Family Therapy',
           'Cultural Competency',
           'Faith-Based Counseling',
-          'Solution-Focused Therapy'
+          'Solution-Focused Therapy',
         ],
         areasOfFocus: [
           'Relationship Issues',
@@ -63,31 +63,32 @@ async function addSnehaChristiana() {
           'Cultural Identity',
           'Spiritual Growth',
           'Communication Skills',
-          'Conflict Resolution'
+          'Conflict Resolution',
         ],
         socialLinks: [],
         acceptsBookings: true,
         slug: {
           _type: 'slug',
-          current: 'christiana'
-        }
-      }
+          current: 'christiana',
+        },
+      },
     ]
 
     for (const member of newMembers) {
       console.log(`📝 Creating team member: ${member.name}`)
-      
+
       const result = await client.create(member)
       console.log(`✅ Created: ${member.name} (ID: ${result._id})`)
     }
 
     console.log('🎉 Sneha and Christiana have been added successfully!')
     console.log('🌐 Check your Sanity Studio at http://localhost:3000/studio')
-
   } catch (error) {
     console.error('❌ Error adding team members:', error)
     if (error.message.includes('permission')) {
-      console.log('🔑 Permission error - you may need to update your API token permissions in Sanity')
+      console.log(
+        '🔑 Permission error - you may need to update your API token permissions in Sanity'
+      )
     }
   }
 }

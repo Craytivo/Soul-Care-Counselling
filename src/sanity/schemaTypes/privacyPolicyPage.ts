@@ -16,7 +16,6 @@ const privacyPolicyPage = {
       of: [{ type: 'block' }],
     },
   ],
-};
+}
 
-
-export default privacyPolicyPage;
+export default privacyPolicyPage

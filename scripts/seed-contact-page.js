@@ -20,7 +20,8 @@ async function seedContactPage() {
       hero: {
         badge: 'Contact',
         heading: "We'd love to hear from you",
-        description: 'Reach out with questions, request a free consultation, or send us a message. We typically respond within 1–2 business days.',
+        description:
+          'Reach out with questions, request a free consultation, or send us a message. We typically respond within 1–2 business days.',
         emailButtonText: 'Email Us',
         consultationButtonText: 'Book a Free Consultation',
       },
@@ -38,7 +39,8 @@ async function seedContactPage() {
           messageLabel: 'Message',
           messagePlaceholder: "Share any context you'd like us to know.",
         },
-        consentText: 'I consent to be contacted about my inquiry. I understand this form is not for emergencies.',
+        consentText:
+          'I consent to be contacted about my inquiry. I understand this form is not for emergencies.',
         submitButtonText: 'Send message',
         crisisNotice: 'If you are in crisis, call 911 or go to your nearest emergency department.',
       },
@@ -71,33 +73,30 @@ async function seedContactPage() {
       },
       seo: {
         metaTitle: 'Soul Care — Contact',
-        metaDescription: 'Contact Soul Care Christian Counselling. Book a free consultation, send a message, or reach us by email.',
+        metaDescription:
+          'Contact Soul Care Christian Counselling. Book a free consultation, send a message, or reach us by email.',
       },
     }
 
     // Check if contact page already exists
     const existingPage = await client.fetch(`*[_type == "contactPage"][0]`)
-    
+
     if (existingPage) {
       console.log('📝 Contact page already exists, updating...')
-      const result = await client
-        .patch(existingPage._id)
-        .set(contactPageData)
-        .commit()
-      
+      const result = await client.patch(existingPage._id).set(contactPageData).commit()
+
       console.log('✅ Contact page updated successfully!')
       console.log(`   Document ID: ${result._id}`)
     } else {
       console.log('📝 Creating new contact page...')
       const result = await client.create(contactPageData)
-      
+
       console.log('✅ Contact page created successfully!')
       console.log(`   Document ID: ${result._id}`)
     }
 
     console.log('\n🎯 Contact page is now ready!')
     console.log('You can now edit the contact page content through Sanity Studio.')
-    
   } catch (error) {
     console.error('❌ Error creating contact page:', error.message)
     if (error.details) {

@@ -5,16 +5,16 @@ const client = createClient({
   dataset: 'production',
   useCdn: false,
   token: process.env.SANITY_API_TOKEN,
-  apiVersion: '2025-09-05'
+  apiVersion: '2025-09-05',
 })
 
 async function removeAuthorReferences() {
   try {
     console.log('🔍 Fetching blog posts with author references...')
-    
+
     // Fetch all blog posts that have author references
     const blogPosts = await client.fetch('*[_type == "blogPost" && defined(author)]')
-    
+
     if (blogPosts.length === 0) {
       console.log('✅ No blog posts with author references found')
       return
@@ -24,18 +24,14 @@ async function removeAuthorReferences() {
 
     for (const post of blogPosts) {
       console.log(`📝 Removing author reference from: ${post.title || post._id}`)
-      
+
       // Remove the author field
-      await client
-        .patch(post._id)
-        .unset(['author'])
-        .commit()
+      await client.patch(post._id).unset(['author']).commit()
 
       console.log(`✅ Updated: ${post.title || post._id}`)
     }
 
     console.log('🎉 All author references removed successfully!')
-    
   } catch (error) {
     console.error('❌ Error removing author references:', error)
   }

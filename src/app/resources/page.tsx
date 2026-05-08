@@ -1,740 +1,268 @@
-
-
-
+import type { Metadata } from 'next'
 
 export const revalidate = 300
 
-
+export const metadata: Metadata = {
+  title: 'Free Mental Health Resources | Soul Care Counselling',
+  description:
+    'Download free worksheets, guides, and therapeutic materials for trauma healing, anxiety, depression, and spiritual care. Professional resources from certified Christian counsellors.',
+  keywords:
+    'free mental health resources, therapy worksheets, anxiety resources, trauma worksheets, christian counselling resources, self-care guides',
+  openGraph: {
+    title: 'Free Mental Health Resources | Soul Care Counselling',
+    description:
+      'Download free worksheets, guides, and therapeutic materials to support your mental health journey.',
+    type: 'website',
+    locale: 'en_CA',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Free Mental Health Resources | Soul Care Counselling',
+    description:
+      'Download free worksheets, guides, and therapeutic materials to support your mental health journey.',
+  },
+  alternates: {
+    canonical: '/resources',
+  },
+}
 
 import { getResources, getFeaturedResources } from '@/lib/sanity-queries'
-
-import { urlFor } from '@/lib/sanity'
-
-import Image from 'next/image'
-
-import type { Resource } from '@/lib/sanity'
-
-import EmptyState from '@/components/ui/EmptyState'
-
+import ResourcesClient from '@/components/resources/ResourcesClient'
+import ConsultationCta from '@/components/cta/ConsultationCta'
 import ResourceLeadForm from '@/components/forms/ResourceLeadForm'
-
-import GatedDownloadButton from '@/components/resources/GatedDownloadButton'
-
 import Link from 'next/link'
 
-import ConsultationCta from '@/components/cta/ConsultationCta'
-
-// Helper to add cache-busting to image URLs based on resource update time
-function getResourceImageUrl(resource: Resource, width: number, height: number) {
-  const baseUrl = urlFor(resource.previewImage).width(width).height(height).auto('format').url()
-  // Add cache-buster using _updatedAt timestamp
-  const cacheBuster = resource._updatedAt 
-    ? new Date(resource._updatedAt).getTime().toString(36).slice(-6)
-    : Date.now().toString(36).slice(-6)
-  return `${baseUrl}?v=${cacheBuster}`
-}
-
-
-
-const categories = [
-
-  'All Resources',
-
-  'Worksheets',
-
-  'Guides', 
-
-  'Assessment Tools',
-
-  'Self-Care',
-
-  'Trauma Resources',
-
-  'Spiritual Care'
-
-]
-
-
-
-const forcedGatedResourceMarkers = [
-
-  'sc thought record form',
-
-  'reframing anxious thoughts',
-
-  'pause method - emotional de-escalation',
-
-  'emotional regulation guide',
-
-]
-
-
-
-function normalizeForMatch(value?: string) {
-
-  return (value || '').toLowerCase().replace(/\s+/g, ' ').trim()
-
-}
-
-
-
-function isForcedGatedResource(resource: Resource) {
-
-  const title = normalizeForMatch(resource.title)
-
-  const originalFilename = normalizeForMatch(resource.pdfFile?.asset?.originalFilename)
-
-  const imageAlt = normalizeForMatch(resource.previewImage?.alt)
-
-
-
-  return forcedGatedResourceMarkers.some(
-
-    (marker) =>
-
-      title.includes(marker) ||
-
-      originalFilename.includes(marker) ||
-
-      imageAlt.includes(marker)
-
-  )
-
-}
-
-
-
-function getResourceImageAlt(resource: Resource) {
-
-  const trimmedAlt = resource.previewImage?.alt?.trim()
-
-  return trimmedAlt || `${resource.title} resource preview`
-
-}
-
-
-
 export default async function ResourcesPage() {
-
   const [allResources, featuredResources] = await Promise.all([
-
     getResources(),
+    getFeaturedResources(),
+  ])
 
-    getFeaturedResources()
+  // Calculate resource stats
+  const totalResources = allResources.length
+  const categoryCount = new Set(allResources.map((r) => r.category).filter(Boolean)).size
 
-  ]);
-
-  const selectedCategory = 'All Resources';
-
-  const filteredResources = allResources;
-
-
-
-  // Server components can't use interactive category selection, so default to 'All Resources'.
-
-
-
-  const formatFileSize = (bytes: number) => {
-
-    if (bytes === 0) return '0 Bytes'
-
-    const k = 1024
-
-    const sizes = ['Bytes', 'KB', 'MB', 'GB']
-
-    const i = Math.floor(Math.log(bytes) / Math.log(k))
-
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
-
+  // Generate structured data for resources
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Free Mental Health Resources | Soul Care Counselling',
+    description:
+      'Download free worksheets, guides, and therapeutic materials for trauma healing, anxiety, depression, and spiritual care.',
+    url: 'https://thesoulcarecounsellor.com/resources',
+    provider: {
+      '@type': 'Organization',
+      name: 'Soul Care Counselling',
+      url: 'https://thesoulcarecounsellor.com',
+    },
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Free Mental Health Resources',
+      itemListElement: allResources.slice(0, 10).map((resource, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        item: {
+          '@type': 'DigitalDocument',
+          name: resource.title,
+          description: resource.description,
+          encodingFormat: 'application/pdf',
+          author: {
+            '@type': 'Organization',
+            name: 'Soul Care Counselling',
+          },
+        },
+      })),
+    },
   }
-
-
-
-  const ResourceCard = ({ resource, featured = false }: { resource: Resource, featured?: boolean }) => {
-
-    const isGated = Boolean(resource.requiresEmailGate || isForcedGatedResource(resource))
-
-    return (
-
-    <article className={`rounded-2xl bg-white ring-1 ring-charcoal/5 overflow-hidden hover:ring-charcoal/10 hover:shadow-lg hover:shadow-charcoal/[0.03] transition-all duration-300 ${featured ? '' : ''}`}>
-
-      {resource.previewImage?.asset && (
-
-        <div className="w-full relative">
-
-          <Image
-
-            src={getResourceImageUrl(resource, 600, 450)}
-
-            alt={getResourceImageAlt(resource)}
-
-            width={600}
-            height={450}
-
-            className="w-full h-auto"
-
-            priority={featured}
-
-            quality={85}
-
-            sizes={featured ? '(max-width: 768px) 100vw, 50vw' : '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'}
-
-          />
-
-          <div className="absolute inset-0 bg-gradient-to-t from-charcoal/5 to-transparent pointer-events-none" />
-
-        </div>
-
-      )}
-
-      {!resource.previewImage?.asset && resource.pdfFile?.asset?.url && (
-
-        <div className={`relative ${featured ? 'h-64 md:h-auto' : 'h-48'} bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center`}>
-
-          <div className="text-center">
-
-            <svg className="w-16 h-16 mx-auto text-red-600 mb-2" fill="currentColor" viewBox="0 0 24 24">
-
-              <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
-
-            </svg>
-
-            <span className="text-sm font-semibold text-gray-700">PDF Document</span>
-
-            {resource.pdfFile?.asset?.size && (
-
-              <div className="text-xs text-gray-500 mt-1">
-
-                {formatFileSize(resource.pdfFile.asset.size)}
-
-              </div>
-
-            )}
-
-          </div>
-
-        </div>
-
-      )}
-
-      
-
-      <div className={`${featured ? 'p-5 md:p-7' : 'p-5'}`}>
-
-          <div className="flex items-center gap-2 mb-2.5">
-
-            {resource.category && (
-
-              <span className="px-3 py-1 bg-sand text-charcoal text-xs font-medium rounded-full">
-
-                {resource.category}
-
-              </span>
-
-            )}
-
-            {isGated && (
-
-              <span className="px-3 py-1 bg-bark text-cream text-xs font-medium rounded-full">
-
-                Email required
-
-              </span>
-
-            )}
-
-            {resource.pdfFile?.asset?.size && (
-
-              <span className="text-charcoal/60 text-sm">{formatFileSize(resource.pdfFile.asset.size)}</span>
-
-            )}
-
-          </div>
-
-        
-
-        <h3 className={`font-heading font-semibold mb-2 tracking-tight ${featured ? 'text-xl md:text-2xl' : 'text-lg'}`}>
-
-          {resource.title}
-
-        </h3>
-
-        
-
-        {resource.description && (
-
-          <p className={`text-charcoal/75 mb-4 leading-relaxed ${featured ? '' : 'text-sm line-clamp-3'}`}>
-
-            {resource.description}
-
-          </p>
-
-        )}
-
-
-
-        <div className="flex items-center justify-between">
-
-          <div className="flex items-center gap-3">
-
-            <div className={`rounded-full bg-clay flex items-center justify-center ${featured ? 'w-10 h-10' : 'w-8 h-8'}`}>
-
-              <span className={`text-cream font-semibold ${featured ? 'text-sm' : 'text-xs'}`}>
-
-                SC
-
-              </span>
-
-            </div>
-
-            <div>
-
-              <p className={`font-medium ${featured ? 'text-sm' : 'text-xs'}`}>Soul Care Counselling</p>
-
-              {featured && <p className="text-charcoal/60 text-xs">Professional Resources</p>}
-
-            </div>
-
-          </div>
-
-          
-
-          {resource.pdfFile?.asset?.url && (
-
-            <GatedDownloadButton
-
-              requiresEmailGate={isGated}
-
-              downloadUrl={resource.pdfFile.asset.url}
-
-              fileName={resource.pdfFile.asset.originalFilename}
-
-              resourceTitle={resource.title}
-
-              resourceSlug={resource.slug.current}
-
-            />
-
-          )}
-
-        </div>
-
-      </div>
-
-    </article>
-
-    )
-
-  }
-
-
 
   return (
-
     <>
-
-      {/* Hero Section */}
-
-      <section className="relative overflow-hidden rounded-2xl bg-bark text-cream ring-1 ring-cream/15">
-
-        <div className="absolute -right-12 -top-12 h-56 w-56 rounded-full bg-gradient-to-br from-clay/40 to-cream/10 blur-2xl" aria-hidden="true"></div>
-
-        <div className="absolute -left-12 -bottom-12 h-48 w-48 rounded-full bg-gradient-to-tr from-cream/10 to-clay/20 blur-2xl" aria-hidden="true"></div>
-
-        <div className="relative z-10 px-6 py-10 md:px-10 md:py-14">
-
-          <span className="inline-flex items-center gap-2 rounded-full bg-cream/10 px-3 py-1 ring-1 ring-cream/30 uppercase tracking-[.22em] text-[11px]">
-
-            Resources
-
-          </span>
-
-          <h1 className="mt-3 font-heading text-3xl md:text-4xl font-bold tracking-tight leading-tight text-balance">Helpful Resources</h1>
-
-          <p className="mt-3 max-w-3xl text-cream/85">
-
-            Download worksheets, guides, and therapeutic materials to support your mental health journey and personal growth.
-
-          </p>
-
-        </div>
-
-      </section>
-
-
-
-      {/* Category Filter */}
-
-      <section className="mt-8">
-
-        <div className="flex flex-wrap gap-2">
-
-          {categories.map((category) => (
-
-            <span
-
-              key={category}
-
-              className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
-
-                category === selectedCategory
-
-                  ? 'bg-clay text-charcoal ring-1 ring-charcoal/20'
-
-                  : 'bg-white text-charcoal/80 ring-1 ring-charcoal/5 hover:ring-charcoal/15'
-
-              }`}
-
-            >
-
-              {category}
-
-            </span>
-
-          ))}
-
-        </div>
-
-        <p className="mt-4 text-sm text-charcoal/75">
-
-          Looking for deeper support as you apply these tools? Explore our{' '}
-
-          <Link href="/services" className="underline decoration-charcoal/30 hover:decoration-charcoal">
-
-            counselling services
-
-          </Link>{' '}
-
-          or{' '}
-
-          <Link href="/contact" className="underline decoration-charcoal/30 hover:decoration-charcoal">
-
-            speak with our team
-
-          </Link>
-
-          .
-
-        </p>
-
-      </section>
-
-
-
-  {allResources.length === 0 ? (
-
-        /* Empty State */
-
-        <section className="mt-16">
-
-          <EmptyState
-
-            title="No resources yet"
-
-            description="We're preparing helpful resources to share with you. Check back soon for worksheets, guides, and therapeutic materials."
-
-            action={
-
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-
-                <a
-
-                  href="https://thesoulcarecounsellor.janeapp.com"
-
-                  target="_blank"
-
-                  rel="noopener noreferrer"
-
-                  className="ui-btn-primary"
-
-                >
-
-                  Book a Free Consultation
-
-                </a>
-
-                <Link href="/contact" className="ui-btn-ghost">
-
-                  Contact Our Team
-
-                </Link>
-
-              </div>
-
-            }
-
-          />
-
-        </section>
-
-      ) : (
-
-        <>
-
-          {/* Featured Resources */}
-
-          {featuredResources.length > 0 && (
-
-            <section className="mt-12">
-
-              <h2 className="font-heading text-2xl font-semibold mb-6">Featured Resources</h2>
-
-              <div className="space-y-8">
-
-                {featuredResources.map((resource) => (
-
-                  (() => {
-
-                    const isGated = Boolean(resource.requiresEmailGate || isForcedGatedResource(resource))
-
-                    return (
-
-                  <div key={resource._id} className="rounded-2xl bg-white ring-1 ring-charcoal/10 overflow-hidden">
-
-                    <div className="md:grid md:grid-cols-2 md:gap-8">
-
-                      {resource.previewImage?.asset && (
-
-                        <div className="w-full">
-
-                          <Image
-
-                            src={getResourceImageUrl(resource, 600, 450)}
-
-                            alt={getResourceImageAlt(resource)}
-
-                            width={600}
-                            height={450}
-
-                            className="w-full h-auto"
-
-                            priority
-
-                            quality={85}
-
-                            sizes="(max-width: 768px) 100vw, 50vw"
-
-                          />
-
-                        </div>
-
-                      )}
-
-                      {!resource.previewImage?.asset && resource.pdfFile?.asset?.url && (
-
-                        <div className="relative h-64 md:h-auto bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-
-                          <div className="text-center">
-
-                            <svg className="w-20 h-20 mx-auto text-red-600 mb-3" fill="currentColor" viewBox="0 0 24 24">
-
-                              <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
-
-                            </svg>
-
-                            <span className="text-lg font-semibold text-gray-700">PDF Document</span>
-
-                            {resource.pdfFile?.asset?.size && (
-
-                              <div className="text-sm text-gray-500 mt-2">
-
-                                {formatFileSize(resource.pdfFile.asset.size)}
-
-                              </div>
-
-                            )}
-
-                          </div>
-
-                        </div>
-
-                      )}
-
-                      <div className={`p-6 md:p-8 ${!resource.previewImage?.asset ? 'md:col-span-2' : ''}`}>
-
-                        <div className="flex items-center gap-2 mb-3">
-
-                          {resource.category && (
-
-                            <span className="px-3 py-1 bg-sand text-charcoal text-xs font-medium rounded-full">
-
-                              {resource.category}
-
-                            </span>
-
-                          )}
-
-                          {isGated && (
-
-                            <span className="px-3 py-1 bg-bark text-cream text-xs font-medium rounded-full">
-
-                              Email required
-
-                            </span>
-
-                          )}
-
-                          {resource.pdfFile?.asset?.size && (
-
-                            <span className="text-charcoal/60 text-sm">{formatFileSize(resource.pdfFile.asset.size)}</span>
-
-                          )}
-
-                        </div>
-
-                        <h3 className="font-heading text-xl md:text-2xl font-semibold mb-3">
-
-                          {resource.title}
-
-                        </h3>
-
-                        {resource.description && (
-
-                          <p className="text-charcoal/85 mb-4 leading-relaxed">{resource.description}</p>
-
-                        )}
-
-                        <div className="flex items-center justify-between">
-
-                          <div className="flex items-center gap-3">
-
-                            <div className="w-10 h-10 rounded-full bg-clay flex items-center justify-center">
-
-                              <span className="text-cream font-semibold text-sm">
-
-                                SC
-
-                              </span>
-
-                            </div>
-
-                            <div>
-
-                              <p className="font-medium text-sm">Soul Care Counselling</p>
-
-                              <p className="text-charcoal/60 text-xs">Professional Resources</p>
-
-                            </div>
-
-                          </div>
-
-                          {resource.pdfFile?.asset?.url && (
-
-                            <GatedDownloadButton
-
-                              requiresEmailGate={isGated}
-
-                              downloadUrl={resource.pdfFile.asset.url}
-
-                              fileName={resource.pdfFile.asset.originalFilename}
-
-                              resourceTitle={resource.title}
-
-                              resourceSlug={resource.slug.current}
-
-                              className="inline-flex items-center px-4 py-2 font-semibold text-charcoal bg-clay hover:bg-clay/90 rounded-md transition-colors ring-1 ring-charcoal/10"
-
-                            />
-
-                          )}
-
-                        </div>
-
-                      </div>
-
-                    </div>
-
-                  </div>
-
-                    )
-
-                  })()
-
-                ))}
-
-              </div>
-
-            </section>
-
-          )}
-
-
-
-          {/* All Resources Grid */}
-
-          <section className="mt-16">
-
-            <h2 className="font-heading text-2xl font-semibold mb-6">All Resources</h2>
-
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-
-              {filteredResources.filter(resource => !resource.isFeatured).map((resource) => (
-
-                <ResourceCard key={resource._id} resource={resource} />
-
-              ))}
-
-            </div>
-
-          </section>
-
-        </>
-
-      )}
-
-
-
-      {/* Newsletter Signup */}
-
-      <section className="mt-16 rounded-2xl bg-gradient-to-br from-sand/60 to-sand/40 backdrop-blur-sm p-8 md:p-10 ring-1 ring-charcoal/5">
-
-        <div className="md:grid md:grid-cols-2 md:gap-10 md:items-center">
-
-          <div className="mb-6 md:mb-0">
-
-            <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-clay/15 mb-4">
-
-              <svg className="w-5 h-5 text-clay" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5S19.832 5.477 21 6.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253" />
-
-              </svg>
-
-            </div>
-
-            <h3 className="font-heading text-xl md:text-2xl font-semibold mb-2 tracking-tight">Your Private Wellness Library</h3>
-
-            <p className="text-charcoal/75 leading-relaxed">
-
-              Join our community to receive thoughtfully curated worksheets, guides, and practical tools designed for steady emotional growth.
-
-            </p>
-
-          </div>
-
-          <ResourceLeadForm />
-
-        </div>
-
-      </section>
-
-
-
-      <ConsultationCta
-
-        title="Ready for personalized support?"
-
-        description="If these resources resonate with you, a consultation can help you choose the right next step in a supportive, no-pressure way."
-
-        trackingLocation="resources-bottom"
-
-        variant="bark"
-
+      {/* Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
+      {/* Enhanced Hero Section */}
+      <section className="relative overflow-hidden rounded-xl bg-bark text-cream ring-1 ring-cream/15 md:rounded-2xl">
+        {/* Animated gradient background */}
+        <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+          <div
+            className="absolute -right-8 -top-8 h-40 w-40 animate-pulse rounded-full bg-gradient-to-br from-clay/40 to-cream/10 blur-2xl md:-right-12 md:-top-12 md:h-56 md:w-56"
+            style={{ animationDuration: '4s' }}
+          ></div>
+          <div
+            className="absolute -bottom-8 -left-8 h-32 w-32 animate-pulse rounded-full bg-gradient-to-tr from-cream/10 to-clay/20 blur-2xl md:-bottom-12 md:-left-12 md:h-48 md:w-48"
+            style={{ animationDuration: '5s', animationDelay: '1s' }}
+          ></div>
+          <div className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-clay/10 via-transparent to-cream/5 blur-3xl md:h-96 md:w-96"></div>
+        </div>
+
+        <div className="relative z-10 px-5 py-8 sm:px-6 sm:py-10 md:px-10 md:py-16 lg:px-12 lg:py-20">
+          <div className="max-w-4xl">
+            <span className="inline-flex items-center gap-2 rounded-full bg-cream/10 px-3 py-1.5 text-[11px] uppercase tracking-[.22em] ring-1 ring-cream/30 backdrop-blur-sm">
+              <svg
+                className="h-3.5 w-3.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5S19.832 5.477 21 6.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253"
+                />
+              </svg>
+              Free Downloads
+            </span>
+
+            <h1 className="mt-4 text-balance font-heading text-3xl font-bold leading-tight tracking-tight md:text-4xl lg:text-5xl">
+              Your Mental Health <span className="text-clay">Resource Library</span>
+            </h1>
+
+            <p className="mt-4 max-w-2xl text-lg leading-relaxed text-cream/85 md:text-xl">
+              Professional worksheets, guides, and tools designed by certified Christian counsellors
+              to support your healing journey.
+            </p>
+
+            {/* Value Props */}
+            <div className="mt-5 flex flex-wrap gap-2 md:mt-6 md:gap-4">
+              <div className="flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5 ring-1 ring-white/20 backdrop-blur-sm md:gap-2 md:px-4 md:py-2">
+                <svg
+                  className="h-4 w-4 flex-shrink-0 text-clay md:h-5 md:w-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <span className="whitespace-nowrap text-xs text-cream/80 md:text-sm">
+                  Clinically-Tested
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5 ring-1 ring-white/20 backdrop-blur-sm md:gap-2 md:px-4 md:py-2">
+                <svg
+                  className="h-4 w-4 flex-shrink-0 text-clay md:h-5 md:w-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+                <span className="whitespace-nowrap text-xs text-cream/80 md:text-sm">
+                  Faith-Centered
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5 ring-1 ring-white/20 backdrop-blur-sm md:gap-2 md:px-4 md:py-2">
+                <svg
+                  className="h-4 w-4 flex-shrink-0 text-clay md:h-5 md:w-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <span className="whitespace-nowrap text-xs text-cream/80 md:text-sm">
+                  Free Download
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Resources with Filter and Search */}
+      <section className="mt-8">
+        <p className="mb-6 text-sm text-charcoal/75">
+          Looking for deeper support as you apply these tools? Explore our{' '}
+          <Link
+            href="/services"
+            className="underline decoration-charcoal/30 hover:decoration-charcoal"
+          >
+            counselling services
+          </Link>{' '}
+          or{' '}
+          <Link
+            href="/contact"
+            className="underline decoration-charcoal/30 hover:decoration-charcoal"
+          >
+            speak with our team
+          </Link>
+          .
+        </p>
+
+        <ResourcesClient allResources={allResources} featuredResources={featuredResources} />
+      </section>
+
+      {/* Enhanced Newsletter Signup */}
+      <section className="mt-12 rounded-xl bg-gradient-to-br from-sand/60 to-sand/40 p-5 ring-1 ring-charcoal/5 backdrop-blur-sm md:mt-16 md:rounded-2xl md:p-8 lg:p-10">
+        <div className="md:grid md:grid-cols-2 md:items-center md:gap-8 lg:gap-10">
+          <div className="mb-5 md:mb-0">
+            <h3 className="mb-2 font-heading text-xl font-bold tracking-tight text-charcoal md:mb-3 md:text-2xl lg:text-3xl">
+              Get New Resources First
+            </h3>
+            <p className="mb-4 leading-relaxed text-charcoal/75">
+              Join our wellness community and receive exclusive worksheets, seasonal guides, and
+              therapeutic tools delivered to your inbox.
+            </p>
+            {/* Value Proposition Bullets */}
+            <ul className="space-y-2 text-sm text-charcoal/70">
+              <li className="flex items-center gap-2">
+                <svg
+                  className="h-4 w-4 flex-shrink-0 text-clay"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                Instant access to all free resources
+              </li>
+              <li className="flex items-center gap-2">
+                <svg
+                  className="h-4 w-4 flex-shrink-0 text-clay"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                New tools delivered monthly
+              </li>
+              <li className="flex items-center gap-2">
+                <svg
+                  className="h-4 w-4 flex-shrink-0 text-clay"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                Unsubscribe anytime—no spam
+              </li>
+            </ul>
+          </div>
+          <div className="rounded-lg bg-white p-4 shadow-sm ring-1 ring-charcoal/10 md:rounded-xl md:p-6">
+            <ResourceLeadForm />
+          </div>
+        </div>
+      </section>
+
+      <ConsultationCta
+        title="Ready for personalized support?"
+        description="If these resources resonate with you, a consultation can help you choose the right next step in a supportive, no-pressure way."
+        trackingLocation="resources-bottom"
+        variant="bark"
+      />
     </>
-
   )
-
 }
-

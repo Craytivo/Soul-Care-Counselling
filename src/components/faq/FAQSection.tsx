@@ -18,7 +18,7 @@ export default function FAQSection({ title, id, faqs, startIndex }: FAQSectionPr
 
   return (
     <section id={id} className="mt-14 md:mt-16">
-      <div className="flex items-center gap-3 mb-4">
+      <div className="mb-4 flex items-center gap-3">
         <div className="h-px flex-1 bg-charcoal/5" />
         <h2 className="font-heading text-xs uppercase tracking-[.2em] text-charcoal/40">{title}</h2>
         <div className="h-px flex-1 bg-charcoal/5" />

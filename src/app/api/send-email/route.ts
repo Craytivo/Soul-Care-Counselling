@@ -87,7 +87,8 @@ export async function POST(request: Request) {
         const buffer = Buffer.from(await maybeFile.arrayBuffer())
         const safeFilename = (maybeFile.name || `${key}.bin`).replace(/[^a-zA-Z0-9._-]/g, '_')
 
-        fields[key] = `[file] ${safeFilename} (${maybeFile.type || 'application/octet-stream'}, ${maybeFile.size} bytes)`
+        fields[key] =
+          `[file] ${safeFilename} (${maybeFile.type || 'application/octet-stream'}, ${maybeFile.size} bytes)`
         attachments.push({
           content: buffer.toString('base64'),
           filename: safeFilename,

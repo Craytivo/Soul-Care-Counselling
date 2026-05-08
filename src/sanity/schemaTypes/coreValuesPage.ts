@@ -65,7 +65,7 @@ export const coreValuesPage = defineType({
     }),
     defineField({
       name: 'values',
-  title: 'Core Pillars',
+      title: 'Core Pillars',
       type: 'array',
       of: [
         {
@@ -170,7 +170,7 @@ export const coreValuesPage = defineType({
       const status = isActive ? '✅' : '⏳'
       return {
         title: `${status} ${title}`,
-  subtitle: 'Core Pillars Page',
+        subtitle: 'Core Pillars Page',
       }
     },
   },

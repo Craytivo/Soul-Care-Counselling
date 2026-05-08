@@ -6,10 +6,6 @@ export const metadata: Metadata = {
     'Insights, reflections, and guidance from our team of Christian counselors. Explore faith-centered perspectives on mental health, healing, and personal growth.',
 }
 
-export default function NotesLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function NotesLayout({ children }: { children: React.ReactNode }) {
   return children
 }

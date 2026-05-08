@@ -33,9 +33,9 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     contactPage,
     blogPost,
     resource,
-  siteSettings,
-  privacyPolicyPage,
-  termsOfUsePage,
-  waitlistSignup,
+    siteSettings,
+    privacyPolicyPage,
+    termsOfUsePage,
+    waitlistSignup,
   ],
 }

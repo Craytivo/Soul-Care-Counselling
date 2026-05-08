@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import React, { useState } from 'react'
 
@@ -12,9 +12,9 @@ export default function LegalTOC({ headings }: { headings: Heading[] }) {
   return (
     <div>
       {/* Toggle button (mobile only) */}
-      <div className="md:hidden mb-4">
+      <div className="mb-4 md:hidden">
         <button
-          className="w-full flex items-center justify-between rounded-md bg-sand/60 px-4 py-2 text-sm font-semibold text-charcoal"
+          className="flex w-full items-center justify-between rounded-md bg-sand/60 px-4 py-2 text-sm font-semibold text-charcoal"
           onClick={() => setOpen((s) => !s)}
           aria-expanded={open}
           aria-controls="legal-toc"
@@ -25,10 +25,10 @@ export default function LegalTOC({ headings }: { headings: Heading[] }) {
       </div>
 
       {/* Contents box: visible on md+ or when mobile toggle is open. Full width so it matches content width. */}
-      <div className={`${open ? 'block' : 'hidden'} md:block mb-6`} id="legal-toc">
-        <div className="w-full rounded-lg border border-charcoal/8 bg-white/50 p-4">
-          <strong className="block text-sm text-charcoal/80 mb-2">Contents</strong>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-1 text-sm text-charcoal/85">
+      <div className={`${open ? 'block' : 'hidden'} mb-6 md:block`} id="legal-toc">
+        <div className="border-charcoal/8 w-full rounded-lg border bg-white/50 p-4">
+          <strong className="mb-2 block text-sm text-charcoal/80">Contents</strong>
+          <div className="grid grid-cols-1 gap-x-6 gap-y-1 text-sm text-charcoal/85 md:grid-cols-2">
             {(() => {
               const mid = Math.ceil(headings.length / 2)
               const left = headings.slice(0, mid)
@@ -36,16 +36,20 @@ export default function LegalTOC({ headings }: { headings: Heading[] }) {
               return (
                 <>
                   <ul className="space-y-1">
-                    {left.map(h => (
+                    {left.map((h) => (
                       <li key={h.id} className={h.level === 3 ? 'pl-4' : ''}>
-                        <a href={`#${h.id}`} className="underline text-clay hover:text-bark">{h.text}</a>
+                        <a href={`#${h.id}`} className="text-clay underline hover:text-bark">
+                          {h.text}
+                        </a>
                       </li>
                     ))}
                   </ul>
                   <ul className="space-y-1">
-                    {right.map(h => (
+                    {right.map((h) => (
                       <li key={h.id} className={h.level === 3 ? 'pl-4' : ''}>
-                        <a href={`#${h.id}`} className="underline text-clay hover:text-bark">{h.text}</a>
+                        <a href={`#${h.id}`} className="text-clay underline hover:text-bark">
+                          {h.text}
+                        </a>
                       </li>
                     ))}
                   </ul>

@@ -1,4 +1,3 @@
-
 import { getServicePage } from '@/lib/sanity-queries'
 import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
@@ -11,21 +10,19 @@ export default async function SanityServicePage({ slug }: SanityServicePageProps
   const page = await getServicePage(slug)
   if (!page) {
     return (
-      <div className="text-center py-12">
+      <div className="py-12 text-center">
         <p className="text-charcoal/60">Service page not found.</p>
       </div>
     )
   }
 
-  const renderCtaButton = (cta: { text: string; url: string; external: boolean }, className: string) => {
+  const renderCtaButton = (
+    cta: { text: string; url: string; external: boolean },
+    className: string
+  ) => {
     if (cta.external) {
       return (
-        <a
-          href={cta.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={className}
-        >
+        <a href={cta.url} target="_blank" rel="noopener noreferrer" className={className}>
           {cta.text}
         </a>
       )
@@ -39,80 +36,87 @@ export default async function SanityServicePage({ slug }: SanityServicePageProps
   }
 
   type Section = {
-    _key?: string;
-    _type: string;
-    title?: string;
-    content?: unknown[];
-    items?: Array<{label?: string; value?: string}> | string[];
-    description?: string;
-    primaryButton?: { text: string; url: string; external: boolean };
-    secondaryButton?: { text: string; url: string; external: boolean };
-  };
+    _key?: string
+    _type: string
+    title?: string
+    content?: unknown[]
+    items?: Array<{ label?: string; value?: string }> | string[]
+    description?: string
+    primaryButton?: { text: string; url: string; external: boolean }
+    secondaryButton?: { text: string; url: string; external: boolean }
+  }
   const renderSection = (section: Section) => {
     const sectionKey = section._key || `${section._type}-${section.title || 'section'}`
     switch (section._type) {
       case 'textSection':
         return (
-          <section key={sectionKey} className="mx-auto max-w-3xl mt-12">
-            <h2 className="font-heading text-2xl md:text-3xl font-bold text-charcoal">{section.title}</h2>
+          <section key={sectionKey} className="mx-auto mt-12 max-w-3xl">
+            <h2 className="font-heading text-2xl font-bold text-charcoal md:text-3xl">
+              {section.title}
+            </h2>
             <div className="mt-4 text-charcoal/90">
               <PortableText
-                value={Array.isArray(section.content)
-                  ? section.content.filter(
-                      (block): block is import('@portabletext/types').TypedObject =>
-                        typeof block === 'object' && block !== null && '_type' in block
-                    )
-                  : []}
+                value={
+                  Array.isArray(section.content)
+                    ? section.content.filter(
+                        (block): block is import('@portabletext/types').TypedObject =>
+                          typeof block === 'object' && block !== null && '_type' in block
+                      )
+                    : []
+                }
               />
             </div>
           </section>
         )
 
       case 'detailsSection':
-        const isSingleSession = page.slug?.current === 'single-session';
-        const isAffordable = page.slug?.current === 'affordable';
+        const isSingleSession = page.slug?.current === 'single-session'
+        const isAffordable = page.slug?.current === 'affordable'
         return (
-          <section key={sectionKey} className="mx-auto max-w-5xl mt-12">
-            <h2 className="font-heading text-2xl md:text-3xl font-bold text-charcoal">{section.title}</h2>
+          <section key={sectionKey} className="mx-auto mt-12 max-w-5xl">
+            <h2 className="font-heading text-2xl font-bold text-charcoal md:text-3xl">
+              {section.title}
+            </h2>
             <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {(section.items as Array<{label: string; value: string}> | string[])
-                .filter((item: {label?: string; value?: string} | string) => {
-                  const label = typeof item === 'string' ? item : item.label?.toLowerCase() ?? '';
+              {(section.items as Array<{ label: string; value: string }> | string[])
+                .filter((item: { label?: string; value?: string } | string) => {
+                  const label = typeof item === 'string' ? item : (item.label?.toLowerCase() ?? '')
                   if (label.includes('cost') || label.includes('price') || label.includes('fee')) {
-                    return isSingleSession || isAffordable;
+                    return isSingleSession || isAffordable
                   }
-                  return true;
+                  return true
                 })
-                .map((item: {label?: string; value?: string} | string) => {
-                  let value = typeof item === 'string' ? item : item.value ?? item.label;
+                .map((item: { label?: string; value?: string } | string) => {
+                  let value = typeof item === 'string' ? item : (item.value ?? item.label)
                   if (
                     isSingleSession &&
                     typeof item !== 'string' &&
-                    (
-                      item.label?.toLowerCase().includes('cost') ||
+                    (item.label?.toLowerCase().includes('cost') ||
                       item.label?.toLowerCase().includes('price') ||
-                      item.label?.toLowerCase().includes('fee')
-                    )
+                      item.label?.toLowerCase().includes('fee'))
                   ) {
-                    value = '$20.00 per session';
+                    value = '$20.00 per session'
                   }
                   if (
                     isAffordable &&
                     typeof item !== 'string' &&
-                    (
-                      item.label?.toLowerCase().includes('cost') ||
+                    (item.label?.toLowerCase().includes('cost') ||
                       item.label?.toLowerCase().includes('price') ||
-                      item.label?.toLowerCase().includes('fee')
-                    )
+                      item.label?.toLowerCase().includes('fee'))
                   ) {
-                    value = '$80.00 for 7 sessions';
+                    value = '$80.00 for 7 sessions'
                   }
                   return (
-                    <div key={`${typeof item === 'string' ? item : `${item.label}-${item.value}`}`} className="rounded-lg bg-white p-5 ring-1 ring-charcoal/10 shadow-sm">
-                      <dt className="font-semibold">{typeof item === 'string' ? item : item.label ?? item.value}</dt>
+                    <div
+                      key={`${typeof item === 'string' ? item : `${item.label}-${item.value}`}`}
+                      className="rounded-lg bg-white p-5 shadow-sm ring-1 ring-charcoal/10"
+                    >
+                      <dt className="font-semibold">
+                        {typeof item === 'string' ? item : (item.label ?? item.value)}
+                      </dt>
                       <dd className="mt-1 text-charcoal/90">{value}</dd>
                     </div>
-                  );
+                  )
                 })}
             </div>
           </section>
@@ -120,8 +124,10 @@ export default async function SanityServicePage({ slug }: SanityServicePageProps
 
       case 'listSection':
         return (
-          <section key={sectionKey} className="mx-auto max-w-5xl mt-12">
-            <h2 className="font-heading text-2xl md:text-3xl font-bold text-charcoal">{section.title}</h2>
+          <section key={sectionKey} className="mx-auto mt-12 max-w-5xl">
+            <h2 className="font-heading text-2xl font-bold text-charcoal md:text-3xl">
+              {section.title}
+            </h2>
             <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {(section.items as string[]).map((item: string) => (
                 <li key={item} className="flex items-start gap-3">
@@ -135,21 +141,21 @@ export default async function SanityServicePage({ slug }: SanityServicePageProps
 
       case 'ctaSection':
         return (
-          <section key={sectionKey} className="mx-auto max-w-3xl mt-12">
-            <div className="rounded-xl bg-bark text-cream p-6 ring-1 ring-cream/15">
-              <h3 className="font-heading text-xl md:text-2xl font-bold">{section.title}</h3>
-              {section.description && (
-                <p className="mt-2 text-cream/90">{section.description}</p>
-              )}
+          <section key={sectionKey} className="mx-auto mt-12 max-w-3xl">
+            <div className="rounded-xl bg-bark p-6 text-cream ring-1 ring-cream/15">
+              <h3 className="font-heading text-xl font-bold md:text-2xl">{section.title}</h3>
+              {section.description && <p className="mt-2 text-cream/90">{section.description}</p>}
               <div className="mt-5 flex flex-wrap gap-3">
-                {section.primaryButton && renderCtaButton(
-                  section.primaryButton,
-                  "inline-flex items-center justify-center rounded-lg bg-clay px-5 py-2.5 font-semibold text-charcoal shadow-sm ring-1 ring-charcoal/10 transition hover:bg-clay/90"
-                )}
-                {section.secondaryButton && renderCtaButton(
-                  section.secondaryButton,
-                  "inline-flex items-center justify-center rounded-lg bg-sand px-5 py-2.5 font-semibold text-charcoal shadow-sm ring-1 ring-charcoal/10 transition hover:bg-sand/90"
-                )}
+                {section.primaryButton &&
+                  renderCtaButton(
+                    section.primaryButton,
+                    'inline-flex items-center justify-center rounded-lg bg-clay px-5 py-2.5 font-semibold text-charcoal shadow-sm ring-1 ring-charcoal/10 transition hover:bg-clay/90'
+                  )}
+                {section.secondaryButton &&
+                  renderCtaButton(
+                    section.secondaryButton,
+                    'inline-flex items-center justify-center rounded-lg bg-sand px-5 py-2.5 font-semibold text-charcoal shadow-sm ring-1 ring-charcoal/10 transition hover:bg-sand/90'
+                  )}
               </div>
             </div>
           </section>
@@ -164,32 +170,32 @@ export default async function SanityServicePage({ slug }: SanityServicePageProps
     <>
       {/* Page Hero */}
       <section className="mx-auto max-w-3xl">
-        <span className="inline-flex items-center gap-2 rounded-full bg-sand/70 px-3 py-1 ring-1 ring-charcoal/10 uppercase tracking-[.22em] text-[11px] text-charcoal/80">
+        <span className="inline-flex items-center gap-2 rounded-full bg-sand/70 px-3 py-1 text-[11px] uppercase tracking-[.22em] text-charcoal/80 ring-1 ring-charcoal/10">
           {page.badge}
         </span>
-        <h1 className="mt-3 font-heading text-3xl md:text-4xl font-bold text-charcoal">
+        <h1 className="mt-3 font-heading text-3xl font-bold text-charcoal md:text-4xl">
           {page.mainTitle}
         </h1>
-        
+
         {page.quote && (
-          <blockquote className="mt-6 border-l-4 border-clay pl-4 text-charcoal/90 italic">
+          <blockquote className="mt-6 border-l-4 border-clay pl-4 italic text-charcoal/90">
             &quot;{page.quote.text}&quot;
-            <span className="not-italic font-semibold"> {page.quote.attribution}</span>
+            <span className="font-semibold not-italic"> {page.quote.attribution}</span>
           </blockquote>
         )}
-        
-        <div className="mt-6 whitespace-pre-line text-charcoal/90 leading-relaxed">
+
+        <div className="mt-6 whitespace-pre-line leading-relaxed text-charcoal/90">
           {page.heroDescription}
         </div>
-        
+
         <div className="mt-6 flex flex-wrap gap-3">
           {renderCtaButton(
             page.primaryCta,
-            "inline-flex items-center justify-center rounded-lg bg-clay px-5 py-2.5 font-semibold text-charcoal shadow-sm ring-1 ring-charcoal/10 transition hover:bg-clay/90"
+            'inline-flex items-center justify-center rounded-lg bg-clay px-5 py-2.5 font-semibold text-charcoal shadow-sm ring-1 ring-charcoal/10 transition hover:bg-clay/90'
           )}
           {renderCtaButton(
             page.secondaryCta,
-            "inline-flex items-center justify-center rounded-lg bg-sand px-5 py-2.5 font-semibold text-charcoal shadow-sm ring-1 ring-charcoal/10 transition hover:bg-sand/90"
+            'inline-flex items-center justify-center rounded-lg bg-sand px-5 py-2.5 font-semibold text-charcoal shadow-sm ring-1 ring-charcoal/10 transition hover:bg-sand/90'
           )}
         </div>
       </section>

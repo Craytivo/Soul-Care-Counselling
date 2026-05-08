@@ -136,8 +136,10 @@ export const resource = defineType({
     prepare({ title, category, media, isPublished, isFeatured }) {
       const status = isPublished ? '✅' : '⏳'
       const featured = isFeatured ? '⭐' : ''
-      const categoryLabel = category?.replace('-', ' ').replace(/\b\w/g, (l: string) => l.toUpperCase()) || 'Uncategorized'
-      
+      const categoryLabel =
+        category?.replace('-', ' ').replace(/\b\w/g, (l: string) => l.toUpperCase()) ||
+        'Uncategorized'
+
       return {
         title: `${status}${featured} ${title}`,
         subtitle: categoryLabel,

@@ -25,10 +25,6 @@ export function trackLeadFormSubmit(payload: {
   pushEvent('lead_form_submit', payload)
 }
 
-export function trackConsultationClick(payload: {
-  location: string
-  label: string
-  url: string
-}) {
+export function trackConsultationClick(payload: { location: string; label: string; url: string }) {
   pushEvent('consultation_click', payload)
 }

@@ -1,3 +1,3 @@
-import { PortableText } from '@portabletext/react';
+import { PortableText } from '@portabletext/react'
 
-export default PortableText;
+export default PortableText

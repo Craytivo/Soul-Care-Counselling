@@ -16,7 +16,6 @@ const termsOfUsePage = {
       of: [{ type: 'block' }],
     },
   ],
-};
+}
 
-
-export default termsOfUsePage;
+export default termsOfUsePage

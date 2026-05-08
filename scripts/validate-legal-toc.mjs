@@ -8,7 +8,9 @@ const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || process.env.SANIT
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || process.env.SANITY_DATASET
 
 if (!projectId || !dataset) {
-  console.error('Missing SANITY project/dataset env vars. Set NEXT_PUBLIC_SANITY_PROJECT_ID and NEXT_PUBLIC_SANITY_DATASET (or SANITY_PROJECT_ID/SANITY_DATASET).')
+  console.error(
+    'Missing SANITY project/dataset env vars. Set NEXT_PUBLIC_SANITY_PROJECT_ID and NEXT_PUBLIC_SANITY_DATASET (or SANITY_PROJECT_ID/SANITY_DATASET).'
+  )
   process.exit(2)
 }
 
@@ -16,17 +18,19 @@ const client = createClient({
   projectId,
   dataset,
   useCdn: false,
-  apiVersion: '2025-09-05'
+  apiVersion: '2025-09-05',
 })
 
 async function run() {
-  const pages = await client.fetch(`*[_type in ["privacyPolicyPage","termsOfUsePage"]] { _id, _type, title, content }`)
+  const pages = await client.fetch(
+    `*[_type in ["privacyPolicyPage","termsOfUsePage"]] { _id, _type, title, content }`
+  )
 
   let ok = true
 
   for (const p of pages) {
     const content = Array.isArray(p.content) ? p.content : []
-    const hasHeading = content.some(block => {
+    const hasHeading = content.some((block) => {
       if (typeof block !== 'object' || block === null) return false
       const b = block
       const type = b._type || b['_type']
@@ -49,7 +53,7 @@ async function run() {
   process.exit(0)
 }
 
-run().catch(err => {
+run().catch((err) => {
   console.error('Validation failed:', err)
   process.exit(2)
 })

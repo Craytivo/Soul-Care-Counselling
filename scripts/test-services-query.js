@@ -12,7 +12,7 @@ const client = createClient({
 async function testServicesQuery() {
   try {
     console.log('🔍 Testing services query...')
-    
+
     const result = await client.fetch(`
       *[_type == "services"] {
         _id,
@@ -28,7 +28,7 @@ async function testServicesQuery() {
         "servicesCount": length(servicesList[])
       }
     `)
-    
+
     console.log(`📊 Found ${result.length} services documents:`)
     result.forEach((doc, index) => {
       console.log(`  ${index + 1}. ${doc.title || 'Untitled'}`)
@@ -44,7 +44,6 @@ async function testServicesQuery() {
       console.log('❌ No services documents found!')
       console.log('💡 Make sure you have created a services document in Sanity Studio')
     }
-
   } catch (error) {
     console.error('❌ Error testing query:', error)
   }

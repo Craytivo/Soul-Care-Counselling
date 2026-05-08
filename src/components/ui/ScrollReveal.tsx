@@ -26,12 +26,7 @@ export default function ScrollReveal({
   return (
     <Tag
       ref={ref}
-      className={cn(
-        variant,
-        delay > 0 && `stagger-${delay}`,
-        isVisible && 'visible',
-        className
-      )}
+      className={cn(variant, delay > 0 && `stagger-${delay}`, isVisible && 'visible', className)}
     >
       {children}
     </Tag>

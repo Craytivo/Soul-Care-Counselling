@@ -1,106 +1,108 @@
-"use client";
+'use client'
 
-import { useMemo, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { ArrowRight, ChevronDown, Search, SlidersHorizontal, X } from "lucide-react";
-import { motion } from "framer-motion";
-import { extractBioText } from "@/lib/portable-text";
-import { urlFor } from "@/lib/sanity";
-import type { TeamMember } from "@/lib/sanity";
+import { useMemo, useState } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { ArrowRight, ChevronDown, Search, SlidersHorizontal, X } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { extractBioText } from '@/lib/portable-text'
+import { urlFor } from '@/lib/sanity'
+import type { TeamMember } from '@/lib/sanity'
 
 interface TeamFilter {
-  key: string;
-  label: string;
-  count: number;
+  key: string
+  label: string
+  count: number
 }
 
 const ALL_FILTER: TeamFilter = {
-  key: "all",
-  label: "All clinicians",
+  key: 'all',
+  label: 'All clinicians',
   count: 0,
-};
+}
 
 const PRIORITY_SPECIALTIES = [
-  "Anxiety",
-  "Depression",
-  "Trauma",
-  "Couples",
-  "Youth",
-  "Family",
+  'Anxiety',
+  'Depression',
+  'Trauma',
+  'Couples',
+  'Youth',
+  'Family',
   "Women's mental health",
   "Men's mental health",
-  "Stress management",
-  "Postpartum Mental Health",
-  "Affordable therapy",
-  "Bilingual",
-];
+  'Stress management',
+  'Postpartum Mental Health',
+  'Affordable therapy',
+  'Bilingual',
+]
 
 const normalize = (value: string) =>
   value
     .replace(/[’‘‛`´]/g, "'")
-    .replace(/\s+/g, " ")
+    .replace(/\s+/g, ' ')
     .trim()
-    .toLowerCase();
+    .toLowerCase()
 
 function getFilters(teamMembers: TeamMember[]): TeamFilter[] {
-  const specialtyMap = new Map<string, TeamFilter>();
+  const specialtyMap = new Map<string, TeamFilter>()
 
   teamMembers.forEach((member) => {
     member.specialties?.forEach((specialty) => {
-      const label = specialty.trim();
-      if (!label) return;
+      const label = specialty.trim()
+      if (!label) return
 
-      const key = normalize(label);
-      const existing = specialtyMap.get(key);
+      const key = normalize(label)
+      const existing = specialtyMap.get(key)
 
       specialtyMap.set(key, {
         key,
         label: existing?.label ?? label,
         count: (existing?.count ?? 0) + 1,
-      });
-    });
-  });
+      })
+    })
+  })
 
-  const priority = new Map(PRIORITY_SPECIALTIES.map((specialty, index) => [normalize(specialty), index]));
+  const priority = new Map(
+    PRIORITY_SPECIALTIES.map((specialty, index) => [normalize(specialty), index])
+  )
 
   return [
     { ...ALL_FILTER, count: teamMembers.length },
     ...Array.from(specialtyMap.values()).sort((a, b) => {
-      const priorityA = priority.get(a.key) ?? Number.POSITIVE_INFINITY;
-      const priorityB = priority.get(b.key) ?? Number.POSITIVE_INFINITY;
+      const priorityA = priority.get(a.key) ?? Number.POSITIVE_INFINITY
+      const priorityB = priority.get(b.key) ?? Number.POSITIVE_INFINITY
 
-      if (priorityA !== priorityB) return priorityA - priorityB;
-      if (b.count !== a.count) return b.count - a.count;
+      if (priorityA !== priorityB) return priorityA - priorityB
+      if (b.count !== a.count) return b.count - a.count
 
-      return a.label.localeCompare(b.label);
+      return a.label.localeCompare(b.label)
     }),
-  ];
+  ]
 }
 
 function getImageUrl(member: TeamMember) {
-  if (!member.image) return "/assets/img/team/placeholder.webp";
+  if (!member.image) return '/assets/img/team/placeholder.webp'
 
   try {
-    return urlFor(member.image).width(160).height(160).url();
+    return urlFor(member.image).width(160).height(160).url()
   } catch {
-    return "/assets/img/team/placeholder.webp";
+    return '/assets/img/team/placeholder.webp'
   }
 }
 
 export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMember[] }) {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [activeFilter, setActiveFilter] = useState("all");
+  const [searchQuery, setSearchQuery] = useState('')
+  const [activeFilter, setActiveFilter] = useState('all')
 
-  const filters = useMemo(() => getFilters(teamMembers), [teamMembers]);
-  const activeFilterOption = filters.find((filter) => filter.key === activeFilter) ?? filters[0];
-  const quickFilters = filters.filter((filter) => filter.key !== "all").slice(0, 6);
+  const filters = useMemo(() => getFilters(teamMembers), [teamMembers])
+  const activeFilterOption = filters.find((filter) => filter.key === activeFilter) ?? filters[0]
+  const quickFilters = filters.filter((filter) => filter.key !== 'all').slice(0, 6)
 
   const filteredMembers = useMemo(() => {
-    const searchLower = normalize(searchQuery);
+    const searchLower = normalize(searchQuery)
 
     return teamMembers.filter((member) => {
-      const bioText = extractBioText(member.bio);
+      const bioText = extractBioText(member.bio)
       const searchableValues = [
         member.name,
         member.credentials,
@@ -108,43 +110,46 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
         bioText,
         ...(member.specialties ?? []),
         ...(member.areasOfFocus ?? []),
-      ];
+      ]
 
       const matchesSearch =
-        !searchLower || searchableValues.some((value) => value && normalize(value).includes(searchLower));
+        !searchLower ||
+        searchableValues.some((value) => value && normalize(value).includes(searchLower))
 
       const matchesFilter =
-        activeFilter === "all" || member.specialties?.some((specialty) => normalize(specialty) === activeFilter);
+        activeFilter === 'all' ||
+        member.specialties?.some((specialty) => normalize(specialty) === activeFilter)
 
-      return matchesSearch && matchesFilter;
-    });
-  }, [teamMembers, searchQuery, activeFilter]);
+      return matchesSearch && matchesFilter
+    })
+  }, [teamMembers, searchQuery, activeFilter])
 
-  const hasActiveFilters = Boolean(searchQuery) || activeFilter !== "all";
+  const hasActiveFilters = Boolean(searchQuery) || activeFilter !== 'all'
 
   return (
     <section id="team" className="mt-14 md:mt-20">
       <div className="mx-auto max-w-7xl">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <header className="max-w-2xl">
-            <span className="inline-flex items-center gap-2 rounded-full bg-sand/70 px-3 py-1 ring-1 ring-charcoal/10 uppercase tracking-[.22em] text-[11px] text-charcoal/80">
+            <span className="inline-flex items-center gap-2 rounded-full bg-sand/70 px-3 py-1 text-[11px] uppercase tracking-[.22em] text-charcoal/80 ring-1 ring-charcoal/10">
               Our Team
             </span>
-            <h2 className="mt-3 font-heading text-2xl md:text-3xl font-bold text-charcoal">
+            <h2 className="mt-3 font-heading text-2xl font-bold text-charcoal md:text-3xl">
               Warm, culturally responsive clinicians
             </h2>
             <p className="mt-3 text-charcoal/80">
-              Faith-informed and evidence-based care. Filter by focus area to find the right support more quickly.
+              Faith-informed and evidence-based care. Filter by focus area to find the right support
+              more quickly.
             </p>
           </header>
 
           <div className="flex items-center gap-3 text-sm text-charcoal/70">
             <span className="font-semibold text-charcoal">{filteredMembers.length}</span>
-            <span>{filteredMembers.length === 1 ? "clinician" : "clinicians"} in view</span>
+            <span>{filteredMembers.length === 1 ? 'clinician' : 'clinicians'} in view</span>
           </div>
         </div>
 
-        <div className="mt-8 rounded-2xl border border-charcoal/10 bg-white/85 p-4 shadow-elevation-2 backdrop-blur sm:p-5 md:mt-9">
+        <div className="mt-8 rounded-2xl border border-charcoal/10 bg-white/85 p-4 backdrop-blur shadow-elevation-2 sm:p-5 md:mt-9">
           <div className="grid gap-3 lg:grid-cols-[minmax(260px,1fr)_minmax(260px,340px)_auto] lg:items-center">
             <label htmlFor="teamSearch" className="sr-only">
               Search team
@@ -164,7 +169,7 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
               {searchQuery && (
                 <button
                   type="button"
-                  onClick={() => setSearchQuery("")}
+                  onClick={() => setSearchQuery('')}
                   className="absolute right-2 top-1/2 inline-flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full text-charcoal/45 transition hover:bg-sand/70 hover:text-charcoal"
                   aria-label="Clear team search"
                 >
@@ -197,8 +202,8 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
             <button
               type="button"
               onClick={() => {
-                setSearchQuery("");
-                setActiveFilter("all");
+                setSearchQuery('')
+                setActiveFilter('all')
               }}
               className="inline-flex h-11 items-center justify-center rounded-lg border border-charcoal/15 px-4 text-sm font-semibold text-charcoal transition hover:border-bark/30 hover:bg-sand/60 disabled:pointer-events-none disabled:opacity-45"
               disabled={!hasActiveFilters}
@@ -210,23 +215,28 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
           <div className="mt-3 flex flex-col gap-3 border-t border-charcoal/10 pt-3 md:flex-row md:items-center md:justify-between">
             <div className="flex min-w-0 items-center gap-2 text-sm text-charcoal/70">
               <span className="shrink-0 rounded-full bg-cream px-3 py-1 font-semibold text-charcoal ring-1 ring-charcoal/10">
-                {activeFilterOption?.label ?? "All clinicians"}
+                {activeFilterOption?.label ?? 'All clinicians'}
               </span>
               <span className="truncate">
-                {hasActiveFilters ? "Showing the best matches for your selection" : "Choose a focus area or search directly"}
+                {hasActiveFilters
+                  ? 'Showing the best matches for your selection'
+                  : 'Choose a focus area or search directly'}
               </span>
             </div>
 
-            <div className="-mx-2 flex gap-2 overflow-x-auto px-2 py-1 md:max-w-[52%] md:justify-end" aria-label="Popular specialty filters">
+            <div
+              className="-mx-2 flex gap-2 overflow-x-auto px-2 py-1 md:max-w-[52%] md:justify-end"
+              aria-label="Popular specialty filters"
+            >
               <button
                 type="button"
-                onClick={() => setActiveFilter("all")}
+                onClick={() => setActiveFilter('all')}
                 className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-semibold ring-1 transition ${
-                  activeFilter === "all"
-                    ? "bg-charcoal text-white ring-charcoal"
-                    : "bg-white text-charcoal ring-charcoal/15 hover:bg-sand/60"
+                  activeFilter === 'all'
+                    ? 'bg-charcoal text-white ring-charcoal'
+                    : 'bg-white text-charcoal ring-charcoal/15 hover:bg-sand/60'
                 }`}
-                aria-pressed={activeFilter === "all"}
+                aria-pressed={activeFilter === 'all'}
               >
                 All
               </button>
@@ -237,13 +247,17 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
                   onClick={() => setActiveFilter(filter.key)}
                   className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-semibold ring-1 transition ${
                     activeFilter === filter.key
-                      ? "bg-charcoal text-white ring-charcoal"
-                      : "bg-white text-charcoal ring-charcoal/15 hover:bg-sand/60"
+                      ? 'bg-charcoal text-white ring-charcoal'
+                      : 'bg-white text-charcoal ring-charcoal/15 hover:bg-sand/60'
                   }`}
                   aria-pressed={activeFilter === filter.key}
                 >
                   {filter.label}
-                  <span className={activeFilter === filter.key ? "ml-1 text-white/70" : "ml-1 text-charcoal/45"}>
+                  <span
+                    className={
+                      activeFilter === filter.key ? 'ml-1 text-white/70' : 'ml-1 text-charcoal/45'
+                    }
+                  >
                     {filter.count}
                   </span>
                 </button>
@@ -253,9 +267,12 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
         </div>
 
         {filteredMembers.length > 0 ? (
-          <ul role="list" className="mt-8 grid gap-5 sm:grid-cols-1 md:mt-10 md:grid-cols-2 md:gap-7 lg:grid-cols-3 xl:grid-cols-4 xl:gap-8 items-stretch stagger-grid">
+          <ul
+            role="list"
+            className="stagger-grid mt-8 grid items-stretch gap-5 sm:grid-cols-1 md:mt-10 md:grid-cols-2 md:gap-7 lg:grid-cols-3 xl:grid-cols-4 xl:gap-8"
+          >
             {filteredMembers.map((member, index) => {
-              const specialties = Array.isArray(member.specialties) ? member.specialties : [];
+              const specialties = Array.isArray(member.specialties) ? member.specialties : []
 
               return (
                 <motion.li
@@ -264,9 +281,13 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
                   initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.18 }}
-                  transition={{ duration: 0.45, delay: Math.min(index * 0.04, 0.24), ease: "easeOut" }}
+                  transition={{
+                    duration: 0.45,
+                    delay: Math.min(index * 0.04, 0.24),
+                    ease: 'easeOut',
+                  }}
                 >
-                  <article className="group flex h-full flex-col rounded-2xl border border-charcoal/10 bg-white shadow-elevation-1 transition duration-200 hover:-translate-y-0.5 hover:border-clay/35 hover:shadow-elevation-3">
+                  <article className="group flex h-full flex-col rounded-2xl border border-charcoal/10 bg-white transition duration-200 shadow-elevation-1 hover:-translate-y-0.5 hover:border-clay/35 hover:shadow-elevation-3">
                     <div className="flex flex-1 flex-col p-5">
                       <div className="flex items-start gap-4">
                         <Image
@@ -282,9 +303,13 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
                             {member.name}
                           </h3>
                           {member.credentials && (
-                            <p className="mt-1 text-sm font-medium text-charcoal/65">{member.credentials}</p>
+                            <p className="mt-1 text-sm font-medium text-charcoal/65">
+                              {member.credentials}
+                            </p>
                           )}
-                          <p className="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-clay">{member.role}</p>
+                          <p className="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-clay">
+                            {member.role}
+                          </p>
                           {!member.acceptsBookings && (
                             <span className="mt-2 inline-flex rounded-full bg-sand/55 px-2.5 py-1 text-[11px] font-semibold text-charcoal/65">
                               Not accepting clients
@@ -293,14 +318,17 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
                         </div>
                       </div>
 
-                      <p className="mt-4 text-sm leading-relaxed text-charcoal/76 line-clamp-4">
-                        {extractBioText(member.bio) || "Professional bio coming soon."}
+                      <p className="text-charcoal/76 mt-4 line-clamp-4 text-sm leading-relaxed">
+                        {extractBioText(member.bio) || 'Professional bio coming soon.'}
                       </p>
 
                       {specialties.length > 0 && (
                         <div className="mt-4 flex flex-wrap gap-1.5">
                           {specialties.slice(0, 3).map((specialty) => (
-                            <span key={specialty} className="rounded-full bg-cream px-2.5 py-1 text-xs font-medium text-charcoal/72 ring-1 ring-charcoal/5">
+                            <span
+                              key={specialty}
+                              className="text-charcoal/72 rounded-full bg-cream px-2.5 py-1 text-xs font-medium ring-1 ring-charcoal/5"
+                            >
                               {specialty}
                             </span>
                           ))}
@@ -324,20 +352,22 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
                     </div>
                   </article>
                 </motion.li>
-              );
+              )
             })}
           </ul>
         ) : (
           <div className="mt-8 rounded-2xl border border-charcoal/10 bg-white p-8 text-center shadow-elevation-1">
-            <h3 className="font-heading text-xl font-semibold text-charcoal">No clinicians match those filters</h3>
+            <h3 className="font-heading text-xl font-semibold text-charcoal">
+              No clinicians match those filters
+            </h3>
             <p className="mx-auto mt-2 max-w-md text-sm text-charcoal/70">
               Try a broader specialty or clear the search to see the full team.
             </p>
             <button
               type="button"
               onClick={() => {
-                setSearchQuery("");
-                setActiveFilter("all");
+                setSearchQuery('')
+                setActiveFilter('all')
               }}
               className="mt-5 inline-flex h-10 items-center justify-center rounded-lg bg-charcoal px-4 text-sm font-semibold text-white transition hover:bg-bark"
             >
@@ -347,5 +377,5 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
         )}
       </div>
     </section>
-  );
+  )
 }

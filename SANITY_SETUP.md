@@ -51,6 +51,7 @@ Your website will be available at `http://localhost:3000`
 ## 📝 Content Types Available
 
 ### Team Members
+
 - Name, credentials, role
 - Profile image with hotspot
 - Rich text bio
@@ -59,6 +60,7 @@ Your website will be available at `http://localhost:3000`
 - Booking availability
 
 ### Blog Posts (Notes)
+
 - Title, excerpt, content
 - Author information
 - Featured image
@@ -66,6 +68,7 @@ Your website will be available at `http://localhost:3000`
 - Publication date
 
 ### Workshops
+
 - Title, description, instructor
 - Date, time, duration
 - Price and registration link
@@ -73,12 +76,14 @@ Your website will be available at `http://localhost:3000`
 - Thumbnail image
 
 ### Services
+
 - Title, description
 - Icon image
 - Features list
 - Pricing information
 
 ### Site Settings
+
 - Site title and description
 - Contact information
 - Logo and hero images
@@ -87,11 +92,13 @@ Your website will be available at `http://localhost:3000`
 ## 🎨 For Non-Technical Users
 
 ### Accessing the CMS
+
 1. Go to `http://localhost:3333` (when Sanity Studio is running)
 2. Log in with your Sanity account
 3. Start editing content!
 
 ### Editing Content
+
 - **Rich Text Editor**: Edit content like a Word document
 - **Image Upload**: Drag and drop images
 - **Live Preview**: See changes instantly
@@ -99,6 +106,7 @@ Your website will be available at `http://localhost:3000`
 - **Publishing**: Save as draft or publish immediately
 
 ### Adding Team Members
+
 1. Go to "Team Members" in the sidebar
 2. Click "Create" button
 3. Fill in all required fields
@@ -106,6 +114,7 @@ Your website will be available at `http://localhost:3000`
 5. Save and publish
 
 ### Adding Blog Posts
+
 1. Go to "Blog Posts" in the sidebar
 2. Click "Create" button
 3. Write your content using the rich text editor
@@ -116,17 +125,21 @@ Your website will be available at `http://localhost:3000`
 ## 🔧 Technical Details
 
 ### API Integration
+
 The website automatically fetches content from Sanity using:
+
 - `src/lib/sanity.ts` - Sanity client configuration
 - `src/lib/sanity-queries.ts` - Data fetching functions
 - Components automatically update when content changes
 
 ### Image Optimization
+
 - All images are automatically optimized
 - Responsive images with different sizes
 - WebP format for better performance
 
 ### Content Management
+
 - Real-time updates
 - Draft and published states
 - Content validation
@@ -135,13 +148,17 @@ The website automatically fetches content from Sanity using:
 ## 🚀 Deployment
 
 ### Sanity Studio
+
 Deploy to Sanity's hosting:
+
 ```bash
 npx sanity deploy
 ```
 
 ### Next.js Website
+
 Deploy to Vercel, Netlify, or your preferred hosting:
+
 ```bash
 npm run build
 ```
@@ -149,6 +166,7 @@ npm run build
 ## 📞 Support
 
 If you need help with the CMS setup or content management, refer to:
+
 - [Sanity Documentation](https://www.sanity.io/docs)
 - [Next.js Documentation](https://nextjs.org/docs)
 - Contact the development team

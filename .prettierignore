@@ -1,0 +1,12 @@
+node_modules
+.next
+out
+dist
+build
+package-lock.json
+*.min.js
+*.min.css
+public
+.husky
+.github
+*.log

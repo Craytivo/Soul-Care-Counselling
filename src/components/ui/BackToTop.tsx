@@ -30,19 +30,19 @@ export default function BackToTop() {
       className={cn(
         'fixed bottom-6 right-6 z-50',
         'flex items-center justify-center',
-        'w-12 h-12 rounded-full',
-        'glass shadow-elevation-2',
+        'h-12 w-12 rounded-full',
+        'shadow-elevation-2 glass',
         'text-charcoal hover:text-clay',
         'transition-all duration-300',
         'hover:scale-110 hover:shadow-elevation-3',
         'focus:outline-none focus:ring-2 focus:ring-clay/50',
-        isVisible && 'opacity-100 translate-y-0',
-        !isVisible && 'opacity-0 translate-y-4 pointer-events-none'
+        isVisible && 'translate-y-0 opacity-100',
+        !isVisible && 'pointer-events-none translate-y-4 opacity-0'
       )}
       aria-label="Back to top"
       aria-hidden={!isVisible}
     >
-      <ArrowUp className="w-5 h-5" />
+      <ArrowUp className="h-5 w-5" />
     </button>
   )
 }

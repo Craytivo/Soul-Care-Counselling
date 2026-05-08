@@ -57,7 +57,8 @@ export const internApplicationPage = defineType({
           title: 'File Upload Note',
           type: 'text',
           rows: 2,
-          initialValue: 'Note: File uploads are sent as email attachments if your mail app supports it. For best results, email your resume/CV directly to info@soulcarecounselling.com after submitting the form.',
+          initialValue:
+            'Note: File uploads are sent as email attachments if your mail app supports it. For best results, email your resume/CV directly to info@soulcarecounselling.com after submitting the form.',
         }),
         defineField({
           name: 'formQuestions',
@@ -94,7 +95,8 @@ export const internApplicationPage = defineType({
                   name: 'placeholder',
                   title: 'Placeholder Text',
                   type: 'string',
-                  hidden: ({ parent }) => parent?.fieldType === 'checkbox' || parent?.fieldType === 'file',
+                  hidden: ({ parent }) =>
+                    parent?.fieldType === 'checkbox' || parent?.fieldType === 'file',
                 }),
                 defineField({
                   name: 'required',

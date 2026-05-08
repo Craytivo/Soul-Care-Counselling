@@ -1,5 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Fail builds on ESLint and TypeScript errors (prevents bad deploys)
+  eslint: {
+    ignoreDuringBuilds: false,
+  },
+  typescript: {
+    ignoreBuildErrors: false,
+  },
   images: {
     remotePatterns: [
       {
@@ -30,7 +37,11 @@ const nextConfig = {
       { source: '/baraka-mwangi', destination: '/about/baraka-mwangi', permanent: true },
       { source: '/christiana-takyi', destination: '/about/christiana-takyi', permanent: true },
       { source: '/davene-miller', destination: '/about/davene-miller', permanent: true },
-      { source: '/jessica-robinson-grant', destination: '/about/jessica-robinson-grant', permanent: true },
+      {
+        source: '/jessica-robinson-grant',
+        destination: '/about/jessica-robinson-grant',
+        permanent: true,
+      },
       { source: '/josh-dale', destination: '/about/josh-dale', permanent: true },
       { source: '/khadian-williams', destination: '/about/khadian-williams', permanent: true },
       { source: '/natalia', destination: '/about/natalia', permanent: true },
@@ -42,6 +53,6 @@ const nextConfig = {
       { source: '/sneha-christian', destination: '/about/sneha-christian', permanent: true },
     ]
   },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig

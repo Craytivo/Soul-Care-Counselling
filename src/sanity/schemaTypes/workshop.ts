@@ -30,7 +30,8 @@ export const workshop = defineType({
       name: 'instructorRole',
       title: 'Instructor Role',
       type: 'string',
-      description: 'Role or title of the instructor (e.g., "Associate Therapist", "Clinical Director")',
+      description:
+        'Role or title of the instructor (e.g., "Associate Therapist", "Clinical Director")',
     }),
     defineField({
       name: 'date',
@@ -132,4 +133,3 @@ export const workshop = defineType({
     },
   },
 })
-

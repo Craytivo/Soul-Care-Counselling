@@ -128,7 +128,8 @@ export default defineType({
           name: 'consentText',
           title: 'Consent Checkbox Text',
           type: 'text',
-          initialValue: 'I consent to be contacted about my inquiry. I understand this form is not for emergencies.',
+          initialValue:
+            'I consent to be contacted about my inquiry. I understand this form is not for emergencies.',
         }),
         defineField({
           name: 'submitButtonText',
@@ -140,7 +141,8 @@ export default defineType({
           name: 'crisisNotice',
           title: 'Crisis Notice',
           type: 'text',
-          initialValue: 'If you are in crisis, call 911 or go to your nearest emergency department.',
+          initialValue:
+            'If you are in crisis, call 911 or go to your nearest emergency department.',
         }),
       ],
     }),
@@ -304,7 +306,8 @@ export default defineType({
           name: 'metaDescription',
           title: 'Meta Description',
           type: 'text',
-          initialValue: 'Contact Soul Care Christian Counselling. Book a free consultation, send a message, or reach us by email.',
+          initialValue:
+            'Contact Soul Care Christian Counselling. Book a free consultation, send a message, or reach us by email.',
         }),
       ],
     }),

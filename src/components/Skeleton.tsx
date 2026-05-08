@@ -6,7 +6,11 @@ interface SkeletonProps {
   height?: string
 }
 
-export default function Skeleton({ className = '', width = 'w-full', height = 'h-4' }: SkeletonProps) {
+export default function Skeleton({
+  className = '',
+  width = 'w-full',
+  height = 'h-4',
+}: SkeletonProps) {
   return (
     <div
       className={cn('skeleton rounded', width, height, className)}

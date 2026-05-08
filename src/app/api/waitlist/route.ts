@@ -2,6 +2,39 @@ import { createClient } from 'next-sanity'
 import { createHash } from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
 
+// Simple in-memory rate limiter
+// In production with multiple servers, use Redis or similar
+type RateLimitEntry = {
+  count: number
+  resetTime: number
+}
+
+const rateLimitMap = new Map<string, RateLimitEntry>()
+const RATE_LIMIT_MAX = 3
+const RATE_LIMIT_WINDOW_MS = 5 * 60 * 1000 // 5 minutes
+
+function checkRateLimit(key: string): { allowed: boolean; retryAfter?: number } {
+  const now = Date.now()
+  const entry = rateLimitMap.get(key)
+
+  if (!entry || now > entry.resetTime) {
+    // Reset or create new entry
+    rateLimitMap.set(key, {
+      count: 1,
+      resetTime: now + RATE_LIMIT_WINDOW_MS,
+    })
+    return { allowed: true }
+  }
+
+  if (entry.count >= RATE_LIMIT_MAX) {
+    const retryAfter = Math.ceil((entry.resetTime - now) / 1000)
+    return { allowed: false, retryAfter }
+  }
+
+  entry.count++
+  return { allowed: true }
+}
+
 const sanityWriteClient = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
@@ -66,6 +99,18 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: 'Please enter a valid email address.' }, { status: 400 })
     }
 
+    // Rate limiting check
+    const rateLimitKey = `signup:${email}`
+    const rateLimitResult = checkRateLimit(rateLimitKey)
+    if (!rateLimitResult.allowed) {
+      return NextResponse.json(
+        {
+          message: `Please wait ${Math.ceil(rateLimitResult.retryAfter! / 60)} minutes before trying again.`,
+        },
+        { status: 429 }
+      )
+    }
+
     const idSuffix = createHash('sha256').update(email).digest('hex').slice(0, 24)
     const docId = `waitlistSignup.${idSuffix}`
     const now = new Date().toISOString()
@@ -104,10 +149,13 @@ export async function POST(request: NextRequest) {
     )
 
     await transaction.commit()
-    const groupId = source === 'shop'
-      ? (process.env.MAILERLITE_SHOP_GROUP_ID || process.env.MAILERLITE_GROUP_ID!)
-      : process.env.MAILERLITE_GROUP_ID!
-    const mailerLiteSynced = await syncMailerLiteSubscriber(email, firstName, groupId).catch(() => false)
+    const groupId =
+      source === 'shop'
+        ? process.env.MAILERLITE_SHOP_GROUP_ID || process.env.MAILERLITE_GROUP_ID!
+        : process.env.MAILERLITE_GROUP_ID!
+    const mailerLiteSynced = await syncMailerLiteSubscriber(email, firstName, groupId).catch(
+      () => false
+    )
 
     return NextResponse.json({
       success: true,
@@ -125,6 +173,9 @@ export async function POST(request: NextRequest) {
         : typeof error === 'string'
           ? error
           : 'Unknown server error.'
-    return NextResponse.json({ message: `Unable to join waitlist right now: ${details}` }, { status: 500 })
+    return NextResponse.json(
+      { message: `Unable to join waitlist right now: ${details}` },
+      { status: 500 }
+    )
   }
 }

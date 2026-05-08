@@ -1,6 +1,6 @@
 import { createClient } from 'next-sanity'
 import imageUrlBuilder from '@sanity/image-url'
-import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
 
 // Create Sanity client
 export const client = createClient({
@@ -11,8 +11,7 @@ export const client = createClient({
   perspective: 'published', // Only fetch published content
 })
 
-const defaultRevalidate =
-  Number(process.env.NEXT_PUBLIC_SANITY_REVALIDATE_SECONDS) || 300
+const defaultRevalidate = Number(process.env.NEXT_PUBLIC_SANITY_REVALIDATE_SECONDS) || 300
 
 type SanityFetchParams = Record<string, unknown>
 
@@ -232,10 +231,12 @@ export interface ServicePage {
     _type: 'textSection' | 'detailsSection' | 'listSection' | 'ctaSection'
     title: string
     content?: unknown[]
-    items?: Array<{
-      label: string
-      value: string
-    }> | string[]
+    items?:
+      | Array<{
+          label: string
+          value: string
+        }>
+      | string[]
     description?: string
     primaryButton?: {
       text: string
@@ -364,7 +365,7 @@ export interface AreasPage {
     slug: {
       current: string
     }
-  content: unknown[] // Portable Text
+    content: unknown[] // Portable Text
     order: number
   }>
   cta?: {
@@ -582,4 +583,3 @@ export interface Resource {
   publishedAt?: string
   fileSize?: number
 }
-

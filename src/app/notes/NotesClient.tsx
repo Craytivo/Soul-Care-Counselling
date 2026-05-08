@@ -94,36 +94,44 @@ export default function NotesClient({ allPosts, featuredPosts }: NotesClientProp
           aria-hidden="true"
         ></div>
         <div className="relative z-10 px-5 py-9 sm:px-6 sm:py-10 md:px-10 md:py-14">
-          <span className="inline-flex items-center gap-2 rounded-full bg-cream/10 px-3 py-1 ring-1 ring-cream/30 uppercase tracking-[.22em] text-[11px]">
+          <span className="inline-flex items-center gap-2 rounded-full bg-cream/10 px-3 py-1 text-[11px] uppercase tracking-[.22em] ring-1 ring-cream/30">
             Notes from Soul Care
           </span>
-          <h1 className="mt-3 font-heading text-2xl sm:text-3xl md:text-4xl font-bold leading-tight">
+          <h1 className="mt-3 font-heading text-2xl font-bold leading-tight sm:text-3xl md:text-4xl">
             Insights for Your Journey
           </h1>
-          <p className="mt-3 max-w-3xl text-sm sm:text-base text-cream/85">
-            Explore faith-centered perspectives on mental health, healing, and personal growth from our counselling
-            team.
+          <p className="mt-3 max-w-3xl text-sm text-cream/85 sm:text-base">
+            Explore faith-centered perspectives on mental health, healing, and personal growth from
+            our counselling team.
           </p>
           <div className="mt-5 flex flex-wrap gap-2">
-            <span className="rounded-full bg-cream/10 px-3 py-1 text-xs ring-1 ring-cream/20">{allPosts.length} total posts</span>
-            <span className="rounded-full bg-cream/10 px-3 py-1 text-xs ring-1 ring-cream/20">{featuredPosts.length} featured</span>
-            <span className="rounded-full bg-cream/10 px-3 py-1 text-xs ring-1 ring-cream/20">{categoryCount} in view</span>
+            <span className="rounded-full bg-cream/10 px-3 py-1 text-xs ring-1 ring-cream/20">
+              {allPosts.length} total posts
+            </span>
+            <span className="rounded-full bg-cream/10 px-3 py-1 text-xs ring-1 ring-cream/20">
+              {featuredPosts.length} featured
+            </span>
+            <span className="rounded-full bg-cream/10 px-3 py-1 text-xs ring-1 ring-cream/20">
+              {categoryCount} in view
+            </span>
           </div>
         </div>
       </section>
 
       <section className="mt-7 sm:mt-8">
-        <div className="rounded-2xl bg-white p-4 sm:p-5 ring-1 ring-charcoal/10">
+        <div className="rounded-2xl bg-white p-4 ring-1 ring-charcoal/10 sm:p-5">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-xs uppercase tracking-[.2em] text-charcoal/55">Filter</p>
-              <h2 className="mt-1 font-heading text-lg sm:text-xl font-semibold">Browse by Category</h2>
+              <h2 className="mt-1 font-heading text-lg font-semibold sm:text-xl">
+                Browse by Category
+              </h2>
             </div>
             <div className="flex items-center gap-2">
               {selectedCategory !== 'All Posts' && (
                 <button
                   onClick={() => setSelectedCategory('All Posts')}
-                  className="inline-flex items-center justify-center rounded-md bg-sand px-3 py-2 text-sm font-semibold text-charcoal hover:bg-sand/90 ring-1 ring-charcoal/10"
+                  className="inline-flex items-center justify-center rounded-md bg-sand px-3 py-2 text-sm font-semibold text-charcoal ring-1 ring-charcoal/10 hover:bg-sand/90"
                 >
                   Clear
                 </button>
@@ -135,7 +143,7 @@ export default function NotesClient({ allPosts, featuredPosts }: NotesClientProp
           </div>
 
           {/* Mobile/Tablet filter (kept as-is) */}
-          <div className="mt-4 grid gap-3 lg:hidden sm:grid-cols-[1fr_auto] sm:items-center">
+          <div className="mt-4 grid gap-3 sm:grid-cols-[1fr_auto] sm:items-center lg:hidden">
             <label htmlFor="notes-category" className="sr-only">
               Filter notes by category
             </label>
@@ -143,7 +151,7 @@ export default function NotesClient({ allPosts, featuredPosts }: NotesClientProp
               id="notes-category"
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full rounded-md border border-charcoal/20 bg-white px-3 py-2.5 text-sm font-medium text-charcoal outline-none focus:ring-2 focus:ring-clay/40 focus:border-clay"
+              className="w-full rounded-md border border-charcoal/20 bg-white px-3 py-2.5 text-sm font-medium text-charcoal outline-none focus:border-clay focus:ring-2 focus:ring-clay/40"
             >
               {categories.map((category) => (
                 <option key={category} value={category}>
@@ -151,7 +159,7 @@ export default function NotesClient({ allPosts, featuredPosts }: NotesClientProp
                 </option>
               ))}
             </select>
-            <p className="text-xs sm:text-sm text-charcoal/60">
+            <p className="text-xs text-charcoal/60 sm:text-sm">
               Showing: <span className="font-semibold text-charcoal/80">{selectedCategory}</span>
             </p>
           </div>
@@ -164,20 +172,23 @@ export default function NotesClient({ allPosts, featuredPosts }: NotesClientProp
                 const count =
                   category === 'All Posts'
                     ? allPosts.length
-                    : allPosts.filter((post) => post.category === reverseCategoryMap[category]).length
+                    : allPosts.filter((post) => post.category === reverseCategoryMap[category])
+                        .length
 
                 return (
                   <button
                     key={category}
                     onClick={() => setSelectedCategory(category)}
-                    className={`inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium transition-colors ring-1 ${
+                    className={`inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium ring-1 transition-colors ${
                       isActive
                         ? 'bg-clay text-charcoal ring-charcoal/25'
-                        : 'bg-white text-charcoal/80 hover:bg-sand ring-charcoal/10 hover:ring-charcoal/20'
+                        : 'bg-white text-charcoal/80 ring-charcoal/10 hover:bg-sand hover:ring-charcoal/20'
                     }`}
                   >
                     <span>{category}</span>
-                    <span className={`rounded-full px-1.5 py-0.5 text-xs ${isActive ? 'bg-charcoal/15' : 'bg-charcoal/10'}`}>
+                    <span
+                      className={`rounded-full px-1.5 py-0.5 text-xs ${isActive ? 'bg-charcoal/15' : 'bg-charcoal/10'}`}
+                    >
                       {count}
                     </span>
                   </button>
@@ -190,7 +201,7 @@ export default function NotesClient({ allPosts, featuredPosts }: NotesClientProp
 
       {featuredPost && (
         <section className="mt-10 sm:mt-12">
-          <div className="mb-5 sm:mb-6 flex items-center justify-between gap-3">
+          <div className="mb-5 flex items-center justify-between gap-3 sm:mb-6">
             <h2 className="font-heading text-2xl font-semibold">Featured Post</h2>
             <span className="rounded-full bg-sand px-3 py-1 text-xs font-medium text-charcoal/80 ring-1 ring-charcoal/10">
               Editor&apos;s pick
@@ -210,24 +221,35 @@ export default function NotesClient({ allPosts, featuredPosts }: NotesClientProp
                   />
                 </div>
               )}
-                <div className={`p-5 sm:p-6 md:p-8 ${featuredPost.featuredImage ? 'md:col-span-7' : 'md:col-span-12'}`}>
-                  <div className="mb-4 flex flex-wrap items-center gap-2">
-                    <span className="rounded-full bg-sand px-3 py-1 text-xs font-medium text-charcoal">
-                      {categoryMap[featuredPost.category] || featuredPost.category}
-                    </span>
-                    <span className="text-sm text-charcoal/60">{featuredPost.readingTime} min read</span>
-                    <span className="text-sm text-charcoal/50">{formatDate(featuredPost.publishedAt)}</span>
-                  </div>
-                <h3 className="font-heading text-xl sm:text-2xl font-semibold leading-tight">
-                  <Link href={`/notes/${featuredPost.slug.current}`} className="hover:text-clay transition-colors">
+              <div
+                className={`p-5 sm:p-6 md:p-8 ${featuredPost.featuredImage ? 'md:col-span-7' : 'md:col-span-12'}`}
+              >
+                <div className="mb-4 flex flex-wrap items-center gap-2">
+                  <span className="rounded-full bg-sand px-3 py-1 text-xs font-medium text-charcoal">
+                    {categoryMap[featuredPost.category] || featuredPost.category}
+                  </span>
+                  <span className="text-sm text-charcoal/60">
+                    {featuredPost.readingTime} min read
+                  </span>
+                  <span className="text-sm text-charcoal/50">
+                    {formatDate(featuredPost.publishedAt)}
+                  </span>
+                </div>
+                <h3 className="font-heading text-xl font-semibold leading-tight sm:text-2xl">
+                  <Link
+                    href={`/notes/${featuredPost.slug.current}`}
+                    className="transition-colors hover:text-clay"
+                  >
                     {featuredPost.title}
                   </Link>
                 </h3>
-                <p className="mt-4 max-w-3xl text-sm sm:text-base text-charcoal/85 leading-relaxed">{featuredPost.excerpt}</p>
+                <p className="mt-4 max-w-3xl text-sm leading-relaxed text-charcoal/85 sm:text-base">
+                  {featuredPost.excerpt}
+                </p>
                 <div className="mt-6">
                   <Link
                     href={`/notes/${featuredPost.slug.current}`}
-                    className="inline-flex w-full sm:w-auto items-center justify-center rounded-md bg-clay px-4 py-2 font-semibold text-charcoal hover:bg-clay/90 ring-1 ring-charcoal/10"
+                    className="inline-flex w-full items-center justify-center rounded-md bg-clay px-4 py-2 font-semibold text-charcoal ring-1 ring-charcoal/10 hover:bg-clay/90 sm:w-auto"
                   >
                     Read Featured Article
                   </Link>
@@ -242,16 +264,17 @@ export default function NotesClient({ allPosts, featuredPosts }: NotesClientProp
         <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
           <h2 className="font-heading text-2xl font-semibold">Latest Posts</h2>
           <p className="text-sm text-charcoal/65">
-            {selectedCategory === 'All Posts' ? 'All categories' : selectedCategory} · {latestNonFeatured.length} posts
+            {selectedCategory === 'All Posts' ? 'All categories' : selectedCategory} ·{' '}
+            {latestNonFeatured.length} posts
           </p>
         </div>
 
         {latestNonFeatured.length > 0 ? (
-          <div className="grid gap-6 sm:gap-8 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 sm:gap-8 xl:grid-cols-3">
             {latestNonFeatured.map((post) => (
               <article
                 key={post._id}
-                className="group overflow-hidden rounded-2xl bg-white ring-1 ring-charcoal/10 hover:ring-clay/30 hover:shadow-md transition-all duration-200"
+                className="group overflow-hidden rounded-2xl bg-white ring-1 ring-charcoal/10 transition-all duration-200 hover:shadow-md hover:ring-clay/30"
               >
                 {post.featuredImage && (
                   <div className="relative h-52 overflow-hidden">
@@ -271,15 +294,22 @@ export default function NotesClient({ allPosts, featuredPosts }: NotesClientProp
                     </span>
                     <span className="text-xs text-charcoal/60">{post.readingTime} min read</span>
                   </div>
-                  <h3 className="font-heading text-base sm:text-lg font-semibold leading-snug">
-                    <Link href={`/notes/${post.slug.current}`} className="hover:text-clay transition-colors">
+                  <h3 className="font-heading text-base font-semibold leading-snug sm:text-lg">
+                    <Link
+                      href={`/notes/${post.slug.current}`}
+                      className="transition-colors hover:text-clay"
+                    >
                       {post.title}
                     </Link>
                   </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-charcoal/85 line-clamp-3">{post.excerpt}</p>
+                  <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-charcoal/85">
+                    {post.excerpt}
+                  </p>
                   <div className="mt-5 flex items-center justify-between">
                     <p className="text-xs font-medium text-charcoal/65">Soul Care Counselling</p>
-                    <span className="text-xs text-charcoal/55">{formatDate(post.publishedAt, true)}</span>
+                    <span className="text-xs text-charcoal/55">
+                      {formatDate(post.publishedAt, true)}
+                    </span>
                   </div>
                 </div>
               </article>
@@ -288,7 +318,12 @@ export default function NotesClient({ allPosts, featuredPosts }: NotesClientProp
         ) : (
           <div className="rounded-2xl bg-white p-10 text-center ring-1 ring-charcoal/10">
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-sand">
-              <svg className="h-8 w-8 text-charcoal/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg
+                className="h-8 w-8 text-charcoal/60"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -297,13 +332,15 @@ export default function NotesClient({ allPosts, featuredPosts }: NotesClientProp
                 />
               </svg>
             </div>
-            <h3 className="font-heading text-lg font-semibold text-charcoal mb-2">No posts in this category yet</h3>
+            <h3 className="mb-2 font-heading text-lg font-semibold text-charcoal">
+              No posts in this category yet
+            </h3>
             <p className="mx-auto mb-6 max-w-md text-charcoal/70">
               Try another category, or explore all posts while we continue publishing new content.
             </p>
             <button
               onClick={() => setSelectedCategory('All Posts')}
-              className="inline-flex items-center justify-center rounded-md bg-clay px-4 py-2 font-semibold text-charcoal hover:bg-clay/90 ring-1 ring-charcoal/10"
+              className="inline-flex items-center justify-center rounded-md bg-clay px-4 py-2 font-semibold text-charcoal ring-1 ring-charcoal/10 hover:bg-clay/90"
             >
               View All Posts
             </button>
@@ -311,31 +348,36 @@ export default function NotesClient({ allPosts, featuredPosts }: NotesClientProp
         )}
       </section>
 
-      <section className="mt-14 sm:mt-16 rounded-2xl bg-sand p-5 sm:p-6 md:p-8 ring-1 ring-charcoal/10">
-        <div className="max-w-2xl mx-auto text-center">
-          <h3 className="font-heading text-lg sm:text-xl md:text-2xl font-semibold mb-3">Stay Connected</h3>
-          <p className="text-charcoal/80 mb-6">
+      <section className="mt-14 rounded-2xl bg-sand p-5 ring-1 ring-charcoal/10 sm:mt-16 sm:p-6 md:p-8">
+        <div className="mx-auto max-w-2xl text-center">
+          <h3 className="mb-3 font-heading text-lg font-semibold sm:text-xl md:text-2xl">
+            Stay Connected
+          </h3>
+          <p className="mb-6 text-charcoal/80">
             Get the latest insights and encouragement delivered to your inbox.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+          <div className="mx-auto flex max-w-md flex-col gap-3 sm:flex-row">
             <input
               type="email"
               placeholder="Enter your email"
-              className="flex-1 rounded-md border border-charcoal/20 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-clay focus:border-transparent"
+              className="flex-1 rounded-md border border-charcoal/20 px-4 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-clay"
             />
-            <button className="rounded-md bg-clay px-6 py-2 font-semibold text-charcoal hover:bg-clay/90 transition-colors">
+            <button className="rounded-md bg-clay px-6 py-2 font-semibold text-charcoal transition-colors hover:bg-clay/90">
               Subscribe
             </button>
           </div>
         </div>
       </section>
 
-      <section className="mt-14 sm:mt-16 rounded-2xl bg-bark text-cream p-5 sm:p-6 md:p-8 ring-1 ring-cream/15">
+      <section className="mt-14 rounded-2xl bg-bark p-5 text-cream ring-1 ring-cream/15 sm:mt-16 sm:p-6 md:p-8">
         <div className="grid gap-6 md:grid-cols-3 md:items-center">
           <div className="md:col-span-2">
-            <h3 className="font-heading text-xl md:text-2xl font-semibold">Ready to begin your healing journey?</h3>
+            <h3 className="font-heading text-xl font-semibold md:text-2xl">
+              Ready to begin your healing journey?
+            </h3>
             <p className="mt-2 text-cream/85">
-              Book a free consultation to explore how our faith-centered approach can support your growth.
+              Book a free consultation to explore how our faith-centered approach can support your
+              growth.
             </p>
           </div>
           <div className="md:justify-self-end">
@@ -343,7 +385,7 @@ export default function NotesClient({ allPosts, featuredPosts }: NotesClientProp
               href="https://thesoulcarecounsellor.janeapp.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-md bg-clay px-5 py-2.5 font-semibold text-charcoal hover:bg-clay/90 ring-1 ring-charcoal/10"
+              className="inline-flex items-center justify-center rounded-md bg-clay px-5 py-2.5 font-semibold text-charcoal ring-1 ring-charcoal/10 hover:bg-clay/90"
             >
               Book a Free Consultation
             </a>

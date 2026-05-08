@@ -16,6 +16,6 @@ const accessibilityPage = {
       of: [{ type: 'block' }],
     },
   ],
-};
+}
 
-export default accessibilityPage;
+export default accessibilityPage
