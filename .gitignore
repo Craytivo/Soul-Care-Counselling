@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+# Force Netlify rebuild
 /.pnp
 .pnp.*
 .yarn/*
