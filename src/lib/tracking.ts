@@ -1,7 +1,6 @@
 'use client'
 
 // Analytics tracking module
-
 declare global {
   interface Window {
     dataLayer?: Array<Record<string, unknown>>
