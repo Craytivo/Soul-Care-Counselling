@@ -130,7 +130,7 @@ export default async function SanityAboutPage() {
 
         <div className="mx-auto max-w-7xl px-5 py-10 sm:px-8 md:px-10 md:py-12 lg:py-16 xl:px-12">
           {/* OUR STORY / WELCOME SECTION */}
-          <section className="mb-16 md:mb-20">
+          <section className="mb-8 md:mb-12">
             <div className="mb-5 flex items-center gap-3">
               <span className="inline-block h-8 w-2 rounded bg-clay" />
               <h2 className="font-heading text-2xl font-bold tracking-tight text-bark md:text-3xl">
@@ -212,32 +212,36 @@ export default async function SanityAboutPage() {
 
           {/* OUR APPROACH / PILLARS - Card Grid */}
           <section className="mb-16 md:mb-20">
-            <div className="mb-6 flex items-center gap-3">
-              <span className="inline-block h-8 w-2 rounded bg-clay" />
-              <h2 className="font-heading text-2xl font-bold tracking-tight text-bark md:text-3xl">
-                {pageData.pillars.title}
-              </h2>
-            </div>
-            <p className="mb-8 max-w-3xl text-base text-charcoal/80">
-              Our foundation is built on compassion, evidence, and your unique needs.
-            </p>
-            <div className="grid gap-5 md:grid-cols-3 md:gap-6">
-              {pageData.pillars.pillarList.map((pillar, i) => (
-                <div
-                  key={pillar.title}
-                  className="ring-charcoal/8 group relative rounded-2xl bg-white p-6 ring-1 transition-all duration-200 hover:-translate-y-0.5 hover:ring-clay/25 hover:shadow-elevation-2 md:p-7"
-                >
-                  <span className="font-mono text-xs tabular-nums text-clay/40">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <h3 className="mt-3 font-heading text-lg font-semibold leading-snug text-bark">
-                    {pillar.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-charcoal/75 md:text-base">
-                    {pillar.description}
-                  </p>
-                </div>
-              ))}
+            <div className="rounded-3xl bg-sand/30 p-8 md:p-10">
+              <div className="mb-4">
+                <p className="mb-2 text-sm font-medium uppercase tracking-wider text-clay/60">
+                  Built on these principles
+                </p>
+                <h2 className="font-heading text-2xl font-bold tracking-tight text-bark md:text-3xl">
+                  {pageData.pillars.title}
+                </h2>
+              </div>
+              <p className="mb-8 max-w-3xl text-base text-charcoal/80">
+                Our foundation is built on compassion, evidence, and your unique needs.
+              </p>
+              <div className="grid gap-5 md:grid-cols-3 md:gap-6">
+                {pageData.pillars.pillarList.map((pillar, i) => (
+                  <div
+                    key={pillar.title}
+                    className="ring-charcoal/8 group relative rounded-2xl bg-white/80 p-5 ring-1 backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:ring-clay/25 hover:shadow-elevation-2 md:p-6"
+                  >
+                    <span className="font-mono text-xs tabular-nums text-clay/40">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <h3 className="mt-3 font-heading text-lg font-semibold leading-snug text-bark">
+                      {pillar.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-relaxed text-charcoal/75 md:text-base">
+                      {pillar.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           </section>
 
