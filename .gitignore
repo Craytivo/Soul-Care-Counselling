@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-# Force Netlify rebuild
+# Force Netlify rebuild - cache clear for team member changes
 /.pnp
 .pnp.*
 .yarn/*
