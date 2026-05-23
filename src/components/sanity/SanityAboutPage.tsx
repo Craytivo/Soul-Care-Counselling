@@ -128,30 +128,24 @@ export default async function SanityAboutPage() {
       <section className="relative z-20 -mt-14 rounded-t-[2rem] border-t border-white/70 bg-cream shadow-[0_-22px_55px_rgba(35,32,27,0.16)] sm:-mt-16 sm:rounded-t-[2.5rem] lg:-mt-20">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-clay/35 to-transparent" />
 
-        <div className="mx-auto max-w-7xl px-5 py-10 sm:px-8 md:px-10 md:py-12 lg:py-16 xl:px-12">
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-5 sm:py-10 md:px-10 md:py-12 lg:py-16 xl:px-12">
           {/* OUR STORY / WELCOME SECTION */}
-          <section className="mb-8 md:mb-12">
-            <div className="mb-5 flex items-center gap-3">
+          <section className="mb-6 md:mb-12">
+            <div className="mb-4 flex items-center gap-3">
               <span className="inline-block h-8 w-2 rounded bg-clay" />
-              <h2 className="font-heading text-2xl font-bold tracking-tight text-bark md:text-3xl">
+              <h2 className="font-heading text-xl font-bold tracking-tight text-bark md:text-2xl lg:text-3xl">
                 Our Story
               </h2>
             </div>
-            <p className="mb-6 max-w-3xl text-base leading-relaxed text-charcoal/85 md:text-lg">
+            <p className="mb-5 max-w-3xl text-base leading-relaxed text-charcoal/85 md:text-lg">
               {pageData.welcome.title}
             </p>
-            <div className="grid gap-8 md:grid-cols-2 md:gap-10">
-              <div className="space-y-4">
-                <PortableText
-                  value={pageData.welcome.content as import('@portabletext/types').TypedObject[]}
-                  components={portableTextComponents}
-                />
-              </div>
-              {/* CTA Buttons Column */}
-              <div className="flex flex-col justify-start gap-4">
+            <div className="grid gap-6 md:grid-cols-2 md:gap-10">
+              {/* CTA Buttons Column - First on mobile */}
+              <div className="flex flex-col justify-start gap-3 md:order-2">
                 <Link
                   href="/contact"
-                  className="group inline-flex items-center justify-center gap-3 rounded-lg bg-clay px-6 py-4 text-sm font-semibold text-cream ring-1 ring-clay/40 transition shadow-elevation-2 hover:bg-bark hover:shadow-elevation-3"
+                  className="group inline-flex w-full items-center justify-center gap-3 rounded-lg bg-clay px-5 py-3.5 text-sm font-semibold text-cream ring-1 ring-clay/40 transition shadow-elevation-2 hover:bg-bark hover:shadow-elevation-3 sm:w-auto sm:px-6 sm:py-4"
                 >
                   <svg
                     className="h-5 w-5"
@@ -170,7 +164,7 @@ export default async function SanityAboutPage() {
                 </Link>
                 <Link
                   href="/services"
-                  className="inline-flex items-center justify-center gap-3 rounded-lg border border-clay/40 bg-clay/10 px-6 py-4 text-sm font-semibold text-bark transition hover:border-clay/60 hover:bg-clay/20"
+                  className="inline-flex w-full items-center justify-center gap-3 rounded-lg border border-clay/40 bg-clay/10 px-5 py-3.5 text-sm font-semibold text-bark transition hover:border-clay/60 hover:bg-clay/20 sm:w-auto sm:px-6 sm:py-4"
                 >
                   <svg
                     className="h-5 w-5"
@@ -189,7 +183,7 @@ export default async function SanityAboutPage() {
                 </Link>
                 <Link
                   href="/areas"
-                  className="inline-flex items-center justify-center gap-3 rounded-lg border border-charcoal/15 bg-white px-6 py-4 text-sm font-semibold text-bark transition hover:border-charcoal/20 hover:bg-sand"
+                  className="inline-flex w-full items-center justify-center gap-3 rounded-lg border border-charcoal/15 bg-white px-5 py-3.5 text-sm font-semibold text-bark transition hover:border-charcoal/20 hover:bg-sand sm:w-auto sm:px-6 sm:py-4"
                 >
                   <svg
                     className="h-5 w-5"
@@ -207,28 +201,34 @@ export default async function SanityAboutPage() {
                   Areas We Specialize In
                 </Link>
               </div>
+              <div className="space-y-4 md:order-1">
+                <PortableText
+                  value={pageData.welcome.content as import('@portabletext/types').TypedObject[]}
+                  components={portableTextComponents}
+                />
+              </div>
             </div>
           </section>
 
           {/* OUR APPROACH / PILLARS - Card Grid */}
           <section className="mb-16 md:mb-20">
-            <div className="rounded-3xl bg-sand/30 p-8 md:p-10">
+            <div className="rounded-3xl bg-sand/30 p-6 md:p-10">
               <div className="mb-4">
-                <p className="mb-2 text-sm font-medium uppercase tracking-wider text-clay/60">
+                <p className="mb-2 text-xs font-medium uppercase tracking-wider text-clay/60 sm:text-sm">
                   Built on these principles
                 </p>
-                <h2 className="font-heading text-2xl font-bold tracking-tight text-bark md:text-3xl">
+                <h2 className="font-heading text-xl font-bold tracking-tight text-bark md:text-2xl lg:text-3xl">
                   {pageData.pillars.title}
                 </h2>
               </div>
-              <p className="mb-8 max-w-3xl text-base text-charcoal/80">
+              <p className="mb-6 max-w-3xl text-base leading-relaxed text-charcoal/80 md:mb-8">
                 Our foundation is built on compassion, evidence, and your unique needs.
               </p>
-              <div className="grid gap-5 md:grid-cols-3 md:gap-6">
+              <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 md:grid-cols-3 md:gap-6">
                 {pageData.pillars.pillarList.map((pillar, i) => (
                   <div
                     key={pillar.title}
-                    className="ring-charcoal/8 group relative rounded-2xl bg-white/80 p-5 ring-1 backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:ring-clay/25 hover:shadow-elevation-2 md:p-6"
+                    className="ring-charcoal/8 group relative rounded-2xl bg-white/80 p-4 ring-1 backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:ring-clay/25 hover:shadow-elevation-2 sm:p-5 md:p-6"
                   >
                     <span className="font-mono text-xs tabular-nums text-clay/40">
                       {String(i + 1).padStart(2, '0')}
