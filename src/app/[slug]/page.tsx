@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation'
 import { getTeamMember } from '@/lib/sanity-queries'
 import { urlForImage } from '@/lib/sanity'
-import { extractBioParagraphs } from '@/lib/portable-text'
 import TeamMemberPage from '@/components/team/TeamMemberPage'
 
 interface TeamMemberPageProps {
@@ -28,7 +27,7 @@ export default async function TeamMemberRoute({ params }: TeamMemberPageProps) {
     portraitImage: member.image
       ? urlForImage(member.image, { width: 365, height: 365, fit: 'crop' }).url()
       : '',
-    bio: extractBioParagraphs(member.bio),
+    bio: member.bio as unknown[],
     specialties: member.specialties || [],
     areasOfFocus: member.areasOfFocus || [],
     socialLinks: member.socialLinks || [],

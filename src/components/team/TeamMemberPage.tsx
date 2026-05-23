@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { PortableText } from '@portabletext/react'
 
 interface TeamMemberData {
   name: string
@@ -8,7 +9,7 @@ interface TeamMemberData {
   image: string
   heroImage: string
   portraitImage: string
-  bio: string[]
+  bio: unknown[]
   specialties: string[]
   areasOfFocus: string[]
   socialLinks?: {
@@ -90,9 +91,25 @@ export default function TeamMemberPage({ member }: TeamMemberPageProps) {
           <h2 className="font-heading text-xl font-semibold md:text-2xl">
             About {member.name.split(' ')[0]}
           </h2>
-          {member.bio.map((paragraph, index) => (
-            <p key={`bio-${index}`}>{paragraph}</p>
-          ))}
+          <PortableText
+            value={member.bio as import('@portabletext/types').TypedObject[]}
+            components={{
+              block: {
+                normal: ({ children }) => <p className="mb-4 leading-7">{children}</p>,
+                h3: ({ children }) => (
+                  <h3 className="mb-3 mt-6 font-heading text-lg font-semibold">{children}</h3>
+                ),
+              },
+              list: {
+                bullet: ({ children }) => (
+                  <ul className="mb-4 ml-6 list-disc space-y-2">{children}</ul>
+                ),
+                number: ({ children }) => (
+                  <ol className="mb-4 ml-6 list-decimal space-y-2">{children}</ol>
+                ),
+              },
+            }}
+          />
         </article>
 
         {/* RIGHT: Quick facts / booking */}
