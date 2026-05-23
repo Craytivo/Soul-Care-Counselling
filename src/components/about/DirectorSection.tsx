@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowUpRight, Quote } from 'lucide-react'
-import { urlFor } from '@/lib/sanity'
+import { urlForImage } from '@/lib/sanity'
 import { useState, useEffect, useRef } from 'react'
 
 interface SanityImage {
@@ -164,7 +164,7 @@ export default function DirectorSection({
                       {/* Image */}
                       <div className="relative h-full w-full">
                         <Image
-                          src={urlFor(image).width(200).height(240).quality(95).url()}
+                          src={urlForImage(image, { width: 200, height: 240, fit: 'crop' }).url()}
                           alt={image.alt || name}
                           fill
                           className="object-cover transition-transform duration-1000 group-hover:scale-105"
@@ -278,7 +278,7 @@ export default function DirectorSection({
               >
                 <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-clay/20 to-cream/20 opacity-0 blur-sm transition-opacity duration-500 group-hover:opacity-100" />
                 <Image
-                  src={urlFor(psychologyTodayImage).url()}
+                  src={urlForImage(psychologyTodayImage, { fit: 'crop' }).url()}
                   alt={psychologyTodayImage.alt || 'Verified on Psychology Today'}
                   width={320}
                   height={110}
