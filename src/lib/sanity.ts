@@ -45,6 +45,23 @@ export function urlFor(source: SanityImageSource) {
   return builder.image(source)
 }
 
+// Helper to get cropped image URL with hotspot support
+export function urlForImage(
+  source: SanityImageSource,
+  options?: { width?: number; height?: number; fit?: 'crop' | 'clip' | 'fill' | 'max' | 'scale' }
+) {
+  let image = builder.image(source)
+
+  if (options?.width) image = image.width(options.width)
+  if (options?.height) image = image.height(options.height)
+  if (options?.fit) image = image.fit(options.fit)
+
+  // Use hotspot for cropping if available
+  image = image.auto('format')
+
+  return image
+}
+
 // Type definitions
 export interface SanityImage {
   _type: 'image'

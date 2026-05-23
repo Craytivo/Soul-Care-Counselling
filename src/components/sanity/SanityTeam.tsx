@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { getTeamMembers } from '@/lib/sanity-queries'
-import { urlFor } from '@/lib/sanity'
+import { urlForImage } from '@/lib/sanity'
 import type { TeamMember } from '@/lib/sanity'
 
 interface Filter {
@@ -193,7 +193,7 @@ export default async function SanityTeam({
                 <div className="p-4">
                   <div className="flex items-center gap-3">
                     <Image
-                      src={urlFor(member.image).width(48).height(48).url()}
+                      src={urlForImage(member.image, { width: 48, height: 48, fit: 'crop' }).url()}
                       alt={member.name}
                       className="h-12 w-12 rounded-full object-cover"
                       width={48}

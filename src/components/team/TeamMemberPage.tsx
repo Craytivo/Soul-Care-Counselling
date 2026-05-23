@@ -6,6 +6,8 @@ interface TeamMemberData {
   credentials?: string
   role: string
   image: string
+  heroImage: string
+  portraitImage: string
   bio: string[]
   specialties: string[]
   areasOfFocus: string[]
@@ -27,7 +29,7 @@ export default function TeamMemberPage({ member }: TeamMemberPageProps) {
       {/* Page hero with member image background */}
       <section
         className="relative flex min-h-[340px] items-center overflow-hidden rounded-2xl text-cream ring-1 ring-cream/15 md:min-h-[420px]"
-        style={{ background: `url('${member.image}') top/cover no-repeat` }}
+        style={{ background: `url('${member.heroImage}') top/cover no-repeat` }}
       >
         {/* Even darker overlay for maximum readability */}
         <div className="absolute inset-0 bg-black/90" aria-hidden="true"></div>
@@ -69,7 +71,7 @@ export default function TeamMemberPage({ member }: TeamMemberPageProps) {
           <div className="md:col-span-5">
             <figure className="rounded-2xl bg-sand p-2 shadow ring-1 ring-charcoal/10">
               <Image
-                src={member.image}
+                src={member.portraitImage}
                 width={365}
                 height={365}
                 alt={`Portrait of ${member.name}`}
