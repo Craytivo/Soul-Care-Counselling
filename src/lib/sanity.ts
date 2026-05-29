@@ -463,6 +463,7 @@ export interface InternApplicationPage {
   _type: 'internApplicationPage'
   title: string
   metaDescription?: string
+  acceptingApplications: boolean
   hero: {
     badge: string
     heading: string

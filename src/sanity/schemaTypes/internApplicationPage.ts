@@ -20,6 +20,13 @@ export const internApplicationPage = defineType({
       validation: (Rule) => Rule.max(160),
     }),
     defineField({
+      name: 'acceptingApplications',
+      title: 'Accepting Applications',
+      type: 'boolean',
+      initialValue: true,
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'hero',
       title: 'Hero Section',
       type: 'object',

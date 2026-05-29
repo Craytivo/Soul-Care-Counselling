@@ -61,10 +61,42 @@ export default async function InternApplicationPage() {
       </section>
 
       <section className="mt-14 grid gap-10 md:mt-16 md:grid-cols-12 md:items-start">
-        {/* LEFT: Intern Application Form */}
+        {/* LEFT: Intern Application Form or Paused Message */}
         <div className="md:col-span-7">
-          <InternApplicationForm pageData={pageData} />
-          <p className="mt-4 text-xs text-charcoal/70">{pageData.formFields.fileUploadNote}</p>
+          {pageData.acceptingApplications ? (
+            <>
+              <InternApplicationForm pageData={pageData} />
+              <p className="mt-4 text-xs text-charcoal/70">{pageData.formFields.fileUploadNote}</p>
+            </>
+          ) : (
+            <div className="rounded-2xl bg-sand p-6 ring-1 ring-charcoal/5 md:p-8">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0">
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-clay/15 text-clay">
+                    <svg
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-heading text-xl font-semibold">Applications Paused</h3>
+                  <p className="mt-2 leading-relaxed text-charcoal/75">
+                    We are not currently accepting internship applications. Please check back later.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* RIGHT: Intern Info Side Column */}
