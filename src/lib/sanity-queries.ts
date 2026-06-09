@@ -99,7 +99,7 @@ export async function getAccessibilityPage() {
 export async function getTeamMembers(): Promise<TeamMember[]> {
   return fetchSanityQuerySafe(
     `
-      *[_type == "teamMember"] | order(name asc) {
+      *[_type == "teamMember"] | order(name == "Jessica Robinson-Grant" desc, name asc) {
         _id,
         _type,
         name,
