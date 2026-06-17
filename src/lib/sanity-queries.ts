@@ -68,6 +68,26 @@ const imageProjection = `{
   hotspot
 }`
 
+const JESSICA_TEAM_MATCH = `(slug.current == "jessica-robinson-grant" || name in ["Jessica Robinson Grant", "Jessica Robinson-Grant"])`
+const NIGEL_TEAM_MATCH = `(slug.current in ["nigel", "nigel-bucknor", "nigel-miller"] || name in ["Nigel", "Nigel Bucknor"])`
+const teamMemberProjection = `{
+  _id,
+  _type,
+  name,
+  credentials,
+  "role": select(
+    ${NIGEL_TEAM_MATCH} => "Director of Therapist Development",
+    role
+  ),
+  image ${imageProjection},
+  bio,
+  specialties,
+  areasOfFocus,
+  socialLinks,
+  acceptsBookings,
+  slug
+}`
+
 // Privacy Policy Page
 export async function getPrivacyPolicyPage() {
   return fetchSanityQuerySafe<LegalPage | null>(
@@ -99,33 +119,14 @@ export async function getAccessibilityPage() {
 export async function getTeamMembers(): Promise<TeamMember[]> {
   return fetchSanityQuerySafe(
     `
-      *[_type == "teamMember" && name == "Jessica Robinson Grant"] {
-        _id,
-        _type,
-        name,
-        credentials,
-        role,
-        image ${imageProjection},
-        bio,
-        specialties,
-        areasOfFocus,
-        socialLinks,
-        acceptsBookings,
-        slug
-      } + *[_type == "teamMember" && name != "Jessica Robinson Grant"] | order(name asc) {
-        _id,
-        _type,
-        name,
-        credentials,
-        role,
-        image ${imageProjection},
-        bio,
-        specialties,
-        areasOfFocus,
-        socialLinks,
-        acceptsBookings,
-        slug
-      }
+      *[_type == "teamMember"] | order(
+        select(
+          ${JESSICA_TEAM_MATCH} => 0,
+          ${NIGEL_TEAM_MATCH} => 1,
+          2
+        ) asc,
+        name asc
+      ) ${teamMemberProjection}
     `,
     [],
     { tags: ['team-members'] }
@@ -135,20 +136,7 @@ export async function getTeamMembers(): Promise<TeamMember[]> {
 export async function getTeamMember(slug: string): Promise<TeamMember | null> {
   return fetchSanityQuerySafe(
     `
-      *[_type == "teamMember" && slug.current == $slug][0] {
-        _id,
-        _type,
-        name,
-        credentials,
-        role,
-        image ${imageProjection},
-        bio,
-        specialties,
-        areasOfFocus,
-        socialLinks,
-        acceptsBookings,
-        slug
-      }
+      *[_type == "teamMember" && slug.current == $slug][0] ${teamMemberProjection}
     `,
     null,
     { params: { slug }, tags: ['team-members', `team-member:${slug}`] }

@@ -252,7 +252,7 @@ const teamMembers = [
     _type: 'teamMember',
     name: 'Nigel Bucknor',
     credentials: 'BA, MA, CCC',
-    role: 'Associate Christian Therapist',
+    role: 'Director of Therapist Development',
     bio: [
       "Whether we believe it or not, our lived experiences have created a core belief about ourselves and influences a core language we use to describe ourselves, which prevents us from being our authentic self or the desire to change. Here's a truth, you have permission. You have the permission to change, to grow, to develop, to advocate for what you need, create new habits and, to unlearn and learn again. The beauty in the journey is you don't have to do it alone and I'm here to journey with you.",
       'My name is Nigel Bucknor and I am a registered therapist. I have a BA in Community Development & Policy Studies from Ontario Tech University, MA in Counselling Psychology from Yorkville University, and a Canadian Certified Counsellor. I have spent over 10 years working with children and teens with exceptionalities, and in high-risk communities. I work primarily with teens, adults, and couples.',

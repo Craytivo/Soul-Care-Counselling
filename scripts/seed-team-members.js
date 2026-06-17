@@ -151,7 +151,7 @@ const teamMembers = [
     _type: 'teamMember',
     name: 'Nigel',
     credentials: 'MSW, RSW',
-    role: 'Clinical Social Worker',
+    role: 'Director of Therapist Development',
     bio: 'Nigel provides compassionate and effective therapy services, focusing on helping clients achieve mental wellness and personal growth.',
     specialties: ['Individual Therapy', 'Mental Health Counseling', 'Wellness Support'],
     areasOfFocus: ['Mental Health', 'Personal Growth', 'Therapeutic Care'],
