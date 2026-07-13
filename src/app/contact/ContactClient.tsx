@@ -223,6 +223,23 @@ export default function ContactClient({ pageData }: { pageData: ContactPage }) {
               onSubmit={handleSubmit}
             >
               <input type="hidden" name="form-name" value="contact" />
+              <input type="hidden" name="form-start-time" value={Date.now().toString()} />
+              <input
+                type="text"
+                name="company"
+                tabIndex={-1}
+                autoComplete="off"
+                className="hidden"
+                aria-hidden="true"
+              />
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                className="hidden"
+                aria-hidden="true"
+              />
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>

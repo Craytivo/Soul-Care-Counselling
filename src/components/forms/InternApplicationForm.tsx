@@ -160,6 +160,23 @@ export default function InternApplicationForm({ pageData }: InternApplicationFor
       onSubmit={handleSubmit}
     >
       <input type="hidden" name="form-name" value="intern-application" />
+      <input type="hidden" name="form-start-time" value={Date.now().toString()} />
+      <input
+        type="text"
+        name="company"
+        tabIndex={-1}
+        autoComplete="off"
+        className="hidden"
+        aria-hidden="true"
+      />
+      <input
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        className="hidden"
+        aria-hidden="true"
+      />
       {/* Dynamic form fields from Sanity */}
       <div className="space-y-4">
         {pageData.formFields.formQuestions.map((question) => (

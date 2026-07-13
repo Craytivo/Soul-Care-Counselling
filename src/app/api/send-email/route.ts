@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { checkForSpam } from '@/lib/antiSpam'
 
 export const runtime = 'nodejs'
 
@@ -96,6 +97,15 @@ export async function POST(request: Request) {
           disposition: 'attachment',
         })
       }
+    }
+
+    const spamCheck = checkForSpam(fields, request)
+    if (spamCheck.blocked) {
+      console.warn('Blocked spam submission:', spamCheck.reason)
+      return NextResponse.json(
+        { message: 'Your message was blocked as suspicious.' },
+        { status: 400 }
+      )
     }
 
     const senderEmail =
