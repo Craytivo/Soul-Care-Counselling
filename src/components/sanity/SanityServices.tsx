@@ -45,8 +45,6 @@ export default async function SanityServices({
     }
   }
 
-
-
   return (
     <section className="mt-12 grid gap-6 md:grid-cols-2">
       {activeServices.map((service: Service) => (
