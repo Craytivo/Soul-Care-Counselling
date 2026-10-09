@@ -21,7 +21,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/affordable',
     '/single-session',
     '/workshops',
-    '/studio',
     '/shop',
     '/intern-application',
   ]
