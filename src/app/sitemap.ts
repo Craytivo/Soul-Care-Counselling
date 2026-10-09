@@ -30,7 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/anita-owusu',
     '/baraka-mwangi',
     '/christiana-takyi',
-    '/davene-miller',
+    '/about/davene',
     '/jessica-robinson-grant',
     '/josh-dale',
     '/khadian-williams',
