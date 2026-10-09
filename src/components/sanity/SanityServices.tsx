@@ -11,8 +11,13 @@ export default async function SanityServices({
   servicesData?: Services | null
 }) {
   const servicesData = initialServicesData ?? (await getServices())
+  const activeServices = (servicesData?.servicesList ?? []).filter(
+    (service: Service) =>
+      service.isActive &&
+      !/parent[\s-]*coach/i.test(service.title + ' ' + (service.slug?.current ?? ''))
+  )
 
-  if (!servicesData || !servicesData.servicesList || servicesData.servicesList.length === 0) {
+  if (activeServices.length === 0) {
     return (
       <section className="mt-12">
         <div className="py-12 text-center">
@@ -39,9 +44,6 @@ export default async function SanityServices({
         return null
     }
   }
-
-  // Filter active services
-  const activeServices = servicesData.servicesList.filter((service: Service) => service.isActive)
 
   return (
     <section className="mt-12 grid gap-6 md:grid-cols-2">

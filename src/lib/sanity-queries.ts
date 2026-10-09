@@ -119,7 +119,7 @@ export async function getAccessibilityPage() {
 export async function getTeamMembers(): Promise<TeamMember[]> {
   return fetchSanityQuerySafe(
     `
-      *[_type == "teamMember"] | order(
+      *[_type == "teamMember" && !(slug.current == "princeton-owusu" || name match "Princeton*")] | order(
         select(
           ${JESSICA_TEAM_MATCH} => 0,
           ${NIGEL_TEAM_MATCH} => 1,
@@ -136,7 +136,7 @@ export async function getTeamMembers(): Promise<TeamMember[]> {
 export async function getTeamMember(slug: string): Promise<TeamMember | null> {
   return fetchSanityQuerySafe(
     `
-      *[_type == "teamMember" && slug.current == $slug][0] ${teamMemberProjection}
+      *[_type == "teamMember" && slug.current == $slug && !(slug.current == "princeton-owusu" || name match "Princeton*")][0] ${teamMemberProjection}
     `,
     null,
     { params: { slug }, tags: ['team-members', `team-member:${slug}`] }
@@ -235,6 +235,7 @@ export async function getServices(): Promise<Services | null> {
 }
 
 export async function getService(slug: string): Promise<Service | null> {
+  if (/parent[\s-]*coach/i.test(slug)) return null
   const servicesData = await fetchSanityQuerySafe<{ servicesList: Service | null }>(
     `
       *[_type == "services" && isActive == true][0] {
@@ -522,7 +523,7 @@ export async function getAreasPage(): Promise<AreasPage | null> {
 
 // Service Pages
 export async function getServicePages(): Promise<ServicePage[]> {
-  return fetchSanityQuerySafe(
+  const pages = await fetchSanityQuerySafe<ServicePage[]>(
     `
       *[_type == "servicePage" && isActive == true] | order(title asc) {
         _id,
@@ -543,9 +544,14 @@ export async function getServicePages(): Promise<ServicePage[]> {
     [],
     { tags: ['service-pages'] }
   )
+
+  return pages.filter(
+    (page) => !/parent[\s-]*coach/i.test(page.title + ' ' + (page.slug?.current ?? ''))
+  )
 }
 
 export async function getServicePage(slug: string): Promise<ServicePage | null> {
+  if (/parent[\s-]*coach/i.test(slug)) return null
   const page = await fetchSanityQuerySafe<ServicePage | null>(
     `
       *[_type == "servicePage" && slug.current == $slug && isActive == true][0] {

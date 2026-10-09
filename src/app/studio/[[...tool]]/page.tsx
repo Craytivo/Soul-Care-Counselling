@@ -7,12 +7,21 @@
  * https://github.com/sanity-io/next-sanity
  */
 
+import type { Metadata } from 'next'
 import { NextStudio } from 'next-sanity/studio'
 import config from '../../../../sanity.config'
 
 export const dynamic = 'force-static'
 
-export { metadata, viewport } from 'next-sanity/studio'
+export { viewport } from 'next-sanity/studio'
+
+export const metadata: Metadata = {
+  title: 'Soul Care Content Studio',
+  robots: {
+    index: false,
+    follow: false,
+  },
+}
 
 export default function StudioPage() {
   return <NextStudio config={config} />

@@ -3,11 +3,15 @@ import { MetadataRoute } from 'next'
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://thesoulcarecounsellor.ca'
 
-  // Static pages
+  // Only include canonical, public URLs. Legacy aliases are redirected by next.config.js.
   const staticPages = [
     '',
     '/about',
     '/services',
+    '/services/individual',
+    '/services/group-therapy',
+    '/services/affordable',
+    '/services/single-session',
     '/contact',
     '/resources',
     '/faq',
@@ -16,41 +20,32 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/terms',
     '/accessibility',
     '/areas',
-    '/individual',
-    '/group-therapy',
-    '/affordable',
-    '/single-session',
     '/workshops',
-    '/studio',
     '/shop',
     '/intern-application',
   ]
 
-  // Team member pages (you'll need to dynamically fetch these from Sanity)
+  // Canonical team profile routes.
   const teamPages = [
-    '/anita-owusu',
-    '/baraka-mwangi',
-    '/christiana-takyi',
-    '/davene-miller',
-    '/jessica-robinson-grant',
-    '/josh-dale',
-    '/khadian-williams',
-    '/natalia',
-    '/natalia-willis',
-    '/natalie-mcdonald',
-    '/natalie-willis',
-    '/nigel-miller',
-    '/oluseye-olumide',
-    '/princeton-owusu',
-    '/sneha-christian',
+    '/about/anita-owusu',
+    '/about/baraka-mwangi',
+    '/about/christiana-takyi',
+    '/about/davene',
+    '/about/jessica-robinson-grant',
+    '/about/josh-dale',
+    '/about/khadian-williams',
+    '/about/natalia',
+    '/about/natalia-willis',
+    '/about/natalie-mcdonald',
+    '/about/nigel-miller',
+    '/about/oluseye-olumide',
+    '/about/sneha-christian',
   ]
 
-  const allPages = [...staticPages, ...teamPages].map((page) => ({
+  return [...staticPages, ...teamPages].map((page) => ({
     url: `${baseUrl}${page}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: page === '' ? 1 : 0.8,
   }))
-
-  return allPages
 }
