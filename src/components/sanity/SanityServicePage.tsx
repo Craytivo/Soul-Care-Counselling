@@ -1,4 +1,5 @@
 import { getServicePage } from '@/lib/sanity-queries'
+import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
 
@@ -9,11 +10,7 @@ interface SanityServicePageProps {
 export default async function SanityServicePage({ slug }: SanityServicePageProps) {
   const page = await getServicePage(slug)
   if (!page) {
-    return (
-      <div className="py-12 text-center">
-        <p className="text-charcoal/60">Service page not found.</p>
-      </div>
-    )
+    notFound()
   }
 
   const renderCtaButton = (
