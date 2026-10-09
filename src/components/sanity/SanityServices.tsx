@@ -40,8 +40,12 @@ export default async function SanityServices({
     }
   }
 
-  // Filter active services
-  const activeServices = servicesData.servicesList.filter((service: Service) => service.isActive)
+  // Keep inactive and retired offerings out of the public service list.
+  const activeServices = servicesData.servicesList.filter(
+    (service: Service) =>
+      service.isActive &&
+      !/parent[\\s-]*coach/i.test(service.title + ' ' + (service.slug?.current ?? ''))
+  )
 
   return (
     <section className="mt-12 grid gap-6 md:grid-cols-2">
