@@ -49,7 +49,8 @@ const nextConfig = {
       { source: '/natalie-mcdonald', destination: '/about/natalie-mcdonald', permanent: true },
       { source: '/nigel-miller', destination: '/about/nigel-miller', permanent: true },
       { source: '/oluseye-olumide', destination: '/about/oluseye-olumide', permanent: true },
-      { source: '/princeton-owusu', destination: '/about/princeton-owusu', permanent: true },
+      { source: '/princeton-owusu', destination: '/about', permanent: true },
+      { source: '/about/princeton-owusu', destination: '/about', permanent: true },
       { source: '/sneha-christian', destination: '/about/sneha-christian', permanent: true },
     ]
   },
