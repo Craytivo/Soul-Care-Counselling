@@ -546,7 +546,7 @@ export async function getServicePages(): Promise<ServicePage[]> {
   )
 
   return pages.filter(
-    (page) => !/parent[\\s-]*coach/i.test(page.title + ' ' + (page.slug?.current ?? ''))
+    (page) => !/parent[\s-]*coach/i.test(page.title + ' ' + (page.slug?.current ?? ''))
   )
 }
 
