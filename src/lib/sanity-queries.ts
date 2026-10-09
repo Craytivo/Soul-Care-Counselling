@@ -523,7 +523,7 @@ export async function getAreasPage(): Promise<AreasPage | null> {
 
 // Service Pages
 export async function getServicePages(): Promise<ServicePage[]> {
-  return fetchSanityQuerySafe(
+  const pages = await fetchSanityQuerySafe<ServicePage[]>(
     `
       *[_type == "servicePage" && isActive == true] | order(title asc) {
         _id,
@@ -543,6 +543,10 @@ export async function getServicePages(): Promise<ServicePage[]> {
     `,
     [],
     { tags: ['service-pages'] }
+  )
+
+  return pages.filter(
+    (page) => !/parent[\\s-]*coach/i.test(page.title + ' ' + (page.slug?.current ?? ''))
   )
 }
 
