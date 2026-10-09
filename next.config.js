@@ -52,6 +52,8 @@ const nextConfig = {
       { source: '/oluseye-olumide', destination: '/about/oluseye-olumide', permanent: true },
       { source: '/princeton-owusu', destination: '/about', permanent: true },
       { source: '/about/princeton-owusu', destination: '/about', permanent: true },
+      { source: '/princeton', destination: '/about', permanent: true },
+      { source: '/about/princeton', destination: '/about', permanent: true },
       { source: '/sneha-christian', destination: '/about/sneha-christian', permanent: true },
     ]
   },
