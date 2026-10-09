@@ -41,7 +41,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/natalie-willis',
     '/nigel-miller',
     '/oluseye-olumide',
-    '/princeton-owusu',
     '/sneha-christian',
   ]
 
