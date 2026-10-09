@@ -36,7 +36,8 @@ const nextConfig = {
       { source: '/anita-owusu', destination: '/about/anita-owusu', permanent: true },
       { source: '/baraka-mwangi', destination: '/about/baraka-mwangi', permanent: true },
       { source: '/christiana-takyi', destination: '/about/christiana-takyi', permanent: true },
-      { source: '/davene-miller', destination: '/about/davene-miller', permanent: true },
+      { source: '/davene-miller', destination: '/about/davene', permanent: true },
+      { source: '/davene', destination: '/about/davene', permanent: true },
       {
         source: '/jessica-robinson-grant',
         destination: '/about/jessica-robinson-grant',
