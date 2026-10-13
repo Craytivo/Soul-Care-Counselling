@@ -92,11 +92,13 @@ export default function Hero({ homePageData }: HeroProps) {
   return (
     <section
       aria-labelledby="homepage-hero-heading"
-      className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-hidden bg-charcoal"
+      className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen bg-charcoal"
       style={{
-        height: aspectRatio ? `${100 / aspectRatio}vw` : '70vh',
-        minHeight: 'min(500px, calc(100svh - 6rem))',
-        maxHeight: '720px',
+        // Keep the container at the source image's aspect ratio at every viewport width.
+        // Avoid fixed min/max heights: they force the image to crop or leave unused space.
+        aspectRatio: imageDimensions
+          ? `${imageDimensions.width} / ${imageDimensions.height}`
+          : '16 / 9',
       }}
     >
       {backgroundImageSrc && (
@@ -106,7 +108,7 @@ export default function Hero({ homePageData }: HeroProps) {
           fill
           priority
           sizes="100vw"
-          className="object-cover"
+          className="object-contain"
           style={{ objectPosition }}
         />
       )}
