@@ -8,7 +8,7 @@ import Header from '../components/Header'
 
 import Footer from '../components/Footer'
 import BackToTop from '@/components/ui/BackToTop'
-import { interTight, inter, fontVariables } from '@/lib/fonts'
+import { fontVariables } from '@/lib/fonts'
 
 const gtmId = process.env.NEXT_PUBLIC_GTM_ID
 
