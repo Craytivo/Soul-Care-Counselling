@@ -124,62 +124,42 @@ export default function Hero({ homePageData }: HeroProps) {
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(35,32,27,0.70)_0%,rgba(35,32,27,0.25)_30%,rgba(35,32,27,0.25)_70%,rgba(35,32,27,0.70)_100%)]" />
       <div className="via-charcoal/18 absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-charcoal/60 to-transparent" />
 
-      <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-5 pb-20 pt-24 sm:px-8 sm:pb-24 lg:px-10 lg:pb-28">
-        <div className="grid gap-8 sm:grid-cols-2 lg:gap-16">
-          <div className="max-w-xl">
-            <h1 className="text-balance font-heading text-3xl font-bold leading-[1.06] text-white drop-shadow-sm sm:text-4xl lg:text-5xl">
+      <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-5 pb-10 pt-24 sm:px-8 sm:pb-14 lg:px-10 lg:pb-16">
+        <div className="grid gap-4 sm:grid-cols-2 lg:gap-8">
+          <div className="max-w-lg">
+            <h1 className="text-balance font-heading text-2xl font-bold leading-[1.08] text-white drop-shadow-sm sm:text-3xl lg:text-4xl">
               <span className="block">{heroData.mainHeading}</span>
-              <span className="mt-1 block text-clay drop-shadow-md">{heroData.highlightText}</span>
+              <span className="mt-0.5 block text-clay drop-shadow-md">
+                {heroData.highlightText}
+              </span>
             </h1>
 
-            <p className="mt-4 max-w-xl text-sm leading-6 text-cream/90 sm:text-base">
-              {heroData.description}
-            </p>
-
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-3 flex flex-col gap-2 sm:flex-row">
               <HeroButtonLink button={heroData.ctaButtons.primaryButton} variant="primary" />
               <HeroButtonLink button={heroData.ctaButtons.secondaryButton} variant="secondary" />
             </div>
           </div>
 
-          <div className="flex flex-col justify-end gap-4 sm:gap-5">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/15 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-cream/95 shadow-lg backdrop-blur-lg">
-              <ShieldCheck className="h-3.5 w-3.5" />
-              Virtual counselling across Canada
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-2 lg:gap-4">
+          <div className="flex flex-col justify-end gap-2 sm:gap-3">
+            <div className="grid gap-2 sm:grid-cols-2 lg:gap-2.5">
               {features.map((feature) => {
                 const Icon = iconComponents[feature.icon] ?? ShieldCheck
 
                 return (
                   <div
                     key={`${feature.icon}-${feature.text}`}
-                    className="sm:px-4.5 flex items-center gap-3 rounded-xl border border-white/20 bg-white/15 px-4 py-3 shadow-lg backdrop-blur-lg sm:py-3.5"
+                    className="flex items-center gap-2 rounded-lg border border-white/20 bg-white/15 px-3 py-2 shadow-lg backdrop-blur-lg sm:px-3.5 sm:py-2.5"
                   >
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-clay to-bark text-cream shadow-md ring-1 ring-white/30 sm:h-10 sm:w-10">
-                      <Icon className="h-[18px] w-[18px] sm:h-[20px] sm:w-[20px]" />
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-clay to-bark text-cream shadow-md ring-1 ring-white/30 sm:h-8 sm:w-8">
+                      <Icon className="h-[14px] w-[14px] sm:h-[16px] sm:w-[16px]" />
                     </span>
-                    <span className="text-xs font-medium leading-snug tracking-wide text-white/90 sm:text-sm">
+                    <span className="text-[11px] font-medium leading-tight tracking-wide text-white/90 sm:text-xs">
                       {feature.text}
                     </span>
                   </div>
                 )
               })}
             </div>
-
-            {heroData.quote?.text && (
-              <blockquote className="border-l-2 border-clay/80 pl-4 text-[#FFFFFF] sm:pl-5">
-                <p className="font-serif text-xs italic leading-5 text-[#FFFFFF]/95 sm:text-sm sm:leading-6">
-                  &ldquo;{heroData.quote.text}&rdquo;
-                </p>
-                {heroData.quote.author && (
-                  <footer className="mt-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-sand/90 sm:text-xs">
-                    {heroData.quote.author}
-                  </footer>
-                )}
-              </blockquote>
-            )}
           </div>
         </div>
       </div>
