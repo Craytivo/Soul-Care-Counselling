@@ -1,9 +1,15 @@
 export const revalidate = 300
-import { getTeamMembers, getHomePage } from '../lib/sanity-queries'
+import { getTeamMembers, getHomePage, getServices } from '../lib/sanity-queries'
 import HomeClient from './HomeClient'
 
 export default async function Home() {
-  const [teamMembers, homePageData] = await Promise.all([getTeamMembers(), getHomePage()])
+  const [teamMembers, homePageData, servicesData] = await Promise.all([
+    getTeamMembers(),
+    getHomePage(),
+    getServices(),
+  ])
 
-  return <HomeClient teamMembers={teamMembers} homePageData={homePageData} />
+  return (
+    <HomeClient teamMembers={teamMembers} homePageData={homePageData} servicesData={servicesData} />
+  )
 }
