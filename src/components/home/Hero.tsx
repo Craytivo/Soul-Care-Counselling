@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, LockKeyhole, MapPin, HeartHandshake, BookOpenCheck } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { urlFor } from '@/lib/sanity'
 import type { HomePage } from '@/lib/sanity'
 
@@ -16,13 +16,6 @@ type HeroButton = {
   external: boolean
 }
 
-const careHighlights = [
-  { text: 'Private & secure telehealth', icon: LockKeyhole },
-  { text: 'Virtual care, Canada-wide', icon: MapPin },
-  { text: 'Culturally responsive team', icon: HeartHandshake },
-  { text: 'Evidence-based, practical care', icon: BookOpenCheck },
-]
-
 function HeroButtonLink({
   button,
   variant,
@@ -32,8 +25,8 @@ function HeroButtonLink({
 }) {
   const className =
     variant === 'primary'
-      ? 'group inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-clay px-5 py-3 text-sm font-semibold text-cream shadow-elevation-2 ring-1 ring-clay/40 transition hover:bg-bark hover:shadow-elevation-3 focus:outline-none focus:ring-2 focus:ring-cream/70 focus:ring-offset-2 focus:ring-offset-charcoal sm:w-auto'
-      : 'inline-flex min-h-12 w-full items-center justify-center rounded-lg border border-white/30 bg-white/10 px-5 py-3 text-sm font-semibold text-white backdrop-blur-md transition hover:border-white/50 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-cream/70 focus:ring-offset-2 focus:ring-offset-charcoal sm:w-auto'
+      ? 'group inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-clay px-5 py-3 text-sm font-semibold text-cream shadow-elevation-2 ring-1 ring-clay/40 transition hover:bg-bark hover:shadow-elevation-3 focus:outline-none focus:ring-2 focus:ring-bark/50 focus:ring-offset-2 focus:ring-offset-cream sm:w-auto'
+      : 'inline-flex min-h-12 w-full items-center justify-center rounded-lg border border-bark/25 bg-transparent px-5 py-3 text-sm font-semibold text-bark transition hover:border-bark/50 hover:bg-sand/60 focus:outline-none focus:ring-2 focus:ring-bark/50 focus:ring-offset-2 focus:ring-offset-cream sm:w-auto'
 
   const content = (
     <>
@@ -88,75 +81,44 @@ export default function Hero({ homePageData }: HeroProps) {
   const dimensionMatch = imageRef?.match(/-(\d+)x(\d+)-/)
   const imageDimensions = dimensionMatch
     ? { width: Number(dimensionMatch[1]), height: Number(dimensionMatch[2]) }
-    : null
+    : { width: 1600, height: 1000 }
 
   return (
     <section
       aria-labelledby="homepage-hero-heading"
-      className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen bg-charcoal"
+      className="w-full bg-cream text-bark"
     >
-      <div
-        className="relative w-full overflow-hidden bg-charcoal"
-        style={{
-          // Match the source image's ratio so object-cover fills the frame without cropping it.
-          aspectRatio: imageDimensions
-            ? [imageDimensions.width, imageDimensions.height].join(' / ')
-            : '16 / 9',
-        }}
-      >
-        {backgroundImageSrc && (
-          <Image
-            src={backgroundImageSrc}
-            alt={backgroundImageAlt}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
-        )}
-        <div
-          className="absolute inset-0 hidden bg-gradient-to-t from-charcoal/95 via-charcoal/75 via-[38%] to-transparent xl:block"
-          aria-hidden="true"
-        />
-      </div>
-
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-8 pt-7 text-white sm:px-8 sm:pb-10 xl:absolute xl:inset-x-0 xl:bottom-0 xl:px-12 xl:pb-12 xl:pt-24">
-        <div className="max-w-3xl">
+      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-8 px-5 py-8 sm:gap-10 sm:px-8 sm:py-12 md:py-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-12 lg:px-10 lg:py-16 xl:gap-16 xl:px-12 xl:py-20">
+        <div className="order-1 min-w-0">
           <h1
             id="homepage-hero-heading"
-            className="text-balance font-heading text-3xl font-semibold leading-[1.08] sm:text-4xl lg:text-5xl"
+            className="max-w-2xl text-balance font-heading text-3xl font-semibold leading-[1.08] text-bark sm:text-4xl md:text-5xl xl:text-6xl"
           >
-            {heroData.mainHeading} <span className="text-clay">{heroData.highlightText}</span>
+            {heroData.mainHeading}{' '}
+            <span className="text-clay">{heroData.highlightText}</span>
           </h1>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-cream/95 sm:mt-4 sm:text-base sm:leading-7">
+          <p className="mt-4 max-w-xl text-base leading-7 text-bark/80 sm:mt-5 sm:text-lg sm:leading-8">
             {heroData.description}
           </p>
-          <div className="mt-4 flex flex-col gap-2 sm:mt-5 sm:flex-row sm:gap-3">
+          <div className="mt-6 flex flex-col gap-3 sm:mt-7 sm:flex-row sm:flex-wrap sm:gap-3">
             <HeroButtonLink button={heroData.ctaButtons.primaryButton} variant="primary" />
             <HeroButtonLink button={heroData.ctaButtons.secondaryButton} variant="secondary" />
           </div>
         </div>
 
-        <ul
-          aria-label="Our care commitments"
-          className="mt-6 grid gap-x-5 gap-y-3 border-t border-white/20 pt-5 text-sm text-cream sm:grid-cols-2 xl:mt-7 xl:max-w-3xl xl:gap-y-3"
-        >
-          {careHighlights.map(({ text, icon: Icon }) => (
-            <li key={text} className="flex items-center gap-2.5">
-              <Icon className="h-4 w-4 shrink-0 text-clay" aria-hidden="true" />
-              <span>{text}</span>
-            </li>
-          ))}
-        </ul>
-
-        <blockquote className="mt-6 max-w-2xl border-l-2 border-clay pl-4 text-cream sm:mt-7">
-          <p className="font-heading text-base italic leading-6 sm:text-lg">
-            “It is the will of the Father that you are well”
-          </p>
-          <cite className="mt-2 block text-xs not-italic text-cream/75 sm:text-sm">
-            Jessica Robinson-Grant
-          </cite>
-        </blockquote>
+        {backgroundImageSrc && (
+          <div className="order-2 min-w-0 self-center lg:order-2">
+            <Image
+              src={backgroundImageSrc}
+              alt={backgroundImageAlt}
+              width={imageDimensions.width}
+              height={imageDimensions.height}
+              priority
+              sizes="(max-width: 1023px) 100vw, 55vw"
+              className="block h-auto w-full rounded-xl object-contain"
+            />
+          </div>
+        )}
       </div>
     </section>
   )
