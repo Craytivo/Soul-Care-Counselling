@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, CheckCircle2, LockKeyhole, MapPin, HeartHandshake, BookOpenCheck } from 'lucide-react'
 import { urlFor } from '@/lib/sanity'
 import type { HomePage } from '@/lib/sanity'
 
@@ -15,6 +15,13 @@ type HeroButton = {
   url: string
   external: boolean
 }
+
+const careHighlights = [
+  { text: 'Private & secure telehealth', icon: LockKeyhole },
+  { text: 'Virtual care, Canada-wide', icon: MapPin },
+  { text: 'Culturally responsive team', icon: HeartHandshake },
+  { text: 'Evidence-based, practical care', icon: BookOpenCheck },
+]
 
 function HeroButtonLink({
   button,
@@ -75,49 +82,46 @@ export default function Hero({ homePageData }: HeroProps) {
     ? urlFor(heroData.backgroundImage).quality(92).url()
     : null
   const backgroundImageAlt = heroData.backgroundImage?.alt || 'Soul Care Counselling team'
-  const hotspot = (heroData.backgroundImage as { hotspot?: { x: number; y: number } })?.hotspot
-  const objectPosition = hotspot
-    ? `${(hotspot.x * 100).toFixed(2)}% ${(hotspot.y * 100).toFixed(2)}%`
-    : 'center center'
   const imageMetadata = heroData.backgroundImage as { asset?: { _ref: string } }
   const imageRef = imageMetadata?.asset?._ref
-  const imageDimensions = imageRef
-    ? {
-        width: parseInt(imageRef.split('-')[2], 10),
-        height: parseInt(imageRef.split('-')[3], 10),
-      }
+  // Sanity image references use the format image-<id>-<width>x<height>-<format>.
+  const dimensionMatch = imageRef?.match(/-(\d+)x(\d+)-/)
+  const imageDimensions = dimensionMatch
+    ? { width: Number(dimensionMatch[1]), height: Number(dimensionMatch[2]) }
     : null
-  const aspectRatio = imageDimensions ? imageDimensions.width / imageDimensions.height : 16 / 9
 
   return (
     <section
       aria-labelledby="homepage-hero-heading"
       className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen bg-charcoal"
-      style={{
-        // Keep the container at the source image's aspect ratio at every viewport width.
-        // Avoid fixed min/max heights: they force the image to crop or leave unused space.
-        aspectRatio: imageDimensions
-          ? `${imageDimensions.width} / ${imageDimensions.height}`
-          : '16 / 9',
-      }}
     >
-      {backgroundImageSrc && (
-        <Image
-          src={backgroundImageSrc}
-          alt={backgroundImageAlt}
-          fill
-          priority
-          sizes="100vw"
-          className="object-contain"
-          style={{ objectPosition }}
-        />
-      )}
       <div
-        className="absolute inset-0 bg-gradient-to-t from-charcoal/95 via-charcoal/75 via-[38%] to-transparent"
-        aria-hidden="true"
-      />
-      <div className="relative z-10 mx-auto flex h-full max-w-7xl items-end px-5 pb-7 pt-20 sm:px-8 sm:pb-10 md:px-10 lg:px-12 lg:pb-12">
-        <div className="max-w-3xl text-white">
+        className="relative w-full overflow-hidden bg-charcoal"
+        style={{
+          // Match the source image's ratio so object-cover fills the frame without cropping it.
+          aspectRatio: imageDimensions
+            ? [imageDimensions.width, imageDimensions.height].join(' / ')
+            : '16 / 9',
+        }}
+      >
+        {backgroundImageSrc && (
+          <Image
+            src={backgroundImageSrc}
+            alt={backgroundImageAlt}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+        )}
+        <div
+          className="absolute inset-0 hidden bg-gradient-to-t from-charcoal/95 via-charcoal/75 via-[38%] to-transparent lg:block"
+          aria-hidden="true"
+        />
+      </div>
+
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-8 pt-7 text-white sm:px-8 sm:pb-10 lg:absolute lg:inset-x-0 lg:bottom-0 lg:px-12 lg:pb-12 lg:pt-24">
+        <div className="max-w-3xl">
           <h1
             id="homepage-hero-heading"
             className="text-balance font-heading text-3xl font-semibold leading-[1.08] sm:text-4xl lg:text-5xl"
@@ -132,6 +136,27 @@ export default function Hero({ homePageData }: HeroProps) {
             <HeroButtonLink button={heroData.ctaButtons.secondaryButton} variant="secondary" />
           </div>
         </div>
+
+        <ul
+          aria-label="Our care commitments"
+          className="mt-6 grid gap-x-5 gap-y-3 border-t border-white/20 pt-5 text-sm text-cream sm:grid-cols-2 lg:mt-7 lg:max-w-3xl lg:gap-y-3"
+        >
+          {careHighlights.map(({ text, icon: Icon }) => (
+            <li key={text} className="flex items-center gap-2.5">
+              <Icon className="h-4 w-4 shrink-0 text-clay" aria-hidden="true" />
+              <span>{text}</span>
+            </li>
+          ))}
+        </ul>
+
+        <blockquote className="mt-6 max-w-2xl border-l-2 border-clay pl-4 text-cream sm:mt-7">
+          <p className="font-heading text-base italic leading-6 sm:text-lg">
+            “It is the will of the Father that you are well”
+          </p>
+          <cite className="mt-2 block text-xs not-italic text-cream/75 sm:text-sm">
+            Jessica Robinson-Grant
+          </cite>
+        </blockquote>
       </div>
     </section>
   )
