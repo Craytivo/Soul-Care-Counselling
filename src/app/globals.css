@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Build-safe font stacks: no external font metadata is needed at build time. */
+.font-fallbacks {
+  --font-heading: 'Arial', 'Helvetica Neue', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Arial', 'Helvetica Neue', ui-sans-serif, system-ui, sans-serif;
+}
+
 /* ===========================
    TYPOGRAPHY FOUNDATION
    =========================== */
