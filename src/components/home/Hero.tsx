@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, Globe2, GraduationCap, LockKeyhole, MapPin, ShieldCheck } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { urlFor } from '@/lib/sanity'
 import type { HomePage } from '@/lib/sanity'
 
@@ -14,13 +14,6 @@ type HeroButton = {
   text: string
   url: string
   external: boolean
-}
-
-const iconComponents = {
-  lock: LockKeyhole,
-  mapPin: MapPin,
-  globe: Globe2,
-  graduationCap: GraduationCap,
 }
 
 function HeroButtonLink({
@@ -98,11 +91,12 @@ export default function Hero({ homePageData }: HeroProps) {
 
   return (
     <section
+      aria-labelledby="homepage-hero-heading"
       className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-hidden bg-charcoal"
       style={{
-        height: aspectRatio ? `${100 / aspectRatio}vw` : '60vh',
-        minHeight: '40vh',
-        maxHeight: '80vh',
+        height: aspectRatio ? `${100 / aspectRatio}vw` : '70vh',
+        minHeight: 'min(620px, calc(100svh - 6rem))',
+        maxHeight: '820px',
       }}
     >
       {backgroundImageSrc && (
@@ -116,6 +110,34 @@ export default function Hero({ homePageData }: HeroProps) {
           style={{ objectPosition }}
         />
       )}
+      <div
+        className="absolute inset-0 bg-gradient-to-r from-charcoal/90 via-charcoal/65 to-charcoal/10"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute inset-0 bg-gradient-to-t from-charcoal/55 via-transparent to-charcoal/10"
+        aria-hidden="true"
+      />
+      <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center px-5 py-12 sm:px-8 md:px-10 lg:px-12">
+        <div className="max-w-2xl text-white">
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-cream/90 sm:text-sm">
+            Soul Care Counselling
+          </p>
+          <h1
+            id="homepage-hero-heading"
+            className="text-balance font-heading text-4xl font-semibold leading-[1.08] sm:text-5xl lg:text-6xl"
+          >
+            {heroData.mainHeading} <span className="text-clay">{heroData.highlightText}</span>
+          </h1>
+          <p className="mt-5 max-w-xl text-base leading-7 text-cream/95 sm:text-lg sm:leading-8">
+            {heroData.description}
+          </p>
+          <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+            <HeroButtonLink button={heroData.ctaButtons.primaryButton} variant="primary" />
+            <HeroButtonLink button={heroData.ctaButtons.secondaryButton} variant="secondary" />
+          </div>
+        </div>
+      </div>
     </section>
   )
 }
