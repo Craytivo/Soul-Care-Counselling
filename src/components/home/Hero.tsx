@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, CheckCircle2, LockKeyhole, MapPin, HeartHandshake, BookOpenCheck } from 'lucide-react'
+import { ArrowRight, LockKeyhole, MapPin, HeartHandshake, BookOpenCheck } from 'lucide-react'
 import { urlFor } from '@/lib/sanity'
 import type { HomePage } from '@/lib/sanity'
 
@@ -115,12 +115,12 @@ export default function Hero({ homePageData }: HeroProps) {
           />
         )}
         <div
-          className="absolute inset-0 hidden bg-gradient-to-t from-charcoal/95 via-charcoal/75 via-[38%] to-transparent lg:block"
+          className="absolute inset-0 hidden bg-gradient-to-t from-charcoal/95 via-charcoal/75 via-[38%] to-transparent xl:block"
           aria-hidden="true"
         />
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-8 pt-7 text-white sm:px-8 sm:pb-10 lg:absolute lg:inset-x-0 lg:bottom-0 lg:px-12 lg:pb-12 lg:pt-24">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-8 pt-7 text-white sm:px-8 sm:pb-10 xl:absolute xl:inset-x-0 xl:bottom-0 xl:px-12 xl:pb-12 xl:pt-24">
         <div className="max-w-3xl">
           <h1
             id="homepage-hero-heading"
@@ -139,7 +139,7 @@ export default function Hero({ homePageData }: HeroProps) {
 
         <ul
           aria-label="Our care commitments"
-          className="mt-6 grid gap-x-5 gap-y-3 border-t border-white/20 pt-5 text-sm text-cream sm:grid-cols-2 lg:mt-7 lg:max-w-3xl lg:gap-y-3"
+          className="mt-6 grid gap-x-5 gap-y-3 border-t border-white/20 pt-5 text-sm text-cream sm:grid-cols-2 xl:mt-7 xl:max-w-3xl xl:gap-y-3"
         >
           {careHighlights.map(({ text, icon: Icon }) => (
             <li key={text} className="flex items-center gap-2.5">
