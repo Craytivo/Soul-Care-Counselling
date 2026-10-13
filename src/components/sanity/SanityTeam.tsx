@@ -51,12 +51,10 @@ export function filterMembers(
     }
 
     // Direct specialty matching for the filter tabs
-    if (!member.specialties || member.specialties.length === 0) {
-      return false
-    }
-
     const normalizedFilter = activeFilter.trim().toLowerCase()
-    const hasSpecialty = member.specialties.some((x) => x.trim().toLowerCase() === normalizedFilter)
+    const hasSpecialty = member.specialties?.some(
+      (x) => x.trim().toLowerCase() === normalizedFilter
+    )
 
     return matchesSearch && hasSpecialty
   })

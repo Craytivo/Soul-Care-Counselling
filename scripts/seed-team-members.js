@@ -45,8 +45,8 @@ const teamMembers = [
   },
   {
     _type: 'teamMember',
-    name: 'Davene',
-    credentials: 'Operations Manager',
+    name: 'Davene Harris',
+    credentials: 'MA',
     role: 'Operations Manager',
     bio: 'Davene manages the day-to-day operations of Soul Care Counselling, ensuring smooth coordination of services and supporting both clients and therapists in their journey.',
     specialties: ['Operations Management', 'Client Coordination', 'Administrative Support'],
@@ -60,7 +60,7 @@ const teamMembers = [
     ],
     acceptsBookings: false,
     slug: {
-      current: 'davene',
+      current: 'davene-harris',
     },
   },
   {

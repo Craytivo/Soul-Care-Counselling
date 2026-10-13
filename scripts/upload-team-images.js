@@ -12,18 +12,14 @@ const client = createClient({
   apiVersion: '2025-09-05',
 })
 
-// Map team members to their image files
+// Map team members to their image files (using current Sanity slugs)
 const teamImageMapping = {
-  'jessica-robinson-grant': 'rs=w_365,h_365,cg_true,m.webp',
-  davene: 'rs=w_365,h_365,cg_true,m (1).webp',
-  princeton: 'rs=w_365,h_365,cg_true,m (2).webp',
-  anita: 'rs=w_365,h_365,cg_true,m (3).webp',
-  baraka: 'rs=w_365,h_365,cg_true,m (4).webp',
-  josh: 'rs=w_365,h_365,cg_true,m (5).webp',
-  khadian: 'rs=w_365,h_365,cg_true,m (6).webp',
-  natalie: 'rs=w_365,h_365,cg_true,m (7).webp',
-  nigel: 'rs=w_365,h_365,cg_true,m (8).webp',
-  oluseye: 'rs=w_365,h_365,cg_true,m.webp',
+  'jessica-robinson-grant': 'Jessica.jpg',
+  'baraka-mwangi': 'Baraka.jpg',
+  'khadian-williams': 'Khadian.jpg',
+  'natalie-willis': 'Natalie.jpg',
+  'nigel-miller': 'Nigel.jpg',
+  'oluseye-olumide': 'Oluseye.jpg',
 }
 
 async function uploadTeamImages() {
