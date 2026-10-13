@@ -71,7 +71,7 @@ export default async function SanityAboutPage() {
             fill
             priority
             className="object-cover"
-            style={{ objectPosition: '50% 42%' }}
+            style={{ objectPosition: '50% 0%' }}
           />
         )}
         {/* Content */}
