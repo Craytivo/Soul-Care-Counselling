@@ -26,7 +26,7 @@ export default function HomeClient({ teamMembers, homePageData, servicesData }: 
       <HeroContent homePageData={homePageData} />
 
       <section
-        className="bg-cream px-5 py-16 sm:px-8 md:py-20 lg:px-10"
+        className="bg-cream px-5 pb-8 pt-16 sm:px-8 sm:pb-10 md:pb-10 md:pt-20 lg:px-10"
         aria-labelledby="services-heading"
       >
         <div className="mx-auto max-w-7xl">
@@ -99,7 +99,7 @@ export default function HomeClient({ teamMembers, homePageData, servicesData }: 
       </section>
 
       <section className="bg-cream">
-        <div className="mx-auto max-w-7xl px-6 pb-14 pt-10 sm:px-8 md:px-10 md:pb-16 md:pt-12 lg:pb-20 xl:px-12">
+        <div className="mx-auto max-w-7xl px-6 pb-14 pt-4 sm:px-8 md:px-10 md:pb-16 md:pt-6 lg:pb-20 xl:px-12">
           <SanityTeamClient teamMembers={teamMembers} />
         </div>
       </section>
