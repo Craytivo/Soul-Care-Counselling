@@ -1,27 +1,9 @@
-import { Inter_Tight, Inter } from 'next/font/google'
-
 /**
- * Headings: Inter Tight
- * A modern, geometric sans-serif with tight proportions
- * Perfect for confident, minimal typography
+ * Font fallback configuration.
+ *
+ * Avoids fetching Google Font metadata during the Netlify build, which can
+ * fail inside next/font/google when the upstream response cannot be parsed.
+ * The CSS variables preserve the existing font-family hooks used by Tailwind
+ * and the site's typography styles.
  */
-export const interTight = Inter_Tight({
-  variable: '--font-heading',
-  subsets: ['latin'],
-  display: 'swap',
-  weight: ['400', '500', '600', '700'],
-})
-
-/**
- * Body: Inter
- * Excellent readability at all sizes
- * Open letterforms and generous spacing
- */
-export const inter = Inter({
-  variable: '--font-body',
-  subsets: ['latin'],
-  display: 'swap',
-  weight: ['300', '400', '500', '600', '700'],
-})
-
-export const fontVariables = `${interTight.variable} ${inter.variable}`
+export const fontVariables = 'font-fallbacks'
