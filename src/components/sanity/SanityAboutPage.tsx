@@ -74,10 +74,14 @@ export default async function SanityAboutPage() {
             style={{ objectPosition: '50% 42%' }}
           />
         )}
-        {/* Gradient overlays for text contrast */}
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(35,32,27,0.12)_0%,rgba(35,32,27,0.42)_42%,rgba(35,32,27,0.88)_100%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(35,32,27,0.86)_0%,rgba(35,32,27,0.62)_42%,rgba(35,32,27,0.20)_100%)] opacity-80" />
-        <div className="via-charcoal/18 absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-charcoal/55 to-transparent" />
+        {/* Content */}
+        <div className="relative z-10 mx-auto flex min-h-[70vh] max-w-7xl flex-col justify-end px-5 pb-20 pt-24 sm:min-h-[72vh] sm:px-8 lg:min-h-[min(820px,90vh)] lg:px-10 lg:pb-28">
+          <div className="max-w-3xl">
+            {pageData.hero.badge && (
+              <div className="border-white/18 bg-white/12 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-cream backdrop-blur-md">
+                {pageData.hero.badge}
+              </div>
+            )}
 
         {/* Content */}
         <div className="relative z-10 mx-auto flex min-h-[70vh] max-w-7xl flex-col justify-end px-5 pb-20 pt-24 sm:min-h-[72vh] sm:px-8 lg:min-h-[min(820px,90vh)] lg:px-10 lg:pb-28">
@@ -88,13 +92,16 @@ export default async function SanityAboutPage() {
               </div>
             )}
 
-            <h1 className="mt-5 text-balance font-heading text-4xl font-bold leading-[1.04] text-white sm:text-5xl lg:text-6xl">
-              {pageData.hero.title}
-            </h1>
+            {/* Localized contrast background for hero text only; the image itself stays undarkened. */}
+            <div className="mt-5 inline-block max-w-3xl rounded-[4px] bg-[rgba(37,35,31,0.65)] px-4 py-3.5 sm:px-6 sm:py-5">
+              <h1 className="text-balance font-heading text-4xl font-bold leading-[1.04] text-white sm:text-5xl lg:text-6xl">
+                {pageData.hero.title}
+              </h1>
 
-            <p className="mt-5 max-w-2xl text-base leading-7 text-cream sm:text-lg">
-              {pageData.hero.description}
-            </p>
+              <p className="mt-5 max-w-2xl text-base leading-7 text-cream sm:text-lg">
+                {pageData.hero.description}
+              </p>
+            </div>
 
             {/* CTA Buttons */}
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
