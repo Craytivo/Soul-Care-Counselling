@@ -100,7 +100,7 @@ export default function HomeClient({ teamMembers, homePageData, servicesData }: 
 
       <section className="bg-cream">
         <div className="mx-auto max-w-7xl px-6 pb-14 pt-4 sm:px-8 md:px-10 md:pb-16 md:pt-6 lg:pb-20 xl:px-12">
-          <SanityTeamClient teamMembers={teamMembers} />
+          <SanityTeamClient teamMembers={teamMembers} featured />
         </div>
       </section>
     </div>
