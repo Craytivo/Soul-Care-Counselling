@@ -100,6 +100,8 @@ export default async function ShopPage() {
                     </p>
                     <div className="mt-auto flex items-center justify-between gap-3 pt-5">
                       <span className="font-semibold text-bark">
+                        {product.priceRange.minVariantPrice.amount !==
+                          product.priceRange.maxVariantPrice.amount && 'From '}
                         {formatShopifyPrice(
                           product.priceRange.minVariantPrice.amount,
                           product.priceRange.minVariantPrice.currencyCode
