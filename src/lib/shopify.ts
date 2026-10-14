@@ -17,6 +17,10 @@ export type ShopifyProduct = {
       amount: string
       currencyCode: string
     }
+    maxVariantPrice: {
+      amount: string
+      currencyCode: string
+    }
   }
 }
 
@@ -46,6 +50,10 @@ const PRODUCTS_QUERY = `
         }
         priceRange {
           minVariantPrice {
+            amount
+            currencyCode
+          }
+          maxVariantPrice {
             amount
             currencyCode
           }
