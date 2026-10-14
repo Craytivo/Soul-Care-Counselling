@@ -227,6 +227,13 @@ export const servicePage = defineType({
               of: [{ type: 'string' }],
               validation: (Rule) => Rule.required(),
             },
+            {
+              name: 'note',
+              title: 'Note',
+              type: 'text',
+              rows: 2,
+              description: 'Optional note shown below the list',
+            },
           ],
         },
         {

@@ -30,7 +30,10 @@ function HeroButtonLink({
     <>
       {button.text}
       {variant === 'primary' && (
-        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+        <ArrowRight
+          className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+          aria-hidden="true"
+        />
       )}
     </>
   )
@@ -77,46 +80,53 @@ export default function Hero({ homePageData }: HeroProps) {
   return (
     <section
       aria-labelledby="homepage-hero-heading"
-      className="relative isolate flex min-h-[650px] w-full items-center overflow-hidden bg-bark text-white sm:min-h-[680px] lg:min-h-[min(740px,calc(100svh-5rem))]"
+      className="relative isolate w-full overflow-hidden bg-charcoal text-white lg:flex lg:h-[min(62vw,calc(100svh-5rem))] lg:min-h-[560px] lg:items-end"
     >
+      {/* Team photo: shown at its natural ratio on small screens, full-bleed on large screens.
+          Faces sit in the upper half of the photo, so text stays in the bottom band. */}
       {backgroundImageSrc && (
-        <Image
-          src={backgroundImageSrc}
-          alt={backgroundImageAlt}
-          fill
-          priority
-          sizes="100vw"
-          className="absolute inset-0 -z-20 object-cover object-center"
-        />
+        <div className="relative aspect-[124/77] w-full lg:absolute lg:inset-0 lg:-z-20 lg:aspect-auto">
+          <Image
+            src={backgroundImageSrc}
+            alt={backgroundImageAlt}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-top"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-b from-transparent from-60% to-charcoal lg:from-transparent lg:from-50% lg:via-charcoal/55 lg:via-70% lg:to-charcoal"
+          />
+        </div>
       )}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-gradient-to-r from-charcoal/90 via-charcoal/65 to-charcoal/25"
-      />
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-charcoal/45 via-transparent to-charcoal/10" />
 
-      <div className="mx-auto w-full max-w-7xl px-5 py-20 sm:px-8 sm:py-24 lg:px-12 lg:py-28">
-        <div className="max-w-3xl">
-          <p className="mb-5 text-xs font-semibold uppercase tracking-[0.22em] text-white/80 sm:text-sm">
-            Soul Care Christian Counselling
-          </p>
-          <h1
-            id="homepage-hero-heading"
-            className="max-w-3xl text-balance font-heading text-4xl font-semibold leading-[1.08] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl"
-          >
-            {heroData.mainHeading}{' '}
-            <span className="text-[#e7c49a]">{heroData.highlightText}</span>
-          </h1>
-          <p className="mt-6 max-w-2xl text-base leading-7 text-white/90 sm:text-lg sm:leading-8">
-            {heroData.description}
-          </p>
-          <div className="mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:flex-wrap">
-            <HeroButtonLink button={heroData.ctaButtons.primaryButton} variant="primary" />
-            <HeroButtonLink button={heroData.ctaButtons.secondaryButton} variant="secondary" />
+      <div className="relative mx-auto w-full max-w-7xl px-5 pb-12 pt-6 sm:px-8 sm:pb-14 lg:px-12 lg:pb-10 lg:pt-0 xl:pb-12">
+        <div className="lg:grid lg:grid-cols-12 lg:items-end lg:gap-10 xl:gap-14">
+          <div className="lg:col-span-6 xl:col-span-7">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-white/80 sm:text-sm">
+              Soul Care Christian Counselling
+            </p>
+            <h1
+              id="homepage-hero-heading"
+              className="text-balance font-heading text-4xl font-semibold leading-[1.08] tracking-tight text-white [text-shadow:0_2px_16px_rgba(0,0,0,0.35)] sm:text-5xl lg:text-[2.6rem] xl:text-5xl"
+            >
+              {heroData.mainHeading}{' '}
+              <span className="text-[#e7c49a]">{heroData.highlightText}</span>
+            </h1>
+            <p className="mt-4 text-sm leading-6 text-white/75">
+              Faith-centred care. Culturally responsive support. Virtual counselling across Canada.
+            </p>
           </div>
-          <p className="mt-6 text-sm leading-6 text-white/75">
-            Faith-centred care. Culturally responsive support. Virtual counselling across Canada.
-          </p>
+          <div className="mt-6 lg:col-span-6 lg:mt-0 xl:col-span-5">
+            <p className="text-base leading-7 text-white/90 [text-shadow:0_1px_10px_rgba(0,0,0,0.35)]">
+              {heroData.description}
+            </p>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <HeroButtonLink button={heroData.ctaButtons.primaryButton} variant="primary" />
+              <HeroButtonLink button={heroData.ctaButtons.secondaryButton} variant="secondary" />
+            </div>
+          </div>
         </div>
       </div>
     </section>

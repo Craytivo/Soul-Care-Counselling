@@ -30,7 +30,9 @@ const nextConfig = {
       // Service sub-page redirects
       { source: '/individual', destination: '/services/individual', permanent: true },
       { source: '/group-therapy', destination: '/services/group-therapy', permanent: true },
-      { source: '/single-session', destination: '/services/single-session', permanent: true },
+      // Single Session Therapy is no longer offered
+      { source: '/single-session', destination: '/services', permanent: true },
+      { source: '/services/single-session', destination: '/services', permanent: true },
       { source: '/affordable', destination: '/services/affordable', permanent: true },
       // Team member redirects
       { source: '/anita-owusu', destination: '/about/anita-owusu', permanent: true },

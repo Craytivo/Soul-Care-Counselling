@@ -21,7 +21,7 @@ export default function HomeClient({ teamMembers, homePageData, servicesData }: 
     .slice(0, 3)
 
   return (
-    <div className="-mx-4 -my-12 bg-cream">
+    <div className="relative left-1/2 right-1/2 -my-12 -ml-[50vw] -mr-[50vw] w-screen bg-cream">
       <Hero homePageData={homePageData} />
       <HeroContent homePageData={homePageData} />
 

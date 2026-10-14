@@ -85,8 +85,8 @@ function getImageUrl(member: TeamMember, featured = false) {
 
   try {
     return featured
-      ? urlFor(member.image).width(720).height(900).fit('crop').url()
-      : urlFor(member.image).width(160).height(160).url()
+      ? urlFor(member.image).width(720).fit('max').url()
+      : urlFor(member.image).width(160).height(160).fit('max').url()
   } catch {
     return '/assets/img/team/placeholder.webp'
   }
@@ -295,13 +295,13 @@ export default function SanityTeamClient({
                     ease: 'easeOut',
                   }}
                 >
-                  <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-charcoal/10 bg-white shadow-elevation-1 transition duration-200 hover:-translate-y-0.5 hover:border-clay/35 hover:shadow-elevation-3">
+                  <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-charcoal/10 bg-white transition duration-200 shadow-elevation-1 hover:-translate-y-0.5 hover:border-clay/35 hover:shadow-elevation-3">
                     {featured && (
                       <div className="relative overflow-hidden bg-sand">
                         <Image
                           src={getImageUrl(member, true)}
                           alt={member.name}
-                          className="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-[1.03] sm:h-72"
+                          className="h-auto w-full object-contain"
                           width={720}
                           height={900}
                           loading="lazy"
@@ -310,12 +310,14 @@ export default function SanityTeamClient({
                       </div>
                     )}
                     <div className={`flex flex-1 flex-col ${featured ? 'p-6 sm:p-7' : 'p-5'}`}>
-                      <div className={featured ? 'flex items-start gap-4' : 'flex items-start gap-4'}>
+                      <div
+                        className={featured ? 'flex items-start gap-4' : 'flex items-start gap-4'}
+                      >
                         {!featured && (
                           <Image
                             src={getImageUrl(member)}
                             alt={member.name}
-                            className="h-16 w-16 rounded-full object-cover ring-1 ring-charcoal/10"
+                            className="h-16 w-16 flex-shrink-0 rounded-xl bg-sand object-contain ring-1 ring-charcoal/10"
                             width={64}
                             height={64}
                             loading="lazy"

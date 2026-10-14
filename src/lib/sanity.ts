@@ -257,6 +257,7 @@ export interface ServicePage {
         }>
       | string[]
     description?: string
+    note?: string
     primaryButton?: {
       text: string
       url: string

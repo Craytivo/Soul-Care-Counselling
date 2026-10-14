@@ -10,7 +10,7 @@ import ConsultationCta from '@/components/cta/ConsultationCta'
 export const metadata: Metadata = {
   title: 'Services | Soul Care Counselling',
   description:
-    'Faith-centered, culturally sensitive therapy. Virtual across Canada. Explore individual therapy, affordable therapy, single-session options, and group therapy.',
+    'Faith-centered, culturally sensitive therapy. Virtual across Canada. Explore individual therapy, affordable therapy, and group therapy.',
 }
 
 export default async function ServicesPage() {
