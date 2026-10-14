@@ -104,12 +104,6 @@ export default async function ShopPage() {
                           product.priceRange.minVariantPrice.amount,
                           product.priceRange.minVariantPrice.currencyCode
                         )}
-                        <span className="ml-1 text-xs font-normal text-charcoal/55">
-                          {product.priceRange.minVariantPrice.amount !==
-                          product.priceRange.minVariantPrice.amount
-                            ? 'From'
-                            : ''}
-                        </span>
                       </span>
                       {productUrl ? (
                         <a
