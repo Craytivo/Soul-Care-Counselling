@@ -32,6 +32,44 @@ export default async function SanityServicePage({ slug }: SanityServicePageProps
     }
   }
 
+  const textSectionComponents = {
+    block: {
+      normal: ({ children }: { children?: React.ReactNode }) => (
+        <p className="leading-relaxed">{children}</p>
+      ),
+      h3: ({ children }: { children?: React.ReactNode }) => (
+        <h3 className="pt-2 font-heading text-lg font-semibold text-bark md:text-xl">{children}</h3>
+      ),
+      h4: ({ children }: { children?: React.ReactNode }) => (
+        <h4 className="pt-1 font-heading text-base font-semibold text-bark">{children}</h4>
+      ),
+    },
+    list: {
+      bullet: ({ children }: { children?: React.ReactNode }) => (
+        <ul className="space-y-2.5">{children}</ul>
+      ),
+      number: ({ children }: { children?: React.ReactNode }) => (
+        <ol className="list-decimal space-y-2.5 pl-6">{children}</ol>
+      ),
+    },
+    listItem: {
+      bullet: ({ children }: { children?: React.ReactNode }) => (
+        <li className="flex items-start gap-3 leading-relaxed">
+          <span className="mt-2 inline-block h-2 w-2 flex-shrink-0 rounded-full bg-bark" />
+          <span>{children}</span>
+        </li>
+      ),
+      number: ({ children }: { children?: React.ReactNode }) => (
+        <li className="pl-1 leading-relaxed">{children}</li>
+      ),
+    },
+    marks: {
+      strong: ({ children }: { children?: React.ReactNode }) => (
+        <strong className="font-semibold text-charcoal">{children}</strong>
+      ),
+    },
+  }
+
   type Section = {
     _key?: string
     _type: string
@@ -39,6 +77,7 @@ export default async function SanityServicePage({ slug }: SanityServicePageProps
     content?: unknown[]
     items?: Array<{ label?: string; value?: string }> | string[]
     description?: string
+    note?: string
     primaryButton?: { text: string; url: string; external: boolean }
     secondaryButton?: { text: string; url: string; external: boolean }
   }
@@ -51,8 +90,9 @@ export default async function SanityServicePage({ slug }: SanityServicePageProps
             <h2 className="font-heading text-2xl font-bold text-charcoal md:text-3xl">
               {section.title}
             </h2>
-            <div className="mt-4 text-charcoal/90">
+            <div className="mt-4 space-y-4 text-charcoal/90">
               <PortableText
+                components={textSectionComponents}
                 value={
                   Array.isArray(section.content)
                     ? section.content.filter(
@@ -94,15 +134,6 @@ export default async function SanityServicePage({ slug }: SanityServicePageProps
                   ) {
                     value = '$20.00 per session'
                   }
-                  if (
-                    isAffordable &&
-                    typeof item !== 'string' &&
-                    (item.label?.toLowerCase().includes('cost') ||
-                      item.label?.toLowerCase().includes('price') ||
-                      item.label?.toLowerCase().includes('fee'))
-                  ) {
-                    value = '$80.00 for 7 sessions'
-                  }
                   return (
                     <div
                       key={`${typeof item === 'string' ? item : `${item.label}-${item.value}`}`}
@@ -133,6 +164,7 @@ export default async function SanityServicePage({ slug }: SanityServicePageProps
                 </li>
               ))}
             </ul>
+            {section.note && <p className="mt-6 text-sm text-charcoal/75">{section.note}</p>}
           </section>
         )
 
@@ -141,7 +173,9 @@ export default async function SanityServicePage({ slug }: SanityServicePageProps
           <section key={sectionKey} className="mx-auto mt-12 max-w-3xl">
             <div className="rounded-xl bg-bark p-6 text-cream ring-1 ring-cream/15">
               <h3 className="font-heading text-xl font-bold md:text-2xl">{section.title}</h3>
-              {section.description && <p className="mt-2 text-cream/90">{section.description}</p>}
+              {section.description && (
+                <p className="mt-2 whitespace-pre-line text-cream/90">{section.description}</p>
+              )}
               <div className="mt-5 flex flex-wrap gap-3">
                 {section.primaryButton &&
                   renderCtaButton(

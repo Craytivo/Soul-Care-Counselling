@@ -70,6 +70,10 @@ const imageProjection = `{
 
 const JESSICA_TEAM_MATCH = `(slug.current == "jessica-robinson-grant" || name in ["Jessica Robinson Grant", "Jessica Robinson-Grant"])`
 const NIGEL_TEAM_MATCH = `(slug.current in ["nigel", "nigel-bucknor", "nigel-miller"] || name in ["Nigel", "Nigel Bucknor"])`
+const DAVENE_TEAM_MATCH = `(slug.current in ["davene", "davene-harris", "davene-miller"] || name match "Davene*")`
+
+// Discontinued services, hidden from listings and detail pages
+const DISCONTINUED_SERVICE_MATCH = `slug.current in ["single-session"]`
 const teamMemberProjection = `{
   _id,
   _type,
@@ -123,6 +127,7 @@ export async function getTeamMembers(): Promise<TeamMember[]> {
         select(
           ${JESSICA_TEAM_MATCH} => 0,
           ${NIGEL_TEAM_MATCH} => 1,
+          ${DAVENE_TEAM_MATCH} => 3,
           2
         ) asc,
         name asc
@@ -190,7 +195,7 @@ export async function getServices(): Promise<Services | null> {
             suffix
           }
         },
-        servicesList[] {
+        servicesList[!(${DISCONTINUED_SERVICE_MATCH})] {
           title,
           slug,
           description,
@@ -239,7 +244,7 @@ export async function getService(slug: string): Promise<Service | null> {
   const servicesData = await fetchSanityQuerySafe<{ servicesList: Service | null }>(
     `
       *[_type == "services" && isActive == true][0] {
-        servicesList[slug.current == $slug && isActive == true][0] {
+        servicesList[slug.current == $slug && isActive == true && !(${DISCONTINUED_SERVICE_MATCH})][0] {
           title,
           slug,
           description,

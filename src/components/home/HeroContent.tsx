@@ -23,38 +23,59 @@ export default function HeroContent({ homePageData }: HeroContentProps) {
     .slice(0, 4)
 
   return (
-    <section className="bg-white px-5 py-8 sm:px-8 sm:py-10 lg:px-10" aria-label="What to expect">
-      <div className="mx-auto grid max-w-7xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {features.map((feature) => {
-          const Icon = iconComponents[feature.icon] ?? ShieldCheck
+    <section
+      className="relative overflow-hidden border-b border-[#e7c49a]/20 bg-charcoal px-5 py-5 text-white sm:px-8 lg:px-12"
+      aria-label="What to expect"
+    >
+      {/* Soft warm glow so the bar reads as a continuation of the hero */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-[#e7c49a]/[0.07] to-transparent"
+      />
 
-          return (
-            <div
-              key={`${feature.icon}-${feature.text}`}
-              className="flex items-center gap-3 border-l-2 border-clay/70 py-2 pl-4"
-            >
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sand text-bark">
-                <Icon className="h-5 w-5" aria-hidden="true" />
-              </span>
-              <span className="text-sm font-medium leading-snug text-charcoal/85">
-                {feature.text}
-              </span>
-            </div>
-          )
-        })}
+      <div className="relative mx-auto flex max-w-7xl flex-col items-center gap-3.5">
+        {features.length > 0 && (
+          <ul className="grid grid-cols-2 gap-x-6 gap-y-2.5 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-0">
+            {features.map((feature, index) => {
+              const Icon = iconComponents[feature.icon] ?? ShieldCheck
+
+              return (
+                <li key={`${feature.icon}-${feature.text}`} className="flex items-center">
+                  {index > 0 && (
+                    <span
+                      aria-hidden="true"
+                      className="mx-4 hidden h-1 w-1 rotate-45 bg-[#e7c49a]/60 sm:inline-block xl:mx-5"
+                    />
+                  )}
+                  <Icon
+                    className="mr-2 h-3.5 w-3.5 shrink-0 text-[#e7c49a]"
+                    strokeWidth={1.75}
+                    aria-hidden="true"
+                  />
+                  <span className="text-[0.68rem] font-medium uppercase leading-snug tracking-[0.14em] text-white/85">
+                    {feature.text}
+                  </span>
+                </li>
+              )
+            })}
+          </ul>
+        )}
+
+        {heroData.quote?.text && (
+          <figure className="flex shrink-0 flex-col items-center gap-1 text-center sm:flex-row sm:gap-3">
+            <blockquote>
+              <p className="font-serif text-sm italic text-cream/90">
+                &ldquo;{heroData.quote.text}&rdquo;
+              </p>
+            </blockquote>
+            {heroData.quote.author && (
+              <figcaption className="text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-[#e7c49a]">
+                {heroData.quote.author}
+              </figcaption>
+            )}
+          </figure>
+        )}
       </div>
-      {heroData.quote?.text && (
-        <blockquote className="mx-auto mt-8 max-w-3xl text-center">
-          <p className="mx-auto font-serif text-base italic leading-relaxed text-bark/80 sm:text-lg">
-            &ldquo;{heroData.quote.text}&rdquo;
-          </p>
-          {heroData.quote.author && (
-            <footer className="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-bark/60">
-              {heroData.quote.author}
-            </footer>
-          )}
-        </blockquote>
-      )}
     </section>
   )
 }

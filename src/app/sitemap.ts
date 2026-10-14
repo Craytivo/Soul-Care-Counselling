@@ -11,7 +11,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/services/individual',
     '/services/group-therapy',
     '/services/affordable',
-    '/services/single-session',
     '/contact',
     '/resources',
     '/faq',
