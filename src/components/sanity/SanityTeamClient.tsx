@@ -80,17 +80,25 @@ function getFilters(teamMembers: TeamMember[]): TeamFilter[] {
   ]
 }
 
-function getImageUrl(member: TeamMember) {
+function getImageUrl(member: TeamMember, featured = false) {
   if (!member.image) return '/assets/img/team/placeholder.webp'
 
   try {
-    return urlFor(member.image).width(160).height(160).url()
+    return featured
+      ? urlFor(member.image).width(720).height(900).fit('crop').url()
+      : urlFor(member.image).width(160).height(160).url()
   } catch {
     return '/assets/img/team/placeholder.webp'
   }
 }
 
-export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMember[] }) {
+export default function SanityTeamClient({
+  teamMembers,
+  featured = false,
+}: {
+  teamMembers: TeamMember[]
+  featured?: boolean
+}) {
   const [searchQuery, setSearchQuery] = useState('')
   const [activeFilter, setActiveFilter] = useState('all')
 
@@ -269,7 +277,7 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
         {filteredMembers.length > 0 ? (
           <ul
             role="list"
-            className="stagger-grid mt-8 grid items-stretch gap-5 sm:grid-cols-1 md:mt-10 md:grid-cols-2 md:gap-7 lg:grid-cols-3 xl:grid-cols-4 xl:gap-8"
+            className={`stagger-grid mt-8 grid items-stretch gap-5 sm:grid-cols-1 md:mt-10 md:grid-cols-2 md:gap-7 lg:grid-cols-3 ${featured ? 'xl:grid-cols-3 xl:gap-8' : 'xl:grid-cols-4 xl:gap-8'}`}
           >
             {filteredMembers.map((member, index) => {
               const specialties = Array.isArray(member.specialties) ? member.specialties : []
@@ -287,17 +295,32 @@ export default function SanityTeamClient({ teamMembers }: { teamMembers: TeamMem
                     ease: 'easeOut',
                   }}
                 >
-                  <article className="group flex h-full flex-col rounded-2xl border border-charcoal/10 bg-white transition duration-200 shadow-elevation-1 hover:-translate-y-0.5 hover:border-clay/35 hover:shadow-elevation-3">
-                    <div className="flex flex-1 flex-col p-5">
-                      <div className="flex items-start gap-4">
+                  <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-charcoal/10 bg-white shadow-elevation-1 transition duration-200 hover:-translate-y-0.5 hover:border-clay/35 hover:shadow-elevation-3">
+                    {featured && (
+                      <div className="relative overflow-hidden bg-sand">
                         <Image
-                          src={getImageUrl(member)}
+                          src={getImageUrl(member, true)}
                           alt={member.name}
-                          className="h-16 w-16 rounded-full object-cover ring-1 ring-charcoal/10"
-                          width={64}
-                          height={64}
+                          className="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-[1.03] sm:h-72"
+                          width={720}
+                          height={900}
                           loading="lazy"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                         />
+                      </div>
+                    )}
+                    <div className={`flex flex-1 flex-col ${featured ? 'p-6 sm:p-7' : 'p-5'}`}>
+                      <div className={featured ? 'flex items-start gap-4' : 'flex items-start gap-4'}>
+                        {!featured && (
+                          <Image
+                            src={getImageUrl(member)}
+                            alt={member.name}
+                            className="h-16 w-16 rounded-full object-cover ring-1 ring-charcoal/10"
+                            width={64}
+                            height={64}
+                            loading="lazy"
+                          />
+                        )}
                         <div className="min-w-0 flex-1">
                           <h3 className="font-heading text-base font-semibold leading-tight text-charcoal transition-colors group-hover:text-bark">
                             {member.name}
