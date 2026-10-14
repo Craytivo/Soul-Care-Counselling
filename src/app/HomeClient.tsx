@@ -21,12 +21,11 @@ export default function HomeClient({ teamMembers, homePageData, servicesData }: 
     .slice(0, 3)
 
   return (
-    <div className="-mx-4 -my-12 bg-cream">
+    <div className="relative left-1/2 -my-12 w-screen -translate-x-1/2 bg-cream">
       <Hero homePageData={homePageData} />
-      <HeroContent homePageData={homePageData} />
 
       <section
-        className="bg-cream px-5 pb-8 pt-16 sm:px-8 sm:pb-10 md:pb-10 md:pt-20 lg:px-10"
+        className="bg-cream px-5 py-14 sm:px-8 sm:py-16 lg:px-10 lg:py-20"
         aria-labelledby="services-heading"
       >
         <div className="mx-auto max-w-7xl">
@@ -41,13 +40,17 @@ export default function HomeClient({ teamMembers, homePageData, servicesData }: 
               >
                 Explore how we can support you
               </h2>
+              <p className="mt-4 max-w-2xl text-base leading-7 text-charcoal/75 sm:text-lg">
+                You do not have to work through everything alone. Explore counselling options
+                designed to meet you with care, respect, and practical support.
+              </p>
             </div>
             <Link
               href="/services"
               className="group inline-flex min-h-11 items-center gap-2 self-start font-semibold text-bark underline decoration-clay/60 underline-offset-4 transition hover:text-clay sm:self-auto"
             >
               View all services
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
             </Link>
           </div>
 
@@ -66,7 +69,7 @@ export default function HomeClient({ teamMembers, homePageData, servicesData }: 
                     </p>
                     <span className="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-semibold text-bark">
                       Learn more
-                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                     </span>
                   </>
                 )
@@ -98,9 +101,32 @@ export default function HomeClient({ teamMembers, homePageData, servicesData }: 
         </div>
       </section>
 
+      <HeroContent homePageData={homePageData} />
+
       <section className="bg-cream">
-        <div className="mx-auto max-w-7xl px-6 pb-14 pt-4 sm:px-8 md:px-10 md:pb-16 md:pt-6 lg:pb-20 xl:px-12">
+        <div className="mx-auto max-w-7xl px-6 pb-14 pt-14 sm:px-8 md:px-10 md:pb-16 lg:pb-20 xl:px-12">
           <SanityTeamClient teamMembers={teamMembers} />
+        </div>
+      </section>
+
+      <section className="bg-sand/70 px-5 py-14 sm:px-8 sm:py-16 lg:px-10 lg:py-20" aria-labelledby="home-cta-heading">
+        <div className="mx-auto flex max-w-5xl flex-col items-start justify-between gap-6 rounded-2xl border border-bark/10 bg-cream p-7 shadow-sm sm:p-10 md:flex-row md:items-center">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-bark/65">A gentle first step</p>
+            <h2 id="home-cta-heading" className="mt-2 max-w-2xl font-heading text-3xl font-semibold text-charcoal sm:text-4xl">
+              You deserve support that meets you with care.
+            </h2>
+            <p className="mt-3 max-w-2xl text-base leading-7 text-charcoal/75">
+              When you are ready, learn more about counselling or reach out with questions.
+            </p>
+          </div>
+          <Link
+            href="/contact"
+            className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-lg bg-bark px-6 py-3 text-sm font-semibold text-cream transition hover:bg-clay focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bark"
+          >
+            Get in touch
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
         </div>
       </section>
     </div>
